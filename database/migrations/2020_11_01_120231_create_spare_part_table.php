@@ -15,8 +15,7 @@ class CreateSparePartTable extends Migration {
         if (!Schema::hasTable('spare_part')) {
             Schema::create('spare_part', function (Blueprint $table) {
                 $table->bigIncrements('id_spare_part');
-                $table->string('id', 7);
-                $table->string('nama_spare_part', 50);
+                $table->string('nama_spare_part', 120);
                 $table->string('deskripsi', 255);
                 $table->enum('tipe', ['hp', 'pc/komputer', 'printer']);
                 $table->unsignedSmallInteger('stok');

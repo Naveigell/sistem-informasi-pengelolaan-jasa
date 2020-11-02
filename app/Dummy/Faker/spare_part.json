@@ -1,0 +1,33 @@
+{
+    "hp": {
+        "nama_spare_part": [
+            "OPPO Layar LCD Touch Screen", "ASUS Layar LCD Touch Screen", "Samsung Layar LCD Touch Screen",
+            "Huawei Layar LCD Touch Screen", "Xiaomi Layar LCD Touch Screen", "Vivo Layar LCD Touch Screen",
+            "Realme Layar LCD Touch Screen"
+        ],
+        "harga_spare_part": [
+            "271897", "521716", "1037329", "413407", "513000", "216000", "338712"
+        ],
+        "stok_spare_part": [
+            "10", "5", "3", "1", "2", "4", "9"
+        ]
+    },
+    "pc": {
+       "nama_spare_part": [
+           "RAM DDR 3 2GB KINGSTON", "RAM DDR 3 4GB", "RAM DDR 4 8GB KINGSTON", "RAM KINGSTON LONGDIMM DDR4 4GB PC19200",
+           "Kipas CPU Computer Fan Casing 8cm Hitam", "Heatsink Fan HSF cpu Cooler Intel AMD", "Harddisk Seagate Internal PC 500GB HDD SATA 3.5\"",
+           "Seagate Barracuda 1TB HDD / Hardisk / Harddisk Internal", "Kingston A400 120GB SATA3 2.5\" SSD Internal", "VGA ASUS TUF Gaming GTX 1650 Super OC 4gb"
+       ],
+        "harga_spare_part": [
+            "182000", "155000", "415000", "218000", "17000", "174900", "175000", "715000", "455000", "2920000"
+        ]
+    },
+    "printer": {
+        "nama_spare_part": [
+
+        ],
+        "harga_spare_part": [
+
+        ]
+    }
+}
