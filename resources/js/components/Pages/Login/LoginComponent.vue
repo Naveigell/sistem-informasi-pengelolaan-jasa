@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <div class="form-container">
-            <form action="">
+            <form v-on:submit.prevent>
                 <h3>Oneya Solutions</h3>
                 <div class="sub-title">
                     <span>
@@ -10,9 +10,9 @@
                         service hp, service printer dan lain sebagainya.
                     </span>
                 </div>
-                <input style="margin-top: 40px;" class="input-form-text" placeholder="Email ..." id="email" type="email">
+                <input v-model="input.email" class="input-form-text" style="margin-top: 40px;" placeholder="Email ..." id="email" type="email">
                 <span class="sub-message">Masukkan emailmu disini. Cth: oneya@solutions.com</span>
-                <input class="input-form-text" placeholder="Password ..." id="password" type="password">
+                <input v-model="input.password" class="input-form-text" placeholder="Password ..." id="password" type="password">
                 <span class="sub-message">Masukkan passwordmu disini.</span>
                 <div class="option">
                     <span>
@@ -21,7 +21,9 @@
                     </span>
                     <a id="forget-password" href="">Lupa password?</a>
                 </div>
-                <input id="login" type="button" value="Masuk" class="input-form-button">
+                <button v-on:click="login($event)" id="login" class="input-form-button">
+                    Masuk
+                </button>
             </form>
         </div>
     </div>
@@ -29,15 +31,30 @@
 
 <script>
     export default {
-        name: "LoginComponent"
+        name: "LoginComponent",
+        data() {
+            return {
+                input: {
+                    email: "",
+                    password: ""
+                }
+            };
+        },
+        methods: {
+            login(evt){
+                this.$api.post('/auth/login', {
+
+                }).then(function (response) {
+                    console.log(response)
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        }
     }
 </script>
 
 <style scoped>
-
-html, body {
-    background: #cacaca;
-}
 
 h3 {
     text-align: center;
@@ -101,6 +118,7 @@ input[type="checkbox"] {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background: #f8f8f8;
 }
 
 .form-container {
@@ -110,6 +128,7 @@ input[type="checkbox"] {
     justify-content: center;
     padding: 60px;
     box-shadow: 0px 0px 2px #8d8989;
+    background: white;
 }
 
 #email, #password {
@@ -128,5 +147,9 @@ input[type="checkbox"] {
     font-weight: bold;
     color: white;
     background: #1d84ff;
+}
+
+#login:hover {
+    background: #3690ff;
 }
 </style>

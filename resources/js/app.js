@@ -6,6 +6,8 @@
 
 require('./bootstrap');
 
+import axios from "axios";
+
 window.Vue = require('vue');
 
 /**
@@ -27,6 +29,17 @@ import App from './components/App.vue';
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.use({
+    install(Vue) {
+        Vue.prototype.$api = axios.create({
+            baseURL: "http://localhost:8000/api/v1/",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+});
 
 const app = new Vue({
     render: h => h(App)

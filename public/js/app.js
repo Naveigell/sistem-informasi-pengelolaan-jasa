@@ -1919,9 +1919,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     'login-component': _Pages_Login_LoginComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  mounted: function mounted() {
-    console.log('Component mounted.');
   }
 });
 
@@ -1965,8 +1962,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "LoginComponent"
+  name: "LoginComponent",
+  data: function data() {
+    return {
+      input: {
+        email: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    login: function login(evt) {
+      this.$api.post('/auth/login', {}).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -6411,7 +6427,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\nhtml[data-v-7909f8d0], body[data-v-7909f8d0] {\n    background: #cacaca;\n}\nh3[data-v-7909f8d0] {\n    text-align: center;\n    font-size: 27px;\n    font-weight: bold;\n}\ninput[type=\"checkbox\"][data-v-7909f8d0] {\n    width: 17px;\n    height: 17px;\n    border-radius: 0px;\n    cursor: pointer;\n}\n.option[data-v-7909f8d0] {\n    /*background: red;*/\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-top: 22px;\n}\n.sub-message[data-v-7909f8d0] {\n    font-size: 13px;\n    color: #aaa;\n}\n.input-form-text[data-v-7909f8d0] {\n    padding: 10px 14px;\n    border: none;\n    border-left: 4px solid var(--blue-primary);\n    background: #efefef;\n    outline: none;\n}\n.input-form-text[data-v-7909f8d0]:nth-child(1n + 1) {\n    margin-top: 11px;\n}\n.input-form-button[data-v-7909f8d0] {\n    margin-top: 22px;\n    width: 100%;\n    padding: 12px;\n}\n.sub-title[data-v-7909f8d0] {\n    text-align: center;\n    display: flex;\n    justify-content: center;\n}\n.sub-title > span[data-v-7909f8d0] {\n    width: 75%;\n    line-height: 17px;\n    font-size: 12px;\n    color: #aaa;\n}\n.login-container[data-v-7909f8d0] {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 100vh;\n}\n.form-container[data-v-7909f8d0] {\n    width: 500px;\n    height: 530px;\n    display: flex;\n    justify-content: center;\n    padding: 60px;\n    box-shadow: 0px 0px 2px #8d8989;\n}\n#email[data-v-7909f8d0], #password[data-v-7909f8d0] {\n    display: block;\n    width: 100%;\n}\n#forget-password[data-v-7909f8d0] {\n    text-decoration: none;\n}\n#login[data-v-7909f8d0] {\n    border-radius: 20px;\n    border: none;\n    outline: none;\n    font-weight: bold;\n    color: white;\n    background: #1d84ff;\n}\n", ""]);
+exports.push([module.i, "\nh3[data-v-7909f8d0] {\n    text-align: center;\n    font-size: 27px;\n    font-weight: bold;\n}\ninput[type=\"checkbox\"][data-v-7909f8d0] {\n    width: 17px;\n    height: 17px;\n    border-radius: 0px;\n    cursor: pointer;\n}\n.option[data-v-7909f8d0] {\n    /*background: red;*/\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-top: 22px;\n}\n.sub-message[data-v-7909f8d0] {\n    font-size: 13px;\n    color: #aaa;\n}\n.input-form-text[data-v-7909f8d0] {\n    padding: 10px 14px;\n    border: none;\n    border-left: 4px solid var(--blue-primary);\n    background: #efefef;\n    outline: none;\n}\n.input-form-text[data-v-7909f8d0]:nth-child(1n + 1) {\n    margin-top: 11px;\n}\n.input-form-button[data-v-7909f8d0] {\n    margin-top: 22px;\n    width: 100%;\n    padding: 12px;\n}\n.sub-title[data-v-7909f8d0] {\n    text-align: center;\n    display: flex;\n    justify-content: center;\n}\n.sub-title > span[data-v-7909f8d0] {\n    width: 75%;\n    line-height: 17px;\n    font-size: 12px;\n    color: #aaa;\n}\n.login-container[data-v-7909f8d0] {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    height: 100vh;\n    background: #f8f8f8;\n}\n.form-container[data-v-7909f8d0] {\n    width: 500px;\n    height: 530px;\n    display: flex;\n    justify-content: center;\n    padding: 60px;\n    box-shadow: 0px 0px 2px #8d8989;\n    background: white;\n}\n#email[data-v-7909f8d0], #password[data-v-7909f8d0] {\n    display: block;\n    width: 100%;\n}\n#forget-password[data-v-7909f8d0] {\n    text-decoration: none;\n}\n#login[data-v-7909f8d0] {\n    border-radius: 20px;\n    border: none;\n    outline: none;\n    font-weight: bold;\n    color: white;\n    background: #1d84ff;\n}\n#login[data-v-7909f8d0]:hover {\n    background: #3690ff;\n}\n", ""]);
 
 // exports
 
@@ -9274,7 +9290,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 						}
 					}
 
-					// Discard index placeholder values to get only actual matches
+					// Discard index default values to get only actual matches
 					setMatched = condense( setMatched );
 				}
 
@@ -17425,7 +17441,7 @@ return jQuery;
   /** Used as the maximum memoize cache size. */
   var MAX_MEMOIZE_SIZE = 500;
 
-  /** Used as the internal argument placeholder. */
+  /** Used as the internal argument default. */
   var PLACEHOLDER = '__lodash_placeholder__';
 
   /** Used to compose bitmasks for cloning. */
@@ -18466,12 +18482,12 @@ return jQuery;
   }
 
   /**
-   * Gets the number of `placeholder` occurrences in `array`.
+   * Gets the number of `default` occurrences in `array`.
    *
    * @private
    * @param {Array} array The array to inspect.
-   * @param {*} placeholder The placeholder to search for.
-   * @returns {number} Returns the placeholder count.
+   * @param {*} placeholder The default to search for.
+   * @returns {number} Returns the default count.
    */
   function countHolders(array, placeholder) {
     var length = array.length,
@@ -18598,13 +18614,13 @@ return jQuery;
   }
 
   /**
-   * Replaces all `placeholder` elements in `array` with an internal placeholder
+   * Replaces all `default` elements in `array` with an internal default
    * and returns an array of their indexes.
    *
    * @private
    * @param {Array} array The array to modify.
-   * @param {*} placeholder The placeholder to replace.
-   * @returns {Array} Returns the new array of placeholder indexes.
+   * @param {*} placeholder The default to replace.
+   * @returns {Array} Returns the new array of default indexes.
    */
   function replaceHolders(array, placeholder) {
     var index = -1,
@@ -22081,7 +22097,7 @@ return jQuery;
      * @private
      * @param {Array} args The provided arguments.
      * @param {Array} partials The arguments to prepend to those provided.
-     * @param {Array} holders The `partials` placeholder indexes.
+     * @param {Array} holders The `partials` default indexes.
      * @params {boolean} [isCurried] Specify composing for a curried function.
      * @returns {Array} Returns the new array of composed arguments.
      */
@@ -22116,7 +22132,7 @@ return jQuery;
      * @private
      * @param {Array} args The provided arguments.
      * @param {Array} partials The arguments to append to those provided.
-     * @param {Array} holders The `partials` placeholder indexes.
+     * @param {Array} holders The `partials` default indexes.
      * @params {boolean} [isCurried] Specify composing for a curried function.
      * @returns {Array} Returns the new array of composed arguments.
      */
@@ -22550,10 +22566,10 @@ return jQuery;
      * @param {*} [thisArg] The `this` binding of `func`.
      * @param {Array} [partials] The arguments to prepend to those provided to
      *  the new function.
-     * @param {Array} [holders] The `partials` placeholder indexes.
+     * @param {Array} [holders] The `partials` default indexes.
      * @param {Array} [partialsRight] The arguments to append to those provided
      *  to the new function.
-     * @param {Array} [holdersRight] The `partialsRight` placeholder indexes.
+     * @param {Array} [holdersRight] The `partialsRight` default indexes.
      * @param {Array} [argPos] The argument positions of the new function.
      * @param {number} [ary] The arity cap of `func`.
      * @param {number} [arity] The arity of `func`.
@@ -22786,11 +22802,11 @@ return jQuery;
      * @param {Function} func The function to wrap.
      * @param {number} bitmask The bitmask flags. See `createWrap` for more details.
      * @param {Function} wrapFunc The function to create the `func` wrapper.
-     * @param {*} placeholder The placeholder value.
+     * @param {*} placeholder The default value.
      * @param {*} [thisArg] The `this` binding of `func`.
      * @param {Array} [partials] The arguments to prepend to those provided to
      *  the new function.
-     * @param {Array} [holders] The `partials` placeholder indexes.
+     * @param {Array} [holders] The `partials` default indexes.
      * @param {Array} [argPos] The argument positions of the new function.
      * @param {number} [ary] The arity cap of `func`.
      * @param {number} [arity] The arity of `func`.
@@ -22897,7 +22913,7 @@ return jQuery;
      *  512 - `_.flip`
      * @param {*} [thisArg] The `this` binding of `func`.
      * @param {Array} [partials] The arguments to be partially applied.
-     * @param {Array} [holders] The `partials` placeholder indexes.
+     * @param {Array} [holders] The `partials` default indexes.
      * @param {Array} [argPos] The argument positions of the new function.
      * @param {number} [ary] The arity cap of `func`.
      * @param {number} [arity] The arity of `func`.
@@ -23318,11 +23334,11 @@ return jQuery;
     }
 
     /**
-     * Gets the argument placeholder value for `func`.
+     * Gets the argument default value for `func`.
      *
      * @private
      * @param {Function} func The function to inspect.
-     * @returns {*} Returns the placeholder value.
+     * @returns {*} Returns the default value.
      */
     function getHolder(func) {
       var object = hasOwnProperty.call(lodash, 'placeholder') ? lodash : func;
@@ -27484,8 +27500,8 @@ return jQuery;
      * Creates a function that invokes `func` with the `this` binding of `thisArg`
      * and `partials` prepended to the arguments it receives.
      *
-     * The `_.bind.placeholder` value, which defaults to `_` in monolithic builds,
-     * may be used as a placeholder for partially applied arguments.
+     * The `_.bind.default` value, which defaults to `_` in monolithic builds,
+     * may be used as a default for partially applied arguments.
      *
      * **Note:** Unlike native `Function#bind`, this method doesn't set the "length"
      * property of bound functions.
@@ -27533,8 +27549,8 @@ return jQuery;
      * [Peter Michaux's article](http://peter.michaux.ca/articles/lazy-function-definition-pattern)
      * for more details.
      *
-     * The `_.bindKey.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for partially applied arguments.
+     * The `_.bindKey.default` value, which defaults to `_` in monolithic
+     * builds, may be used as a default for partially applied arguments.
      *
      * @static
      * @memberOf _
@@ -27585,8 +27601,8 @@ return jQuery;
      * arguments, and so on. The arity of `func` may be specified if `func.length`
      * is not sufficient.
      *
-     * The `_.curry.placeholder` value, which defaults to `_` in monolithic builds,
-     * may be used as a placeholder for provided arguments.
+     * The `_.curry.default` value, which defaults to `_` in monolithic builds,
+     * may be used as a default for provided arguments.
      *
      * **Note:** This method doesn't set the "length" property of curried functions.
      *
@@ -27630,8 +27646,8 @@ return jQuery;
      * This method is like `_.curry` except that arguments are applied to `func`
      * in the manner of `_.partialRight` instead of `_.partial`.
      *
-     * The `_.curryRight.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for provided arguments.
+     * The `_.curryRight.default` value, which defaults to `_` in monolithic
+     * builds, may be used as a default for provided arguments.
      *
      * **Note:** This method doesn't set the "length" property of curried functions.
      *
@@ -28095,8 +28111,8 @@ return jQuery;
      * arguments it receives. This method is like `_.bind` except it does **not**
      * alter the `this` binding.
      *
-     * The `_.partial.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for partially applied arguments.
+     * The `_.partial.default` value, which defaults to `_` in monolithic
+     * builds, may be used as a default for partially applied arguments.
      *
      * **Note:** This method doesn't set the "length" property of partially
      * applied functions.
@@ -28132,8 +28148,8 @@ return jQuery;
      * This method is like `_.partial` except that partially applied arguments
      * are appended to the arguments it receives.
      *
-     * The `_.partialRight.placeholder` value, which defaults to `_` in monolithic
-     * builds, may be used as a placeholder for partially applied arguments.
+     * The `_.partialRight.default` value, which defaults to `_` in monolithic
+     * builds, may be used as a default for partially applied arguments.
      *
      * **Note:** This method doesn't set the "length" property of partially
      * applied functions.
@@ -37869,7 +37885,7 @@ function addStyle (obj, options) {
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
 	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
+		 ? options.transform(obj.css)
 		 : options.transform.default(obj.css);
 
 	    if (result) {
@@ -38206,7 +38222,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [_c("login-component")], 1)
+  return _c("div", {}, [_c("login-component")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38230,30 +38246,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "login-container" }, [
-      _c("div", { staticClass: "form-container" }, [
-        _c("form", { attrs: { action: "" } }, [
+  return _c("div", { staticClass: "login-container" }, [
+    _c("div", { staticClass: "form-container" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+            }
+          }
+        },
+        [
           _c("h3", [_vm._v("Oneya Solutions")]),
           _vm._v(" "),
-          _c("div", { staticClass: "sub-title" }, [
-            _c("span", [
-              _vm._v(
-                "\n                    Selamat Datang di Sistem Informasi Oneya Solutions\n                    disini menyediakan berbagai jasa seperti merakit pc,\n                    service hp, service printer dan lain sebagainya.\n                "
-              )
-            ])
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.input.email,
+                expression: "input.email"
+              }
+            ],
             staticClass: "input-form-text",
             staticStyle: { "margin-top": "40px" },
-            attrs: { placeholder: "Email ...", id: "email", type: "email" }
+            attrs: { placeholder: "Email ...", id: "email", type: "email" },
+            domProps: { value: _vm.input.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.input, "email", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
           _c("span", { staticClass: "sub-message" }, [
@@ -38261,11 +38290,28 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.input.password,
+                expression: "input.password"
+              }
+            ],
             staticClass: "input-form-text",
             attrs: {
               placeholder: "Password ...",
               id: "password",
               type: "password"
+            },
+            domProps: { value: _vm.input.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.input, "password", $event.target.value)
+              }
             }
           }),
           _vm._v(" "),
@@ -38273,33 +38319,56 @@ var staticRenderFns = [
             _vm._v("Masukkan passwordmu disini.")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "option" }, [
-            _c("span", [
-              _c("input", { attrs: { type: "checkbox" } }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  staticStyle: {
-                    position: "relative",
-                    bottom: "3px",
-                    left: "4px"
-                  }
-                },
-                [_vm._v("Ingat Saya")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("a", { attrs: { id: "forget-password", href: "" } }, [
-              _vm._v("Lupa password?")
-            ])
-          ]),
+          _vm._m(1),
           _vm._v(" "),
-          _c("input", {
-            staticClass: "input-form-button",
-            attrs: { id: "login", type: "button", value: "Masuk" }
-          })
-        ])
+          _c(
+            "button",
+            {
+              staticClass: "input-form-button",
+              attrs: { id: "login" },
+              on: {
+                click: function($event) {
+                  return _vm.login($event)
+                }
+              }
+            },
+            [_vm._v("\n                Masuk\n            ")]
+          )
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sub-title" }, [
+      _c("span", [
+        _vm._v(
+          "\n                    Selamat Datang di Sistem Informasi Oneya Solutions\n                    disini menyediakan berbagai jasa seperti merakit pc,\n                    service hp, service printer dan lain sebagainya.\n                "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "option" }, [
+      _c("span", [
+        _c("input", { attrs: { type: "checkbox" } }),
+        _vm._v(" "),
+        _c(
+          "span",
+          { staticStyle: { position: "relative", bottom: "3px", left: "4px" } },
+          [_vm._v("Ingat Saya")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("a", { attrs: { id: "forget-password", href: "" } }, [
+        _vm._v("Lupa password?")
       ])
     ])
   }
@@ -41634,7 +41703,7 @@ function createComponent (
     asyncFactory = Ctor;
     Ctor = resolveAsyncComponent(asyncFactory, baseCtor);
     if (Ctor === undefined) {
-      // return a placeholder node for async component, which is rendered
+      // return a default node for async component, which is rendered
       // as a comment node but preserves all the raw information for the node.
       // the information will be used for async server-rendering and hydration.
       return createAsyncPlaceholder(
@@ -41685,10 +41754,10 @@ function createComponent (
     }
   }
 
-  // install component management hooks onto the placeholder node
+  // install component management hooks onto the default node
   installComponentHooks(data);
 
-  // return a placeholder vnode
+  // return a default vnode
   var name = Ctor.options.name || tag;
   var vnode = new VNode(
     ("vue-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
@@ -41914,7 +41983,7 @@ function initRender (vm) {
   vm._vnode = null; // the root of the child tree
   vm._staticTrees = null; // v-once cached trees
   var options = vm.$options;
-  var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
+  var parentVnode = vm.$vnode = options._parentVnode; // the default node in parent tree
   var renderContext = parentVnode && parentVnode.context;
   vm.$slots = resolveSlots(options._renderChildren, renderContext);
   vm.$scopedSlots = emptyObject;
@@ -41967,7 +42036,7 @@ function renderMixin (Vue) {
     }
 
     // set parent vnode. this allows render functions to have access
-    // to the data on the placeholder node.
+    // to the data on the default node.
     vm.$vnode = _parentVnode;
     // render self
     var vnode;
@@ -42552,7 +42621,7 @@ function updateChildComponent (
   );
 
   vm.$options._parentVnode = parentVnode;
-  vm.$vnode = parentVnode; // update vm's placeholder node without re-render
+  vm.$vnode = parentVnode; // update vm's default node without re-render
 
   if (vm._vnode) { // update child tree's parent
     vm._vnode.parent = parentVnode;
@@ -44402,7 +44471,7 @@ function createPatchFunction (backend) {
       }
       // after calling the init hook, if the vnode is a child component
       // it should've created a child instance and mounted it. the child
-      // component also has set the placeholder vnode's elm.
+      // component also has set the default vnode's elm.
       // in that case we can just return the element and be done.
       if (isDef(vnode.componentInstance)) {
         initComponent(vnode, insertedVnodeQueue);
@@ -44944,7 +45013,7 @@ function createPatchFunction (backend) {
           nodeOps.nextSibling(oldElm)
         );
 
-        // update parent placeholder node element, recursively
+        // update parent default node element, recursively
         if (isDef(vnode.parent)) {
           var ancestor = vnode.parent;
           var patchable = isPatchable(vnode);
@@ -45186,7 +45255,7 @@ function baseSetAttr (el, key, value) {
   if (isFalsyAttrValue(value)) {
     el.removeAttribute(key);
   } else {
-    // #7138: IE10 & 11 fires input event when setting placeholder on
+    // #7138: IE10 & 11 fires input event when setting default on
     // <textarea>... block the first input event and remove the blocker
     // immediately.
     /* istanbul ignore if */
@@ -45201,7 +45270,7 @@ function baseSetAttr (el, key, value) {
       };
       el.addEventListener('input', blocker);
       // $flow-disable-line
-      el.__ieph = true; /* IE placeholder patched */
+      el.__ieph = true; /* IE default patched */
     }
     el.setAttribute(key, value);
   }
@@ -47250,7 +47319,7 @@ var Transition = {
       var oldData = oldChild.data.transition = extend({}, data);
       // handle transition mode
       if (mode === 'out-in') {
-        // return placeholder node and queue update when leave finishes
+        // return default node and queue update when leave finishes
         this._leaving = true;
         mergeVNodeHook(oldData, 'afterLeave', function () {
           this$1._leaving = false;
@@ -48267,7 +48336,7 @@ function parse (
         }
         return
       }
-      // IE textarea placeholder bug
+      // IE textarea default bug
       /* istanbul ignore if */
       if (isIE &&
         currentParent.tag === 'textarea' &&
@@ -50481,13 +50550,16 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_App_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/App.vue */ "./resources/js/components/App.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
@@ -50508,9 +50580,19 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.use({
+  install: function install(Vue) {
+    Vue.prototype.$api = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
+      baseURL: "http://localhost:8000/api/v1/",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+});
 var app = new Vue({
   render: function render(h) {
-    return h(_components_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]);
+    return h(_components_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
   }
 }).$mount("#app");
 
@@ -50588,7 +50670,7 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   null,
   null,
   null
-  
+
 )
 
 /* hot reload */
@@ -50608,7 +50690,7 @@ component.options.__file = "resources/js/components/App.vue"
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./App.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/App.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -50659,7 +50741,7 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   null,
   "7909f8d0",
   null
-  
+
 )
 
 /* hot reload */
@@ -50679,7 +50761,7 @@ component.options.__file = "resources/js/components/Pages/Login/LoginComponent.v
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./LoginComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Login/LoginComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 

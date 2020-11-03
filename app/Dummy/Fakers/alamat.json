@@ -1,0 +1,13 @@
+{
+    "jalan": [
+        "Jl.", "Jalan Raya", "Jln."
+    ],
+    "nama": [
+        "Imam Bonjol", "Gatot Subroto", "Ahmad Yani", "Kecubung", "Gajah Mada", "Ngurah Rai", "Gunung Batur",
+        "Gunung Agung", "Pupuan", "Padangbai", "Tukad Barito", "Tukad Gangga", "Tukad Pancoran", "Tukad Balian",
+        "Adiyaksa Bali", "Diponegoro"
+    ],
+    "gang": [
+        "Melati", "Mawar", "Cempaka", "Lily", "Asoka"
+    ]
+}

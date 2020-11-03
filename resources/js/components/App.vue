@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="">
         <login-component/>
     </div>
 </template>
@@ -11,8 +11,5 @@
         components: {
             'login-component': LoginComponent
         },
-        mounted() {
-            console.log('Component mounted.')
-        }
     }
 </script>

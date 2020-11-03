@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+// v1 api versioning
+Route::group(['prefix' => '/api/v1'], function () {
+    Route::post('/auth/login', 'Api\Auth\LoginController@login');
+});
