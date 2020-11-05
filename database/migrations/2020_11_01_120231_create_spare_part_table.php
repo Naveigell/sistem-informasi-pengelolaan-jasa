@@ -16,12 +16,11 @@ class CreateSparePartTable extends Migration {
             Schema::create('spare_part', function (Blueprint $table) {
                 $table->bigIncrements('id_spare_part');
                 $table->string('nama_spare_part', 120);
-                $table->string('deskripsi', 255);
+                $table->text('deskripsi')->nullable();
                 $table->enum('tipe', ['hp', 'pc/komputer', 'printer']);
                 $table->unsignedSmallInteger('stok');
                 $table->unsignedInteger('terjual');
                 $table->unsignedInteger('harga');
-                $table->string('picture', 255);
                 $table->timestamps();
             });
         }

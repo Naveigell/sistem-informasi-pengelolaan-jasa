@@ -23,12 +23,12 @@ class CreateServiceTable extends Migration
                 $table->string('alamat_pemilik', 90);
                 $table->string('keluhan', 255);
                 $table->enum('jenis_perangkat', ['hp', 'pc/komputer', 'printer']);
-                $table->string('merk', 20);
-                $table->integer('biaya_jasa');
+                $table->string('merk', 70);
+                $table->integer('biaya_jasa')->nullable();
                 $table->enum('status_service', ['menunggu', 'dicek', 'perbaikan', 'selesai', 'pembayaran', 'terima']);
-                $table->dateTime('tanggal_pengecekan');
-                $table->dateTime('tanggal_selesai');
-                $table->unsignedSmallInteger('estimasi_selesai');
+                $table->dateTime('tanggal_pengecekan')->nullable();
+                $table->dateTime('tanggal_selesai')->nullable();
+                $table->unsignedSmallInteger('estimasi_selesai')->nullable();
                 $table->timestamps();
 
                 $table->foreign('service_id_teknisi')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');

@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Traits\ArrayRandom;
-use App\Traits\FakerFiles;
+
+use App\Traits\Random;
+use App\Traits\Seeder\FakerBiodata;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -11,8 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UsersSeeder extends Seeder {
-    use ArrayRandom;
-    use FakerFiles;
+    use Random, FakerBiodata;
 
     /**
      * @var int helper for generate gender
@@ -33,7 +33,7 @@ class UsersSeeder extends Seeder {
      * @return string generate an email from username
      */
     private function makeEmail($username) : string {
-        $parse = $this->parseFile("internet");
+        $parse = $this->readFile("internet");
 
         return $username.'@'.$this->random($parse->file->email);
     }
@@ -42,7 +42,7 @@ class UsersSeeder extends Seeder {
      * @return array get random list name from faker dummy
      */
     private function randomListName() : array{
-        $parse = $this->parseFile("nama");
+        $parse = $this->readFile("nama");
 
         if (rand(0, 10) < 5) {
             static::$gender = 0;
@@ -51,41 +51,6 @@ class UsersSeeder extends Seeder {
 
         static::$gender = 1;
         return $parse->file->nama->pria;
-    }
-
-    /**
-     * @return string create random phone number
-     */
-    private function makePhoneNumber(){
-        return "08".mt_rand(100000000, 999999999);
-    }
-
-    /**
-     * @return string create random address
-     */
-    private function makeAddress(){
-        $parse = $this->parseFile("alamat");
-
-        $jalan = $this->random($parse->file->jalan);
-        $nama = $this->random($parse->file->nama);
-        $gang = $this->random($parse->file->gang);
-
-        $needGang = rand(0, 10) < 5;
-        $needX = rand(0, 10) < 5;
-
-        $full = $jalan." ".$nama;
-        // cek jika diperlukan nama gang
-        if ($needGang)
-            $full .= " Gang ".$gang;
-
-        // masukkan nomor rumah
-        $full .= " No.".rand(1, 999);
-
-        // apakah butuh X dibelakangnya, misal: No 30X, No 2X
-        if ($needX)
-            $full .= "X";
-
-        return $full;
     }
 
     /**

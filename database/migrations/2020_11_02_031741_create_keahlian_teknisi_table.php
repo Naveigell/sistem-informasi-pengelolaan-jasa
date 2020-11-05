@@ -13,15 +13,16 @@ class CreateKeahlianTeknisiTable extends Migration
      */
     public function up() {
 
-        if (Schema::hasTable('keahlian_teknisi')) {
+        if (!Schema::hasTable('keahlian_teknisi')) {
             Schema::create('keahlian_teknisi', function (Blueprint $table) {
                 $table->bigIncrements('id_keahlian_teknisi');
-                $table->bigInteger('keahlian_teknisi_id_users')->unique()->index();
+                $table->bigInteger('keahlian_teknisi_id_users')->index();
                 $table->enum('keahlian', [
                     'instalasi_printer', 'perbaikan_printer', 'pembersihan_printer',
                     'instalasi_pc', 'perbaikan_pc', 'pembersihan_pc',
                     'perbaikan_hp'
                 ]);
+                $table->enum('tipe', ['hp', 'pc/komputer', 'printer']);
                 $table->timestamps();
             });
         }

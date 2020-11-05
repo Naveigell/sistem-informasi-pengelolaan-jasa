@@ -19030,7 +19030,7 @@ return jQuery;
      * `stubObject`, `stubString`, `stubTrue`, `subtract`, `sum`, `sumBy`,
      * `template`, `times`, `toFinite`, `toInteger`, `toJSON`, `toLength`,
      * `toLower`, `toNumber`, `toSafeInteger`, `toString`, `toUpper`, `trim`,
-     * `trimEnd`, `trimStart`, `truncate`, `unescape`, `uniqueId`, `upperCase`,
+     * `trimEnd`, `trimStart`, `truncate`, `unescape`, `randomID`, `upperCase`,
      * `upperFirst`, `value`, and `words`
      *
      * @name _
@@ -33624,10 +33624,10 @@ return jQuery;
      * @returns {string} Returns the unique ID.
      * @example
      *
-     * _.uniqueId('contact_');
+     * _.randomID('contact_');
      * // => 'contact_104'
      *
-     * _.uniqueId();
+     * _.randomID();
      * // => '105'
      */
     function uniqueId(prefix) {
