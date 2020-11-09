@@ -15,9 +15,10 @@ class CreateServiceSparePartTable extends Migration
 
         if (!Schema::hasTable('service_spare_part')) {
             Schema::create('service_spare_part', function (Blueprint $table) {
-                $table->bigIncrements('id_service_hardware');
-                $table->unsignedBigInteger('service_hardware_id')->nullable()->index();
-                $table->smallInteger('jumlah');
+                $table->bigIncrements('id_service_spare_part');
+                $table->unsignedBigInteger('service_spare_part_id_spare_part')->nullable()->index();
+                $table->string('nama_spare_part', 120);
+                $table->unsignedSmallInteger('jumlah');
                 $table->unsignedInteger('harga');
                 $table->timestamps();
 

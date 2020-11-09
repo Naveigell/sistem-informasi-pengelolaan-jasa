@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Dummy/Fakers/spare_part.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dummy/Fakers/spare_part.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_132230_create_service_spare_part_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_01_132230_create_service_spare_part_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/KeahlianTeknisiSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/KeahlianTeknisiSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/SparePartSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/SparePartSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/UsersSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UsersSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +193,8 @@
       <workItem from="1604822697069" duration="193000" />
       <workItem from="1604831970482" duration="6000" />
       <workItem from="1604836699280" duration="2513000" />
-      <workItem from="1604881699025" duration="725000" />
+      <workItem from="1604881699025" duration="5380000" />
+      <workItem from="1604907808509" duration="2760000" />
     </task>
     <servers />
   </component>
