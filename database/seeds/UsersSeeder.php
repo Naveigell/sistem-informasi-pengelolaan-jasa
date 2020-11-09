@@ -60,10 +60,10 @@ class UsersSeeder extends Seeder {
     private function makeDefaultImage(string $name){
 
         $imgPath = public_path("img/users/default/placeholder.png");
-        $img = File::get($imgPath);
         $extension = File::extension($imgPath);
 
-        $moved = Storage::disk("public")->put("users/image/$name.$extension", $img);
+//        $moved = Storage::disk("public")->put("users/image/$name.$extension", $img);
+        $moved = File::copy($imgPath, public_path("/img/users/$name.$extension"));
 
         return $moved;
     }
@@ -109,9 +109,7 @@ class UsersSeeder extends Seeder {
                     "username"      => $username,
                     "email"         => $email,
                     "password"      => Hash::make("123456"),
-                    "role"          => $role,
-                    "created_at"    => date("Y-m-d H:i:s"),
-                    "updated_at"    => date("Y-m-d H:i:s")
+                    "role"          => $role
                 ]);
 
                 $biodata->insert([
@@ -119,9 +117,7 @@ class UsersSeeder extends Seeder {
                     "jenis_kelamin"         => $gender,
                     "nomor_hp"              => $phone,
                     "profile_picture"       => $imgName.".png",
-                    "alamat"                => $address,
-                    "created_at"            => date("Y-m-d H:i:s"),
-                    "updated_at"            => date("Y-m-d H:i:s")
+                    "alamat"                => $address
                 ]);
 
                 error_log($name);

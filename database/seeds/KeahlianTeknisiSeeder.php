@@ -34,9 +34,9 @@ class KeahlianTeknisiSeeder extends Seeder
                 $keahlian   = $listKeahlian[array_rand($listKeahlian)];
                 $tipe       = 'hp';
 
-                if (in_array('pc/komputer', ['instalasi_pc', 'perbaikan_pc', 'pembersihan_pc'])) {
+                if (in_array($keahlian, ['instalasi_pc', 'perbaikan_pc', 'pembersihan_pc'])) {
                     $tipe = "pc/komputer";
-                } elseif (in_array('hp', ['instalasi_printer', 'perbaikan_printer', 'pembersihan_printer'])) {
+                } elseif (in_array($keahlian, ['instalasi_printer', 'perbaikan_printer', 'pembersihan_printer'])) {
                     $tipe = "hp";
                 }
 

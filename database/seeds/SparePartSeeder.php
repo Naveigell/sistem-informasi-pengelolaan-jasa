@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Traits\FakerFiles;
+use App\Traits\Seeder\FakerFiles;
 
 use Illuminate\Support\Facades\DB;
 
