@@ -64,13 +64,13 @@
                 const self = this;
                 this.loading.buttonLoading = true;
 
-                const response = function (response) {
+                this.$http.onResponse(function (response) {
                     if (response.status === 200) {
                         self.$root.$emit('event-login', true);
                     }
-                };
+                });
 
-                const error = function (error) {
+                this.$http.onError(function (error) {
                     const status = self.$math.status(error);
 
                     if (status === 4) {
@@ -79,12 +79,12 @@
                     } else if (status === 5) {
                         self.errors.server = error.response.data.errors.messages.server[0];
                     }
-                };
+                });
 
-                await this.$api.post(this.$endpoints.auth.login, {
+                await this.$http.post(this.$endpoints.auth.login, {
                     email: this.input.email,
                     password: this.input.password
-                }).then(response).catch(error);
+                });
 
                 this.loading.buttonLoading = false;
             }

@@ -1,0 +1,8 @@
+.app-container {
+    margin-left: calc(var(--sidebar-width) + 20px);
+    margin-top: calc(var(--header-height) + 20px);
+}
+
+.application {
+    background: var(--body-primary);
+}

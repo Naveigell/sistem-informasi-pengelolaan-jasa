@@ -29,7 +29,7 @@ export default {
 <style scoped>
 aside {
     background: white;
-    width: 220px;
+    width: var(--sidebar-width);
     height: 100vh;
     box-shadow: 2px 0 0 #efefef;
     position: fixed;

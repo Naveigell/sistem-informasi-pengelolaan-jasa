@@ -1,23 +1,24 @@
 <template>
-    <div>
+    <div class="application">
         <app-header/>
-        <side-bar/>
+        <app-sidebar/>
+        <component :is="el">
+            <slot></slot>
+        </component>
     </div>
 </template>
 
 <script>
-import Header from "../Includes/Header";
-import Sidebar from "../Includes/Sidebar";
-
 export default {
     name: "Layout",
-    components: {
-        'side-bar': Sidebar,
-        'app-header': Header
+    props: {
+        el: {
+            type: [String, Object],
+            default: 'div',
+        }
     }
 }
 </script>
 
 <style scoped>
-
 </style>

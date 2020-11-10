@@ -2,7 +2,9 @@
     /* COLOR */
     --blue-primary: #1680ff;
     --red-primary: #ff2d2d;
+    --body-primary: #f6f6f6;
 
     /* HEIGHT */
     --header-height: 60px;
+    --sidebar-width: 220px;
 }

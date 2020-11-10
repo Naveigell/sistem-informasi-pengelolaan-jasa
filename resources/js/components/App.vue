@@ -27,14 +27,18 @@
                 self.hasLoggedIn = args;
             });
 
-            this.$api.get(this.$endpoints.auth.check).then(function (response) {
+            this.$http.get(this.$endpoints.auth.check);
+
+            this.$http.onResponse(function (response) {
                 if (response.status === 200) {
                     self.hasLoggedIn = response.data.body.loggedin;
                     self.loading.fullLoading = false;
                 }
-            }).catch(function (error) {
-                console.log(error)
-            })
+            });
+
+            this.$http.onError(function (error) {
+                console.log(error);
+            });
         },
         components: {
             'login-component': LoginComponent,

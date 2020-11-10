@@ -23,8 +23,19 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/App.vue').default);
 import App from './components/App.vue';
-import Api from './routes/endpoints';
+import Endpoints from './routes/endpoints';
 import Math from './helpers/math';
+import Http from './helpers/http';
+
+import Header from "./components/Includes/Header";
+import Sidebar from "./components/Includes/Sidebar";
+import Container from "./components/Includes/Container";
+import Layout from "./components/Layouts/Layout";
+
+Vue.component('app-header', Header);
+Vue.component('app-sidebar', Sidebar);
+Vue.component('app-container', Container);
+Vue.component('app-layout', Layout);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,16 +45,20 @@ import Math from './helpers/math';
 
 Vue.use({
     install(Vue) {
-        Vue.prototype.$api = axios.create({
+
+        const axiosInstance = axios.create({
             baseURL: "http://localhost:8000/api/v1/",
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        Vue.prototype.$endpoints = Api;
+        Vue.prototype.$api = axiosInstance;
+
+        Vue.prototype.$endpoints = Endpoints;
         Vue.prototype.$math = Math;
         Vue.prototype.$basepath = "http://localhost:8000/";
+        Vue.prototype.$http = new Http(axiosInstance);
     }
 });
 

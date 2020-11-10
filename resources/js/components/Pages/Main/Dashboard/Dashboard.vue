@@ -1,20 +1,21 @@
 <template>
-    <div>
-        <layout/>
+    <div class="application">
+        <app-layout :el="body"/>
     </div>
 </template>
 
 <script>
-import Layout from "../../../Layouts/Layout";
+import Body from "./Body";
 
 export default {
     name: "Dashboard",
-    components: {
-        'layout': Layout
-    }
+    data(){
+        return {
+            body: Body
+        }
+    },
 }
 </script>
 
 <style scoped>
-
 </style>
