@@ -19,5 +19,7 @@ Route::get('/', function () {
 
 // v1 api versioning
 Route::group(['prefix' => '/api/v1'], function () {
+    // auth
     Route::post('/auth/login', 'Api\Auth\LoginController@login');
+    Route::get('/auth/check', 'Api\Auth\AuthController@check');
 });

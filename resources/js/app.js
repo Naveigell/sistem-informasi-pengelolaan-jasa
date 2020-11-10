@@ -23,6 +23,8 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/App.vue').default);
 import App from './components/App.vue';
+import Api from './routes/endpoints';
+import Math from './helpers/math';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -37,7 +39,11 @@ Vue.use({
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
+        });
+
+        Vue.prototype.$endpoints = Api;
+        Vue.prototype.$math = Math;
+        Vue.prototype.$basepath = "http://localhost:8000/";
     }
 });
 

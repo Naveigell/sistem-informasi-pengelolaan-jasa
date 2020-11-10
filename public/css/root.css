@@ -1,3 +1,8 @@
 :root {
+    /* COLOR */
     --blue-primary: #1680ff;
+    --red-primary: #ff2d2d;
+
+    /* HEIGHT */
+    --header-height: 60px;
 }

@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -40,6 +42,13 @@ class Handler extends ExceptionHandler
     }
 
     /**
+     * @return bool check if need a json
+     */
+    private function isAjax() {
+        return request()->wantsJson() && request()->ajax();
+    }
+
+    /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -50,6 +59,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ValidationException) {
+            if ($this->isAjax()) {
+                return error(null, $exception->errors(), 422);
+            }
+        } elseif ($exception instanceof \PDOException) {
+            if ($this->isAjax()) {
+                return error(null, [
+                    "server"        => ["Terjadi kesalahan pada server"]
+                ], 500);
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }
