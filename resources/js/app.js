@@ -75,7 +75,7 @@ Vue.use({
     }
 });
 
-import { store } from "./stores/auth";
+import { store } from "./stores/store";
 
 Vue.config.productionTip = false
 

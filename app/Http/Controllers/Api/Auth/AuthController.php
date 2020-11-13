@@ -24,6 +24,7 @@ class AuthController extends Controller
         $user = auth('user')->user();
 
         return json([
+            "name"          => $user->name,
             "username"      => $user->username
         ]);
     }

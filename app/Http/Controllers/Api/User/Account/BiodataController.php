@@ -9,4 +9,8 @@ class BiodataController extends Controller {
     public function index() {
         return view('user.account.biodata');
     }
+
+    public function biodataData() {
+
+    }
 }
