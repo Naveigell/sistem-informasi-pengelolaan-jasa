@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Oneya Solutions Login</title>
+    <title>Biodata</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <login-and-dashboard-component></login-and-dashboard-component>
+        <biodata/>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

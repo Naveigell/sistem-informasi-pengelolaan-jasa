@@ -2,7 +2,8 @@
 const api = {
     auth: {
         login: "/auth/login",
-        check: "/auth/check"
+        check: "/auth/check",
+        data: "/auth/session/data"
     }
 }
 

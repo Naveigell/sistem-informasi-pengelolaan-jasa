@@ -66,7 +66,7 @@
 
                 this.$http.onResponse(function (response) {
                     if (response.status === 200) {
-                        self.$root.$emit('event-login', true);
+                        self.$store.commit('retrieveUserData');
                     }
                 });
 
@@ -86,7 +86,11 @@
                     password: this.input.password
                 });
 
-                this.loading.buttonLoading = false;
+                self.$store.watch(function (state) {
+                    if (state.user.check) {
+                        self.loading.buttonLoading = false;
+                    }
+                });
             }
         }
     }

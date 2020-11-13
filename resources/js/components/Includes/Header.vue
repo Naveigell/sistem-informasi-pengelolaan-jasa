@@ -5,7 +5,7 @@
                 Logo
             </div>
         </div>
-        <div class="right-side">
+        <div class="right-side" v-if="user.data != null">
             <div class="tools-container">
                 <span class="">
                     <i class="glyphicon glyphicon-th"></i>
@@ -19,7 +19,7 @@
                 <div class="account">
                     <img id="account-img" v-bind:src="$basepath + 'img/users/default/placeholder.png'" alt="">
                 </div>
-                <span class="username">asjfdlasfldalskdfj</span>
+                <span class="username" v-html="user.data == null ? '(Not Login Yet)' : user.data.username"></span>
             </div>
         </div>
     </header>
@@ -27,7 +27,20 @@
 
 <script>
 export default {
-    name: "Header"
+    name: "Header",
+    data(){
+        return {
+            user: {
+                data: null
+            }
+        };
+    },
+    mounted() {
+        const self = this;
+        this.$root.$on('event-user-data', function (data) {
+            self.user.data = data;
+        });
+    }
 }
 </script>
 

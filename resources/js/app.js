@@ -6,46 +6,55 @@
 
 require('./bootstrap');
 
-import axios from "axios";
-
 window.Vue = require('vue');
+
+import Vuex from "vuex";
 
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/App.vue -> <example-component></example-component>
+ * Eg. ./components/LoginAndDashboard.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/App.vue').default);
-import App from './components/App.vue';
-import Endpoints from './routes/endpoints';
-import Math from './helpers/math';
-import Http from './helpers/http';
+// Vue.component('example-component', require('./components/LoginAndDashboard.vue').default);
+import LoginAndDashboard from './components/Templates/LoginAndDashboard.vue';
+import Biodata from "./components/Templates/Biodata";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
 import Container from "./components/Includes/Container";
 import Layout from "./components/Layouts/Layout";
 
+import FullLoading from "./components/Loaders/FullLoading";
+
 Vue.component('app-header', Header);
 Vue.component('app-sidebar', Sidebar);
 Vue.component('app-container', Container);
 Vue.component('app-layout', Layout);
+
+Vue.component('login-and-dashboard-component', LoginAndDashboard);
+Vue.component('biodata', Biodata);
+
+Vue.component('full-loading', FullLoading);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import Math from "./helpers/math";
+import Http from "./helpers/http";
+
+import axios from "axios";
+import Endpoints from "./routes/endpoints";
 
 Vue.use({
-    install(Vue) {
-
+    async install(Vue) {
         const axiosInstance = axios.create({
             baseURL: "http://localhost:8000/api/v1/",
             headers: {
@@ -59,9 +68,24 @@ Vue.use({
         Vue.prototype.$math = Math;
         Vue.prototype.$basepath = "http://localhost:8000/";
         Vue.prototype.$http = new Http(axiosInstance);
+
+        Vue.prototype.$user = {
+            data: null
+        };
     }
 });
 
+import { store } from "./stores/auth";
+
+Vue.config.productionTip = false
+
+Vue.use(Vuex);
+
 const app = new Vue({
-    render: h => h(App)
+    // render: h => h(LoginAndDashboard),
+    store,
+    async mounted() {
+        await this.$store.commit('retrieveUserData');
+    }
 }).$mount("#app");
+

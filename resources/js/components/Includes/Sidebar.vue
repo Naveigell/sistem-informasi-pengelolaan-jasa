@@ -1,16 +1,19 @@
 <template>
     <aside>
         <div class="sidebar-container">
-            <div class="sidebar">
+            <div class="sidebar" v-for="sidebar in sidebars">
                 <span class="sidebar-title">
-                    <span>
-                        <i class="fa fa-dashboard" style="margin-right: 10px;"></i> Dashboard
+                    <span v-if="sidebar._link == null">
+                        <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
                     </span>
-                    <span class="sidebar-title-caret">
+                    <a v-else href="/account/biodata">
+                        <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
+                    </a>
+                    <span class="sidebar-title-caret" v-if="sidebar.hasDropdown">
                         <i class="fa fa-caret-down"></i>
                     </span>
                 </span>
-                <div class="sidebar-menu">
+                <div class="sidebar-menu" v-if="sidebar.hasDropdown">
                     <span class="menu">
                         Data Pelanggan
                     </span>
@@ -22,7 +25,27 @@
 
 <script>
 export default {
-    name: "Sidebar"
+    name: "Sidebar",
+    data() {
+        return {
+            sidebars: [
+                {
+                    title: "Dashboard",
+                    icon: "fa fa-dashboard",
+                    hasDropdown: true,
+                },
+                {
+                    title: "Biodata",
+                    icon: "fa fa-user",
+                    hasDropdown: false,
+                    _link: {
+                        isLink: true,
+                        to: this.$basepath + "account/biodata"
+                    }
+                },
+            ]
+        };
+    }
 }
 </script>
 
@@ -44,6 +67,16 @@ aside {
 .sidebar-container {
     padding-top: 2px;
     margin-top: 2px;
+}
+
+.sidebar-title a:hover {
+    color: var(--blue-primary);
+}
+
+.sidebar-title a {
+    color: #aaaaaa;
+    text-decoration: none;
+    margin-left: 4px;
 }
 
 .sidebar-title:hover {

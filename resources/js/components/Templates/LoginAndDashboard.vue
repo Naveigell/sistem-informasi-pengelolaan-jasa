@@ -7,9 +7,8 @@
 </template>
 
 <script>
-    import LoginComponent from "./Pages/Login/LoginComponent";
-    import Dashboard from "./Pages/Main/Dashboard/Dashboard"
-    import FullLoading from "./Loaders/FullLoading";
+    import LoginComponent from "../Pages/Login/LoginComponent";
+    import Dashboard from "../Pages/Main/Dashboard/Dashboard"
 
     export default {
         data(){
@@ -23,27 +22,20 @@
         mounted() {
             const self = this;
 
-            this.$root.$on('event-login', function (args) {
-                self.hasLoggedIn = args;
-            });
-
-            this.$http.get(this.$endpoints.auth.check);
-
-            this.$http.onResponse(function (response) {
-                if (response.status === 200) {
-                    self.hasLoggedIn = response.data.body.loggedin;
+            this.$store.watch(function (state) {
+                if (state.user.check) {
                     self.loading.fullLoading = false;
+                    self.hasLoggedIn = state.user.data !== null;
                 }
             });
 
-            this.$http.onError(function (error) {
-                console.log(error);
-            });
+        },
+        methods: {
+
         },
         components: {
             'login-component': LoginComponent,
             'dashboard-component': Dashboard,
-            'full-loading': FullLoading
         },
     }
 </script>

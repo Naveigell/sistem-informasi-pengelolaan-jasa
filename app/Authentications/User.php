@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id_users', 'name', 'username', 'email', 'role'
     ];
 
     /**
@@ -38,4 +38,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return mixed get id attribute
+     */
+    public function getIdAttribute() {
+        return $this->id_users;
+    }
 }
