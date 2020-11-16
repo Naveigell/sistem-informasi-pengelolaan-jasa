@@ -1911,6 +1911,65 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Overlays_FullOverlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Overlays/FullOverlay */ "./resources/js/components/Overlays/FullOverlay.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "BiodataUpdateSuccess",
+  components: {
+    'full-overlay': _Overlays_FullOverlay__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    var self = this;
+    var countDownID = setInterval(function () {
+      clearInterval(countDownID);
+      self.$emit('destroyed');
+    }, 2100);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errors/Errors404.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Errors/Errors404.vue?vue&type=script&lang=js& ***!
@@ -2121,6 +2180,27 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Overlays/FullOverlay.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "FullOverlay"
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Login/LoginComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Pages/Login/LoginComponent.vue?vue&type=script&lang=js& ***!
@@ -2291,6 +2371,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Alerts_BiodataUpdateSuccess__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Alerts/BiodataUpdateSuccess */ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2346,8 +2441,207 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Body"
+  name: "Body",
+  components: {
+    'alert-success-biodata': _Alerts_BiodataUpdateSuccess__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      user: {
+        data: null,
+        update: null
+      },
+      button: {
+        changeActive: false,
+        saveActive: false
+      },
+      errors: {
+        biodata: {
+          data: {},
+          firstErrorMessage: null
+        },
+        image: {
+          data: {},
+          firstErrorMessage: null
+        }
+      },
+      layouts: {
+        alerts: {
+          success: {
+            biodata: {
+              active: false
+            }
+          }
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.retrieveUserBiodata();
+  },
+  methods: {
+    retrieveUserBiodata: function retrieveUserBiodata() {
+      var self = this;
+      this.$api.get(this.$endpoints.biodata.data).then(function (response) {
+        self.user.data = JSON.parse(JSON.stringify(response.data.body));
+        self.user.update = JSON.parse(JSON.stringify(response.data.body));
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    changeProfilePicture: function changeProfilePicture() {
+      if (this.$refs.input_image !== undefined) {
+        this.$refs.input_image.click();
+      }
+    },
+    onProfilePictureChange: function onProfilePictureChange(event) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var file, image, self, updated, reader;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                file = event.target.files[0];
+                image = _this.$refs.image;
+                self = _this;
+
+                if (!(file !== undefined && image !== null)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 6;
+                return _this.saveProfilePicture(file);
+
+              case 6:
+                updated = _context.sent;
+
+                if (updated) {
+                  reader = new FileReader();
+
+                  reader.onload = function (e) {
+                    var result = e.target.result;
+
+                    if (self.user.data != null) {
+                      self.user.data.biodata.profile_picture = result;
+                    }
+
+                    image.setAttribute("src", result);
+                  };
+
+                  reader.readAsDataURL(file);
+                }
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    saveProfilePicture: function saveProfilePicture(file) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var updated, headers, self, form;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                updated = false;
+                headers = {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                };
+                self = _this2;
+                form = new FormData();
+                form.append("image", file);
+                _context2.next = 7;
+                return _this2.$api.post(_this2.$endpoints.biodata.image, form, headers).then(function (response) {
+                  updated = true;
+
+                  if (self.user.data != null) {
+                    self.user.data.biodata.profile_picture = response.data.body.new_image;
+                    self.errors.image.data = {};
+                    self.errors.image.firstErrorMessage = null;
+                  }
+                })["catch"](function (error) {
+                  self.errors.image.data = error.response.data.errors.messages;
+                  var errors = self.errors.image.data;
+                  var key = Object.keys(errors)[0];
+                  var value = errors[key][0];
+                  self.errors.image.firstErrorMessage = value;
+                });
+
+              case 7:
+                return _context2.abrupt("return", updated);
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    updateBiodata: function updateBiodata() {
+      var self = this;
+      if (this.user.data == null) return;
+      this.$api.put(this.$endpoints.biodata.data, _objectSpread({}, this.user.update.biodata)).then(function (response) {
+        if (response.status === 200) {
+          self.layouts.alerts.success.biodata.active = true; // parse after use
+
+          var objs = JSON.parse(JSON.stringify(self.user.update.biodata));
+          var clone = {}; // copy properties into a new object
+
+          for (var key in objs) {
+            if (objs.hasOwnProperty(key) && key !== "profile_picture") {
+              clone[key] = objs[key];
+            }
+          }
+
+          clone["profile_picture"] = self.user.data.biodata.profile_picture;
+          self.user.data.biodata = JSON.parse(JSON.stringify(clone));
+        }
+      })["catch"](function (error) {
+        self.errors.biodata.data = error.response.data.errors.messages;
+        var errors = self.errors.biodata.data;
+        var key = Object.keys(errors)[0];
+        var value = errors[key][0];
+        self.errors.biodata.firstErrorMessage = value;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -6927,6 +7221,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nsvg[data-v-5f884ce5] {\n    top: 0;\n    left: 0;\n    width: 50px;\n    height: 50px;\n}\nspan[data-v-5f884ce5] {\n    font-size: 17px;\n    margin-top: 10px;\n}\n@-webkit-keyframes show-data-v-5f884ce5 {\n0% {\n        opacity: 0;\n}\n100% {\n        opacity: 1;\n}\n}\n@keyframes show-data-v-5f884ce5 {\n0% {\n        opacity: 0;\n}\n100% {\n        opacity: 1;\n}\n}\n.alert-success-biodata-container[data-v-5f884ce5] {\n    position: absolute;\n    bottom: 0;\n    right: 0;\n    left: 0;\n    top: 0;\n    z-index: 30;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    -webkit-animation: show-data-v-5f884ce5 .15s linear;\n            animation: show-data-v-5f884ce5 .15s linear;\n}\n.alert-success-biodata[data-v-5f884ce5] {\n    width: 400px;\n    height: 140px;\n    background: white;\n    border-radius: 4px;\n    box-shadow: 0 0 1px #555;\n    margin: auto auto;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errors/Errors404.vue?vue&type=style&index=0&id=8dd183d8&scoped=true&lang=css&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Errors/Errors404.vue?vue&type=style&index=0&id=8dd183d8&scoped=true&lang=css& ***!
@@ -7003,6 +7316,25 @@ exports.push([module.i, "\n.loading-container[data-v-e820a4ba] {\n    align-item
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.overlay-container[data-v-6c9871c0] {\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background: #222;\n    position: absolute;\n    opacity: .6;\n    z-index: 20;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Login/LoginComponent.vue?vue&type=style&index=0&id=7909f8d0&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Pages/Login/LoginComponent.vue?vue&type=style&index=0&id=7909f8d0&scoped=true&lang=css& ***!
@@ -7034,7 +7366,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\nimg[data-v-293cee6f] {\n    width: 100%;\n    height: 100%;\n    cursor: pointer;\n}\nform[data-v-293cee6f] {\n}\n.biodata-title[data-v-293cee6f], .biodata-value[data-v-293cee6f] {\n    width: 220px;\n    display: inline-block;\n    color: #222;\n}\n.biodata-title[data-v-293cee6f] {\n    /*background: red;*/\n}\n.biodata-value[data-v-293cee6f] {\n    /*background: blue;*/\n    margin-left: 8px;\n}\n.biodata-value[data-v-293cee6f]:hover {\n    color: var(--blue-primary);\n}\n.biodata-table[data-v-293cee6f] {\n    margin-top: 22px;\n}\n.biodata-container[data-v-293cee6f] {\n    margin-top: 25px;\n    display: flex;\n    justify-content: space-between;\n}\n.biodata-container-left[data-v-293cee6f] {\n    background: var(--body-primary);\n    display: block;\n    width: 400px;\n    height: 400px;\n    border: 1px solid #ddd;\n}\n.biodata-container-right[data-v-293cee6f] {\n    display: block;\n    width: 100%;\n    height: 400px;\n    /*background: blue;*/\n}\n.image-container[data-v-293cee6f] {\n    width: 100%;\n}\n.image[data-v-293cee6f] {\n    padding: 20px;\n}\n.button-image[data-v-293cee6f] {\n    width: 260px;\n    height: 35px;\n    margin-left: 20px;\n    border: 1px solid #ddd;\n    background: #fdfdfd;\n    outline: none;\n}\n.button-image[data-v-293cee6f]:hover {\n    background: #f9f9f9;\n    transition: all .2s;\n}\n.sub-image-text[data-v-293cee6f]:nth-child(even) {\n    margin-top: 0;\n}\n.sub-image-text[data-v-293cee6f] {\n    color: #aaaaaa;\n    display: block;\n    font-size: 12px;\n    text-align: center;\n    margin-top: 10px;\n}\n.biodata-container-right-form[data-v-293cee6f] {\n    margin: 20px;\n    width: 100%;\n    height: 100%;\n}\n.biodata-container-right-form h5[data-v-293cee6f] {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: 40px;\n}\n.biodata-container-right-form h5[data-v-293cee6f]:first-child {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: -14px;\n}\n", ""]);
+exports.push([module.i, "\nimg[data-v-293cee6f] {\n    width: 260px;\n    height: 260px;\n    cursor: pointer;\n    -o-object-fit: cover;\n       object-fit: cover;\n    -o-object-position: center;\n       object-position: center;\n}\n.button-update-biodata[data-v-293cee6f], .button-save-biodata[data-v-293cee6f], .button-update-password[data-v-293cee6f] {\n    padding: 9px 17px;\n    outline: none;\n    border: none;\n    border-radius: 4px;\n}\n.button-update-biodata[data-v-293cee6f]:hover, .button-update-password[data-v-293cee6f]:hover {\n    background: #dfdfdf;\n}\n.button-save-biodata[data-v-293cee6f] {\n    background: #1d84ff;\n    color: #fff;\n}\n.button-save-biodata[data-v-293cee6f]:hover {\n    background: #56a4ff;\n}\n.biodata-change[data-v-293cee6f] {\n    color: var(--blue-primary);\n    cursor: pointer;\n}\n.biodata-change[data-v-293cee6f]:hover {\n    color: #8ba2ff;\n}\n.biodata-title[data-v-293cee6f], .biodata-value[data-v-293cee6f] {\n    display: inline-block;\n    color: #222;\n}\n.biodata-title[data-v-293cee6f] {\n    width: 220px;\n}\n.biodata-value[data-v-293cee6f] {\n    width: 320px;\n    margin-left: 8px;\n}\n.biodata-error-message[data-v-293cee6f] {\n    display: block;\n    margin-left: 233px;\n    margin-top: 7px;\n    padding-bottom: 8px;\n    color: orangered;\n}\n.biodata-input[data-v-293cee6f] {\n    width: 370px;\n    margin-left: 8px;\n    padding: 8px 12px;\n    border: 1px solid #cacfd4;\n    border-radius: 2px;\n    outline: none;\n}\n.biodata-input-error[data-v-293cee6f] {\n    width: 370px;\n    margin-left: 8px;\n    padding: 8px 12px;\n    border: 1px solid var(--error-primary);\n    border-radius: 2px;\n    box-shadow: 0 0 1px var(--error-primary);\n    outline: none;\n}\n.biodata-input-select[data-v-293cee6f] {\n    width: 370px;\n    margin-left: 8px;\n    padding: 8px 12px;\n    border: 1px solid #cacfd4;\n    border-radius: 2px;\n    outline: none;\n}\n\n/*.biodata-value:hover {*/\n/*    color: var(--blue-primary);*/\n/*}*/\n.biodata-table[data-v-293cee6f] {\n    margin-top: 22px;\n}\n.biodata-table-save-button-active[data-v-293cee6f] {\n    margin-top: 6px;\n}\n.biodata-container[data-v-293cee6f] {\n    margin-top: 25px;\n    display: flex;\n    justify-content: space-between;\n}\n.biodata-container-left[data-v-293cee6f] {\n    background: var(--body-primary);\n    display: block;\n    width: 400px;\n    height: 400px;\n    border: 1px solid #ddd;\n}\n.biodata-container-right[data-v-293cee6f] {\n    display: block;\n    width: 100%;\n    height: 440px;\n    /*background: blue;*/\n}\n.image-container[data-v-293cee6f] {\n    width: 100%;\n}\n.image[data-v-293cee6f] {\n    padding: 20px;\n}\n.button-image[data-v-293cee6f] {\n    width: 260px;\n    height: 35px;\n    margin-left: 20px;\n    border: 1px solid #ddd;\n    background: #fdfdfd;\n    outline: none;\n}\n.button-image[data-v-293cee6f]:hover {\n    background: #f9f9f9;\n    transition: all .2s;\n}\n.sub-image-text[data-v-293cee6f]:nth-child(even) {\n    margin-top: 10px;\n}\n.sub-image-text[data-v-293cee6f] {\n    color: #aaaaaa;\n    display: block;\n    font-size: 12px;\n    text-align: center;\n    margin-top: 0;\n}\n.biodata-container-right-form[data-v-293cee6f] {\n    margin: 20px 20px 20px 30px;\n    width: 100%;\n    height: 100%;\n}\n.biodata-container-right-form h5[data-v-293cee6f] {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: 40px;\n}\n.biodata-container-right-form h5[data-v-293cee6f]:first-child {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: -14px;\n}\n", ""]);
 
 // exports
 
@@ -38959,6 +39291,36 @@ try {
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errors/Errors404.vue?vue&type=style&index=0&id=8dd183d8&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Errors/Errors404.vue?vue&type=style&index=0&id=8dd183d8&scoped=true&lang=css& ***!
@@ -39058,6 +39420,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FullLoading.vue?vue&type=style&index=0&id=e820a4ba&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loaders/FullLoading.vue?vue&type=style&index=0&id=e820a4ba&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -39723,6 +40115,109 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "biodata" },
+    [
+      _c("full-overlay"),
+      _vm._v(" "),
+      _c("div", { staticClass: "alert-success-biodata-container" }, [
+        _c("div", { staticClass: "alert-success-biodata" }, [
+          _c(
+            "svg",
+            {
+              staticStyle: { "enable-background": "new 0 0 367.805 367.805" },
+              attrs: {
+                version: "1.1",
+                id: "Capa_1",
+                xmlns: "http://www.w3.org/2000/svg",
+                "xmlns:xlink": "http://www.w3.org/1999/xlink",
+                x: "0px",
+                y: "0px",
+                viewBox: "0 0 367.805 367.805",
+                "xml:space": "preserve"
+              }
+            },
+            [
+              _c("g", [
+                _c("path", {
+                  staticStyle: { fill: "#3BB54A" },
+                  attrs: {
+                    d:
+                      "M183.903,0.001c101.566,0,183.902,82.336,183.902,183.902s-82.336,183.902-183.902,183.902 S0.001,285.469,0.001,183.903l0,0C-0.288,82.625,81.579,0.29,182.856,0.001C183.205,0,183.554,0,183.903,0.001z"
+                  }
+                }),
+                _vm._v(" "),
+                _c("polygon", {
+                  staticStyle: { fill: "#D4E1F4" },
+                  attrs: {
+                    points:
+                      "285.78,133.225 155.168,263.837 82.025,191.217 111.805,161.96 155.168,204.801 256.001,103.968"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g"),
+              _vm._v(" "),
+              _c("g")
+            ]
+          ),
+          _vm._v(" "),
+          _c("span", [_vm._v("Biodata berhasil diubah.")])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Errors/Errors404.vue?vue&type=template&id=8dd183d8&scoped=true&":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Errors/Errors404.vue?vue&type=template&id=8dd183d8&scoped=true& ***!
@@ -39996,6 +40491,39 @@ var staticRenderFns = [
         { staticClass: "loading-text", staticStyle: { "margin-left": "20px" } },
         [_vm._v("\n        Loading ...\n    ")]
       )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Overlays/FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "overlay-container" }, [
+      _c("div", { staticClass: "overlay" })
     ])
   }
 ]
@@ -40289,102 +40817,525 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "biodata-container" }, [
-      _c("div", { staticClass: "biodata-container-left" }, [
-        _c("div", { staticClass: "image-container" }, [
-          _c("div", { staticClass: "image" }, [
-            _c("img", {
+      _c("div", { staticClass: "biodata-container" }, [
+        _c("div", { staticClass: "biodata-container-left" }, [
+          _c("div", { staticClass: "image-container" }, [
+            _c("div", { staticClass: "image" }, [
+              _vm.user.data !== null
+                ? _c("img", {
+                    ref: "image",
+                    attrs: {
+                      src: _vm.user.data.biodata.profile_picture,
+                      alt: ""
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeProfilePicture($event)
+                      }
+                    }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              ref: "input_image",
               attrs: {
-                src:
-                  "https://ecs7.tokopedia.net/img/cache/300/user-1/2020/8/7/65194405/65194405_e6de7f49-67fd-4fcf-b53e-fe1b00d15a14.png",
-                alt: ""
+                type: "file",
+                accept: "image/jpeg, image/png, image/jpg",
+                hidden: ""
+              },
+              on: {
+                change: function($event) {
+                  return _vm.onProfilePictureChange($event)
+                }
               }
-            })
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "button-image" }, [
-            _vm._v(
-              "\n                            Pilih Avatar\n                        "
-            )
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "sub-image-text" }, [
-            _vm._v("Ukuran foto maksimal 1MB")
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "sub-image-text" }, [
-            _vm._v("Format gambar yang diterima .jpg, .png, .jpeg")
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button-image",
+                on: {
+                  click: function($event) {
+                    return _vm.changeProfilePicture($event)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                            Pilih Avatar\n                        "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "sub-image-text" }, [
+              _vm._v("Ukuran foto maksimal 10MB")
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "sub-image-text" }, [
+              _vm._v("Format gambar yang diterima .jpg, .png, .jpeg")
+            ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "biodata-container-right" }, [
+          _c(
+            "div",
+            { staticClass: "biodata-container-right-form" },
+            [
+              _vm.user.data !== null
+                ? _c(
+                    "form",
+                    {
+                      attrs: { action: "" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                        }
+                      }
+                    },
+                    [
+                      _c("h5", [_vm._v("Profil Saya")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "biodata-table": !_vm.button.saveActive,
+                            "biodata-table-save-button-active":
+                              _vm.button.saveActive
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "biodata-title" }, [
+                            _vm._v("Nama")
+                          ]),
+                          _vm._v(" "),
+                          !_vm.button.saveActive
+                            ? _c("span", { staticClass: "biodata-value" }, [
+                                _vm._v(_vm._s(_vm.user.data.biodata.name))
+                              ])
+                            : _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.update.biodata.name,
+                                    expression: "user.update.biodata.name"
+                                  }
+                                ],
+                                staticClass: "biodata-input",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.user.update.biodata.name
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user.update.biodata,
+                                      "name",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "biodata-table": !_vm.button.saveActive,
+                            "biodata-table-save-button-active":
+                              _vm.button.saveActive
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "biodata-title" }, [
+                            _vm._v("Username")
+                          ]),
+                          _vm._v(" "),
+                          !_vm.button.saveActive
+                            ? _c("span", { staticClass: "biodata-value" }, [
+                                _vm._v(_vm._s(_vm.user.data.biodata.username))
+                              ])
+                            : _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.update.biodata.username,
+                                    expression: "user.update.biodata.username"
+                                  }
+                                ],
+                                staticClass: "biodata-input",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.user.update.biodata.username
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user.update.biodata,
+                                      "username",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "biodata-table": !_vm.button.saveActive,
+                            "biodata-table-save-button-active":
+                              _vm.button.saveActive
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "biodata-title" }, [
+                            _vm._v("Jenis Kelamin")
+                          ]),
+                          _vm._v(" "),
+                          !_vm.button.saveActive
+                            ? _c("span", { staticClass: "biodata-value" }, [
+                                _vm._v(
+                                  _vm._s(_vm.user.data.biodata.jenis_kelamin)
+                                )
+                              ])
+                            : _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.user.update.biodata.jenis_kelamin,
+                                      expression:
+                                        "user.update.biodata.jenis_kelamin"
+                                    }
+                                  ],
+                                  staticClass: "biodata-input",
+                                  attrs: { name: "", id: "" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.user.update.biodata,
+                                        "jenis_kelamin",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "Laki - laki" } },
+                                    [_vm._v("Laki - laki")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "Perempuan" } },
+                                    [_vm._v("Perempuan")]
+                                  )
+                                ]
+                              )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "biodata-table": !_vm.button.saveActive,
+                            "biodata-table-save-button-active":
+                              _vm.button.saveActive
+                          },
+                          staticStyle: { display: "flex" }
+                        },
+                        [
+                          _c("span", { staticClass: "biodata-title" }, [
+                            _vm._v("Alamat")
+                          ]),
+                          _vm._v(" "),
+                          !_vm.button.saveActive
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass: "biodata-value",
+                                  staticStyle: { "margin-left": "11px" }
+                                },
+                                [_vm._v(_vm._s(_vm.user.data.biodata.alamat))]
+                              )
+                            : _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.update.biodata.alamat,
+                                    expression: "user.update.biodata.alamat"
+                                  }
+                                ],
+                                staticClass: "biodata-input",
+                                staticStyle: {
+                                  "margin-left": "12px",
+                                  resize: "none"
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.user.update.biodata.alamat
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user.update.biodata,
+                                      "alamat",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("h5", [_vm._v("Kontak Saya")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "biodata-table": !_vm.button.saveActive,
+                            "biodata-table-save-button-active":
+                              _vm.button.saveActive
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "biodata-title" }, [
+                            _vm._v("Email")
+                          ]),
+                          _vm._v(" "),
+                          !_vm.button.saveActive
+                            ? _c("span", { staticClass: "biodata-value" }, [
+                                _vm._v(_vm._s(_vm.user.data.biodata.email))
+                              ])
+                            : _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.update.biodata.email,
+                                    expression: "user.update.biodata.email"
+                                  }
+                                ],
+                                class: {
+                                  "biodata-input":
+                                    _vm.errors.biodata.data.email === undefined,
+                                  "biodata-input-error":
+                                    _vm.errors.biodata.data.email !== undefined
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.user.update.biodata.email
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user.update.biodata,
+                                      "email",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "biodata-table": !_vm.button.saveActive,
+                            "biodata-table-save-button-active":
+                              _vm.button.saveActive
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "biodata-title" }, [
+                            _vm._v("Nomor Telepon")
+                          ]),
+                          _vm._v(" "),
+                          !_vm.button.saveActive
+                            ? _c("span", { staticClass: "biodata-value" }, [
+                                _vm._v(_vm._s(_vm.user.data.biodata.nomor_hp))
+                              ])
+                            : _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.update.biodata.nomor_hp,
+                                    expression: "user.update.biodata.nomor_hp"
+                                  }
+                                ],
+                                class: {
+                                  "biodata-input":
+                                    _vm.errors.biodata.data.nomor_hp ===
+                                    undefined,
+                                  "biodata-input-error":
+                                    _vm.errors.biodata.data.nomor_hp !==
+                                    undefined
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.user.update.biodata.nomor_hp
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user.update.biodata,
+                                      "nomor_hp",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "button-update-container",
+                          staticStyle: { "margin-top": "20px" }
+                        },
+                        [
+                          _c(
+                            "button",
+                            { staticClass: "button-update-password" },
+                            [_vm._v("Ubah Password")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button-update-biodata",
+                              on: {
+                                click: function($event) {
+                                  _vm.button.saveActive = !_vm.button.saveActive
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.button.saveActive
+                                    ? "Batal"
+                                    : "Ubah Biodata"
+                                )
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.button.saveActive
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "button-save-biodata",
+                                  staticStyle: { "margin-left": "3px" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.updateBiodata()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Simpan")]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.errors.biodata.firstErrorMessage != null &&
+                          _vm.button.saveActive
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass: "text-danger",
+                                  staticStyle: { "margin-left": "20px" }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.biodata.firstErrorMessage)
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.layouts.alerts.success.biodata.active
+                ? _c("alert-success-biodata", {
+                    on: {
+                      destroyed: function($event) {
+                        _vm.layouts.alerts.success.biodata.active = false
+                      }
+                    }
+                  })
+                : _vm._e()
+            ],
+            1
+          )
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "biodata-container-right" }, [
-        _c("div", { staticClass: "biodata-container-right-form" }, [
-          _c("form", { attrs: { action: "" } }, [
-            _c("h5", [_vm._v("Profil Saya")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "biodata-table" }, [
-              _c("span", { staticClass: "biodata-title" }, [_vm._v("Nama")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "biodata-value" }, [
-                _vm._v("Naufal Sugiarto")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "biodata-table" }, [
-              _c("span", { staticClass: "biodata-title" }, [
-                _vm._v("Username")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "biodata-value" }, [
-                _vm._v("naufalsugiarto832")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "biodata-table" }, [
-              _c("span", { staticClass: "biodata-title" }, [
-                _vm._v("Jenis Kelamin")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "biodata-value" }, [
-                _vm._v("Laki - laki")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("h5", [_vm._v("Kontak Saya")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "biodata-table" }, [
-              _c("span", { staticClass: "biodata-title" }, [_vm._v("Email")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "biodata-value" }, [
-                _vm._v("naufalsugiarto832@gmail.com")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "biodata-table" }, [
-              _c("span", { staticClass: "biodata-title" }, [
-                _vm._v("Nomor Telepon")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "biodata-value" }, [
-                _vm._v("082122381741")
-              ])
-            ])
-          ])
-        ])
-      ])
+      _vm.errors.image.firstErrorMessage != null
+        ? _c(
+            "span",
+            {
+              staticClass: "alert alert-danger",
+              staticStyle: { padding: "10px 15px" }
+            },
+            [_vm._v(_vm._s(_vm.errors.image.firstErrorMessage))]
+          )
+        : _vm._e()
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -53960,14 +54911,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Includes_Container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Includes/Container */ "./resources/js/components/Includes/Container.vue");
 /* harmony import */ var _components_Layouts_Layout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Layouts/Layout */ "./resources/js/components/Layouts/Layout.vue");
 /* harmony import */ var _components_Loaders_FullLoading__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Loaders/FullLoading */ "./resources/js/components/Loaders/FullLoading.vue");
-/* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./helpers/math */ "./resources/js/helpers/math.js");
-/* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_helpers_math__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _helpers_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./helpers/http */ "./resources/js/helpers/http.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./routes/endpoints */ "./resources/js/routes/endpoints.js");
-/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_routes_endpoints__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./stores/store */ "./resources/js/stores/store.js");
+/* harmony import */ var _components_Overlays_FullOverlay__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Overlays/FullOverlay */ "./resources/js/components/Overlays/FullOverlay.vue");
+/* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./helpers/math */ "./resources/js/helpers/math.js");
+/* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_helpers_math__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _helpers_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./helpers/http */ "./resources/js/helpers/http.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./routes/endpoints */ "./resources/js/routes/endpoints.js");
+/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_routes_endpoints__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./stores/store */ "./resources/js/stores/store.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -54001,13 +54953,19 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
+ // includes
+
 Vue.component('app-header', _components_Includes_Header__WEBPACK_IMPORTED_MODULE_4__["default"]);
 Vue.component('app-sidebar', _components_Includes_Sidebar__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.component('app-container', _components_Includes_Container__WEBPACK_IMPORTED_MODULE_6__["default"]);
-Vue.component('app-layout', _components_Layouts_Layout__WEBPACK_IMPORTED_MODULE_7__["default"]);
+Vue.component('app-layout', _components_Layouts_Layout__WEBPACK_IMPORTED_MODULE_7__["default"]); // templates
+
 Vue.component('login-and-dashboard-component', _components_Templates_LoginAndDashboard_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
-Vue.component('biodata', _components_Templates_Biodata__WEBPACK_IMPORTED_MODULE_3__["default"]);
-Vue.component('full-loading', _components_Loaders_FullLoading__WEBPACK_IMPORTED_MODULE_8__["default"]);
+Vue.component('biodata', _components_Templates_Biodata__WEBPACK_IMPORTED_MODULE_3__["default"]); // loader
+
+Vue.component('full-loading', _components_Loaders_FullLoading__WEBPACK_IMPORTED_MODULE_8__["default"]); // overlays
+
+Vue.component('full-overlay', _components_Overlays_FullOverlay__WEBPACK_IMPORTED_MODULE_9__["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -54026,22 +54984,19 @@ Vue.use({
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              axiosInstance = axios__WEBPACK_IMPORTED_MODULE_11___default.a.create({
+              axiosInstance = axios__WEBPACK_IMPORTED_MODULE_12___default.a.create({
                 baseURL: "http://localhost:8000/api/v1/",
                 headers: {
                   'Content-Type': 'application/json'
                 }
               });
               Vue.prototype.$api = axiosInstance;
-              Vue.prototype.$endpoints = _routes_endpoints__WEBPACK_IMPORTED_MODULE_12___default.a;
-              Vue.prototype.$math = _helpers_math__WEBPACK_IMPORTED_MODULE_9___default.a;
+              Vue.prototype.$endpoints = _routes_endpoints__WEBPACK_IMPORTED_MODULE_13___default.a;
+              Vue.prototype.$math = _helpers_math__WEBPACK_IMPORTED_MODULE_10___default.a;
               Vue.prototype.$basepath = "http://localhost:8000/";
-              Vue.prototype.$http = new _helpers_http__WEBPACK_IMPORTED_MODULE_10__["default"](axiosInstance);
-              Vue.prototype.$user = {
-                data: null
-              };
+              Vue.prototype.$http = new _helpers_http__WEBPACK_IMPORTED_MODULE_11__["default"](axiosInstance);
 
-            case 7:
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -54055,7 +55010,7 @@ Vue.config.productionTip = false;
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var app = new Vue({
   // render: h => h(LoginAndDashboard),
-  store: _stores_store__WEBPACK_IMPORTED_MODULE_13__["store"],
+  store: _stores_store__WEBPACK_IMPORTED_MODULE_14__["store"],
   mounted: function mounted() {
     var _this = this;
 
@@ -54121,6 +55076,93 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/Alerts/BiodataUpdateSuccess.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BiodataUpdateSuccess_vue_vue_type_template_id_5f884ce5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true& */ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true&");
+/* harmony import */ var _BiodataUpdateSuccess_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BiodataUpdateSuccess.vue?vue&type=script&lang=js& */ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _BiodataUpdateSuccess_vue_vue_type_style_index_0_id_5f884ce5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css& */ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _BiodataUpdateSuccess_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BiodataUpdateSuccess_vue_vue_type_template_id_5f884ce5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BiodataUpdateSuccess_vue_vue_type_template_id_5f884ce5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5f884ce5",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Alerts/BiodataUpdateSuccess.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BiodataUpdateSuccess.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_style_index_0_id_5f884ce5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=style&index=0&id=5f884ce5&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_style_index_0_id_5f884ce5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_style_index_0_id_5f884ce5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_style_index_0_id_5f884ce5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_style_index_0_id_5f884ce5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_template_id_5f884ce5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Alerts/BiodataUpdateSuccess.vue?vue&type=template&id=5f884ce5&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_template_id_5f884ce5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BiodataUpdateSuccess_vue_vue_type_template_id_5f884ce5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -54605,6 +55647,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullLoading_vue_vue_type_template_id_e820a4ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullLoading_vue_vue_type_template_id_e820a4ba_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Overlays/FullOverlay.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/Overlays/FullOverlay.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FullOverlay_vue_vue_type_template_id_6c9871c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true& */ "./resources/js/components/Overlays/FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true&");
+/* harmony import */ var _FullOverlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FullOverlay.vue?vue&type=script&lang=js& */ "./resources/js/components/Overlays/FullOverlay.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _FullOverlay_vue_vue_type_style_index_0_id_6c9871c0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css& */ "./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _FullOverlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FullOverlay_vue_vue_type_template_id_6c9871c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FullOverlay_vue_vue_type_template_id_6c9871c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6c9871c0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Overlays/FullOverlay.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Overlays/FullOverlay.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/Overlays/FullOverlay.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FullOverlay.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_style_index_0_id_6c9871c0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=style&index=0&id=6c9871c0&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_style_index_0_id_6c9871c0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_style_index_0_id_6c9871c0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_style_index_0_id_6c9871c0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_style_index_0_id_6c9871c0_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Overlays/FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/Overlays/FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_template_id_6c9871c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Overlays/FullOverlay.vue?vue&type=template&id=6c9871c0&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_template_id_6c9871c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FullOverlay_vue_vue_type_template_id_6c9871c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -55286,6 +56415,10 @@ var api = {
     login: "/auth/login",
     check: "/auth/check",
     data: "/auth/session/data"
+  },
+  biodata: {
+    data: "/biodata",
+    image: "/biodata/image"
   }
 };
 module.exports = api;

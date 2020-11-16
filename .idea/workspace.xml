@@ -21,14 +21,18 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Auth/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Auth/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/JsonResponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/JsonResponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/User/Account/BiodataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/User/Account/BiodataController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User/Account/BiodataController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Traits/Random.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Traits/Random.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/root.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/root.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Templates/Biodata.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Templates/Biodata.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/stores/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/stores/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,19 +172,19 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Templates" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Authentications" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Traits\Seeder" />
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img\users\default" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
     </key>
   </component>
   <component name="RunManager">
@@ -239,7 +243,18 @@
       <workItem from="1605088646897" duration="1994000" />
       <workItem from="1605096035768" duration="2814000" />
       <workItem from="1605226521017" duration="4038000" />
-      <workItem from="1605250212832" duration="7851000" />
+      <workItem from="1605250212832" duration="12978000" />
+      <workItem from="1605320501908" duration="4434000" />
+      <workItem from="1605327362541" duration="440000" />
+      <workItem from="1605328775935" duration="5352000" />
+      <workItem from="1605342573099" duration="3598000" />
+      <workItem from="1605356008215" duration="2386000" />
+      <workItem from="1605362951662" duration="131000" />
+      <workItem from="1605410483098" duration="4181000" />
+      <workItem from="1605427800195" duration="3581000" />
+      <workItem from="1605435320636" duration="452000" />
+      <workItem from="1605441942793" duration="1363000" />
+      <workItem from="1605488326526" duration="2685000" />
     </task>
     <servers />
   </component>
@@ -259,22 +274,22 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1604917479892">
+    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1605331224892">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1604917479892" />
-    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604491698854">
+    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605331224892" />
+    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1605259908196">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1604491698854" />
+    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1605259908196" />
     <state x="604" y="336" key="NewPhpFileDialog" timestamp="1605059253510">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1605059253510" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1605059078031">
+    <state x="277" y="57" key="SettingsEditor" timestamp="1605356130528">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605059078031" />
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605356130528" />
     <state x="561" y="271" key="scopes" timestamp="1604407502590">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

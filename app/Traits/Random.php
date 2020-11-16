@@ -26,4 +26,12 @@ trait Random {
 
         return $unique.$additional;
     }
+
+    /**
+     * @param int $length
+     * @return string create a random string for image, append random string with date
+     */
+    private function randomStringImage(int $length = 90){
+        return Str::random($length).date("dmYHis").mt_rand(0, 100);
+    }
 }

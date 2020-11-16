@@ -27,4 +27,10 @@ Route::group(['prefix' => '/api/v1'], function () {
     Route::post('/auth/login', 'Api\Auth\LoginController@login');
     Route::get('/auth/check', 'Api\Auth\AuthController@check');
     Route::get('/auth/session/data', 'Api\Auth\AuthController@sessionData');
+
+    Route::group(["prefix" => "/biodata", "middleware" => "auth.global"], function (){
+        Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
+        Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
+        Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
+    });
 });

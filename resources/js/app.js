@@ -32,15 +32,23 @@ import Layout from "./components/Layouts/Layout";
 
 import FullLoading from "./components/Loaders/FullLoading";
 
+import FullOverlay from "./components/Overlays/FullOverlay";
+
+// includes
 Vue.component('app-header', Header);
 Vue.component('app-sidebar', Sidebar);
 Vue.component('app-container', Container);
 Vue.component('app-layout', Layout);
 
+// templates
 Vue.component('login-and-dashboard-component', LoginAndDashboard);
 Vue.component('biodata', Biodata);
 
+// loader
 Vue.component('full-loading', FullLoading);
+
+// overlays
+Vue.component('full-overlay', FullOverlay);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -68,10 +76,6 @@ Vue.use({
         Vue.prototype.$math = Math;
         Vue.prototype.$basepath = "http://localhost:8000/";
         Vue.prototype.$http = new Http(axiosInstance);
-
-        Vue.prototype.$user = {
-            data: null
-        };
     }
 });
 

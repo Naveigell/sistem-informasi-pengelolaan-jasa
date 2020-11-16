@@ -2,6 +2,8 @@
 
 return [
 
+    'profile_picture_path' => env('APP_URL').':8000/img/users/',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
