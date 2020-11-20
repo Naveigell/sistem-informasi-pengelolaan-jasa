@@ -24,6 +24,7 @@ import Vuex from "vuex";
 // Vue.component('example-component', require('./components/LoginAndDashboard.vue').default);
 import LoginAndDashboard from './components/Templates/LoginAndDashboard.vue';
 import Biodata from "./components/Templates/Biodata";
+import SparepartIndex from "./components/Templates/Sparepart/Index";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
@@ -34,6 +35,10 @@ import FullLoading from "./components/Loaders/FullLoading";
 
 import FullOverlay from "./components/Overlays/FullOverlay";
 
+import Test from "./components/Test";
+
+Vue.component('test', Test);
+
 // includes
 Vue.component('app-header', Header);
 Vue.component('app-sidebar', Sidebar);
@@ -43,6 +48,7 @@ Vue.component('app-layout', Layout);
 // templates
 Vue.component('login-and-dashboard-component', LoginAndDashboard);
 Vue.component('biodata', Biodata);
+Vue.component('sparepart-index', SparepartIndex);
 
 // loader
 Vue.component('full-loading', FullLoading);

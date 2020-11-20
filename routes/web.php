@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/sparepart', 'Api\Sparepart\SparepartController@index');
+
 Route::group(['prefix' => '/account'], function () {
     Route::get('/biodata', 'Api\User\Account\BiodataController@index');
 });

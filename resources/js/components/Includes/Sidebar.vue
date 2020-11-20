@@ -3,10 +3,10 @@
         <div class="sidebar-container">
             <div class="sidebar" v-for="sidebar in sidebars">
                 <span class="sidebar-title">
-                    <span v-if="sidebar._link == null">
+                    <span v-if="!sidebar.isLink">
                         <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
                     </span>
-                    <a v-else href="/account/biodata">
+                    <a v-else v-bind:href="sidebar.to">
                         <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
                     </a>
                     <span class="sidebar-title-caret" v-if="sidebar.hasDropdown">
@@ -14,9 +14,9 @@
                     </span>
                 </span>
                 <div class="sidebar-menu" v-if="sidebar.hasDropdown">
-                    <span class="menu">
-                        Data Pelanggan
-                    </span>
+                    <a :href="link.to == null ? '#' : link.to" class="menu" v-for="link in sidebar._links">
+                        {{ link.name }}
+                    </a>
                 </div>
             </div>
         </div>
@@ -33,15 +33,25 @@ export default {
                     title: "Dashboard",
                     icon: "fa fa-dashboard",
                     hasDropdown: true,
+                    _links: [
+                        {
+                            name: "Data Pelanggan",
+                            isLink: true,
+                            to: this.$basepath
+                        },
+                        {
+                            name: "Data Spare Part",
+                            isLink: true,
+                            to: this.$basepath + "sparepart"
+                        }
+                    ]
                 },
                 {
                     title: "Biodata",
                     icon: "fa fa-user",
                     hasDropdown: false,
-                    _link: {
-                        isLink: true,
-                        to: this.$basepath + "account/biodata"
-                    }
+                    isLink: true,
+                    to: this.$basepath + "account/biodata"
                 },
             ]
         };
@@ -58,6 +68,13 @@ aside {
     position: fixed;
     left: 0;
     top: calc(var(--header-height));
+}
+
+.menu {
+    font-size: 13px;
+    cursor: pointer;
+    color: #222;
+    display: block;
 }
 
 .sidebar:nth-child(1n + 0) {
@@ -98,8 +115,9 @@ aside {
     margin-left: 48px;
 }
 
-.sidebar-menu span:hover {
+.sidebar-menu .menu:hover {
     color: var(--blue-primary);
+    text-decoration: none;
 }
 
 .sidebar-menu span {

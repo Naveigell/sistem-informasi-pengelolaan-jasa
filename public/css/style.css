@@ -13,3 +13,16 @@
     border: 1px solid #e5e5e5;
     padding: 20px;
 }
+
+.button-success-primary-md {
+    background: var(--blue-primary);
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 8px 20px;
+}
+
+.button-success-primary-md:hover {
+    background: #3690ff;
+}
