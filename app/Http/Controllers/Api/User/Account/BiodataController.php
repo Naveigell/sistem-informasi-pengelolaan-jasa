@@ -28,6 +28,8 @@ class BiodataController extends Controller {
     }
 
     /**
+     *  update user biodata
+     *
      * @param BiodataUpdateRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -44,7 +46,9 @@ class BiodataController extends Controller {
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse retrieve user biodata
+     * retrieve user biodata
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function retrieveBiodata() {
         $user       = auth("user");
@@ -61,8 +65,10 @@ class BiodataController extends Controller {
     }
 
     /**
+     * update just profile picture
+     *
      * @param ProfilePictureUpdateRequest $request
-     * @return \Illuminate\Http\JsonResponse update just profile picture
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateProfilePicture(ProfilePictureUpdateRequest $request)
     {
@@ -99,12 +105,23 @@ class BiodataController extends Controller {
         return json(null, null, 422);
     }
 
+    /**
+     * check if file exists, then delete
+     *
+     * @param $imagename
+     */
     private function deleteOldImage($imagename) {
         if (file_exists(public_path("/img/users/$imagename"))) {
             unlink(public_path("/img/users/$imagename"));
         }
     }
 
+    /**
+     * create a path for stored images
+     *
+     * @param $filename
+     * @return string
+     */
     private function addImagePath($filename)
     {
         return config("app.profile_picture_path").$filename;

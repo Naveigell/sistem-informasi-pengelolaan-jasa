@@ -2780,11 +2780,117 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
   components: {
     "grid": _Lists_GridList__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      spareparts: [],
+      url: {
+        endpoints: {
+          current: this.$endpoints.sparepart.data,
+          next: null,
+          previous: null
+        },
+        uri: ""
+      },
+      jumper: {
+        jumperInput: ""
+      },
+      paginator: {
+        perPage: 10,
+        currentPage: 1,
+        lastPage: 1,
+        totalPage: 1
+      },
+      search: {
+        query: "a",
+        type: "komputer/pc",
+        onSearch: false
+      }
+    };
+  },
+  mounted: function mounted() {
+    var self = this;
+    this.retrieveUrl(this.url.endpoints.current);
+  },
+  methods: {
+    retrieveNextUrl: function retrieveNextUrl() {
+      var next = this.url.endpoints.next;
+
+      if (next !== null) {
+        this.retrieveUrl(next);
+      }
+    },
+    retrievePreviousUrl: function retrievePreviousUrl() {
+      var previous = this.url.endpoints.previous;
+
+      if (previous !== null) {
+        this.retrieveUrl(previous);
+      }
+    },
+    retrieveUrl: function retrieveUrl(url) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var self = this;
+      this.$api.get(url, data).then(function (response) {
+        var res = response.data.body;
+        self.spareparts = res.spareparts;
+        self.url.endpoints.next = res.pages.next_url;
+        self.url.endpoints.previous = res.pages.previous_url;
+        self.url.uri = res.pages.uri;
+        self.paginator.currentPage = res.pages.current_page;
+        self.paginator.lastPage = res.pages.last_page;
+        self.paginator.perPage = res.pages.per_page;
+        self.paginator.totalPage = Math.ceil(res.total / res.pages.per_page);
+        self.search.onSearch = res.search;
+        console.log(response.data.body);
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    jumpIntoPage: function jumpIntoPage(index) {
+      //
+      // if in search mode, use params
+      //
+      if (this.search.onSearch) {
+        this.retrieveUrl(this.$endpoints.sparepart.search, {
+          params: {
+            q: this.search.query,
+            t: this.search.type === "komputer/pc" ? "pc" : this.search.type,
+            p: index
+          }
+        });
+      } else {
+        var url = this.$url.generateUrl(this.url.uri + "/:page");
+        this.retrieveUrl(url(index));
+      }
+    },
+    searchSpareparts: function searchSpareparts() {
+      var acceptTypes = ["komputer/pc", "handphone", "printer"];
+      if (!acceptTypes.includes(this.search.type)) return;
+      this.retrieveUrl(this.$endpoints.sparepart.search, {
+        params: {
+          q: this.search.query,
+          t: this.search.type === "komputer/pc" ? "pc" : this.search.type
+        }
+      });
+    }
   }
 });
 
@@ -2851,11 +2957,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "GridList",
+  props: ["spareparts"],
   data: function data() {
-    return {
-      products: ["RAM DDR 3 2GB KINGSTON", "RAM DDR 3 4GB", "RAM DDR 4 8GB KINGSTON", "RAM KINGSTON LONGDIMM DDR4 4GB PC19200", "Kipas CPU Computer Fan Casing 8cm Hitam", "Heatsink Fan HSF cpu Cooler Intel AMD", "Harddisk Seagate Internal PC 500GB HDD SATA 3.5\"", "Seagate Barracuda 1TB HDD / Hardisk / Harddisk Internal", "Kingston A400 120GB SATA3 2.5\" SSD Internal", "VGA ASUS TUF Gaming GTX 1650 Super OC 4gb"]
-    };
-  }
+    return {};
+  },
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -7645,7 +7751,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "\n.view-model div[data-v-16ec9058] {\n    display: inline-block;\n    cursor: pointer;\n    padding: 4px 8px;\n    border-radius: 2px;\n    margin: 0;\n}\n.view-model div[data-v-16ec9058]:first-child {\n    background: white;\n}\n.view-model div[data-v-16ec9058]:hover {\n}\n.view-model[data-v-16ec9058] {\n    display: inline-block;\n    margin-left: 7px;\n    background: #efefef;\n    border-radius: 2px;\n    padding: 5px;\n}\n.spare-part-tools-right-container[data-v-16ec9058] {\n    float: right;\n    display: inline-block;\n}\n.product-count-bar-container[data-v-16ec9058] {\n    display: inline-block;\n    margin-left: 15px;\n}\n.counter[data-v-16ec9058] {\n    position: relative;\n    left: 11px;\n    top: 3px;\n}\n.product-progress-bar-width[data-v-16ec9058] {\n    background: #ff6e06;\n    border: 1px solid #ff6e06;\n    border-radius: 30px;\n    position: absolute;\n    width: 40px;\n    height: 25px;\n}\n.product-count-bar[data-v-16ec9058] {\n    width: 200px;\n    height: 25px;\n    /*background: blue;*/\n    border: 1px solid #ff6e06;\n    border-radius: 30px;\n}\n.spare-part-tools[data-v-16ec9058] {\n    padding: 20px;\n    display: flex;\n}\n.spare-part-tools-right[data-v-16ec9058] {\n    width: 100%;\n}\n.spare-part-tools-left[data-v-16ec9058] {\n    display: flex;\n    align-items: center;\n    width: 100%;\n}\n.spare-part-tools-left h4[data-v-16ec9058] {\n    color: #222;\n    font-weight: bold;\n    font-size: 22px;\n    display: inline-block;\n}\n.button-search[data-v-16ec9058] {\n    margin-left: 20px;\n}\n.input-search-container[data-v-16ec9058], .input-type-container[data-v-16ec9058] {\n    margin: 20px;\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    display: inline-flex;\n    padding: 7px 12px;\n    align-items: center;\n}\n.input-search[data-v-16ec9058], .input-type[data-v-16ec9058] {\n    margin-left: 10px;\n    width: 290px;\n    border: none;\n    outline: none;\n}\n.separator[data-v-16ec9058] {\n    height: 22px;\n    width: 1px;\n    background: #e0e0e0;\n    display: inline-block;\n    margin-left: 10px;\n    opacity: .7;\n}\n.spare-part-inputs[data-v-16ec9058] {\n    /*background: red;*/\n    /*height: 00px;*/\n    display: flex;\n    justify-content: space-between;\n    margin-top: 20px;\n}\n.spare-part-input-search[data-v-16ec9058], .spare-part-input-type[data-v-16ec9058] {\n    width: 100%;\n}\n.spare-part-input-search[data-v-16ec9058] {\n    height: 100%;\n    /*background: blue;*/\n}\n.spare-part-input-type[data-v-16ec9058] {\n    /*background: green;*/\n}\n.spare-part-list-container[data-v-16ec9058] {\n    /*height: 700px;*/\n}\n.top-navigation ul .router-active[data-v-16ec9058] {\n    border-bottom: 4px solid var(--blue-primary);\n    color: var(--blue-primary);\n    font-weight: bold;\n}\n.spare-part-body-container[data-v-16ec9058] {\n    background: white;\n    border: 1px solid #e5e5e5;\n    margin-bottom: 20px;\n}\n.top-navigation[data-v-16ec9058] {\n    height: 60px;\n    border-bottom: 1px solid #d4d4d4;\n    display: flex;\n    justify-content: flex-start;\n}\n.top-navigation ul[data-v-16ec9058] {\n    display: flex;\n    flex-direction: row;\n    height: 100%;\n    margin: 0 0 0 10px;\n    padding: 0;\n}\n.top-navigation ul li[data-v-16ec9058] {\n    display: flex;\n    cursor: pointer;\n    justify-content: center;\n    align-items: center;\n    bottom: 0;\n    border-bottom: 4px solid white;\n    list-style: none;\n    position: relative;\n    padding: 20px 22px 16px 22px;\n    height: 100%;\n    margin: 0;\n}\n.top-navigation ul li[data-v-16ec9058]:hover {\n    color: var(--blue-primary);\n    transition: .3s;\n}\n", ""]);
+exports.push([module.i, "\n.view-model div[data-v-16ec9058] {\n    display: inline-block;\n    cursor: pointer;\n    padding: 4px 8px;\n    border-radius: 2px;\n    margin: 0;\n}\n.view-model div[data-v-16ec9058]:first-child {\n    background: white;\n}\n.view-model div[data-v-16ec9058]:hover {\n}\n.view-model[data-v-16ec9058] {\n    display: inline-block;\n    margin-left: 7px;\n    background: #efefef;\n    border-radius: 2px;\n    padding: 5px;\n}\n.spare-part-tools-right-container[data-v-16ec9058] {\n    float: right;\n    display: inline-block;\n}\n.pages-button[data-v-16ec9058] {\n    padding: 3px 9px;\n    background: transparent;\n    border: 1px solid #d2d2d2;\n    border-radius: 2px;\n    outline: none;\n}\n.pages-button[data-v-16ec9058]:hover {\n    background: #f1f1f1;\n}\n.pagination-jumper-input[data-v-16ec9058] {\n    border: 1px solid #d2d2d2;\n    border-radius: 2px;\n    outline: none;\n    width: 40px;\n    padding: 3px 9px;\n}\n.pagination-jumper-button[data-v-16ec9058] {\n    background: var(--blue-primary);\n    border: 1px solid var(--blue-primary);\n    border-radius: 2px;\n    outline: none;\n    padding: 3px 9px;\n    color: white;\n}\n.pages-active[data-v-16ec9058], .pages-active[data-v-16ec9058]:hover {\n    background: var(--blue-primary);\n    border: 1px solid var(--blue-primary);\n    color: white;\n}\n.pagination-jumper[data-v-16ec9058] {\n    margin-left: 30px;\n}\n.page-pagination[data-v-16ec9058] {\n    font-size: 25px;\n    cursor: pointer;\n}\n.pagination[data-v-16ec9058] {\n    margin: 30px 30px 30px 45px;\n    display: flex;\n    align-items: center;\n}\n.active-pages[data-v-16ec9058] {\n    display: inline-block;\n}\n.product-count-bar-container[data-v-16ec9058] {\n    display: inline-block;\n    margin-left: 15px;\n}\n.counter[data-v-16ec9058] {\n    position: relative;\n    left: 11px;\n    top: 3px;\n}\n.product-progress-bar-width[data-v-16ec9058] {\n    background: #ff6e06;\n    border: 1px solid #ff6e06;\n    border-radius: 30px;\n    position: absolute;\n    width: 40px;\n    height: 25px;\n}\n.product-count-bar[data-v-16ec9058] {\n    width: 200px;\n    height: 25px;\n    /*background: blue;*/\n    border: 1px solid #ff6e06;\n    border-radius: 30px;\n}\n.spare-part-tools[data-v-16ec9058] {\n    padding: 20px;\n    display: flex;\n}\n.spare-part-tools-right[data-v-16ec9058] {\n    width: 100%;\n}\n.spare-part-tools-left[data-v-16ec9058] {\n    display: flex;\n    align-items: center;\n    width: 100%;\n}\n.spare-part-tools-left h4[data-v-16ec9058] {\n    color: #222;\n    font-weight: bold;\n    font-size: 22px;\n    display: inline-block;\n}\n.button-search[data-v-16ec9058] {\n    margin-left: 20px;\n}\n.input-search-container[data-v-16ec9058], .input-type-container[data-v-16ec9058] {\n    margin: 20px;\n    border: 1px solid #e0e0e0;\n    border-radius: 3px;\n    display: inline-flex;\n    padding: 7px 12px;\n    align-items: center;\n}\n.input-search[data-v-16ec9058], .input-type[data-v-16ec9058] {\n    margin-left: 10px;\n    width: 290px;\n    border: none;\n    outline: none;\n}\n.separator[data-v-16ec9058] {\n    height: 22px;\n    width: 1px;\n    background: #e0e0e0;\n    display: inline-block;\n    margin-left: 10px;\n    opacity: .7;\n}\n.spare-part-inputs[data-v-16ec9058] {\n    /*background: red;*/\n    /*height: 00px;*/\n    display: flex;\n    justify-content: space-between;\n    margin-top: 20px;\n}\n.spare-part-input-search[data-v-16ec9058], .spare-part-input-type[data-v-16ec9058] {\n    width: 100%;\n}\n.spare-part-input-search[data-v-16ec9058] {\n    height: 100%;\n    /*background: blue;*/\n}\n.spare-part-input-type[data-v-16ec9058] {\n    /*background: green;*/\n}\n.spare-part-list-container[data-v-16ec9058] {\n    /*height: 700px;*/\n}\n.top-navigation ul .router-active[data-v-16ec9058] {\n    border-bottom: 4px solid var(--blue-primary);\n    color: var(--blue-primary);\n    font-weight: bold;\n}\n.spare-part-body-container[data-v-16ec9058] {\n    background: white;\n    border: 1px solid #e5e5e5;\n    margin-bottom: 20px;\n}\n.top-navigation[data-v-16ec9058] {\n    height: 60px;\n    border-bottom: 1px solid #d4d4d4;\n    display: flex;\n    justify-content: flex-start;\n}\n.top-navigation ul[data-v-16ec9058] {\n    display: flex;\n    flex-direction: row;\n    height: 100%;\n    margin: 0 0 0 10px;\n    padding: 0;\n}\n.top-navigation ul li[data-v-16ec9058] {\n    display: flex;\n    cursor: pointer;\n    justify-content: center;\n    align-items: center;\n    bottom: 0;\n    border-bottom: 4px solid white;\n    list-style: none;\n    position: relative;\n    padding: 20px 22px 16px 22px;\n    height: 100%;\n    margin: 0;\n}\n.top-navigation ul li[data-v-16ec9058]:hover {\n    color: var(--blue-primary);\n    transition: .3s;\n}\n", ""]);
 
 // exports
 
@@ -7664,7 +7770,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../../node_
 
 
 // module
-exports.push([module.i, "\n.pages-button[data-v-012b03e0] {\n    padding: 3px 9px;\n    background: transparent;\n    border: 1px solid #d2d2d2;\n    border-radius: 2px;\n    outline: none;\n}\n.pagination-jumper-input[data-v-012b03e0] {\n    border: 1px solid #d2d2d2;\n    border-radius: 2px;\n    outline: none;\n    width: 40px;\n    padding: 3px 9px;\n}\n.pagination-jumper-button[data-v-012b03e0] {\n    background: var(--blue-primary);\n    border: 1px solid var(--blue-primary);\n    border-radius: 2px;\n    outline: none;\n    padding: 3px 9px;\n    color: white;\n}\n.pages-active[data-v-012b03e0] {\n    background: var(--blue-primary);\n    border: 1px solid var(--blue-primary);\n    color: white;\n}\n.pagination-jumper[data-v-012b03e0] {\n    margin-left: 30px;\n}\n.grid-container[data-v-012b03e0] {\n    width: 100%;\n    height: 100%;\n}\n.grid[data-v-012b03e0] {\n    padding: 20px;\n    margin: 20px;\n}\n.pagination[data-v-012b03e0] {\n    margin: 30px 30px 30px 45px;\n    display: flex;\n    align-items: center;\n}\n.active-pages[data-v-012b03e0] {\n    display: inline-block;\n}\n.product-info[data-v-012b03e0] {\n    margin-top: 8px;\n    margin-right: 10px;\n    margin-left: 10px;\n}\n.product-sales[data-v-012b03e0] {\n    float: right;\n    font-size: 12px;\n    margin-right: 10px;\n    color: #a4a4a4;\n}\n.product-price[data-v-012b03e0] {\n    color: var(--blue-primary);\n    font-weight: bold;\n}\n.product-stock[data-v-012b03e0] {\n    float: right;\n    color: #a4a4a4;\n}\n.page-pagination[data-v-012b03e0] {\n    font-size: 25px;\n    cursor: pointer;\n}\n.product-meta[data-v-012b03e0] {\n    padding-bottom: 7px;\n}\n.product-grid-container[data-v-012b03e0] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: flex-start;\n}\n.product-title[data-v-012b03e0] {\n    margin-left: 10px;\n    margin-right: 10px;\n    display: block;\n    display: -webkit-box;\n    max-width: 100%;\n    height: 28px;\n    font-size: 14px;\n    font-weight: bold;\n    line-height: 1.1;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.product-grid[data-v-012b03e0] {\n    border: 1px solid #d9d9d9;\n    border-radius: 4px;\n    display: inline-block;\n    width: 186px;\n    height: 300px;\n    margin: 5px;\n    flex-grow: 0;\n    flex-shrink: 1;\n    /*flex-basis: calc(20% - 5px);*/\n}\n.product-grid img[data-v-012b03e0] {\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n}\n", ""]);
+exports.push([module.i, "\n.pages-button[data-v-012b03e0] {\n    padding: 3px 9px;\n    background: transparent;\n    border: 1px solid #d2d2d2;\n    border-radius: 2px;\n    outline: none;\n}\n.pages-button[data-v-012b03e0]:hover {\n    background: #f1f1f1;\n}\n.pagination-jumper-input[data-v-012b03e0] {\n    border: 1px solid #d2d2d2;\n    border-radius: 2px;\n    outline: none;\n    width: 40px;\n    padding: 3px 9px;\n}\n.pagination-jumper-button[data-v-012b03e0] {\n    background: var(--blue-primary);\n    border: 1px solid var(--blue-primary);\n    border-radius: 2px;\n    outline: none;\n    padding: 3px 9px;\n    color: white;\n}\n.pages-active[data-v-012b03e0] {\n    background: var(--blue-primary);\n    border: 1px solid var(--blue-primary);\n    color: white;\n}\n.pagination-jumper[data-v-012b03e0] {\n    margin-left: 30px;\n}\n.page-pagination[data-v-012b03e0] {\n    font-size: 25px;\n    cursor: pointer;\n}\n.pagination[data-v-012b03e0] {\n    margin: 30px 30px 30px 45px;\n    display: flex;\n    align-items: center;\n}\n.active-pages[data-v-012b03e0] {\n    display: inline-block;\n}\n.grid-container[data-v-012b03e0] {\n    width: 100%;\n    height: 100%;\n}\n.grid[data-v-012b03e0] {\n    padding: 20px;\n    margin: 20px;\n}\n.product-info[data-v-012b03e0] {\n    margin-top: 8px;\n    margin-right: 10px;\n    margin-left: 10px;\n}\n.product-type[data-v-012b03e0] {\n    float: right;\n    font-size: 12px;\n    margin-right: 10px;\n    color: #a4a4a4;\n}\n.product-price[data-v-012b03e0] {\n    color: var(--blue-primary);\n    font-weight: bold;\n}\n.product-stock[data-v-012b03e0] {\n    float: right;\n    color: #a4a4a4;\n}\n.product-meta[data-v-012b03e0] {\n    padding-bottom: 7px;\n}\n.product-grid-container[data-v-012b03e0] {\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    justify-content: flex-start;\n}\n.product-title[data-v-012b03e0] {\n    margin-left: 10px;\n    margin-right: 10px;\n    display: block;\n    display: -webkit-box;\n    max-width: 100%;\n    height: 32px;\n    font-size: 14px;\n    font-weight: bold;\n    line-height: 1.15;\n    -webkit-line-clamp: 2;\n    -webkit-box-orient: vertical;\n    overflow: hidden;\n    text-overflow: ellipsis;\n}\n.product-grid[data-v-012b03e0] {\n    border: 1px solid #d9d9d9;\n    border-radius: 4px;\n    display: inline-block;\n    width: 186px;\n    height: 300px;\n    margin: 5px;\n    flex-grow: 0;\n    flex-shrink: 1;\n    /*flex-basis: calc(20% - 5px);*/\n}\n.product-grid img[data-v-012b03e0] {\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n}\n", ""]);
 
 // exports
 
@@ -41798,7 +41904,218 @@ var render = function() {
       _c(
         "div",
         { staticClass: "spare-part-list-container" },
-        [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("grid")],
+        [
+          _c("div", { staticClass: "spare-part-input-container" }, [
+            _c("div", { staticClass: "spare-part-inputs" }, [
+              _c("div", { staticClass: "spare-part-input-search" }, [
+                _c("div", { staticClass: "input-search-container" }, [
+                  _c("span", [_vm._v("Nama Sparepart")]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "separator" }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search.query,
+                        expression: "search.query"
+                      }
+                    ],
+                    staticClass: "input-search",
+                    attrs: { type: "text", placeholder: "Input" },
+                    domProps: { value: _vm.search.query },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.search, "query", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "spare-part-input-type" }, [
+                _c("div", { staticClass: "input-type-container" }, [
+                  _c("span", [_vm._v("Tipe Sparepart")]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "separator" }),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search.type,
+                          expression: "search.type"
+                        }
+                      ],
+                      staticClass: "input-type",
+                      attrs: { name: "", id: "" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.search,
+                            "type",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "komputer/pc" } }, [
+                        _vm._v("Komputer/pc")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "handphone" } }, [
+                        _vm._v("Handphone")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "printer" } }, [
+                        _vm._v("Printer")
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button-search button-success-primary-md",
+                on: {
+                  click: function($event) {
+                    return _vm.searchSpareparts()
+                  }
+                }
+              },
+              [_vm._v("Cari")]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("grid", { attrs: { spareparts: _vm.spareparts } }),
+          _vm._v(" "),
+          _c("div", { staticClass: "pagination" }, [
+            _c(
+              "span",
+              {
+                staticClass: "to-left-page-pagination page-pagination",
+                on: {
+                  click: function($event) {
+                    return _vm.retrievePreviousUrl()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-angle-left" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "active-pages",
+                staticStyle: { "margin-left": "12px" }
+              },
+              _vm._l(_vm.paginator.totalPage, function(i) {
+                return i === 1 ||
+                  i === _vm.paginator.totalPage ||
+                  i === _vm.paginator.currentPage ||
+                  i === _vm.paginator.currentPage - 1 ||
+                  i === _vm.paginator.currentPage + 1
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "pages-button",
+                        class: {
+                          "pages-active": _vm.paginator.currentPage === i
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.jumpIntoPage(i)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(i))]
+                    )
+                  : (i === _vm.paginator.currentPage - 2 ||
+                      i === _vm.paginator.currentPage + 2) &&
+                    !(i === 1 || i === _vm.paginator.totalPage)
+                  ? _c("span", [_vm._v(" ... ")])
+                  : _vm._e()
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "to-left-page-pagination page-pagination",
+                staticStyle: { "margin-left": "12px" },
+                on: {
+                  click: function($event) {
+                    return _vm.retrieveNextUrl()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-angle-right" })]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "pagination-jumper" }, [
+              _c("span", [_vm._v("Ke halaman : ")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.jumper.jumperInput,
+                    expression: "jumper.jumperInput"
+                  }
+                ],
+                staticClass: "pagination-jumper-input",
+                attrs: { type: "text", placeholder: "1" },
+                domProps: { value: _vm.jumper.jumperInput },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.jumper, "jumperInput", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "pagination-jumper-button",
+                  on: {
+                    click: function($event) {
+                      return _vm.jumpIntoPage(_vm.jumper.jumperInput)
+                    }
+                  }
+                },
+                [_vm._v("Pergi")]
+              )
+            ])
+          ])
+        ],
         1
       )
     ])
@@ -41816,57 +42133,6 @@ var staticRenderFns = [
         _c("li", [_vm._v("Harga Terendah")]),
         _vm._v(" "),
         _c("li", [_vm._v("Harga Tertinggi")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "spare-part-input-container" }, [
-      _c("div", { staticClass: "spare-part-inputs" }, [
-        _c("div", { staticClass: "spare-part-input-search" }, [
-          _c("div", { staticClass: "input-search-container" }, [
-            _c("span", [_vm._v("Nama Sparepart")]),
-            _vm._v(" "),
-            _c("span", { staticClass: "separator" }),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "input-search",
-              attrs: { type: "text", placeholder: "Input" }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "spare-part-input-type" }, [
-          _c("div", { staticClass: "input-type-container" }, [
-            _c("span", [_vm._v("Tipe Sparepart")]),
-            _vm._v(" "),
-            _c("span", { staticClass: "separator" }),
-            _vm._v(" "),
-            _c(
-              "select",
-              { staticClass: "input-type", attrs: { name: "", id: "" } },
-              [
-                _c("option", { attrs: { value: "Komputer/pc" } }, [
-                  _vm._v("Komputer/pc")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "Handphone" } }, [
-                  _vm._v("Handphone")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "Printer" } }, [
-                  _vm._v("Printer")
-                ])
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "button-search button-success-primary-md" }, [
-        _vm._v("Cari")
       ])
     ])
   },
@@ -41927,16 +42193,15 @@ var render = function() {
         _c(
           "div",
           { staticClass: "product-grid-container" },
-          _vm._l(_vm.products, function(product) {
+          _vm._l(_vm.spareparts, function(sparepart) {
             return _c("div", { staticClass: "product-grid" }, [
               _c("div", [
                 _c("img", {
                   attrs: {
                     width: "100%",
                     height: "170",
-                    src:
-                      "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//99/MTA-2934486/kingston_kingston-kvr26n19s6-4-memory-ram-pc--4gb--ddr4--2666-mhz-_full02.jpg",
-                    alt: "View"
+                    src: sparepart.images[0].picture,
+                    alt: "sparepart"
                   }
                 }),
                 _vm._v(" "),
@@ -41945,22 +42210,29 @@ var render = function() {
                 _c("span", { staticClass: "product-title" }, [
                   _vm._v(
                     "\n                                " +
-                      _vm._s(product) +
+                      _vm._s(sparepart.nama) +
                       "\n                            "
                   )
                 ]),
                 _vm._v(" "),
                 _vm._m(0, true),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _c("div", { staticClass: "product-meta" }, [
+                  _c("span", { staticClass: "product-type" }, [
+                    _c("i", { staticClass: "fas fa-box" }),
+                    _vm._v(
+                      " " +
+                        _vm._s(sparepart.tipe) +
+                        "\n                                "
+                    )
+                  ])
+                ])
               ])
             ])
           }),
           0
         )
-      ]),
-      _vm._v(" "),
-      _vm._m(2)
+      ])
     ])
   ])
 }
@@ -41980,67 +42252,6 @@ var staticRenderFns = [
         _vm._v(
           "\n                                    Stok 10\n                                "
         )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-meta" }, [
-      _c("span", { staticClass: "product-sales" }, [
-        _c("i", { staticClass: "fas fa-box" }),
-        _vm._v(" Penjualan 100\n                                ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pagination" }, [
-      _c("span", { staticClass: "to-left-page-pagination page-pagination" }, [
-        _c("i", { staticClass: "fa fa-angle-left" })
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "active-pages", staticStyle: { "margin-left": "12px" } },
-        [
-          _c("button", { staticClass: "pages-button pages-active" }, [
-            _vm._v("1")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "pages-button" }, [_vm._v("2")]),
-          _vm._v(" "),
-          _c("span", [_vm._v(".......")]),
-          _vm._v(" "),
-          _c("button", { staticClass: "pages-button" }, [_vm._v("3")]),
-          _vm._v(" "),
-          _c("button", { staticClass: "pages-button" }, [_vm._v("4")])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "span",
-        {
-          staticClass: "to-left-page-pagination page-pagination",
-          staticStyle: { "margin-left": "12px" }
-        },
-        [_c("i", { staticClass: "fa fa-angle-right" })]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "pagination-jumper" }, [
-        _c("span", [_vm._v("Ke halaman : ")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "pagination-jumper-input",
-          attrs: { type: "text", placeholder: "1" }
-        }),
-        _vm._v(" "),
-        _c("button", { staticClass: "pagination-jumper-button" }, [
-          _vm._v("Pergi")
-        ])
       ])
     ])
   }
@@ -55651,11 +55862,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helpers/math */ "./resources/js/helpers/math.js");
 /* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(_helpers_math__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _helpers_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./helpers/http */ "./resources/js/helpers/http.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./routes/endpoints */ "./resources/js/routes/endpoints.js");
-/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_routes_endpoints__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./stores/store */ "./resources/js/stores/store.js");
+/* harmony import */ var _helpers_url__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./helpers/url */ "./resources/js/helpers/url.js");
+/* harmony import */ var _helpers_url__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_helpers_url__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./routes/endpoints */ "./resources/js/routes/endpoints.js");
+/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_routes_endpoints__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./stores/store */ "./resources/js/stores/store.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -55716,6 +55929,7 @@ Vue.component('full-overlay', _components_Overlays_FullOverlay__WEBPACK_IMPORTED
 
 
 
+
 Vue.use({
   install: function install(Vue) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -55724,19 +55938,20 @@ Vue.use({
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              axiosInstance = axios__WEBPACK_IMPORTED_MODULE_14___default.a.create({
+              axiosInstance = axios__WEBPACK_IMPORTED_MODULE_15___default.a.create({
                 baseURL: "http://localhost:8000/api/v1/",
                 headers: {
                   'Content-Type': 'application/json'
                 }
               });
               Vue.prototype.$api = axiosInstance;
-              Vue.prototype.$endpoints = _routes_endpoints__WEBPACK_IMPORTED_MODULE_15___default.a;
+              Vue.prototype.$endpoints = _routes_endpoints__WEBPACK_IMPORTED_MODULE_16___default.a;
               Vue.prototype.$math = _helpers_math__WEBPACK_IMPORTED_MODULE_12___default.a;
               Vue.prototype.$basepath = "http://localhost:8000/";
               Vue.prototype.$http = new _helpers_http__WEBPACK_IMPORTED_MODULE_13__["default"](axiosInstance);
+              Vue.prototype.$url = _helpers_url__WEBPACK_IMPORTED_MODULE_14___default.a;
 
-            case 6:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -55750,7 +55965,7 @@ Vue.config.productionTip = false;
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var app = new Vue({
   // render: h => h(LoginAndDashboard),
-  store: _stores_store__WEBPACK_IMPORTED_MODULE_16__["store"],
+  store: _stores_store__WEBPACK_IMPORTED_MODULE_17__["store"],
   mounted: function mounted() {
     var _this = this;
 
@@ -57524,6 +57739,57 @@ module.exports = math;
 
 /***/ }),
 
+/***/ "./resources/js/helpers/url.js":
+/*!*************************************!*\
+  !*** ./resources/js/helpers/url.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var url = {
+  /**
+   *
+   * @param u u -> url
+   * @param d d -> data
+   * @param h
+   */
+  generateUrl: function generateUrl(u, d, h) {
+    var splitSlash = function splitSlash() {
+      this.url = u.split("/");
+      var index = 0;
+      this.params = this.url.filter(function (item) {
+        return item[0] === ":";
+      });
+
+      for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+        params[_key] = arguments[_key];
+      }
+
+      if (params.length === this.params.length) {
+        for (var i = 0; i < this.url.length; i++) {
+          if (this.url[i][0] === ":") {
+            this.url[i] = params[index];
+            ++index;
+          }
+        }
+
+        return this.url.join("/");
+      } else {
+        throw Error("Passed length of arguments are less than 0 or more than params");
+      }
+    };
+
+    this.post = function () {
+      return splitSlash.apply(void 0, arguments);
+    };
+
+    return this.post;
+  }
+};
+module.exports = url;
+
+/***/ }),
+
 /***/ "./resources/js/routes/endpoints.js":
 /*!******************************************!*\
   !*** ./resources/js/routes/endpoints.js ***!
@@ -57540,6 +57806,10 @@ var api = {
   biodata: {
     data: "/biodata",
     image: "/biodata/image"
+  },
+  sparepart: {
+    data: "/spareparts",
+    search: "/spareparts/search"
   }
 };
 module.exports = api;

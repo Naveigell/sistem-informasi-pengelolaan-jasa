@@ -12,6 +12,9 @@ class AuthController extends Controller
         $this->middleware('auth.global')->only(['sessionData']);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse check if user has logged in
+     */
     public function check() {
         $data = [
             "loggedin"      => auth('user')->check()
@@ -20,6 +23,9 @@ class AuthController extends Controller
         return json($data);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse get session data from user if user has logged in
+     */
     public function sessionData() {
         $user = auth('user')->user();
 

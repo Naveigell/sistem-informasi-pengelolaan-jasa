@@ -9,6 +9,10 @@ use App\Http\Requests\Auth\LoginRequest;
 
 class LoginController extends Controller
 {
+    /**
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse login for user
+     */
     public function login(LoginRequest $request) {
 
         $credentials = [

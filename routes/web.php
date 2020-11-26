@@ -12,15 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/sparepart', 'Api\Sparepart\SparepartController@index');
+// views
+Route::view("/", "index");
+Route::view("/sparepart", 'sparepart.index');
 
 Route::group(['prefix' => '/account'], function () {
-    Route::get('/biodata', 'Api\User\Account\BiodataController@index');
+    Route::view('/biodata', 'user.account.biodata');
 });
 
 // v1 api versioning
@@ -30,9 +27,17 @@ Route::group(['prefix' => '/api/v1'], function () {
     Route::get('/auth/check', 'Api\Auth\AuthController@check');
     Route::get('/auth/session/data', 'Api\Auth\AuthController@sessionData');
 
-    Route::group(["prefix" => "/biodata", "middleware" => "auth.global"], function (){
-        Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
-        Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
-        Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
+    Route::middleware("auth.global")->group(function () {
+        Route::prefix("/biodata")->group(function (){
+            Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
+            Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
+            Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
+        });
+
+        Route::prefix("/spareparts")->group(function (){
+            Route::get("/search", "Api\Sparepart\SparepartController@search");
+            Route::get("/{page?}", "Api\Sparepart\SparepartController@retrieveAll")->name('sparepart.index');
+        });
     });
+
 });

@@ -8,6 +8,10 @@ const api = {
     biodata: {
         data: "/biodata",
         image: "/biodata/image"
+    },
+    sparepart: {
+        data: "/spareparts",
+        search: "/spareparts/search"
     }
 }
 

@@ -1,5 +1,14 @@
 <?php
 if (!function_exists('json')) {
+    /**
+     * sending a custom json
+     *
+     * @param array $body
+     * @param null $errors
+     * @param int $code
+     * @param string $statusText
+     * @return \Illuminate\Http\JsonResponse
+     */
     function json($body = [], $errors = null, $code = 200, $statusText = "OK"){
         $status = [
             "200" => "OK",
@@ -30,6 +39,15 @@ if (!function_exists('json')) {
 }
 
 if (!function_exists('error')) {
+    /**
+     * pass a custom error trough a json function above
+     *
+     * @param mixed $details
+     * @param mixed $messages
+     * @param int $code
+     * @param string $statusText
+     * @return \Illuminate\Http\JsonResponse
+     */
     function error($details, $messages, $code = 500, $statusText = "Internal Server Error"){
         $errors = [
             "messages" => $messages

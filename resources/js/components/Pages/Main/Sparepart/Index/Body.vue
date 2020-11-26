@@ -15,22 +15,22 @@
                             <div class="input-search-container">
                                 <span>Nama Sparepart</span>
                                 <span class="separator"></span>
-                                <input type="text" class="input-search" placeholder="Input"/>
+                                <input v-model="search.query" type="text" class="input-search" placeholder="Input"/>
                             </div>
                         </div>
                         <div class="spare-part-input-type">
                             <div class="input-type-container">
                                 <span>Tipe Sparepart</span>
                                 <span class="separator"></span>
-                                <select class="input-type" name="" id="">
-                                    <option value="Komputer/pc">Komputer/pc</option>
-                                    <option value="Handphone">Handphone</option>
-                                    <option value="Printer">Printer</option>
+                                <select v-model="search.type" class="input-type" name="" id="">
+                                    <option value="komputer/pc">Komputer/pc</option>
+                                    <option value="handphone">Handphone</option>
+                                    <option value="printer">Printer</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <button class="button-search button-success-primary-md">Cari</button>
+                    <button @click="searchSpareparts()" class="button-search button-success-primary-md">Cari</button>
                 </div>
                 <div class="spare-part-tools">
                     <div class="spare-part-tools-left">
@@ -58,7 +58,20 @@
                         </div>
                     </div>
                 </div>
-                <grid/>
+                <grid v-bind:spareparts="spareparts"/>
+                <div class="pagination">
+                    <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
+                    <div class="active-pages" style="margin-left: 12px;">
+                        <button @click="jumpIntoPage(i)" v-for="i in paginator.totalPage" v-if="i === 1 || i === paginator.totalPage || i === paginator.currentPage || i === paginator.currentPage - 1 || i === paginator.currentPage + 1" class="pages-button" v-bind:class="{'pages-active': paginator.currentPage === i}">{{ i }}</button>
+                        <span v-else-if="(i === paginator.currentPage - 2 || i === paginator.currentPage + 2) && !(i === 1 || i === paginator.totalPage)">&nbsp...&nbsp</span>
+                    </div>
+                    <span @click="retrieveNextUrl()" class="to-left-page-pagination page-pagination" style="margin-left: 12px;"><i class="fa fa-angle-right"></i></span>
+                    <div class="pagination-jumper">
+                        <span>Ke halaman : </span>
+                        <input v-model="jumper.jumperInput" type="text" class="pagination-jumper-input" placeholder="1">
+                        <button @click="jumpIntoPage(jumper.jumperInput)" class="pagination-jumper-button">Pergi</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -71,6 +84,107 @@ export default {
     name: "Body",
     components: {
         "grid": GridList
+    },
+    data(){
+        return {
+            spareparts: [],
+            url: {
+                endpoints: {
+                    current: this.$endpoints.sparepart.data,
+                    next: null,
+                    previous: null
+                },
+                uri: ""
+            },
+            jumper: {
+                jumperInput: ""
+            },
+            paginator: {
+                perPage: 10,
+                currentPage: 1,
+                lastPage: 1,
+                totalPage: 1
+            },
+            search: {
+                query: "a",
+                type: "komputer/pc",
+                onSearch: false
+            }
+        }
+    },
+    mounted() {
+        const self = this;
+
+        this.retrieveUrl(this.url.endpoints.current);
+    },
+    methods: {
+        retrieveNextUrl(){
+            const next = this.url.endpoints.next;
+            if (next !== null) {
+                this.retrieveUrl(next);
+            }
+        },
+        retrievePreviousUrl(){
+            const previous = this.url.endpoints.previous;
+            if (previous !== null) {
+                this.retrieveUrl(previous);
+            }
+        },
+        retrieveUrl(url, data = {}){
+            const self = this;
+
+            this.$api.get(url, data).then(function (response) {
+                const res = response.data.body;
+
+                self.spareparts = res.spareparts;
+
+                self.url.endpoints.next     = res.pages.next_url;
+                self.url.endpoints.previous = res.pages.previous_url;
+                self.url.uri                = res.pages.uri;
+
+                self.paginator.currentPage  = res.pages.current_page;
+                self.paginator.lastPage     = res.pages.last_page;
+                self.paginator.perPage      = res.pages.per_page;
+                self.paginator.totalPage    = Math.ceil(res.total / res.pages.per_page);
+
+                self.search.onSearch        = res.search;
+
+                console.log(response.data.body);
+            }).catch(function (error) {
+                console.error(error)
+            });
+        },
+        jumpIntoPage(index) {
+            //
+            // if in search mode, use params
+            //
+
+            if (this.search.onSearch) {
+                this.retrieveUrl(this.$endpoints.sparepart.search, {
+                    params: {
+                        q: this.search.query,
+                        t: this.search.type === "komputer/pc" ? "pc" : this.search.type,
+                        p: index
+                    }
+                });
+            } else {
+                let url = this.$url.generateUrl(this.url.uri + "/:page");
+
+                this.retrieveUrl(url(index));
+            }
+        },
+        searchSpareparts(){
+            const acceptTypes = ["komputer/pc", "handphone", "printer"];
+
+            if (!acceptTypes.includes(this.search.type)) return;
+
+            this.retrieveUrl(this.$endpoints.sparepart.search, {
+                params: {
+                    q: this.search.query,
+                    t: this.search.type === "komputer/pc" ? "pc" : this.search.type
+                }
+            });
+        }
     }
 }
 </script>
@@ -102,6 +216,60 @@ export default {
 
 .spare-part-tools-right-container {
     float: right;
+    display: inline-block;
+}
+
+.pages-button {
+    padding: 3px 9px;
+    background: transparent;
+    border: 1px solid #d2d2d2;
+    border-radius: 2px;
+    outline: none;
+}
+
+.pages-button:hover {
+    background: #f1f1f1;
+}
+
+.pagination-jumper-input {
+    border: 1px solid #d2d2d2;
+    border-radius: 2px;
+    outline: none;
+    width: 40px;
+    padding: 3px 9px;
+}
+
+.pagination-jumper-button {
+    background: var(--blue-primary);
+    border: 1px solid var(--blue-primary);
+    border-radius: 2px;
+    outline: none;
+    padding: 3px 9px;
+    color: white;
+}
+
+.pages-active, .pages-active:hover {
+    background: var(--blue-primary);
+    border: 1px solid var(--blue-primary);
+    color: white;
+}
+
+.pagination-jumper {
+    margin-left: 30px;
+}
+
+.page-pagination {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.pagination {
+    margin: 30px 30px 30px 45px;
+    display: flex;
+    align-items: center;
+}
+
+.active-pages {
     display: inline-block;
 }
 

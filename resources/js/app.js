@@ -63,6 +63,7 @@ Vue.component('full-overlay', FullOverlay);
  */
 import Math from "./helpers/math";
 import Http from "./helpers/http";
+import Urls from "./helpers/url";
 
 import axios from "axios";
 import Endpoints from "./routes/endpoints";
@@ -82,6 +83,7 @@ Vue.use({
         Vue.prototype.$math = Math;
         Vue.prototype.$basepath = "http://localhost:8000/";
         Vue.prototype.$http = new Http(axiosInstance);
+        Vue.prototype.$url = Urls;
     }
 });
 

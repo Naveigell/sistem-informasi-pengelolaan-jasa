@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateSparePartTable extends Migration {
     /**
@@ -23,6 +24,9 @@ class CreateSparePartTable extends Migration {
                 $table->unsignedInteger('harga');
                 $table->timestamps();
             });
+
+            // add full text for nama_spare_part
+            DB::statement("ALTER TABLE spare_part ADD FULLTEXT full(nama_spare_part)");
         }
     }
 

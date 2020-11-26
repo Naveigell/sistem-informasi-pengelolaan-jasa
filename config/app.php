@@ -2,7 +2,17 @@
 
 return [
 
-    'profile_picture_path' => env('APP_URL').':8000/img/users/',
+    /*
+     |-------------------------------------------------------------------------
+     | Application PATH for public image collection
+     |-------------------------------------------------------------------------
+     |
+     | This value is the path to public images
+     |
+     */
+
+    'profile_picture_path' => env('APP_URL', 'localhost').':'.env('APP_PORT', '8000').'/img/users/',
+    'sparepart_picture_path' => env('APP_URL', 'localhost').':'.env('APP_PORT', '8000').'/img/spareparts/',
 
     /*
     |--------------------------------------------------------------------------
@@ -55,6 +65,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'port'=> env('APP_PORT', '8000'),
 
     'asset_url' => env('ASSET_URL', null),
 
