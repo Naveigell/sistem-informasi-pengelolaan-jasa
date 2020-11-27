@@ -22,6 +22,15 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that are used to appends a custom key value
+     *
+     * @var array
+     */
+    protected $appends = [
+        "id"
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -43,6 +52,6 @@ class User extends Authenticatable
      * @return mixed get id attribute
      */
     public function getIdAttribute() {
-        return $this->id_users;
+        return $this->attributes["id_users"];
     }
 }

@@ -24,7 +24,7 @@
                                 <span class="separator"></span>
                                 <select v-model="search.type" class="input-type" name="" id="">
                                     <option value="komputer/pc">Komputer/pc</option>
-                                    <option value="handphone">Handphone</option>
+                                    <option value="hp">Handphone</option>
                                     <option value="printer">Printer</option>
                                 </select>
                             </div>
@@ -106,7 +106,7 @@ export default {
                 totalPage: 1
             },
             search: {
-                query: "a",
+                query: "",
                 type: "komputer/pc",
                 onSearch: false
             }
@@ -174,7 +174,7 @@ export default {
             }
         },
         searchSpareparts(){
-            const acceptTypes = ["komputer/pc", "handphone", "printer"];
+            const acceptTypes = ["komputer/pc", "hp", "printer"];
 
             if (!acceptTypes.includes(this.search.type)) return;
 

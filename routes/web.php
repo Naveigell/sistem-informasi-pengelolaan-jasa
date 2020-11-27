@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 // views
 Route::view("/", "index");
 Route::view("/sparepart", 'sparepart.index');
+Route::view("/sparepart/new", "sparepart.insert");
 
 Route::group(['prefix' => '/account'], function () {
     Route::view('/biodata', 'user.account.biodata');
+});
+
+Route::get("/test", function (){
+    var_dump(auth("user")->user()->user);
 });
 
 // v1 api versioning

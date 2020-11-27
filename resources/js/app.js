@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import Insert from "./components/Templates/Sparepart/Insert";
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -25,6 +27,7 @@ import Vuex from "vuex";
 import LoginAndDashboard from './components/Templates/LoginAndDashboard.vue';
 import Biodata from "./components/Templates/Biodata";
 import SparepartIndex from "./components/Templates/Sparepart/Index";
+import SparepartInsert from "./components/Templates/Sparepart/Insert";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
@@ -49,6 +52,7 @@ Vue.component('app-layout', Layout);
 Vue.component('login-and-dashboard-component', LoginAndDashboard);
 Vue.component('biodata', Biodata);
 Vue.component('sparepart-index', SparepartIndex);
+Vue.component('sparepart-insert', SparepartInsert);
 
 // loader
 Vue.component('full-loading', FullLoading);

@@ -1,7 +1,8 @@
 <?php
 
-if (!function_exists("sparepart_api")) {
+if (!function_exists("api_path_v1")) {
     /**
+     * add the api url into given path string
      * @param string $path
      * @return string
      */

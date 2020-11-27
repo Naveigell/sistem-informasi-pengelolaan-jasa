@@ -38,8 +38,9 @@ class SparepartModel extends Model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function search($q, $t = null) {
-        return $this->select(["id_spare_part", "nama_spare_part AS nama", "tipe", "stok", "harga"])
+        $query = $this->select(["id_spare_part", "nama_spare_part AS nama", "tipe", "stok", "harga"])
 //                    ->whereRaw("MATCH(nama_spare_part) AGAINST(? IN BOOLEAN MODE)", array($q))
+//                    ->whereRaw("MATCH(nama_spare_part) AGAINST("%value" IN BOOLEAN MODE)", array($q))
                     ->orWhere(function ($query) use ($q, $t) {
                         // explode the array
                         $queryArray = explode(" ", $q);
@@ -58,11 +59,13 @@ class SparepartModel extends Model
                             $query->orWhere("nama_spare_part", "LIKE", "%$merges%");
                         }
 
-                        // type is optional,
-                        if ($t != null) {
-                            $query->where("tipe", $t);
-                        }
+                    });
 
-                    })->paginate(12);
+        // type is optional,
+        if ($t != null) {
+            $query->where("tipe", $t);
+        }
+
+        return $query->paginate(12);
     }
 }

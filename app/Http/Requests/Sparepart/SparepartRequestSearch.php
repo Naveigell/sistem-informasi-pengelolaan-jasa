@@ -37,9 +37,12 @@ class SparepartRequestSearch extends FormRequest
      */
     public function rules()
     {
+        // q = query
+        // t = type
+        // p = page
         return [
             "q"     => "required|string|min:1",
-            "t"     => "sometimes|string|in:pc,handphone,printer",
+            "t"     => "sometimes|string|in:pc,hp,printer",
             "p"     => "sometimes|integer|min:1"
         ];
     }

@@ -8,10 +8,10 @@
 
 <script>
 import Errors404 from "../../Errors/Errors404";
-import Sparepart from "../../Pages/Main/Sparepart/Index/Sparepart";
+import Sparepart from "../../Pages/Main/Sparepart/Insert/Sparepart";
 
 export default {
-    name: "Index",
+    name: "Insert",
     components: {
         "error-404-not-found": Errors404,
         "spare-part": Sparepart

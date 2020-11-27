@@ -23,6 +23,24 @@
     padding: 8px 20px;
 }
 
-.button-success-primary-md:hover {
+.button-success-primary-sm {
+    background: var(--blue-primary);
+    border-radius: 4px;
+    border: 1px solid var(--blue-primary);
+    outline: none;
+    color: white;
+    padding: 5px 14px;
+}
+
+.button-transparent-sm {
+    background: transparent;
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+    color: #444;
+    padding: 5px 14px;
+}
+
+.button-success-primary-md:hover, .button-success-primary-sm:hover {
     background: #3690ff;
 }
