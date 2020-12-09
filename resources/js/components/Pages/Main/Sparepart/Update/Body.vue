@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container" style="margin-bottom: 100px;">
+    <div class="app-container">
         <div class="spare-part-body-container">
             <form v-on:submit.prevent>
                 <div class="spare-part-image-container">
@@ -7,10 +7,10 @@
                     <span>Format gambar harus diantara .jpg, .jpeg dan .png</span>
                     <div class="image-container">
                         <div v-for="(item, index) in images" style="display: flex; flex-direction: column; align-items: center">
-                            <div v-if="!images[index]" class="image-dashed" v-on:click="chooseImage(index)">
+                            <div v-if="!images[index].contain" class="image-dashed" v-on:click="chooseImage(index)">
                                 <i class="fa fa-plus-circle"></i>
                             </div>
-                            <div v-show="images[index]" class="image-fill">
+                            <div v-show="images[index].contain" class="image-fill">
                                 <div class="layer">
                                     <div class="insert-overlay"></div>
                                     <div class="remove-image-overlay">
@@ -118,12 +118,35 @@
 <script>
 export default {
     name: "Body",
+    props: ["id"],
     data(){
         return {
-            images: [false, false, false, false, false],
+            images: [
+                {
+                    contain: false,
+                    file: null
+                },
+                {
+                    contain: false,
+                    file: null
+                },
+                {
+                    contain: false,
+                    file: null
+                },
+                {
+                    contain: false,
+                    file: null
+                },
+                {
+                    contain: false,
+                    file: null
+                }
+            ],
             data: {
-                name: "",
-                description: "",
+                id: -1,
+                name: "RAM Bertipe B",
+                description: "Lorem ipsum dolor dolor dolor dolor dolor",
                 type: "pc",
                 stock: 0,
                 price: 0
@@ -136,6 +159,9 @@ export default {
                 price: null
             }
         }
+    },
+    mounted() {
+        this.retrieve();
     },
     watch: {
         "data.name": function (newVal, oldVal) {
@@ -188,39 +214,80 @@ export default {
                         const result = e.target.result;
 
                         self.$refs.images[index].setAttribute("src", result);
-                        self.$set(self.images, index, true);
+                        self.$set(self.images, index, {
+                            contain: true,
+                            file
+                        });
                     };
                     reader.readAsDataURL(file);
                 }
             }
         },
+        retrieve(){
+            const self = this;
+            this.$api.get(this.$endpoints.sparepart.get + `/${this.id}`).then(async function (response) {
+                const sparepart = response.data.body.sparepart;
+
+                self.data.id = sparepart.id;
+                self.data.name = sparepart.nama_spare_part;
+                self.data.description = sparepart.deskripsi;
+                self.data.type = sparepart.tipe === "pc/komputer" ? "pc" : sparepart.tipe;
+                self.data.stock = sparepart.stok;
+                self.data.price = sparepart.harga;
+
+                if (self.$refs.images !== null && sparepart.images !== null) {
+                    for (let i = 0; i < sparepart.images.length; i++) {
+                        const file = await self.$image.urlToFile(sparepart.images[i].picture).then(res => res);
+
+                        self.$set(self.images, i, {
+                            contain: true,
+                            file: file
+                        });
+                        self.$refs.images[i].setAttribute("src", sparepart.images[i].picture);
+                    }
+                }
+            }).catch(function (error) {
+                const data = error.response.data;
+
+                if (error.response.status === 422) {
+                    self.errors = JSON.parse(JSON.stringify(data.errors.messages));
+                }
+
+                console.error(data.errors.messages)
+            })
+        },
         removeImage(index) {
-            this.$set(this.images, index, false);
+            this.$set(this.images, index, {
+                contain: false,
+                file: null
+            });
             this.$refs.input_images[index].value = [];
         },
         saveSparepart(){
             const self = this;
             const form = new FormData();
 
+            form.append("id", this.data.id);
             form.append("name", this.data.name);
             form.append("description", this.data.description);
             form.append("type", this.data.type);
             form.append("stock", this.data.stock);
             form.append("price", this.data.price);
+            form.append("_method", "PUT");
 
-            const images = this.$refs.input_images;
+            const images = this.images;
             for (const index in images) {
-                const file = images[index].files;
-                if (file.length > 0) {
-                    form.append("images[]", file[0]);
-                }
+                if (!images[index].contain) continue;
+
+                const file = images[index].file;
+                form.append("images[]", file);
             }
 
             const headers = {
                 'Content-Type': 'multipart/form-data; charset=utf-8; boundary=' + Math.random().toString().substr(2)
             };
 
-            this.$api.post(this.$endpoints.sparepart.insert, form, { headers }).then(function(response){
+            this.$api.post(this.$endpoints.sparepart.put, form, { headers }).then(function(response){
                 console.log(response);
             }).catch(function(error){
                 const data = error.response.data;

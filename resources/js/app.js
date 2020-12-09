@@ -28,6 +28,7 @@ import LoginAndDashboard from './components/Templates/LoginAndDashboard.vue';
 import Biodata from "./components/Templates/Biodata";
 import SparepartIndex from "./components/Templates/Sparepart/Index";
 import SparepartInsert from "./components/Templates/Sparepart/Insert";
+import SparepartUpdate from "./components/Templates/Sparepart/Update";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
@@ -53,6 +54,7 @@ Vue.component('login-and-dashboard-component', LoginAndDashboard);
 Vue.component('biodata', Biodata);
 Vue.component('sparepart-index', SparepartIndex);
 Vue.component('sparepart-insert', SparepartInsert);
+Vue.component('sparepart-update', SparepartUpdate);
 
 // loader
 Vue.component('full-loading', FullLoading);
@@ -68,6 +70,8 @@ Vue.component('full-overlay', FullOverlay);
 import Math from "./helpers/math";
 import Http from "./helpers/http";
 import Urls from "./helpers/url";
+import Currency from "./helpers/currency";
+import Image from "./helpers/file";
 
 import axios from "axios";
 import Endpoints from "./routes/endpoints";
@@ -88,10 +92,13 @@ Vue.use({
         Vue.prototype.$basepath = "http://localhost:8000/";
         Vue.prototype.$http = new Http(axiosInstance);
         Vue.prototype.$url = Urls;
+        Vue.prototype.$currency = Currency;
+        Vue.prototype.$image = Image;
     }
 });
 
 import { store } from "./stores/store";
+import Update from "./components/Templates/Sparepart/Update";
 
 Vue.config.productionTip = false
 

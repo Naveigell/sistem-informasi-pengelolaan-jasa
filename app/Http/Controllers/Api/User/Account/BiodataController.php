@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\User\Account\Biodata\BiodataUpdateRequest;
 use App\Http\Requests\User\Account\Biodata\ProfilePictureUpdateRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 use App\Models\User\Account\BiodataModel;
@@ -31,7 +32,7 @@ class BiodataController extends Controller {
      *  update user biodata
      *
      * @param BiodataUpdateRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateBiodata(BiodataUpdateRequest $request) {
         $code = $this->biodataTable->updateBiodata(auth("user")->id(), $request->alamat, $request->email, $request->jenis_kelamin, $request->name, $request->nomor_hp, $request->username);
@@ -48,7 +49,7 @@ class BiodataController extends Controller {
     /**
      * retrieve user biodata
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function retrieveBiodata() {
         $user       = auth("user");
@@ -68,7 +69,7 @@ class BiodataController extends Controller {
      * update just profile picture
      *
      * @param ProfilePictureUpdateRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateProfilePicture(ProfilePictureUpdateRequest $request)
     {

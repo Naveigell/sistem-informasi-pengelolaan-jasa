@@ -11,7 +11,10 @@ const api = {
     },
     sparepart: {
         data: "/spareparts",
-        search: "/spareparts/search"
+        search: "/spareparts/search",
+        insert: "/spareparts",
+        get: "/spareparts/retrieve",
+        put: "/spareparts"
     }
 }
 

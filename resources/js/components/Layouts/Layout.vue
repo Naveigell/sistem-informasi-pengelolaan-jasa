@@ -2,7 +2,7 @@
     <div class="application">
         <app-header/>
         <app-sidebar/>
-        <component :is="el">
+        <component :is="el" v-bind:id="id">
             <slot></slot>
         </component>
     </div>
@@ -15,6 +15,10 @@ export default {
         el: {
             type: [String, Object],
             default: 'div',
+        },
+        id: {
+            type: [String, Number],
+            default: null
         }
     }
 }

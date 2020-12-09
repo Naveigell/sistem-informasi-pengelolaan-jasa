@@ -3,13 +3,26 @@
 namespace App\Http\Controllers\Api\Sparepart;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Sparepart\SparepartRequestSearch;
+use App\Models\Sparepart\FotoSparepartModel;
+use App\Models\Sparepart\SparepartModel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-use App\Models\Sparepart\SparepartModel;
-use Illuminate\Support\Collection;
+use App\Traits\Files\FilesHandler;
 
+use App\Http\Requests\Sparepart\SparepartRequestInsert;
+use App\Http\Requests\Sparepart\SparepartRequestSearch;
+use App\Http\Requests\Sparepart\SparepartRequestUpdate;
+
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+
+/**
+ * Class SparepartController
+ * @package App\Http\Controllers\Api\Sparepart
+ */
 class SparepartController extends Controller {
+    use FilesHandler;
 
     /**
      * @var string
@@ -22,19 +35,51 @@ class SparepartController extends Controller {
      */
     private SparepartModel $sparePartModel;
 
+    /**
+     * @var FotoSparepartModel App\Models\Sparepart\FotoSparepartModel
+     */
+    private FotoSparepartModel $fotoSparepartModel;
+
     public function __construct() {
         $this->sparePartModel = new SparepartModel();
-    }
-
-    public function index() {
-        return view('sparepart.index');
+        $this->fotoSparepartModel = new FotoSparepartModel();
     }
 
     /**
-     * Retrieve sparepart data by pages, pages are optional, the default is 1
+     * Create a new sparepart
+     *
+     * @param SparepartRequestInsert $request
+     * @return JsonResponse
+     */
+    public function insert(SparepartRequestInsert $request)
+    {
+        $files      = $request->file("images");
+        $images     = $this->storeMultipleImages(public_path("/img/spareparts"), $files);
+
+        // cast to object
+        $data = (object) $request->only(["name", "description", "type", "stock", "price"]);
+
+        DB::beginTransaction();
+        try {
+
+            $id = $this->sparePartModel->createSparepart($data);
+            $this->fotoSparepartModel->createImages($id, $images);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return error(null, ["server" => "Tambah sparepart gagal"], 500);
+        }
+
+        return json(["sparepart" => "Sparepart berhasil ditambah"]);
+    }
+
+    /**
+     * Retrieve sparepart data by pages, pages are optional, default is 1
      *
      * @param int $pages
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function retrieveAll($pages = 1){
         $pages = (int) $pages;
@@ -68,6 +113,60 @@ class SparepartController extends Controller {
         return json($data);
     }
 
+    public function update(SparepartRequestUpdate $request)
+    {
+        $files      = $request->file("images");
+        $images     = $this->storeMultipleImages(public_path("/img/spareparts"), $files);
+
+        // cast to object
+        $data = (object) $request->only(["name", "description", "type", "stock", "price"]);
+        $id = $request->get("id");
+
+        DB::beginTransaction();
+        try {
+
+            // update sparepart data and create a new images, then delete
+            // the last images
+            $this->sparePartModel->updateSparepart($id, $data);
+            $lastImages = $this->fotoSparepartModel->getImages($id);
+            $deleted = $this->fotoSparepartModel->deleteLastImages($id);
+            $this->fotoSparepartModel->createImages($id, $images);
+
+            if ($deleted) {
+                $this->deleteMultipleImages("/img/spareparts", $lastImages);
+            }
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return error(null, ["server" => "Tambah sparepart gagal"], 500);
+        }
+
+        return json(["sparepart" => "Sparepart berhasil diubah"]);
+    }
+
+    /**
+     * Retrieve a single sparepart by id
+     *
+     * @param $id
+     * @return JsonResponse
+     */
+    public function retrieve($id)
+    {
+        $spareparts[]   = $this->sparePartModel->with("images")->find($id, ["id_spare_part", "nama_spare_part", "deskripsi", "tipe", "stok", "harga"]);
+        $sparepart      = $this->collectSpareparts(collect($spareparts))->toArray()[0];
+
+        return json(["sparepart" => $sparepart]);
+    }
+
+    /**
+     * Search sparepart by query as q or by type as t and set page
+     * of each retrieve
+     *
+     * @param SparepartRequestSearch $request
+     * @return JsonResponse
+     */
     public function search(SparepartRequestSearch $request){
         $query  = $request->get("q");
         // set the type to komputer/pc if the type just pc
@@ -126,6 +225,11 @@ class SparepartController extends Controller {
      */
     private function collectSpareparts(Collection $collection) : Collection {
         $spareparts     = $collection->map(function ($item) {
+
+            // casting the item to object if the type is array
+            if (gettype($item) == "array")
+                $item = (object) $item;
+
             // remove "foto_spare_part_id_spare_part" into "sparepart_id"
             // and add url link into picture
             foreach ($item->images as $image) {

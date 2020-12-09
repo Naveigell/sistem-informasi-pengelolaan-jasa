@@ -46,7 +46,42 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        // define a separated routes
+        Route::middleware("web")
+            ->namespace($this->namespace)
+            ->prefix("/api/v1")
+            ->group(function (){
+
+                $this->mapAuthRoutes();
+                Route::middleware("auth.global")->group(function (){
+                    $this->mapBiodataRoutes();
+                });
+            });
+    }
+
+    /**
+     * Define biodata routes
+     *
+     * @return void
+     */
+    public function mapBiodataRoutes()
+    {
+        Route::prefix("/biodata")->group(function (){
+            Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
+            Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
+            Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
+        });
+    }
+
+    /**
+     * Define auth routes
+     *
+     * @return void
+     */
+    public function mapAuthRoutes(){
+        Route::post('/auth/login', 'Api\Auth\LoginController@login');
+        Route::get('/auth/check', 'Api\Auth\AuthController@check');
+        Route::get('/auth/session/data', 'Api\Auth\AuthController@sessionData');
     }
 
     /**

@@ -3,7 +3,7 @@
         <div class="grid-container">
             <div class="grid">
                 <div class="product-grid-container">
-                    <div class="product-grid" v-for="sparepart in spareparts">
+                    <a v-bind:href="'/sparepart/' + sparepart.id" class="product-grid" v-for="sparepart in spareparts">
                         <div>
                             <img width="100%" height="170" :src="sparepart.images[0].picture" alt="sparepart">
                             <hr/>
@@ -12,10 +12,10 @@
                             </span>
                             <div class="product-info">
                                 <span class="product-price">
-                                    Rp100.000
+                                    Rp{{ $currency.indonesian(sparepart.harga) }}
                                 </span>
                                 <span class="product-stock">
-                                    Stok 10
+                                    Stok {{ sparepart.stok }}
                                 </span>
                             </div>
                             <div class="product-meta">
@@ -23,27 +23,10 @@
                                     <i class="fas fa-box"></i> {{ sparepart.tipe }}
                                 </span>
                             </div>
-<!--                            <hr/>-->
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
-<!--            <div class="pagination">-->
-<!--                <span class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>-->
-<!--                <div class="active-pages" style="margin-left: 12px;">-->
-<!--                    <button class="pages-button pages-active">1</button>-->
-<!--                    <button class="pages-button">2</button>-->
-<!--                    <span>.......</span>-->
-<!--                    <button class="pages-button">3</button>-->
-<!--                    <button class="pages-button">4</button>-->
-<!--                </div>-->
-<!--                <span class="to-left-page-pagination page-pagination" style="margin-left: 12px;"><i class="fa fa-angle-right"></i></span>-->
-<!--                <div class="pagination-jumper">-->
-<!--                    <span>Ke halaman : </span>-->
-<!--                    <input type="text" class="pagination-jumper-input" placeholder="1">-->
-<!--                    <button class="pagination-jumper-button">Pergi</button>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </div>
 </template>
@@ -165,6 +148,7 @@ export default {
 .product-title {
     margin-left: 10px;
     margin-right: 10px;
+    color: #222;
     display: block;
     display: -webkit-box;
     max-width: 100%;
@@ -178,6 +162,14 @@ export default {
     text-overflow: ellipsis;
 }
 
+.product-grid:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    -webkit-transition: .1s;
+    -moz-transition: .1s;
+    -o-transition: .1s;
+    transition: .1s;
+}
+
 .product-grid {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
@@ -187,6 +179,7 @@ export default {
     margin: 5px;
     flex-grow: 0;
     flex-shrink: 1;
+    text-decoration: none;
     /*flex-basis: calc(20% - 5px);*/
 }
 

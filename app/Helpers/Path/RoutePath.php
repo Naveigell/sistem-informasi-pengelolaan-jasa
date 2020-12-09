@@ -6,7 +6,7 @@ if (!function_exists("api_path_v1")) {
      * @param string $path
      * @return string
      */
-    function api_path_v1($path) {
-        return config('app.url').":".config('app.port')."/api/v1".$path;
+    function api_path_v1(string $path) {
+        return url("/api/v1".$path);
     }
 }

@@ -147,9 +147,9 @@ export default {
                 self.paginator.perPage      = res.pages.per_page;
                 self.paginator.totalPage    = Math.ceil(res.total / res.pages.per_page);
 
-                self.search.onSearch        = res.search;
+                console.log(res);
 
-                console.log(response.data.body);
+                self.search.onSearch        = res.search;
             }).catch(function (error) {
                 console.error(error)
             });
@@ -225,6 +225,7 @@ export default {
     border: 1px solid #d2d2d2;
     border-radius: 2px;
     outline: none;
+    margin: 2px;
 }
 
 .pages-button:hover {

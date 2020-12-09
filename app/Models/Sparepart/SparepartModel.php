@@ -15,6 +15,34 @@ class SparepartModel extends Model
     protected $table = "spare_part";
     protected $primaryKey = "id_spare_part";
 
+    /**
+     * Insert then get id for foto_spare_part
+     *
+     * @param $data
+     * @return int
+     */
+    public function createSparepart($data)
+    {
+        return $this->insertGetId([
+            "nama_spare_part"       => $data->name,
+            "deskripsi"             => $data->description,
+            "tipe"                  => $data->type == "pc" ? "pc/komputer" : $data->type,
+            "stok"                  => $data->stock,
+            "harga"                 => $data->price
+        ]);
+    }
+
+    public function updateSparepart($id, $data)
+    {
+        return $this->where("id_spare_part", $id)->update([
+            "nama_spare_part"           => $data->name,
+            "deskripsi"                 => $data->description,
+            "tipe"                      => $data->type == "pc" ? "pc/komputer" : $data->type,
+            "stok"                      => $data->stock,
+            "harga"                     => $data->price
+        ]);
+    }
+
     public function getSparePartList() {
         return $this->with("images")->select(["id_spare_part", "nama_spare_part AS nama", "tipe", "stok", "harga"])->paginate(12);
     }
