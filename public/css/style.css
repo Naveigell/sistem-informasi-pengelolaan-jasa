@@ -32,6 +32,15 @@
     padding: 5px 14px;
 }
 
+.button-transparent-md {
+    background: transparent;
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+    color: #444;
+    padding: 8px 20px;
+}
+
 .button-transparent-sm {
     background: transparent;
     border-radius: 4px;
@@ -41,6 +50,44 @@
     padding: 5px 14px;
 }
 
+.button-danger-md {
+    background: var(--red-primary);
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+    color: #fff;
+    padding: 8px 20px;
+}
+
+.button-danger-sm {
+    background: var(--red-primary);
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+    color: #fff;
+    padding: 5px 14px;
+}
+
+.button-transparent-sm:focus, .button-success-primary-sm:focus, .button-success-primary-md:focus, .button-transparent-md:focus,
+.button-danger-md:focus, .button-danger-sm:focus
+{
+    outline: none;
+}
+
+.button-danger-md:hover, .button-danger-sm:hover {
+    background: var(--red-primary-hover);
+    text-decoration: none;
+    color: #fff;
+}
+
 .button-success-primary-md:hover, .button-success-primary-sm:hover {
-    background: #3690ff;
+    background: var(--blue-primary-hover);
+    text-decoration: none;
+    color: #fff;
+}
+
+.button-success-primary-md:active, .button-success-primary-sm:active,
+.button-success-primary-md:focus, .button-success-primary-sm:focus {
+    text-decoration: none;
+    color: #fff;
 }

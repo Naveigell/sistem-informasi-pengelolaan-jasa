@@ -3,8 +3,8 @@
         <div class="grid-container">
             <div class="grid">
                 <div class="product-grid-container">
-                    <a v-bind:href="'/sparepart/' + sparepart.id" class="product-grid" v-for="sparepart in spareparts">
-                        <div>
+                    <div class="product-grid" v-for="(sparepart, index) in spareparts">
+                        <a v-bind:href="'/sparepart/' + sparepart.id" style="text-decoration: none;">
                             <img width="100%" height="170" :src="sparepart.images[0].picture" alt="sparepart">
                             <hr/>
                             <span class="product-title">
@@ -23,8 +23,18 @@
                                     <i class="fas fa-box"></i> {{ sparepart.tipe }}
                                 </span>
                             </div>
-                        </div>
-                    </a>
+                            <br/>
+                        </a>
+                        <transition name="product-delete-container-transition">
+                            <div key="delete" class="product-delete-container" v-if="onDeleteMode">
+                                <span v-on:click="openDeleteModal(sparepart.id, sparepart, index)">
+                                    <i class="fa fa-trash"></i> Hapus
+                                </span>
+                            </div>
+                        </transition>
+                    </div>
+                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :sparepart="data.sparepart" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
+                    <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
                 </div>
             </div>
         </div>
@@ -32,73 +42,125 @@
 </template>
 
 <script>
+import Delete from "../Modals/Delete";
+import Toast from "../../../../../Toasts/TopRightToast";
+
 export default {
     name: "GridList",
-    props: ["spareparts"],
+    props: ["spareparts", "onDeleteMode"],
+    components: {
+        "delete-modal": Delete,
+        "toast": Toast
+    },
     data() {
         return {
-
+            data: {
+                id: -1,
+                sparepart: null,
+                index: -1
+            },
+            modal: {
+                delete: false
+            },
+            toast: {
+                open: false,
+                background: this.$colors.bluePrimary,
+                data: {
+                    title: "Success!",
+                    message: "Just sample message",
+                    icon: "fa fa-check"
+                }
+            }
         }
     },
     mounted() {
 
+    },
+    methods: {
+        openDeleteModal(id, sparepart, index){
+            this.data.id = id;
+            this.data.sparepart = sparepart;
+            this.data.index = index;
+            this.modal.delete = true;
+        },
+        onDeleteModalResponse(obj){
+            this.toast.data.message = obj.message;
+
+            if (obj.type === "failed") {
+                this.toast.data.title = "Failed!";
+                this.toast.data.icon = "fa fa-times-circle";
+                this.toast.background = this.$colors.redPrimary;
+            } else if (obj.type === "success") {
+                this.toast.background = this.$colors.successPrimary;
+            }
+
+            this.toast.open = true;
+        },
+        onDeleteModalAnimationEnd(){
+            const self = this;
+            const id = setTimeout(function () {
+                self.spareparts.splice(self.data.index, 1);
+                clearTimeout(id);
+            }, 800);
+        }
     }
 }
 </script>
 
 <style scoped>
-.pages-button {
-    padding: 3px 9px;
-    background: transparent;
-    border: 1px solid #d2d2d2;
-    border-radius: 2px;
-    outline: none;
+.product-delete-container-transition-enter-active {
+    transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
 }
 
-.pages-button:hover {
-    background: #f1f1f1;
+.product-delete-container-transition-leave-active {
+    transition: all .1s ease;
+    -o-transition: all .1s ease;
+    -moz-transition: all .1s ease;
+    -webkit-transition: all .1s ease;
 }
 
-.pagination-jumper-input {
-    border: 1px solid #d2d2d2;
-    border-radius: 2px;
-    outline: none;
-    width: 40px;
-    padding: 3px 9px;
+.product-delete-container-transition-enter, .product-delete-container-transition-leave-to {
+    opacity: 0;
 }
 
-.pagination-jumper-button {
-    background: var(--blue-primary);
-    border: 1px solid var(--blue-primary);
-    border-radius: 2px;
-    outline: none;
-    padding: 3px 9px;
-    color: white;
+.delete-transition-ended-leave-active {
+    transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -webkit-transition: all .5s ease;
 }
 
-.pages-active {
-    background: var(--blue-primary);
-    border: 1px solid var(--blue-primary);
-    color: white;
+.delete-transition-ended-leave {
+    opacity: 1;
 }
 
-.pagination-jumper {
-    margin-left: 30px;
+.delete-transition-ended-leave-to {
+    opacity: 0;
 }
 
-.page-pagination {
-    font-size: 25px;
+.product-delete-container {
+    border-top: 1px solid #dedede;
+    width: 184px;
+    background: white;
+    color: var(--red-primary);
+}
+
+.product-delete-container > span {
+    display: block;
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
 }
 
-.pagination {
-    margin: 30px 30px 30px 45px;
-    display: flex;
-    align-items: center;
-}
-
-.active-pages {
-    display: inline-block;
+.product-delete-container > span > i {
+    font-size: 16px;
+    padding-right: 4px;
 }
 
 .grid-container {
@@ -163,6 +225,7 @@ export default {
 }
 
 .product-grid:hover {
+    /*height: 340px;*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     -webkit-transition: .1s;
     -moz-transition: .1s;
@@ -170,13 +233,18 @@ export default {
     transition: .1s;
 }
 
+.product-grid:hover .product-delete-container {
+    display: block;
+}
+
 .product-grid {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     display: inline-block;
     width: 186px;
-    height: 300px;
-    margin: 5px;
+    height: calc(100% + 30px);
+    position: relative;
+    margin: 5px 5px 12px;
     flex-grow: 0;
     flex-shrink: 1;
     text-decoration: none;

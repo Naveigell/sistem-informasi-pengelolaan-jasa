@@ -1,12 +1,20 @@
 <template>
-    <div class="overlay-container">
+    <div class="overlay-container" v-on:click="overlayClicked()">
         <div class="overlay"></div>
     </div>
 </template>
 
 <script>
 export default {
-    name: "FullOverlay"
+    name: "FullOverlay",
+    mounted() {
+        document.body.style.overflow = "hidden";
+    },
+    methods: {
+        overlayClicked(){
+            this.$emit("clicked", true);
+        }
+    }
 }
 </script>
 
@@ -16,9 +24,10 @@ export default {
         left: 0;
         right: 0;
         bottom: 0;
-        background: #222;
-        position: absolute;
-        opacity: .6;
+        background: rgba(34, 34, 34, .6);
+        position: fixed;
+        /*opacity: .6;*/
         z-index: 20;
+        overflow-y: hidden;
     }
 </style>

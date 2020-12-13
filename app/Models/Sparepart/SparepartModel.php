@@ -32,6 +32,24 @@ class SparepartModel extends Model
         ]);
     }
 
+    /**
+     * Delete sparepart by given id
+     *
+     * @param $id
+     * @return int
+     */
+    public function deleteSparepart($id)
+    {
+        return $this->where("id_spare_part", $id)->delete();
+    }
+
+    /**
+     * Update sparepart data
+     *
+     * @param $id
+     * @param $data
+     * @return int
+     */
     public function updateSparepart($id, $data)
     {
         return $this->where("id_spare_part", $id)->update([
@@ -48,7 +66,7 @@ class SparepartModel extends Model
     }
 
     /**
-     * Eager loading, return [
+     * return [
      *      "id_foto_spare_part AS id",
      *      "foto_spare_part_id_spare_part",
      *      "picture"

@@ -21,19 +21,21 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/Path/RoutePath.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Path/RoutePath.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Sparepart/SparepartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Sparepart/SparepartController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/User/Account/BiodataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/User/Account/BiodataController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Sparepart/FotoSparepartModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sparepart/FotoSparepartModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Sparepart/SparepartModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sparepart/SparepartModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_120231_create_spare_part_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_01_120231_create_spare_part_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/root.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/root.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/NK5W1Qe3ChkoNrdZpyqCWWL007lbbSOaposRglGEENfUcT7YHUpyrAGPBLR6bTUgf7ocCA8miDOKWRfnHThZb6zG570912202011323814.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Overlays/FullOverlay.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Overlays/FullOverlay.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Login/LoginComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Login/LoginComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Insert/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Insert/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Update/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Update/Body.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -171,23 +173,23 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../d-1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Helpers\Response" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Templates" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Authentications" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
     </key>
   </component>
   <component name="RunManager">
@@ -303,7 +305,20 @@
       <workItem from="1607431692052" duration="1702000" />
       <workItem from="1607473793508" duration="4506000" />
       <workItem from="1607484816694" duration="2098000" />
-      <workItem from="1607509891332" duration="3348000" />
+      <workItem from="1607509891332" duration="4092000" />
+      <workItem from="1607560244759" duration="8000" />
+      <workItem from="1607560315838" duration="30000" />
+      <workItem from="1607560360622" duration="4458000" />
+      <workItem from="1607589310551" duration="2533000" />
+      <workItem from="1607593922723" duration="1842000" />
+      <workItem from="1607648986776" duration="2942000" />
+      <workItem from="1607656774487" duration="5578000" />
+      <workItem from="1607676322724" duration="5261000" />
+      <workItem from="1607691550902" duration="2182000" />
+      <workItem from="1607755408537" duration="42000" />
+      <workItem from="1607755526428" duration="5122000" />
+      <workItem from="1607769500921" duration="4414000" />
+      <workItem from="1607837004496" duration="3217000" />
     </task>
     <servers />
   </component>
@@ -343,14 +358,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1607000426838" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1605958838010">
+    <state x="277" y="57" key="SettingsEditor" timestamp="1607560389589">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1605958838010" />
-    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1606469824775">
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1607560389589" />
+    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1607677126326">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1606469824775" />
+    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1607677126326" />
     <state x="425" y="187" key="run.anything.popup" timestamp="1606137209070">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

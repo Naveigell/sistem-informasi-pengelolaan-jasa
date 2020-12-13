@@ -36,6 +36,7 @@ Route::group(['prefix' => '/api/v1'], function () {
             Route::get("/{page?}", "Api\Sparepart\SparepartController@retrieveAll")->name('sparepart.index');
             Route::post("/", "Api\Sparepart\SparepartController@insert");
             Route::put("/", "Api\Sparepart\SparepartController@update");
+            Route::delete("/{id}", "Api\Sparepart\SparepartController@delete");
         });
     });
 

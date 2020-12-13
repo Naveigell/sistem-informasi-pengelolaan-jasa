@@ -161,6 +161,33 @@ class SparepartController extends Controller {
     }
 
     /**
+     * Delete sparepart
+     *
+     * @param $id
+     * @return JsonResponse
+     */
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $images = $this->fotoSparepartModel->getImages($id);
+            $delete = $this->sparePartModel->deleteSparepart($id);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return error(null, ["server" => "Hapus sparepart gagal"], 500);
+        }
+
+        if ($delete) {
+            $this->deleteMultipleImages("/img/spareparts", $images);
+        }
+
+        return json(null, null, 204);
+    }
+
+    /**
      * Search sparepart by query as q or by type as t and set page
      * of each retrieve
      *

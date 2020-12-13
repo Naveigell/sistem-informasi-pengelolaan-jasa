@@ -398,6 +398,9 @@ img {
 .image-fill:hover .layer {
     opacity: 1;
     transition: 0.3s all;
+    -o-transition: 0.3s all;
+    -moz-transition: 0.3s all;
+    -webkit-transition: 0.3s all;
 }
 
 input::-webkit-outer-spin-button,

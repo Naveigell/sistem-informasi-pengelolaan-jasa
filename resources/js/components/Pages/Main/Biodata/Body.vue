@@ -370,6 +370,9 @@ img {
 .button-image:hover {
     background: #f9f9f9;
     transition: all .2s;
+    -o-transition: all .2s;
+    -moz-transition: all .2s;
+    -webkit-transition: all .2s;
 }
 
 .sub-image-text:nth-child(even) {

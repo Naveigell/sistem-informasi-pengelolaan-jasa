@@ -3,6 +3,8 @@
 namespace App\Models\Sparepart;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 /**
  * Class FotoSparepartModel
@@ -38,18 +40,23 @@ class FotoSparepartModel extends Model
         return $this->insert($imgs);
     }
 
+    /**
+     * Get images list
+     *
+     * @param $id
+     * @return array
+     */
     public function getImages($id)
     {
-        $images = $this->select(["picture"])->where("foto_spare_part_id_spare_part", $id)->get();
-        $data = [];
-
-        foreach ($images as $image) {
-            array_push($data, $image->picture);
-        }
-
-        return $data;
+        return $this->select(["picture"])->where("foto_spare_part_id_spare_part", $id)->pluck("picture")->toArray();
     }
 
+    /**
+     * Delete images by sparepart id
+     *
+     * @param $id
+     * @return int
+     */
     public function deleteLastImages($id)
     {
         return $this->where("foto_spare_part_id_spare_part", $id)->delete();

@@ -4,6 +4,11 @@
     --red-primary: #ff2d2d;
     --body-primary: #f6f6f6;
     --error-primary: #ff2020;
+    --success-primary: #01bc32;
+
+    /* HOVER */
+    --blue-primary-hover: #3690ff;
+    --red-primary-hover: #fd4747;
 
     /* HEIGHT */
     --header-height: 60px;

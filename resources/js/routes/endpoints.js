@@ -14,7 +14,8 @@ const api = {
         search: "/spareparts/search",
         insert: "/spareparts",
         get: "/spareparts/retrieve",
-        put: "/spareparts"
+        put: "/spareparts",
+        delete: "/spareparts"
     }
 }
 

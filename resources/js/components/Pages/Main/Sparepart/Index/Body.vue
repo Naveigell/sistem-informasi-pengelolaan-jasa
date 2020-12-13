@@ -44,9 +44,9 @@
                     </div>
                     <div class="spare-part-tools-right">
                         <div class="spare-part-tools-right-container">
-                            <button class="button-add button-success-primary-md">
+                            <a href="/sparepart/new" class="button-add button-success-primary-md" style="padding: 10px 20px;">
                                 <i class="fa fa-plus"></i>&nbsp Tambah Spare Part
-                            </button>
+                            </a>
                             <div class="view-model">
                                 <div>
                                     <i class="fa fa-list-ul"></i>
@@ -55,10 +55,13 @@
                                     <i class="fa fa-list-ul"></i>
                                 </div>
                             </div>
+                            <button class="button-add button-danger-md" v-on:click="mode.onDeleteMode = !mode.onDeleteMode; overlay.full = true;" style="margin-left: 7px;">
+                                {{ mode.onDeleteMode ? "Batal Hapus" : "Hapus" }}
+                            </button>
                         </div>
                     </div>
                 </div>
-                <grid v-bind:spareparts="spareparts"/>
+                <grid v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -79,11 +82,13 @@
 
 <script>
 import GridList from "./Lists/GridList";
+import FullOverlay from "../../../../Overlays/FullOverlay";
 
 export default {
     name: "Body",
     components: {
-        "grid": GridList
+        "grid": GridList,
+        "full-overlay": FullOverlay
     },
     data(){
         return {
@@ -109,6 +114,12 @@ export default {
                 query: "",
                 type: "komputer/pc",
                 onSearch: false
+            },
+            mode: {
+                onDeleteMode: false
+            },
+            overlay: {
+                full: false
             }
         }
     },
@@ -146,8 +157,6 @@ export default {
                 self.paginator.lastPage     = res.pages.last_page;
                 self.paginator.perPage      = res.pages.per_page;
                 self.paginator.totalPage    = Math.ceil(res.total / res.pages.per_page);
-
-                console.log(res);
 
                 self.search.onSearch        = res.search;
             }).catch(function (error) {
@@ -422,5 +431,8 @@ export default {
 .top-navigation ul li:hover {
     color: var(--blue-primary);
     transition: .3s;
+    -o-transition: .3s;
+    -moz-transition: .3s;
+    -webkit-transition: .3s;
 }
 </style>

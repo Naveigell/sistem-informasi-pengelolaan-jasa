@@ -135,11 +135,17 @@ input[type="checkbox"] {
     background: #efefef;
     outline: none;
     transition: all 0s;
+    -o-transition: all 0s;
+    -moz-transition: all 0s;
+    -webkit-transition: all 0s;
 }
 
 .input-form-text-error {
     border-left-color: var(--red-primary);
     transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
 }
 
 .sub-message {
