@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="modal-delete-container" v-if="sparepart !== null">
-            <transition name="delete-transition" v-on:after-leave="afterAnimationLeave()">
+            <transition name="delete-transition">
                 <div key="modal" class="delete-container" v-if="onAnimated" id="animated-container">
                     <div class="delete-content">
                         <div>
@@ -57,7 +57,6 @@ export default {
             const self = this;
             this.$api.delete(this.$endpoints.sparepart.delete + `/${this.sparepart.id}`).then(function (response) {
                 self.emitToParent("success", "Hapus sparepart berhasil", true);
-                console.log(response)
             }).catch(function (error) {
                 self.emitToParent("failed", "Hapus sparepart gagal", false);
                 console.error(error)
@@ -81,8 +80,6 @@ export default {
                 clearTimeout(id);
             }, 500);
         },
-        afterAnimationLeave(){
-        }
     }
 }
 </script>

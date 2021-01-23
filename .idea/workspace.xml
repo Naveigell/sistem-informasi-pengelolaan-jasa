@@ -21,21 +21,128 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Sparepart/SparepartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Sparepart/SparepartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/Response/JsonResponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Response/JsonResponse.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Sparepart/FotoSparepartModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sparepart/FotoSparepartModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Sparepart/SparepartModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sparepart/SparepartModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_114637_create_jasa_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_01_114637_create_jasa_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_132230_create_service_spare_part_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_01_132230_create_service_spare_part_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/UsersSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/UsersSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/root.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/root.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/img/spareparts/NK5W1Qe3ChkoNrdZpyqCWWL007lbbSOaposRglGEENfUcT7YHUpyrAGPBLR6bTUgf7ocCA8miDOKWRfnHThZb6zG570912202011323814.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/4F5HSppspou60jPFAwqibntfBJuSFAW1enVkAVVRqKAcHik1pJfBSYHouEJEQlwYmKi0Ug0rIu79dihseXrauMilm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/6QUOAWwEz0C1q2JCjMyi0VRIPGBkYAnhe5DUr6WH82zBPvObuKbSjRGHg16QGTy44BVcY2xlDC1uSflbDIf9eeAll.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/84khZydzqa06VJZmtL6HwIRagY9eZUs3cytzwjNMTFBfX8TegDTTADRIGT203XsvpEBeBNQO3vHsSjfIREaehLDo3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/AfivNqS5nyZR2QXhYC8QQsFmFV9pjY5xGULttL9WqH9raOuSG5dr1x2kGvnIUodgwpQOtntwm6CeUMj35jEhnnk91.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/AjscOHy29mbK88EwnlaLMv5q3v0ysBlu4RWftcXbwFiuzsjm9zJYRduR0n1HmNoOsCbSJ4KyXpUHvgzK9ViCniSVY.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/CsLWCz1EXDTowl6qCK4R47QhMn20yvIiavWWMg4sRXBCwEkBzOtDUDK4Jx1McqIvqOrBafOZHCnTcFJKkY1K47j0b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/L5ZhI7YW3cAnOLLfWiONUjULsThDZsguNrBVYV4DEnPw0mHWBFYFmaqF4eScUw6Gq7hqbZ1hReBVHQe1kdWRsq7Yd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/NNPtHe2USFnQ4u9ZQ5hmmSo0GR9XikrMe7rLVzEjp8619FXVSDKZbeqsLKfHQjuu4ysrnVWKDswheClbSgcqzNgAl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/VBNxaODVcobJ7AeDvyfUtfnFEZnalbDEko5ZwkstTepxBuvEwL53PcZD3NuRWlfXwjQXf4QLmodIQfPjxxgYV27wN.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/XH2CrAXgOT1hnpKcudeokdrQRklNFZ0Llg41dYr7OP89DhypOe2qF0kLJgbGy7CHhXOrvyg8dZn1Jz84juxPfPo6R.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/bCkl0rUPOVOPkMMFROvLFDO8GrJGDMw3oITXiN88elOThlDQA8dlJRCYnbj8lzA67TxRDoZwv6DvrK56d8RYXlGW7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/iwsLAtZLKZPEAxuvTfysMR3ngvFZ8r0wkaWR7PEIjUpUiN7kNnM9UL8VLa880tB8z5Ad6cJwWibQ1rkfUrziOphAr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/nlxD10Ak0uaaKJmSVvquZclvA3hlnIGSe17u6bppLkaEqNh0GvLp0SIszeMNUH4DrPbWUcaNfY9MdhoE1VhxmWHvFo1312202006164591.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/q77dHUkjPhJ9nsRiEpxOSGD2PdgHB3ISIOc67vKXJ7Nw82UTUuljyZeyuitd412NsW4SiwDnlMJPzTmPmsZQlOyfr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/tvkAivBAA0IHMeuGsLSbG6khaLf5O1DOT7CSULRsXXQ7MmoyPi952s1v1GH49THnvcPYGAw3hDbLAL4ximqqJD5OT.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/umbHdMagRuLrq5qMfIwi5SU2YqT2RMKsdD5PXH1BPbPA8e8ZmKsRW0nQGZ3QOQ9YGgKIsa5oSE1SFVBEGk0iSm1v0b1312202006164591.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/xqhjF7VexTc1Wtr45jnuEnuYzM8MWKiqVQZH2OlGJgF8Nc6KfxNCKBMYVc9sN3Ye3ftrpP7AwNewozbFu6qAderVH.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/zb8v11bbwKLzsN9xnFQq6RGtXYVKWHToINypDe1uYvAinAtmki5FjoJh5qmagELfqjVYQMDPE3rGmDPnil1C0H5RN.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/zhW5Hh1RThK1d7BacVbUL2kSOmzKJUh8ChQVGsugCpOYhLMfL85JdHV8CiBivesOaNWlC2n5G5GhrKmYY8JINPjiG.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/1609EHHaJzfjOGNFUyKfSXJnN4lLjZ9jTPeV1ZfSJnhuhTCt4HTOOfI5iMkO20201108122520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/1bMljfbhIj4EOdqdstSavF31uyW1aiDKcCpEwnz52emiJqgWUdnEOvLXZYns20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/1hVRgxuz6vTOMRcZYRk4xMCbucXGvKE5RJJOYxHNf274u7FfHdfCURcf7Okz20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/2fdFJW0EcTAKJYMc485AOw4YfQmwfwuc97zxqNDjs415TrAQEadyq77kBOST20201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/3M2KD5oDgyUznGqfPeXk7JDYcKOjdwepCpFBfKj1SbsJSUZ8GyMwks0tzbC520201108122520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/3uPw3dD46u5HUdXxTboGAM7q9nXZAFDnvsVQ9N5SWdkHUYtqCfma6rWdRzNk20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/3uQngMnKbvIozDRG3VmM01ifizaBvha0lEB4C9W8BhttpmRAuuUU3mqzsHYo20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/4kx0W5vez5YEM6DhRyTR8cMiXBPYUTjhtIs5leeuCCdGhAIm9kTzkHw6zIDd20201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/5M9mkwXHQXqW2ZTA0XoamR36uNJEyCFgknBQaTIfjS0CMfmCzDqocpfODREA20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/5gxdyicHuVM2cLT2cr2toJjs25vXx8OVOY2judp3LGMmXqJaUYqvdJLsP0Hs20201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/5rO5kioQVc4oN8WtruItunB0wTcb4DBQK9ZogFAzXgGXXPpXlZs5c4tuHmjx20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/6E4lsnITqI2IIm9Gdj9kysZsDxdkqQlGbrm6p3063t1wQFNGkIDYUKkb0Cim20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/6d86htaEe8rn7S1Cgm3ILPSuE6mUqUN1cUf4MmGdTppMZkRiLfoBoYlUSIF520201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/7K5GgTFuXJNyLNUvimzFH90VItYCSKNnLKABD77lUQYNCyBPe7lrzNPB2b9x20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/7e346n45jhn8lplitCP6o9qcRhN4JKm2WVIOmpwcEnTU4SQROtebKBrgrAN220201108122523.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/88LV6gAvxL73CzrwUwCluuGxUT4F3gxva5sVWYi9SEN4SasaKA6xvEqU0aJb20201108122514.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/8qwOwcE299yhyws1xXN6UoC9GDUKLOXZzDYrTBroeKrJMdhq1N8geHxY7pIG20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/8yS6asuHos5s3hzWo0dvCy4HHST72sBoGbJkKA0BZRSAgq9IY1VPD00cE4BX20201108122518.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/A4pJwb0KyDcfzX0yJkHVZluXrOQSYOKYhyZKxbQTcF9IQE0FxC5YKZtzp9wy20201108122523.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/AH7xqIRq6d0BLLFP1dtvjBu4iQ2EzqHzRVTKg1QQ12qcIPTOQDxTWIbuglCB20201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/B81ZH4YN7MQyjQ1UpTPKtv1SnK1U5w5Wh2L8kooCFCmqneBS6sU7Yrjy0hHr20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/BoKQHt5Pc4r1cD2MnjP2iVr7JNe5YAdE87UV6QSgSRt3BPp3sVBNXNn1Qm3020201108122521.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/CUWTyF94iYt12oubuWl9juAMMBy4yC1xpTtqhCA7cmsu0vQbQVZdyWzP0iA120201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/CcZ37i5HNXo8cCalY8j6NyinVVdKcNhENNhUB51T4VjJR5wb0NsecAqFfDzp20201108122520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/EXvRGDHqpUBBDtjh5AfDayZGA9VN7Wec78YL1wIuF4SGV5O4rupeYNLKuk1720201108122514.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/ExjMuq8TBh5PkDk0aH5PNecMvSjYMhaHzGK4pJOfMy9gsTdsPjxHESBIFRgt20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/FI5I26SFZUxuPpptLEibfRZpcPdBiSJpd1rk7pBo9x2Jl5S3PZX90f5khamp20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/Go94cKYPXayzribJqS2fJ6nFgfuaw6upDnOl1JqC8Pypj3ERGKikWK0zx9rB20201108122512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/HMJT2vPZ7uPQCRYOUuPpAwnyspEVXSGnVpKqKfEui9PfSPVbFaeqFTk076iE20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/HbtlXPqc7WvcPkOddyjQ9eDO7gI6Rt0kJUh2h1ZNqFncsxnc9VRixdUZs8oe20201108122520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/I00sXXEulWeygBWB4dPy7qreJm83Cwm5jkYUnIStvDsw5reGqU9no6KK3K7E20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/I03RX3BeYTCLdutijkJvTdWfjwaaETn9Pf0VXKvIZ5gFcYfKOtzVAxYYUVnc20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/I383DHPr4PM0o1RghdmwsSkZzgWUKQQEoUuU0Sf8YHy6lKF1qEWkBXsbrznF20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/IneQkZ0t2sxTAFB3RzDwujUCmW0PYEThL6AheL9S78V4SngEHWpVkduVQV8H20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/JHjevQXlZd36m46ny25JfqIJl8L4cWGSYAyr5iLXSkVxMS4RLHBIgJOLub2l20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/JNRzYaKcGEkVuF3b6ZLCLdNbRXJEfPHhJZ0HlozI82DmSZGLSnGi42nA2jyw20201108122521.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/LMbklwq2V1pRriOooDsHqfp489p9zqfD1UmvItlJqQZ6ds2ryZlIM6e6TyfO20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/LtkgsvXetvbqwREoG1zSWFhqPSHYRdXBt9LKCed1owVtJyZUz1i6SpBwaoE020201108122521.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/M4nwsJdIeZuANCoxkjoLTpm1YUZ55tSxSlyHdhdWxNUPESD7voX0wPpOcEkd20201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/Mxp9IJM2cb7tw1phFieCPVxnu1uAzWSJCwQszfMSXHlDCWII3Jr0zsz5HhHN20201108122510.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/NEx2dQvHNwBAgHSDYHICABsba79Srur8NtcQ53TAVhFEy8zNt25JfqaIZbPM20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/NwIvGb6DjDzScDtBX6jkorxUPgl77RxaqHP10N50JZdi0osUDWNw5h0A1PUv20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/OJC10zKIwXeAyV1yzA8QfXaAtoXig7q37I57LaOH3vawj55xyyvtrcH47EKM20201108122518.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/QhssAYX07zTw1MqPnAc82EGanevUSXKs8TWsv7GHT4cFUkpb4V3Ie81AVxaq20201108122510.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/Rvsgz4Mp0l92pnlRUNfMpmsAlTcziy7aOVhroxdUY30nOpIpFm79t3ydRSZL20201108122521.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/S4fPWidXoonYK7ICMtiHAMLozlGtVLaGTWcaXLqsLbg8GVmvrG6BnTgOrkri20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/TGdJAYDMp7H0YiBsHNNgcOWz3YCRJN1t3UMtoPM4r2ODJUFbOL6EFHIWaiiU20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/VJnqp3Iltlg75Y31S3yExbnfJWBwScYfdWYeHB7PoXy95gT4UXB8ymfk5BBL20201108122513.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/WAhk6OtdO0WHE4koh5Jofv7lCnRdWnBf18e2CE88pZ887t5YmkoCbUUZJju220201108122518.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/Wc5CW6GuL9qKKy77fLVm6K3KC6N3xKATvd3b4mZwzBsSGcQhPIl66oQRRxvj20201108122513.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/XOPUM8lG0QBYHZHi90UFf5hhDQqcoWc70NJTuX3cWPxzn0KGWB6cdDx42loJ20201108122510.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/Xl3uzK0HdYhI4vuk9gRhesRd2QPidqppGJfW02moK2AGYQjJN0b4Bc8SJrnD20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/YfPk8DLcg5Hi0panCZZV8ZSQDYTT0CAT0kZO4eWddZgXEzDRpaGsfpWqI03w20201108122513.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/Yov96bzJO7BSgR8BxzuNrktw4FhmnH8FOSgYQ1BbWpgAjrVD4kOds1SqyF0A20201108122512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/biIxrDsvphXOHWEyafIPU9OsV6y21OqoHYClOTFBJgKEvrj2VlUqyVyTJkXo20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/cSXMeE6Aa14XfCTMA81zrfTwWlzTUOCnvHWT4I0pLCv1KOfksESH9G0C6ibj20201108122513.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/dYD2hsEq4mLIZ5ddKnpKSxKeopuVasqHE2WZpzQjmCSJU63rp9GxR4Swv9XR20201108122519.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/dqwJknV6Xg0fe3KZ8aA0Q7zXvVO04GCxf4Oeev4HX53XxITmhEg9WGnSwF8s20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/eocGkQoZR8YJ86jO4lz6SJHtPGE4zd2o2m4x74BSpcTTngNyPmogEngEzul820201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/foroUKdNcAo4Sw5xjDbFE9QZnaglvLoZ0hn2qpq7nhjtxLsUP0sAhKvNTRPj20201108122517.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/gGRE62YvtmdoSzdUDtDQkp1CHx4uRcJId9wsfkTfvLgZSM2GxzzbMd0NrJuc20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/gR83FPoG4rMN4s5odePKamp7mHE4auIwaqlZMDbQdTVRwEwPJyob5Ifnzshj20201108122521.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/gUM7SGnbZ7FJIFNIg7tONztdKT935HTjGPcpQA7PSjvhqfuq6DYZoysvCuSe20201108122520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/jJx5EwxnCMXn76kVzNNwQ4dGACL5OaXrY9YV1Btbs5WQeFjmLxELKkQdrNQq20201108122513.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/l2ohFUFeZLvOTIITkCViXl6FExOi0O73brwym2XoB6kVDZRt0RSBRGZg97co20201108122518.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/lS7HTFxxRpBiVbWhhWmklU7LuMWjbwwMj6bwXPTKf4DWYW70hGNHbwQAhN2c20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/mO03KkYl6YLk6PvkGgexEody34empkQH0hHLRETMTgD0xDGbRmIGjcaPUjiA20201108122512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/nChXbFzJqKMlC0gJyntZQObexcHNS7ZJi5bR2zbuoktUrah2YhKUYBsIZePs20201108122513.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/o0eJu0DVLuScyZv5DtbtmRr7zts8i5Y1MQ3PmORa91NyPzQWn6DtXG4IgNB420201108122512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/q8nLt2YJQJTJSvJdx3Ce0Z5nxg6ZmLboEzDxUmPakFualGz8fZQU1pwW6xUm20201108122514.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/qPqncqtrVhN29BcdtbG89bu8wbrU8hkhu2ck6o5ZvFEUQZCaUSg5dvoZZoeM20201108122512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/sAQ023GthKG42uitCycP8cV30t6kghUbFKHMcPNU7ejacB4aQ5wQu1rq5nI020201108122518.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/sKSNgtv8TCC07t5Yf0qar1o8YKX1N2O0rfhw3MWrzHxZFaFxxmFoePmyufjE20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/sLSfEnoAyjcM5e3GE6akdL2TpqvuGUJ11IlikJnJe1HlKsRwfn0ilH4iX2oz20201108122514.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/sLqGDFtzBBPl821KijFMQMvQsjdPnnHSDV5XhMnVCXFAxhMt3JLcXSeRQIeZ20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/sOEjiIYQntCg0hWUfkLCv3q5cjSo5MDxhlbOYuXqAtk23wSR3g7BglHpQUTt20201108122515.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/t7WCyxChA0XlD86h3VnEnTxBaCqCnflhW4P5oAKSXwcmCwfueovUgC2p1lyM20201108122522.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/tgsVRsnc1skXeDpaMiFtbtLA0OfCOHCQR25Jt5VCMuIH398RnPaPK8eY7dcn20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/uRnLRt5hSv4wEgym55BHhijDj5qHsKh7klLoUS3xk3K4VFUsAEtoddBDFVhK20201108122521.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/up5cxqb4QBKNAeBnmkk7nwWL2e0uyRwqkvWkTwm1x6wR6J3NUUrO2t2TgmYO20201108122512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/ux3SjLPlyW3BSTpJFCxxiw6WonmUxzCjMYUxGwArDfQVsoni7fpJUPP6pl7V20201108122523.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/vQzZOnh5StezW2cOoVfE4mKyvxq6s6ocs34XFWBOwszY5UnfK0yhYGhT66VD20201108122516.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/vkJjv3fTzumK66Z7rCOxGIKKiPxtRR5Pd7ThESAvCSWd6Vae9V6mTRIJGHYW20201108122510.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/wfEzaIDOcr3B1xNbrfh0f5Ii1ftl9lUOn30MPEi7LdUaIbiz6ZrXxAhdWSyj20201108122511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/wjKlEU0Dn7xknqzqP5UXqDP4SKQZxHRGNhESELb9yF81lW27Lyn1OgD60dRu20201108122520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/xtPWF8AJ5Y2Ud3mhguZ1nPPRRBrM7IOhlhJiZ1Jv1G64hM5jqd0x9EEp7PwX20201108122523.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/ymgwitEX5KPS6hPTscD3ZDUUcUttqFn3KlQygg5EnPDhVZjMv9ElhDzCip6920201108122514.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/z3q38gVvoBg5ZH0pmeIaeXXFqYPGzdoethstOXpc2lZu22YN2CFdDi9dYARW20201108122514.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/zUPdyhXM5qy8w6tcPc0VuKDemO0mNni1ZFjZspQsu1w1av7EHIOlo6fiH6cU20201108122518.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/users/zcV0bvp7xixA91uDhl5r78Ng4B2cwo4YuuvP3OCeW0iVI3NliamWPXiXxTWC20201108122513.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Overlays/FullOverlay.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Overlays/FullOverlay.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Login/LoginComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Login/LoginComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Insert/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Insert/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Update/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Update/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Modals/Delete.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Modals/Delete.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -53,8 +160,9 @@
       <list>
         <option value="tsconfig.json" />
         <option value="CSS File" />
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="package.json" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -181,15 +289,15 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img\spareparts" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Helpers\Response" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Templates" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components" />
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Authentications" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
     </key>
   </component>
   <component name="RunManager">
@@ -318,7 +426,33 @@
       <workItem from="1607755408537" duration="42000" />
       <workItem from="1607755526428" duration="5122000" />
       <workItem from="1607769500921" duration="4414000" />
-      <workItem from="1607837004496" duration="3217000" />
+      <workItem from="1607837004496" duration="3873000" />
+      <workItem from="1607857540356" duration="629000" />
+      <workItem from="1607863257929" duration="1827000" />
+      <workItem from="1607925588729" duration="27000" />
+      <workItem from="1607927102228" duration="1383000" />
+      <workItem from="1607934965046" duration="4027000" />
+      <workItem from="1607946909140" duration="4124000" />
+      <workItem from="1607991115692" duration="4013000" />
+      <workItem from="1608009435685" duration="1801000" />
+      <workItem from="1608078559458" duration="22000" />
+      <workItem from="1608079865949" duration="7378000" />
+      <workItem from="1608270294840" duration="3373000" />
+      <workItem from="1608363308393" duration="478000" />
+      <workItem from="1608380350840" duration="3195000" />
+      <workItem from="1608437184359" duration="1435000" />
+      <workItem from="1608453529251" duration="1698000" />
+      <workItem from="1608468785816" duration="676000" />
+      <workItem from="1608610281249" duration="68000" />
+      <workItem from="1608613132575" duration="444000" />
+      <workItem from="1608618142084" duration="5716000" />
+      <workItem from="1608632808422" duration="1170000" />
+      <workItem from="1608701934576" duration="452000" />
+      <workItem from="1608725437496" duration="412000" />
+      <workItem from="1609978957433" duration="34000" />
+      <workItem from="1611297553864" duration="3676000" />
+      <workItem from="1611317347606" duration="3613000" />
+      <workItem from="1611405435647" duration="1604000" />
     </task>
     <servers />
   </component>
@@ -338,30 +472,30 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1607513224401">
+    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1608613584204">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1607513224401" />
-    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1606652402599">
+    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1608613584204" />
+    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607994222161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1606652402599" />
+    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1607994222161" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1606653358494">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1606653358494" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1606998346542">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1608078580340">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1606998346542" />
-    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1607000426838">
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1608078580340" />
+    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1607864509709">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1607000426838" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1607560389589">
+    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1607864509709" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1611298400981">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1607560389589" />
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1611298400981" />
     <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1607677126326">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

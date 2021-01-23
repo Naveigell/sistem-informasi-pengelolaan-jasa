@@ -18,6 +18,8 @@ Route::view("/sparepart", 'sparepart.index');
 Route::view("/sparepart/new", "sparepart.insert");
 Route::get("/sparepart/{id}", "Views\SparepartController@edit");
 
+Route::view("/service", "service.index");
+
 Route::group(['prefix' => '/account'], function () {
     Route::view('/biodata', 'user.account.biodata');
 });
@@ -28,16 +30,12 @@ Route::group(['prefix' => '/api/v1'], function () {
     // lot of routes had been moved into separated functions on app\Http\Providers\RouteServiceProvider
     // AUTH ROUTES moved into app\Http\Providers\RouteServiceProvider
     // BIODATA ROUTES moved into app\Http\Providers\RouteServiceProvider
-
-    Route::middleware("auth.global")->group(function () {
-        Route::prefix("/spareparts")->group(function (){
-            Route::get("/search", "Api\Sparepart\SparepartController@search");
-            Route::get("/retrieve/{id}", "Api\Sparepart\SparepartController@retrieve");
-            Route::get("/{page?}", "Api\Sparepart\SparepartController@retrieveAll")->name('sparepart.index');
-            Route::post("/", "Api\Sparepart\SparepartController@insert");
-            Route::put("/", "Api\Sparepart\SparepartController@update");
-            Route::delete("/{id}", "Api\Sparepart\SparepartController@delete");
-        });
+    // SPAREPART ROUTES moved into app\Http\Providers\RouteServiceProvider
+    Route::group(["prefix" => "/service", "middleware" => "auth.global"], function () {
+        Route::get("/", "Api\Jasa\JasaController@retrieveAll");
+        Route::post("/", "Api\Jasa\JasaController@insert");
+        Route::patch("/activate", "Api\Jasa\JasaController@activate");
+        Route::put("/", "Api\Jasa\JasaController@update");
+        Route::delete("/{id}", "Api\Jasa\JasaController@delete");
     });
-
 });

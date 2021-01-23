@@ -104,31 +104,40 @@ class UsersSeeder extends Seeder {
                 $imgName = Str::random(60).date("YmdHis");
                 $imgCreated = $this->makeDefaultImage($imgName);
 
-                $id = $users->insertGetId([
-                    "name"          => $name,
-                    "username"      => $username,
-                    "email"         => $email,
-                    "password"      => Hash::make("123456"),
-                    "role"          => $role
-                ]);
+                DB::beginTransaction();
+                try {
+                    $id = $users->insertGetId([
+                        "name"          => $name,
+                        "username"      => $username,
+                        "email"         => $email,
+                        "password"      => Hash::make("123456"),
+                        "role"          => $role
+                    ]);
 
-                $biodata->insert([
-                    "biodata_id_users"      => $id,
-                    "jenis_kelamin"         => $gender,
-                    "nomor_hp"              => $phone,
-                    "profile_picture"       => $imgName.".png",
-                    "alamat"                => $address
-                ]);
+                    $biodata->insert([
+                        "biodata_id_users"      => $id,
+                        "jenis_kelamin"         => $gender,
+                        "nomor_hp"              => $phone,
+                        "profile_picture"       => $imgName.".png",
+                        "alamat"                => $address
+                    ]);
 
-                error_log($name);
-                error_log($username);
-                error_log($email);
-                error_log($phone);
-                error_log($gender);
-                error_log($role);
-                error_log($address);
-                error_log($imgCreated ? "Image has been created" : "Image create failed");
-                error_log("--------------------------");
+                    DB::commit();
+
+                    error_log($name);
+                    error_log($username);
+                    error_log($email);
+                    error_log($phone);
+                    error_log($gender);
+                    error_log($role);
+                    error_log($address);
+                    error_log($imgCreated ? "Image has been created" : "Image create failed");
+                    error_log("--------------------------");
+                } catch (Exception $exception) {
+                    DB::rollBack();
+
+                    error_log(strtoupper($exception->getMessage()));
+                }
             });
         }
     }

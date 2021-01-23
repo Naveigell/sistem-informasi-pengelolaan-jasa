@@ -55,8 +55,26 @@ class RouteServiceProvider extends ServiceProvider
                 $this->mapAuthRoutes();
                 Route::middleware("auth.global")->group(function (){
                     $this->mapBiodataRoutes();
+                    $this->mapSparepartRoutes();
                 });
             });
+    }
+
+    /**
+     * Define sparepart routes
+     *
+     * @return void
+     */
+    public function mapSparepartRoutes()
+    {
+        Route::prefix("/spareparts")->group(function (){
+            Route::get("/search", "Api\Sparepart\SparepartController@search");
+            Route::get("/retrieve/{id}", "Api\Sparepart\SparepartController@retrieve");
+            Route::get("/{page?}", "Api\Sparepart\SparepartController@retrieveAll")->name('sparepart.index');
+            Route::post("/", "Api\Sparepart\SparepartController@insert");
+            Route::put("/", "Api\Sparepart\SparepartController@update");
+            Route::delete("/{id}", "Api\Sparepart\SparepartController@delete");
+        });
     }
 
     /**

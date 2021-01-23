@@ -23,7 +23,7 @@ class CreateServiceSparePartTable extends Migration
                 $table->timestamps();
 
                 // foreign
-                $table->foreign('service_hardware_id')->references('id_spare_part')->on('spare_part')->onUpdate('cascade')->onDelete('SET NULL');
+                $table->foreign('service_spare_part_id_spare_part')->references('id_spare_part')->on('spare_part')->onUpdate('cascade')->onDelete('SET NULL');
             });
         }
     }

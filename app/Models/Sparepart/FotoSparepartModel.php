@@ -3,8 +3,6 @@
 namespace App\Models\Sparepart;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 /**
  * Class FotoSparepartModel

@@ -12,6 +12,7 @@ if (!function_exists('json')) {
     function json($body = [], $errors = null, $code = 200, $statusText = "OK"){
         $status = [
             "200" => "OK",
+            "201" => "Created",
             "204" => "No Content",
             "400" => "Bad Request",
             "401" => "Unauthorized",
@@ -48,7 +49,7 @@ if (!function_exists('error')) {
      * @param string $statusText
      * @return \Illuminate\Http\JsonResponse
      */
-    function error($details, $messages, $code = 500, $statusText = "Internal Server Error"){
+    function error($details = null, $messages = null, $code = 500, $statusText = "Internal Server Error"){
         $errors = [
             "messages" => $messages
         ];

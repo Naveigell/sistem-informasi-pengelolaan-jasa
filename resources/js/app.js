@@ -12,6 +12,8 @@ window.Vue = require('vue');
 
 import Vuex from "vuex";
 
+import String from "./prototypes/string";
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -29,6 +31,7 @@ import Biodata from "./components/Templates/Biodata";
 import SparepartIndex from "./components/Templates/Sparepart/Index";
 import SparepartInsert from "./components/Templates/Sparepart/Insert";
 import SparepartUpdate from "./components/Templates/Sparepart/Update";
+import ServiceIndex from "./components/Templates/Service/Index";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
@@ -55,6 +58,7 @@ Vue.component('biodata', Biodata);
 Vue.component('sparepart-index', SparepartIndex);
 Vue.component('sparepart-insert', SparepartInsert);
 Vue.component('sparepart-update', SparepartUpdate);
+Vue.component('service-index', ServiceIndex);
 
 // loader
 Vue.component('full-loading', FullLoading);
@@ -102,7 +106,6 @@ Vue.use({
 });
 
 import { store } from "./stores/store";
-import Update from "./components/Templates/Sparepart/Update";
 
 Vue.config.productionTip = false
 

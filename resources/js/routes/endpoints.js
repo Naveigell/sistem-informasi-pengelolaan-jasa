@@ -1,5 +1,4 @@
-
-const api = {
+const endpoints = {
     auth: {
         login: "/auth/login",
         check: "/auth/check",
@@ -16,7 +15,14 @@ const api = {
         get: "/spareparts/retrieve",
         put: "/spareparts",
         delete: "/spareparts"
+    },
+    service: {
+        data: "/service",
+        activation: "/service/activate",
+        insert: "/service",
+        delete: "/service",
+        update: "/service"
     }
 }
 
-module.exports = api;
+module.exports = endpoints;

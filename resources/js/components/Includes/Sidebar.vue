@@ -53,6 +53,13 @@ export default {
                     isLink: true,
                     to: this.$basepath + "account/biodata"
                 },
+                {
+                    title: "Service",
+                    icon: "fa fa-user",
+                    hasDropdown: false,
+                    isLink: true,
+                    to: this.$basepath + "service"
+                }
             ]
         };
     }
