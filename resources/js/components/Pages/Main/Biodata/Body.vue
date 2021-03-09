@@ -1,6 +1,9 @@
 <template>
     <div class="app-container">
-        <div class="body-container">
+        <div class="body-container" style="position:relative;">
+            <div class="biodata-role">
+                Admin
+            </div>
             <h4>
                 <i class="fa fa-user" style="margin-right: 10px"></i>{{ $store.state.user.data == null ? "" : $store.state.user.data.name }}
             </h4>
@@ -18,8 +21,8 @@
                         <span class="sub-image-text">Format gambar yang diterima .jpg, .png, .jpeg</span>
                     </div>
                 </div>
-                <div class="biodata-container-right">
-                    <div class="biodata-container-right-form">
+                <div class="biodata-container-center">
+                    <div class="biodata-container-center-form">
                         <form v-if="user.data !== null" action="" v-on:submit.prevent>
 <!--                            <div v-if="button.saveActive" class="alert-success">Biodata berhasil diubah</div>-->
                             <h5>Profil Saya</h5>
@@ -245,6 +248,14 @@ img {
     border-radius: 4px;
 }
 
+.biodata-role {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 .button-update-biodata:hover, .button-update-password:hover {
     background: #dfdfdf;
 }
@@ -333,6 +344,7 @@ img {
     margin-top: 25px;
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .biodata-container-left {
@@ -343,11 +355,10 @@ img {
     border: 1px solid #ddd;
 }
 
-.biodata-container-right {
+.biodata-container-center {
     display: block;
     width: 100%;
     height: 440px;
-    /*background: blue;*/
 }
 
 .image-container {
@@ -387,19 +398,19 @@ img {
     margin-top: 0;
 }
 
-.biodata-container-right-form {
+.biodata-container-center-form {
     margin: 20px 20px 20px 30px;
     width: 100%;
     height: 100%;
 }
 
-.biodata-container-right-form h5 {
+.biodata-container-center-form h5 {
     font-size: 16px;
     font-weight: bold;
     margin-top: 40px;
 }
 
-.biodata-container-right-form h5:first-child {
+.biodata-container-center-form h5:first-child {
     font-size: 16px;
     font-weight: bold;
     margin-top: -14px;

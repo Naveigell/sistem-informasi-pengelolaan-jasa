@@ -61,6 +61,11 @@ class SparepartModel extends Model
         ]);
     }
 
+    /**
+     * Get sparepart lists
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getSparePartList() {
         return $this->with("images")->select(["id_spare_part", "nama_spare_part AS nama", "tipe", "stok", "harga"])->paginate(12);
     }

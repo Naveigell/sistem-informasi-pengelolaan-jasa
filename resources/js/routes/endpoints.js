@@ -22,6 +22,15 @@ const endpoints = {
         insert: "/service",
         delete: "/service",
         update: "/service"
+    },
+    technicians: {
+        data: "/technicians",
+        search: "/technicians/search",
+        insert: "/technicians",
+        delete: "/technicians",
+        update: "/technicians",
+        retrieve: "/technicians/username",
+        reset_password: "/technicians/reset-password",
     }
 }
 

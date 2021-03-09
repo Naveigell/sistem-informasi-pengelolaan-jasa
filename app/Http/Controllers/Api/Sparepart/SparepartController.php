@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Sparepart\FotoSparepartModel;
 use App\Models\Sparepart\SparepartModel;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 use App\Traits\Files\FilesHandler;
 
@@ -16,6 +15,8 @@ use App\Http\Requests\Sparepart\SparepartRequestUpdate;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+
+use App\Helpers\Url\QueryString;
 
 /**
  * Class SparepartController
@@ -202,8 +203,6 @@ class SparepartController extends Controller {
 
         set_current_page($page);
 
-        error_log($type);
-
         $collections    = $this->sparePartModel->search($query, $type);
         $spareparts     = $this->collectSpareparts(collect($collections->items()));
 
@@ -214,13 +213,13 @@ class SparepartController extends Controller {
         $previous_page  = $current_page - 1 > 0 && $current_page <= $last_page ? $current_page - 1 : null;
         $next_page      = $current_page < $last_page && $current_page > 0 ? $current_page + 1 : null;
 
-        $next_url       = $this->queryString([
+        $next_url       = QueryString::parse([
             "q"     => $query,
             "t"     => $type === "pc/komputer" ? "pc" : $type,
             "p"     => $next_page
         ]);
 
-        $previous_url   = $this->queryString([
+        $previous_url   = QueryString::parse([
             "q"     => $query,
             "t"     => $type === "pc/komputer" ? "pc" : $type,
             "p"     => $previous_page
@@ -251,7 +250,7 @@ class SparepartController extends Controller {
      * @return Collection
      */
     private function collectSpareparts(Collection $collection) : Collection {
-        $spareparts     = $collection->map(function ($item) {
+        return $collection->map(function ($item) {
 
             // casting the item to object if the type is array
             if (gettype($item) == "array")
@@ -271,50 +270,5 @@ class SparepartController extends Controller {
 
             return $item;
         });
-
-        return $spareparts;
-    }
-
-    /**
-     * Create a params for url by given array, example
-     * $array = [
-     *      "a" => "foo",
-     *      "b" => "bar",
-     *      "c"
-     * ]
-     *
-     * will be ?a=foo&b=bar
-     * c will ignore because c didn't have a value
-     *
-     * @param array $querystring
-     * @return string
-     */
-    private function queryString(array $querystring = []) : string{
-
-        $keys = array_keys($querystring);
-        $query = "";
-        foreach ($keys as $key) {
-
-            if (!is_string($key)) {
-                unset($querystring[$key]);
-            }
-        }
-
-        $keys = array_keys($querystring);
-        for ($i = 0; $i < count($keys); $i++) {
-
-            if ($querystring[$keys[$i]] == null) continue;
-
-            // insert & between key and value
-            // example a=foo&b=1
-            $query .= $keys[$i]."=".$querystring[$keys[$i]];
-            if ($i < count($keys) - 1) {
-                if ($querystring[$keys[$i + 1]] !== null) {
-                    $query .= "&";
-                }
-            }
-        }
-
-        return "?".$query;
     }
 }

@@ -32,6 +32,8 @@ import SparepartIndex from "./components/Templates/Sparepart/Index";
 import SparepartInsert from "./components/Templates/Sparepart/Insert";
 import SparepartUpdate from "./components/Templates/Sparepart/Update";
 import ServiceIndex from "./components/Templates/Service/Index";
+import TechnicianIndex from "./components/Pages/Main/Technician/Index/Technician";
+import TechnicianUpdate from "./components/Pages/Main/Technician/Update/Technician";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
@@ -59,6 +61,8 @@ Vue.component('sparepart-index', SparepartIndex);
 Vue.component('sparepart-insert', SparepartInsert);
 Vue.component('sparepart-update', SparepartUpdate);
 Vue.component('service-index', ServiceIndex);
+Vue.component('technician-index', TechnicianIndex);
+Vue.component('technician-update', TechnicianUpdate);
 
 // loader
 Vue.component('full-loading', FullLoading);
@@ -107,7 +111,7 @@ Vue.use({
 
 import { store } from "./stores/store";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 Vue.use(Vuex);
 

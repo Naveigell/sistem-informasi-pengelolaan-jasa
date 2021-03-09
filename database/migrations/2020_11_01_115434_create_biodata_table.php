@@ -18,7 +18,7 @@ class CreateBiodataTable extends Migration
                 $table->bigIncrements('id_biodata');
                 $table->unsignedBigInteger('biodata_id_users')->unique()->index();
                 $table->enum('jenis_kelamin', ['Laki - laki', 'Perempuan']);
-                $table->string('nomor_hp', 17)->unique();
+                $table->string('nomor_hp', 17)->nullable()->unique();
                 $table->string('profile_picture', 255)->nullable();
                 $table->string('alamat', 100);
                 $table->timestamps();

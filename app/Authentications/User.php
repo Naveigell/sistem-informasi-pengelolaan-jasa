@@ -54,4 +54,12 @@ class User extends Authenticatable
     public function getIdAttribute() {
         return $this->attributes["id_users"];
     }
+
+    /**
+     * @return mixed get role attribute
+     */
+    public function getRoleAttribute()
+    {
+        return $this->attributes["role"];
+    }
 }

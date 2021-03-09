@@ -64,11 +64,11 @@ class Handler extends ExceptionHandler
                 return error(null, $exception->errors(), 422);
             }
         } elseif ($exception instanceof \PDOException) {
-            if ($this->isAjax()) {
-                return error(null, [
-                    "server"        => ["Terjadi kesalahan pada server"]
-                ], 500);
-            }
+//            if ($this->isAjax()) {
+//                return error(null, [
+//                    "server"        => ["Terjadi kesalahan pada server"]
+//                ], 500);
+//            }
         }
 
         return parent::render($request, $exception);

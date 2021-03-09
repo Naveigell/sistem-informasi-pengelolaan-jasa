@@ -1,52 +1,33 @@
 <template>
     <div class="app-container">
-        <div class="spare-part-body-container">
+        <div class="technician-body-container">
             <div class="top-navigation">
                 <ul>
                     <li class="router-active">Semua</li>
-                    <li>Harga Terendah</li>
-                    <li>Harga Tertinggi</li>
                 </ul>
             </div>
-            <div class="spare-part-list-container">
-                <div class="spare-part-input-container">
-                    <div class="spare-part-inputs">
-                        <div class="spare-part-input-search">
+            <div class="technician-list-container">
+                <div class="technician-input-container">
+                    <div class="technician-inputs">
+                        <div class="technician-input-search">
                             <div class="input-search-container">
-                                <span>Nama Sparepart</span>
+                                <span>Nama Teknisi</span>
                                 <span class="separator"></span>
                                 <input v-model="search.query" type="text" class="input-search" placeholder="Input"/>
                             </div>
                         </div>
-                        <div class="spare-part-input-type">
-                            <div class="input-type-container">
-                                <span>Tipe Sparepart</span>
-                                <span class="separator"></span>
-                                <select v-model="search.type" class="input-type" name="" id="">
-                                    <option value="komputer/pc">Komputer/pc</option>
-                                    <option value="hp">Handphone</option>
-                                    <option value="printer">Printer</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
-                    <button @click="searchSpareparts()" class="button-search button-success-primary-md">Cari</button>
+                    <button @click="searchTechnicians()" class="button-search button-success-primary-md">Cari</button>
                 </div>
-                <div class="spare-part-tools">
-                    <div class="spare-part-tools-left">
-                        <h4>{{ this.paginator.totalData }} Spare Part Aktif</h4>
-<!--                        <div class="product-count-bar-container">-->
-<!--                            <div class="product-count-bar">-->
-<!--                                <div class="product-progress-bar-width"></div>-->
-<!--                                <span class="counter">{{ spareparts.length }} / {{ this.paginator.totalData }}</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                <div class="technician-tools">
+                    <div class="technician-tools-left">
+                        <h4>{{ paginator.totalData }} Teknisi Aktif</h4>
                     </div>
-                    <div class="spare-part-tools-right">
-                        <div class="spare-part-tools-right-container">
-                            <a href="/sparepart/new" class="button-add button-success-primary-md" style="padding: 10px 20px;">
-                                <i class="fa fa-plus"></i>&nbsp Tambah Spare Part
-                            </a>
+                    <div class="technician-tools-right">
+                        <div class="technician-tools-right-container">
+                            <button @click="modal.insert.open = true" class="button-add button-success-primary-md" style="padding: 10px 20px;">
+                                <i class="fa fa-plus"></i>&nbsp Tambah Teknisi
+                            </button>
                             <div class="view-model">
                                 <div>
                                     <i class="fa fa-list-ul"></i>
@@ -61,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <grid v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
+                <grid v-bind:technicians="technicians" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -77,25 +58,29 @@
                 </div>
             </div>
         </div>
+        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="openToast"/>
+        <TopRightToast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
     </div>
 </template>
 
 <script>
 import GridList from "./Lists/GridList";
-import FullOverlay from "../../../../Overlays/FullOverlay";
+import Insert from "./Modals/Insert";
+import TopRightToast from "../../../../Toasts/TopRightToast";
 
 export default {
     name: "Body",
     components: {
-        "grid": GridList,
-        "full-overlay": FullOverlay
+        grid: GridList,
+        Insert,
+        TopRightToast
     },
     data(){
         return {
-            spareparts: [],
+            technicians: [],
             url: {
                 endpoints: {
-                    current: this.$endpoints.sparepart.data,
+                    current: this.$endpoints.technicians.data,
                     next: null,
                     previous: null
                 },
@@ -109,7 +94,7 @@ export default {
                 currentPage: 1,
                 lastPage: 1,
                 totalPage: 1,
-                totalData: 1
+                totalData: 0
             },
             search: {
                 query: "",
@@ -121,6 +106,20 @@ export default {
             },
             overlay: {
                 full: false
+            },
+            modal: {
+                insert: {
+                    open: false
+                }
+            },
+            toast: {
+                open: false,
+                background: this.$colors.bluePrimary,
+                data: {
+                    title: "Success!",
+                    message: "Just sample message",
+                    icon: "fa fa-check"
+                }
             }
         }
     },
@@ -128,6 +127,30 @@ export default {
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
+        openToast(obj){
+            this.toast.data.message = obj.message;
+
+            if (obj.type === "failed") {
+                this.toast.data.title = "Failed!";
+                this.toast.data.icon = "fa fa-times-circle";
+                this.toast.background = this.$colors.redPrimary;
+            } else if (obj.type === "success") {
+                this.toast.background = this.$colors.successPrimary;
+            }
+
+            this.toast.open = true;
+
+            // reload if child component need reload
+            if (obj.reload) {
+                this.reload();
+            }
+        },
+        closeModal(modal) {
+            modal.open = false;
+        },
+        reload(){
+            this.retrieveUrl(this.url.endpoints.current);
+        },
         retrieveNextUrl(){
             const next = this.url.endpoints.next;
             if (next !== null) {
@@ -146,10 +169,11 @@ export default {
             this.$api.get(url, data).then(function (response) {
                 const res = response.data.body;
 
-                self.spareparts = res.spareparts;
+                self.technicians = res.technicians;
 
                 self.url.endpoints.next     = res.pages.next_url;
                 self.url.endpoints.previous = res.pages.previous_url;
+                self.url.endpoints.current  = res.pages.current_url;
                 self.url.uri                = res.pages.uri;
 
                 self.paginator.currentPage  = res.pages.current_page;
@@ -169,10 +193,9 @@ export default {
             //
 
             if (this.search.onSearch) {
-                this.retrieveUrl(this.$endpoints.sparepart.search, {
+                this.retrieveUrl(this.$endpoints.technicians.search, {
                     params: {
                         q: this.search.query,
-                        t: this.search.type === "komputer/pc" ? "pc" : this.search.type,
                         p: index
                     }
                 });
@@ -182,15 +205,10 @@ export default {
                 this.retrieveUrl(url(index));
             }
         },
-        searchSpareparts(){
-            const acceptTypes = ["komputer/pc", "hp", "printer"];
-
-            if (!acceptTypes.includes(this.search.type)) return;
-
-            this.retrieveUrl(this.$endpoints.sparepart.search, {
+        searchTechnicians(){
+            this.retrieveUrl(this.$endpoints.technicians.search, {
                 params: {
                     q: this.search.query,
-                    t: this.search.type === "komputer/pc" ? "pc" : this.search.type
                 }
             });
         }
@@ -223,7 +241,7 @@ export default {
     padding: 5px;
 }
 
-.spare-part-tools-right-container {
+.technician-tools-right-container {
     float: right;
     display: inline-block;
 }
@@ -311,22 +329,22 @@ export default {
     border-radius: 30px;
 }
 
-.spare-part-tools {
+.technician-tools {
     padding: 20px;
     display: flex;
 }
 
-.spare-part-tools-right {
+.technician-tools-right {
     width: 100%;
 }
 
-.spare-part-tools-left {
+.technician-tools-left {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.spare-part-tools-left h4 {
+.technician-tools-left h4 {
     color: #222;
     font-weight: bold;
     font-size: 22px;
@@ -337,7 +355,7 @@ export default {
     margin-left: 20px;
 }
 
-.input-search-container, .input-type-container {
+.input-search-container {
     margin: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 3px;
@@ -346,7 +364,7 @@ export default {
     align-items: center;
 }
 
-.input-search, .input-type {
+.input-search {
     margin-left: 10px;
     width: 290px;
     border: none;
@@ -362,28 +380,22 @@ export default {
     opacity: .7;
 }
 
-.spare-part-inputs {
-    /*background: red;*/
-    /*height: 00px;*/
+.technician-inputs {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.spare-part-input-search, .spare-part-input-type {
+.technician-input-search {
     width: 100%;
 }
 
-.spare-part-input-search {
+.technician-input-search {
     height: 100%;
     /*background: blue;*/
 }
 
-.spare-part-input-type {
-    /*background: green;*/
-}
-
-.spare-part-list-container {
+.technician-list-container {
     /*height: 700px;*/
 }
 
@@ -393,7 +405,7 @@ export default {
     font-weight: bold;
 }
 
-.spare-part-body-container {
+.technician-body-container {
     background: white;
     border: 1px solid #e5e5e5;
     margin-bottom: 20px;

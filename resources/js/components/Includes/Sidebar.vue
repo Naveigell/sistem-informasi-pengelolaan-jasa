@@ -43,6 +43,11 @@ export default {
                             name: "Data Spare Part",
                             isLink: true,
                             to: this.$basepath + "sparepart"
+                        },
+                        {
+                            name: "Data Teknisi",
+                            isLink: true,
+                            to: this.$basepath + "technician"
                         }
                     ]
                 },

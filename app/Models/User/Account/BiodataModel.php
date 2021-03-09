@@ -47,6 +47,26 @@ class BiodataModel extends Model
     }
 
     /**
+     * Create new biodata
+     *
+     * @param $id
+     * @param object $data
+     * @return bool
+     */
+    public function createBiodata($id, object $data)
+    {
+        return $this->insert([
+            "biodata_id_users"      => $id,
+            "jenis_kelamin"         => $data->gender,
+            "nomor_hp"              => null,
+            "profile_picture"       => $data->avatar,
+            "alamat"                => null,
+            "created_at"            => now(),
+            "updated_at"            => now()
+        ]);
+    }
+
+    /**
      * @param $id_users string
      * @param $alamat string
      * @param $email string

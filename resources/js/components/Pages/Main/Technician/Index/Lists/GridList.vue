@@ -3,37 +3,37 @@
         <div class="grid-container">
             <div class="grid">
                 <div class="product-grid-container">
-                    <div class="product-grid" v-for="(sparepart, index) in spareparts">
-                        <a v-bind:href="'/sparepart/' + sparepart.id" style="text-decoration: none;">
-                            <img width="100%" height="170" :src="sparepart.images[0].picture" alt="sparepart">
+                    <div class="product-grid" v-for="(technician, index) in technicians" v-if="technicians.length > 0">
+                        <a v-bind:href="'/technician/' + technician.username" style="text-decoration: none;">
+                            <img v-if="technician.biodata !== undefined" width="100%" height="170" :src="technician.biodata.profile_picture" alt="technicians">
                             <hr/>
                             <span class="product-title">
-                                {{ sparepart.nama }}
+                                {{ technician.name }}
                             </span>
                             <div class="product-info">
                                 <span class="product-price">
-                                    Rp{{ $currency.indonesian(sparepart.harga) }}
+                                    {{ technician.username }}
                                 </span>
                                 <span class="product-stock">
-                                    Stok {{ sparepart.stok }}
+                                    {{ technician.biodata === undefined ? '' : technician.biodata.nomor_hp === null ? "-" : technician.biodata.nomor_hp }}
                                 </span>
                             </div>
                             <div class="product-meta">
                                 <span class="product-type">
-                                    <i class="fas fa-box"></i> {{ sparepart.tipe }}
+                                    <i class="fas fa-box"></i> Teknisi
                                 </span>
                             </div>
                             <br/>
                         </a>
                         <transition name="product-delete-container-transition">
                             <div key="delete" class="product-delete-container" v-if="onDeleteMode">
-                                <span v-on:click="openDeleteModal(sparepart.id, sparepart, index)">
+                                <span v-on:click="openDeleteModal(technician.id, technician, index)">
                                     <i class="fa fa-trash"></i> Hapus
                                 </span>
                             </div>
                         </transition>
                     </div>
-                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :sparepart="data.sparepart" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
+                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :technician="data.technician" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                     <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
                 </div>
             </div>
@@ -47,7 +47,7 @@ import Toast from "../../../../../Toasts/TopRightToast";
 
 export default {
     name: "GridList",
-    props: ["spareparts", "onDeleteMode"],
+    props: ["technicians", "onDeleteMode"],
     components: {
         "delete-modal": Delete,
         "toast": Toast
@@ -56,7 +56,7 @@ export default {
         return {
             data: {
                 id: -1,
-                sparepart: null,
+                technician: null,
                 index: -1
             },
             modal: {
@@ -77,9 +77,9 @@ export default {
 
     },
     methods: {
-        openDeleteModal(id, sparepart, index){
+        openDeleteModal(id, technician, index){
             this.data.id = id;
-            this.data.sparepart = sparepart;
+            this.data.technician = technician;
             this.data.index = index;
             this.modal.delete = true;
         },
@@ -99,7 +99,7 @@ export default {
         onDeleteModalAnimationEnd(){
             const self = this;
             const id = setTimeout(function () {
-                self.spareparts.splice(self.data.index, 1);
+                self.technicians.splice(self.data.index, 1);
                 clearTimeout(id);
             }, 800);
         }
@@ -188,11 +188,12 @@ export default {
 
 .product-price {
     color: var(--blue-primary);
-    font-weight: bold;
+    font-size: 15px;
 }
 
 .product-stock {
-    float: right;
+    margin-top: 5px;
+    display: block;
     color: #a4a4a4;
 }
 
