@@ -1,17 +1,17 @@
 <template>
     <div class="app-container">
-        <div class="technician-body-container">
+        <div style="background: white; border: 1px solid #e5e5e5; margin-bottom: 20px;">
             <div class="top-navigation">
                 <ul>
                     <li class="router-active">Semua</li>
                 </ul>
             </div>
-            <div class="technician-list-container">
-                <div class="technician-input-container">
-                    <div class="technician-inputs">
-                        <div class="technician-input-search">
+            <div class="user-list-container">
+                <div class="user-input-container">
+                    <div class="user-inputs">
+                        <div class="user-input-search">
                             <div class="input-search-container">
-                                <span>Nama Teknisi</span>
+                                <span>Nama User</span>
                                 <span class="separator"></span>
                                 <input v-model="search.query" type="text" class="input-search" placeholder="Input"/>
                             </div>
@@ -19,14 +19,14 @@
                     </div>
                     <button @click="searchTechnicians()" class="button-search button-success-primary-md">Cari</button>
                 </div>
-                <div class="technician-tools">
-                    <div class="technician-tools-left">
-                        <h4>{{ paginator.totalData }} Teknisi Aktif</h4>
+                <div class="user-tools">
+                    <div class="user-tools-left">
+                        <h4>{{ paginator.totalData }} User Aktif</h4>
                     </div>
-                    <div class="technician-tools-right">
-                        <div class="technician-tools-right-container">
+                    <div class="user-tools-right">
+                        <div class="user-tools-right-container">
                             <button @click="modal.insert.open = true" class="button-add button-success-primary-md" style="padding: 10px 20px;">
-                                <i class="fa fa-plus"></i>&nbsp Tambah Teknisi
+                                <i class="fa fa-plus"></i>&nbsp Tambah User
                             </button>
                             <div class="view-model">
                                 <div>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <grid v-bind:technicians="technicians" :on-delete-mode="mode.onDeleteMode"/>
+                <grid v-bind:users="users" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -58,36 +58,32 @@
                 </div>
             </div>
         </div>
-        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="openToast"/>
-        <TopRightToast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
     </div>
 </template>
 
 <script>
+import Test from "../../../../Test";
 import GridList from "./Lists/GridList";
-import Insert from "./Modals/Insert";
-import TopRightToast from "../../../../Toasts/TopRightToast";
 
 export default {
     name: "Body",
     components: {
-        grid: GridList,
-        Insert,
-        TopRightToast
+        Test,
+        "grid": GridList
     },
-    data(){
+    mounted() {
+        this.retrieveUrl(this.url.endpoints.current);
+    },
+    data() {
         return {
-            technicians: [],
+            users: [],
             url: {
                 endpoints: {
-                    current: this.$endpoints.technicians.data,
+                    current: this.$endpoints.users.data,
                     next: null,
                     previous: null
                 },
                 uri: ""
-            },
-            jumper: {
-                jumperInput: ""
             },
             paginator: {
                 perPage: 10,
@@ -95,6 +91,9 @@ export default {
                 lastPage: 1,
                 totalPage: 1,
                 totalData: 0
+            },
+            jumper: {
+                jumperInput: ""
             },
             search: {
                 query: "",
@@ -122,31 +121,7 @@ export default {
             }
         }
     },
-    mounted() {
-        this.retrieveUrl(this.url.endpoints.current);
-    },
     methods: {
-        openToast(obj){
-            this.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.toast.data.title = "Failed!";
-                this.toast.data.icon = "fa fa-times-circle";
-                this.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.toast.background = this.$colors.successPrimary;
-            }
-
-            this.toast.open = true;
-
-            // reload if child component need reload
-            if (obj.reload) {
-                this.reload();
-            }
-        },
-        closeModal(modal) {
-            modal.open = false;
-        },
         reload(){
             this.retrieveUrl(this.url.endpoints.current);
         },
@@ -168,7 +143,7 @@ export default {
             this.$api.get(url, data).then(function (response) {
                 const res = response.data.body;
 
-                self.technicians = res.technicians;
+                self.users = res.users;
 
                 self.url.endpoints.next     = res.pages.next_url;
                 self.url.endpoints.previous = res.pages.previous_url;
@@ -182,6 +157,7 @@ export default {
                 self.paginator.totalData    = res.total;
 
                 self.search.onSearch        = res.search;
+                console.log(response);
             }).catch(function (error) {
                 console.error(error)
             });
@@ -204,13 +180,6 @@ export default {
                 this.retrieveUrl(url(index));
             }
         },
-        searchTechnicians(){
-            this.retrieveUrl(this.$endpoints.technicians.search, {
-                params: {
-                    q: this.search.query,
-                }
-            });
-        }
     }
 }
 </script>
@@ -240,7 +209,7 @@ export default {
     padding: 5px;
 }
 
-.technician-tools-right-container {
+.user-tools-right-container {
     float: right;
     display: inline-block;
 }
@@ -328,22 +297,22 @@ export default {
     border-radius: 30px;
 }
 
-.technician-tools {
+.user-tools {
     padding: 20px;
     display: flex;
 }
 
-.technician-tools-right {
+.user-tools-right {
     width: 100%;
 }
 
-.technician-tools-left {
+.user-tools-left {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.technician-tools-left h4 {
+.user-tools-left h4 {
     color: #222;
     font-weight: bold;
     font-size: 22px;
@@ -379,22 +348,22 @@ export default {
     opacity: .7;
 }
 
-.technician-inputs {
+.user-inputs {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
-.technician-input-search {
+.user-input-search {
     width: 100%;
 }
 
-.technician-input-search {
+.user-input-search {
     height: 100%;
     /*background: blue;*/
 }
 
-.technician-list-container {
+.user-list-container {
     /*height: 700px;*/
 }
 
@@ -404,7 +373,7 @@ export default {
     font-weight: bold;
 }
 
-.technician-body-container {
+.user-body-container {
     background: white;
     border: 1px solid #e5e5e5;
     margin-bottom: 20px;

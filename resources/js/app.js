@@ -3,9 +3,6 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
-import Insert from "./components/Templates/Sparepart/Insert";
-
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -32,8 +29,9 @@ import SparepartIndex from "./components/Templates/Sparepart/Index";
 import SparepartInsert from "./components/Templates/Sparepart/Insert";
 import SparepartUpdate from "./components/Templates/Sparepart/Update";
 import ServiceIndex from "./components/Templates/Service/Index";
-import TechnicianIndex from "./components/Pages/Main/Technician/Index/Technician";
-import TechnicianUpdate from "./components/Pages/Main/Technician/Update/Technician";
+import TechnicianIndex from "./components/Templates/Technician/Index";
+import TechnicianUpdate from "./components/Templates/Technician/Update";
+import UserIndex from "./components/Templates/User/Index";
 
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
@@ -63,6 +61,7 @@ Vue.component('sparepart-update', SparepartUpdate);
 Vue.component('service-index', ServiceIndex);
 Vue.component('technician-index', TechnicianIndex);
 Vue.component('technician-update', TechnicianUpdate);
+Vue.component('user-index', UserIndex);
 
 // loader
 Vue.component('full-loading', FullLoading);

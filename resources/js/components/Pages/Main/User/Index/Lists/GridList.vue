@@ -2,38 +2,38 @@
     <div>
         <div class="grid-container">
             <div class="grid">
-                <div class="technician-grid-container">
-                    <div class="technician-grid" v-for="(technician, index) in technicians" v-if="technicians.length > 0">
-                        <a v-bind:href="'/technician/' + technician.username" style="text-decoration: none;">
-                            <img v-if="technician.biodata !== undefined" width="100%" height="170" :src="technician.biodata.profile_picture" alt="technicians">
+                <div class="user-grid-container">
+                    <div class="user-grid" v-for="(user, index) in users" v-if="users.length > 0">
+                        <a v-bind:href="'/user/' + user.username" style="text-decoration: none;">
+                            <img v-if="user.biodata !== undefined" :src="user.biodata.profile_picture" width="100%" height="170" alt="users">
                             <hr/>
-                            <span class="technician-title">
-                                {{ technician.name }}
+                            <span class="user-title">
+                                {{ user.name }}
                             </span>
-                            <div class="technician-info">
-                                <span class="technician-price">
-                                    {{ technician.username }}
+                            <div class="user-info">
+                                <span class="user-price">
+                                    {{ user.username }}
                                 </span>
-                                <span class="technician-stock">
-                                    {{ technician.biodata === undefined ? '' : technician.biodata.nomor_hp === null ? "-" : technician.biodata.nomor_hp }}
+                                <span class="user-stock">
+                                    {{ user.biodata === undefined ? '' : user.biodata.nomor_hp === null ? "-" : user.biodata.nomor_hp }}
                                 </span>
                             </div>
-                            <div class="technician-meta">
-                                <span class="technician-type">
-                                    <i class="fas fa-box"></i> Teknisi
+                            <div class="user-meta">
+                                <span class="user-type">
+                                    <i class="fas fa-box"></i> User
                                 </span>
                             </div>
                             <br/>
                         </a>
-                        <transition name="technician-delete-container-transition">
-                            <div key="delete" class="technician-delete-container" v-if="onDeleteMode">
-                                <span v-on:click="openDeleteModal(technician.id, technician, index)">
+                        <transition name="user-delete-container-transition">
+                            <div key="delete" class="user-delete-container" v-if="onDeleteMode">
+                                <span v-on:click="openDeleteModal(user.id, user, index)">
                                     <i class="fa fa-trash"></i> Hapus
                                 </span>
                             </div>
                         </transition>
                     </div>
-                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :technician="data.technician" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
+                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :user="data.user" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                     <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
                 </div>
             </div>
@@ -42,16 +42,9 @@
 </template>
 
 <script>
-import Delete from "../Modals/Delete";
-import Toast from "../../../../../Toasts/TopRightToast";
-
 export default {
     name: "GridList",
-    props: ["technicians", "onDeleteMode"],
-    components: {
-        "delete-modal": Delete,
-        "toast": Toast
-    },
+    props: ["users", "onDeleteMode"],
     data() {
         return {
             data: {
@@ -74,9 +67,9 @@ export default {
         }
     },
     methods: {
-        openDeleteModal(id, technician, index){
+        openDeleteModal(id, user, index){
             this.data.id = id;
-            this.data.technician = technician;
+            this.data.user = user;
             this.data.index = index;
             this.modal.delete = true;
         },
@@ -96,7 +89,7 @@ export default {
         onDeleteModalAnimationEnd(){
             const self = this;
             const id = setTimeout(function () {
-                self.technicians.splice(self.data.index, 1);
+                self.users.splice(self.data.index, 1);
                 clearTimeout(id);
             }, 800);
         }
@@ -105,21 +98,22 @@ export default {
 </script>
 
 <style scoped>
-.technician-delete-container-transition-enter-active {
+
+.user-delete-container-transition-enter-active {
     transition: all .3s ease;
     -o-transition: all .3s ease;
     -moz-transition: all .3s ease;
     -webkit-transition: all .3s ease;
 }
 
-.technician-delete-container-transition-leave-active {
+.user-delete-container-transition-leave-active {
     transition: all .1s ease;
     -o-transition: all .1s ease;
     -moz-transition: all .1s ease;
     -webkit-transition: all .1s ease;
 }
 
-.technician-delete-container-transition-enter, .technician-delete-container-transition-leave-to {
+.user-delete-container-transition-enter, .user-delete-container-transition-leave-to {
     opacity: 0;
 }
 
@@ -138,14 +132,14 @@ export default {
     opacity: 0;
 }
 
-.technician-delete-container {
+.user-delete-container {
     border-top: 1px solid #dedede;
     width: 184px;
     background: white;
     color: var(--red-primary);
 }
 
-.technician-delete-container > span {
+.user-delete-container > span {
     display: block;
     text-align: center;
     padding-top: 8px;
@@ -155,7 +149,7 @@ export default {
     cursor: pointer;
 }
 
-.technician-delete-container > span > i {
+.user-delete-container > span > i {
     font-size: 16px;
     padding-right: 4px;
 }
@@ -170,42 +164,42 @@ export default {
     margin: 20px;
 }
 
-.technician-info {
+.user-info {
     margin-top: 8px;
     margin-right: 10px;
     margin-left: 10px;
 }
 
-.technician-type {
+.user-type {
     float: right;
     font-size: 12px;
     margin-right: 10px;
     color: #a4a4a4;
 }
 
-.technician-price {
+.user-price {
     color: var(--blue-primary);
     font-size: 15px;
 }
 
-.technician-stock {
+.user-stock {
     margin-top: 5px;
     display: block;
     color: #a4a4a4;
 }
 
-.technician-meta {
+.user-meta {
     padding-bottom: 7px;
 }
 
-.technician-grid-container {
+.user-grid-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
 }
 
-.technician-title {
+.user-title {
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 1em;
@@ -223,7 +217,7 @@ export default {
     text-overflow: ellipsis;
 }
 
-.technician-grid:hover {
+.user-grid:hover {
     /*height: 340px;*/
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     -webkit-transition: .1s;
@@ -232,11 +226,11 @@ export default {
     transition: .1s;
 }
 
-.technician-grid:hover .technician-delete-container {
+.user-grid:hover .user-delete-container {
     display: block;
 }
 
-.technician-grid {
+.user-grid {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     display: inline-block;
@@ -250,7 +244,7 @@ export default {
     /*flex-basis: calc(20% - 5px);*/
 }
 
-.technician-grid img {
+.user-grid img {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }

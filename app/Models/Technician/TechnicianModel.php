@@ -16,6 +16,7 @@ class TechnicianModel extends Model
 {
     protected $table = "users";
     protected $primaryKey = "id_users";
+    private $role = "teknisi";
 
     /**
      * Get technician list per 12
@@ -23,7 +24,7 @@ class TechnicianModel extends Model
      */
     public function getTechnicianList()
     {
-        return $this->with(["biodata"])->select(["id_users", "name", "username", "role"])->where("role", "teknisi")->paginate(12);
+        return $this->with(["biodata"])->select(["id_users", "name", "username", "role"])->where("role", $this->role)->paginate(12);
     }
 
     public function biodata()
@@ -40,7 +41,7 @@ class TechnicianModel extends Model
     public function retrieveByUsername($username)
     {
         return $this->with(["biodata"])->select(["id_users", "name", "username", "email"])->where([
-            "role" => "teknisi",
+            "role" => $this->role,
             "username" => $username
         ])->first();
     }
@@ -97,7 +98,7 @@ class TechnicianModel extends Model
     {
         return $this->where([
             "username"      => $username,
-            "role"          => "teknisi"
+            "role"          => $this->role
         ])->update([
             "password" => Hash::make("123456")
         ]);
@@ -116,7 +117,7 @@ class TechnicianModel extends Model
             "username"      => $data->username,
             "email"         => $data->email,
             "password"      => Hash::make(123456),
-            "role"          => "teknisi",
+            "role"          => $this->role,
             "created_at"    => now(),
             "updated_at"    => now()
         ]);
@@ -130,7 +131,7 @@ class TechnicianModel extends Model
      */
     public function search($q){
         return $this->with(["biodata"])->select(["id_users", "name", "username", "role"])
-                    ->where("role", "teknisi")->where(function ($query) use ($q) {
+                    ->where("role", $this->role)->where(function ($query) use ($q) {
                         // explode the array
                         $queryArray = explode(" ", $q);
                         for ($i = 0; $i < count($queryArray); $i++) {
@@ -157,6 +158,6 @@ class TechnicianModel extends Model
      */
     public function deleteTechnician($id)
     {
-        return $this->where("role", "teknisi")->where("id_users", $id)->delete();
+        return $this->where("role", $this->role)->where("id_users", $id)->delete();
     }
 }

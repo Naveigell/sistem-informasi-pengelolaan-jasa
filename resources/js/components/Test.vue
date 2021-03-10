@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container">
+    <div>
         Just A test component
     </div>
 </template>

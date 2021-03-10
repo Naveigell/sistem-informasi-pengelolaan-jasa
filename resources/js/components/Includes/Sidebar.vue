@@ -37,7 +37,7 @@ export default {
                         {
                             name: "Data Pelanggan",
                             isLink: true,
-                            to: this.$basepath
+                            to: this.$basepath + "user"
                         },
                         {
                             name: "Data Spare Part",

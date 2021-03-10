@@ -55,9 +55,45 @@ class RouteServiceProvider extends ServiceProvider
                 $this->mapAuthRoutes();
                 Route::middleware("auth.global")->group(function (){
                     $this->mapBiodataRoutes();
+                    $this->mapJasaRoutes();
                     $this->mapSparepartRoutes();
+                    $this->mapTechnicianRoutes();
                 });
             });
+    }
+
+    /**
+     * Define jasa routes
+     *
+     * @return void
+     */
+    public function mapJasaRoutes()
+    {
+        Route::prefix("/service")->group(function () {
+            Route::get("/", "Api\Jasa\JasaController@retrieveAll");
+            Route::post("/", "Api\Jasa\JasaController@insert");
+            Route::patch("/activate", "Api\Jasa\JasaController@activate");
+            Route::put("/", "Api\Jasa\JasaController@update");
+            Route::delete("/{id}", "Api\Jasa\JasaController@delete");
+        });
+    }
+
+    /**
+     * Define technician routes
+     *
+     * @return void
+     */
+    public function mapTechnicianRoutes()
+    {
+        Route::prefix("/technicians")->group(function () {
+            Route::get("/search", "Api\Technician\TechnicianController@search");
+            Route::get("/{page?}", "Api\Technician\TechnicianController@retrieveAll");
+            Route::get("/username/{username}", "Api\Technician\TechnicianController@retrieveByUsername");
+            Route::post("/", "Api\Technician\TechnicianController@create");
+            Route::delete("/{id}", "Api\Technician\TechnicianController@delete");
+            Route::put("/", "Api\Technician\TechnicianController@update");
+            Route::post("/reset-password", "Api\Technician\TechnicianController@resetPassword");
+        });
     }
 
     /**

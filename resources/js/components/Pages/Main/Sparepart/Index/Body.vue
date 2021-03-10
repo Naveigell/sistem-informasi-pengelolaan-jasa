@@ -109,7 +109,7 @@ export default {
                 currentPage: 1,
                 lastPage: 1,
                 totalPage: 1,
-                totalData: 1
+                totalData: 0
             },
             search: {
                 query: "",

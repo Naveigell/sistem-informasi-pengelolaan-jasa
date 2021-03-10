@@ -20,13 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Technician/TechnicianController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Technician/TechnicianController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestUpdate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestUpdate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Technician/TechnicianModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Technician/TechnicianModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Update/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Update/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Index/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Index/Lists/GridList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Index/Lists/GridList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Test.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +367,9 @@
       <workItem from="1615291023549" duration="2609000" />
       <workItem from="1615338518824" duration="3893000" />
       <workItem from="1615346590787" duration="1602000" />
-      <workItem from="1615350900804" duration="326000" />
+      <workItem from="1615350900804" duration="4847000" />
+      <workItem from="1615372733230" duration="1149000" />
+      <workItem from="1615377306229" duration="1863000" />
     </task>
     <servers />
   </component>
@@ -388,10 +397,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1607994222161" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1611721759926">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615377587123">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1611721759926" />
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1615377587123" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1608078580340">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -400,18 +409,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="429" y="135" key="NewPhpClassDialog/0.0.1536.824@0.0.1536.824" timestamp="1611483361940" />
-    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1611981028503">
+    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1615353341838">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1611981028503" />
+    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1615353341838" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1615257820534">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1615257820534" />
-    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1612091438792">
+    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1615355742845">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1612091438792" />
+    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1615355742845" />
+    <state x="561" y="271" key="scopes" timestamp="1615355473084">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="561" y="271" key="scopes/0.0.1536.824@0.0.1536.824" timestamp="1615355473084" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1612092537903">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -182,6 +182,12 @@ class TechnicianController extends Controller
         return json($data);
     }
 
+    /**
+     * Reset technician password, the password will automatically turn into '123456'
+     *
+     * @param TechnicianRequestResetPassword $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function resetPassword(TechnicianRequestResetPassword $request)
     {
         $username = auth("user")->user()->username;
@@ -200,7 +206,7 @@ class TechnicianController extends Controller
     }
 
     /**
-     * Update technician data (from admin)
+     * Update technician data (from admin), not by technician itself
      *
      * @param TechnicianRequestUpdate $request
      * @return \Illuminate\Http\JsonResponse|string|string[]
