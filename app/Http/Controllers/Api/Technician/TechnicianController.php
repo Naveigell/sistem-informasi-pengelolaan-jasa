@@ -14,6 +14,7 @@ use App\Models\Auth\AuthModel;
 use App\Models\Technician\TechnicianModel;
 use App\Models\User\Account\BiodataModel;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -198,9 +199,48 @@ class TechnicianController extends Controller
         return error(null, ["password" => ["Password yang anda masukkan salah"]], 422);
     }
 
+    /**
+     * Update technician data (from admin)
+     *
+     * @param TechnicianRequestUpdate $request
+     * @return \Illuminate\Http\JsonResponse|string|string[]
+     */
     public function update(TechnicianRequestUpdate $request)
     {
-        return json("work");
+        try {
+            $id = $this->technicians->getIdByUsername($request->username_before);
+            if ($id == null) {
+                return error(null, ["message" => "Data yang dimasukkan salah"], 400);
+            }
+
+            $this->technicians->updateDataByUsername($request->username_before, (object) $request->only(["name", "username"]));
+            $this->technicians->updateTechnicianBiodata($id->id_users, (object) $request->only(["address", "gender", "phone"]));
+            DB::commit();
+
+            return json(["message" => "Data teknisi berhasil diubah"], null, 204);
+        } catch (QueryException $exception) {
+            DB::rollBack();
+
+            list(, $code, $message) = $exception->errorInfo;
+            if ($code == 1062) {
+                $preg = preg_replace_callback("/^Duplicate entry '(.*)' for key '(.*)'$/", function ($data) {
+                    return $data[2];
+                }, $message);
+
+                // check if column has username or nomor,
+                // if they have it, add it into $data array
+                $data = [];
+                if (strpos($preg, "username") !== false) {
+                    $data["username"] = ["Username sudah digunakan"];
+                } else if (strpos($preg, "nomor") !== false) {
+                    $data["phone"] = ["Nomor hp sudah digunakan"];
+                }
+
+                return error(null, $data, 409);
+            }
+
+            return error(null, ["message" => "Terjadi masalah saat mengubah biodata"]);
+        }
     }
 
     /**

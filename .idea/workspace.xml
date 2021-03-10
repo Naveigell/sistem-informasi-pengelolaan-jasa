@@ -21,26 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Authentications/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Authentications/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/Path/PublicPath.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/Path/PublicPath.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Auth/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Auth/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Sparepart/SparepartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Sparepart/SparepartController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Auth/AuthModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Auth/AuthModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Sparepart/SparepartModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Sparepart/SparepartModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User/Account/BiodataModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User/Account/BiodataModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_115434_create_biodata_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_01_115434_create_biodata_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Technician/TechnicianController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Technician/TechnicianController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestUpdate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestUpdate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Technician/TechnicianModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Technician/TechnicianModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Update/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Technician/Update/Body.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -371,7 +357,10 @@
       <workItem from="1615267278551" duration="3250000" />
       <workItem from="1615277376171" duration="1736000" />
       <workItem from="1615284617389" duration="4164000" />
-      <workItem from="1615291023549" duration="1337000" />
+      <workItem from="1615291023549" duration="2609000" />
+      <workItem from="1615338518824" duration="3893000" />
+      <workItem from="1615346590787" duration="1602000" />
+      <workItem from="1615350900804" duration="326000" />
     </task>
     <servers />
   </component>

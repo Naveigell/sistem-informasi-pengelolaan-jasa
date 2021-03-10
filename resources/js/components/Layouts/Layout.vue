@@ -21,7 +21,7 @@ export default {
             default: null
         },
         username: {
-            type: [String, Object],
+            type: [String, String],
             default: null
         }
     }

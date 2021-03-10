@@ -1,13 +1,13 @@
 <template>
     <div class="app-container">
         <div class="body-container" style="margin-bottom: 20px; position:relative;">
-            <reset-password @response="openToast" @onAnimationEnd="closeModal(layouts.modals.resetPassword)" v-if="layouts.modals.resetPassword.active" :username="username" :icon="layouts.toast.data.icon" :background="layouts.toast.background" :title="layouts.toast.data.title" :timer="2000" :subtitle="layouts.toast.data.message"/>
-            <TopRightToast v-if="layouts.toast.open" @toastEnded="layouts.toast.open = false" :subtitle="'Reset password teknisi berhasil'" :title="'Success!'" :icon="'fa fa-check'" :background="this.$colors.successPrimary" :timer="2000"/>
+            <reset-password @response="openToast" @onAnimationEnd="closeModal(layouts.modals.resetPassword)" v-if="layouts.modals.resetPassword.active" :username="username"/>
+            <TopRightToast v-if="layouts.toast.open" @toastEnded="layouts.toast.open = false" :icon="layouts.toast.data.icon" :background="layouts.toast.background" :title="layouts.toast.data.title" :timer="2000" :subtitle="layouts.toast.data.message"/>
             <div class="biodata-role">
                 Teknisi
             </div>
             <h4>
-                <i class="fa fa-user" style="margin-right: 10px"></i>{{ $store.state.user.data == null ? "" : $store.state.user.data.name }}
+                <i class="fa fa-user" style="margin-right: 10px"></i>{{ user.data.name == null ? "" : user.data.name }}
             </h4>
             <div class="technician-container">
                 <div class="biodata-container-left">
@@ -23,31 +23,31 @@
                             <h5>Profil Teknisi</h5>
                             <div style="margin-top: 16px;">
                                 <div :class="{'field-container': errors.biodata.data.name === undefined, 'field-container-error': errors.biodata.data.name !== undefined}">
-                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.name" value="John Doe">
+                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.name" @focus="errors.biodata.data.name = undefined">
                                     <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Name</label>
                                 </div>
-                                <span v-if="error_test" class="sub-message-error">Nama harus diisi</span>
+                                <span v-if="errors.biodata.data.name !== undefined" class="sub-message-error">{{ errors.biodata.data.name[0] }}</span>
                             </div>
                             <div style="margin-top: 16px;">
                                 <div :class="{'field-container': errors.biodata.data.username === undefined, 'field-container-error': errors.biodata.data.username !== undefined}">
-                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.username" value="dityajelita12345">
+                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.username" @focus="errors.biodata.data.username = undefined">
                                     <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Username</label>
                                 </div>
-                                <span v-if="error_test" class="sub-message-error">Username harus diisi</span>
+                                <span v-if="errors.biodata.data.username !== undefined" class="sub-message-error">{{ errors.biodata.data.username[0] }}</span>
                             </div>
                             <div style="margin-top: 16px;">
                                 <div :class="{'field-container': errors.biodata.data.gender === undefined, 'field-container-error': errors.biodata.data.gender !== undefined}">
-                                    <select style="width: 80%; border: none; outline: none;" v-model="user.data.gender" id="gender">
+                                    <select style="width: 80%; border: none; outline: none;" v-model="user.data.gender" id="gender" @focus="errors.biodata.data.gender = undefined">
                                         <option value="Laki - laki">Laki - laki</option>
                                         <option value="Perempuan">Perempuan</option>
                                     </select>
                                     <label for="gender" style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Gender</label>
                                 </div>
-                                <span v-if="error_test" class="sub-message-error">Gender harus diisi</span>
+                                <span v-if="errors.biodata.data.gender !== undefined" class="sub-message-error">{{ errors.biodata.data.gender[0] }}</span>
                             </div>
                             <div style="margin-top: 16px;">
                                 <div :class="{'field-container': errors.biodata.data.address === undefined, 'field-container-error': errors.biodata.data.address !== undefined}">
-                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.address" value="Jln. Diponegoro Gang Mawar No.172">
+                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.address" @focus="errors.biodata.data.address = undefined">
                                     <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Alamat</label>
                                 </div>
                                 <span v-if="errors.biodata.data.address !== undefined" class="sub-message-error">{{ errors.biodata.data.address[0] }}</span>
@@ -55,16 +55,18 @@
 
                             <h5>Kontak Teknisi</h5>
                             <div style="margin-top: 16px;">
-                                <div :class="{'field-container': errors.biodata.data.email === undefined, 'field-container-error': errors.biodata.data.email !== undefined}">
-                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.email" value="john.doe@mail.com">
+                                <div class="field-disabled" :class="{'field-container': errors.biodata.data.email === undefined, 'field-container-error': errors.biodata.data.email !== undefined}">
+                                    <input type="text" disabled style="width: 80%; border: none; outline: none; cursor: no-drop;" v-model="user.data.email" @focus="errors.biodata.data.email = undefined">
                                     <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Email</label>
                                 </div>
+                                <span v-if="errors.biodata.data.email !== undefined" class="sub-message-error">{{ errors.biodata.data.email[0] }}</span>
                             </div>
                             <div style="margin-top: 16px;">
                                 <div :class="{'field-container': errors.biodata.data.phone === undefined, 'field-container-error': errors.biodata.data.phone !== undefined}">
-                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.phone" value="089999999999">
+                                    <input type="text" style="width: 80%; border: none; outline: none;" v-model="user.data.phone" @focus="errors.biodata.data.phone = undefined">
                                     <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">No Telp</label>
                                 </div>
+                                <span v-if="errors.biodata.data.phone !== undefined" class="sub-message-error">{{ errors.biodata.data.phone[0] }}</span>
                             </div>
                             <div class="button-update-container" style="margin-top: 20px">
                                 <button class="button-save-biodata" v-on:click="updateBiodata" style="margin-left: 3px">Simpan</button>
@@ -72,7 +74,6 @@
                                 <span v-if="errors.biodata.firstErrorMessage != null && button.saveActive" class="text-danger" style="margin-left: 20px;">{{ errors.biodata.firstErrorMessage }}</span>
                             </div>
                         </form>
-<!--                        <alert-success-biodata v-if="layouts.alerts.success.biodata.active" v-on:destroyed="layouts.alerts.success.biodata.active = false"/>-->
                     </div>
                 </div>
             </div>
@@ -108,12 +109,10 @@ export default {
         "reset-password": ResetPassword
     },
     mounted() {
-        this.error_test = false;
         this.retrieve();
     },
     data() {
         return {
-            error_test: false,
             user: {
                 data: {
                     id: "",
@@ -200,19 +199,25 @@ export default {
             });
         },
         async updateBiodata(){
-            this.$api.put(this.$endpoints.technicians.update).then((response) => {
-                console.log(response)
+            // take some needed data
+            const { id, address, email, gender, name, phone, username } = this.user.data;
+
+            this.$api.put(this.$endpoints.technicians.update, {
+                id, address, email, gender, name, phone, username,
+                username_before: this.username
+            }).then((response) => {
+                if (Math.floor(response.status / 100) === 2) {
+                    this.openToast({
+                        type: "success",
+                        message: "Data teknisi berhasil diubah"
+                    });
+                }
             }).catch((error) => {
-                if (error.response.status === 422) {
-                    this.error_test = true;
+                if (error.response.status === 422 || error.response.status === 409) {
                     this.errors.biodata.data = error.response.data.errors.messages;
                 }
-                console.error(error.response.data.errors)
             });
         },
-        resetPassword(){
-            console.log(1)
-        }
     }
 }
 </script>
@@ -254,6 +259,11 @@ export default {
     border-radius: 3px;
     width: 500px;
     position:relative;
+}
+
+.field-disabled {
+    opacity: .7;
+    cursor: no-drop;
 }
 
 .biodata-container-left {

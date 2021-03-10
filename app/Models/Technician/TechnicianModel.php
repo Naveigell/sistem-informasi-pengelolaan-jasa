@@ -5,6 +5,7 @@ namespace App\Models\Technician;
 use App\Models\User\Account\BiodataModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class TechnicianModel
@@ -44,6 +45,54 @@ class TechnicianModel extends Model
         ])->first();
     }
 
+    /**
+     * Get technician id by username
+     *
+     * @param $username
+     * @return TechnicianModel|Model|object|null
+     */
+    public function getIdByUsername($username)
+    {
+        return $this->select(["id_users"])->where("username", $username)->first();
+    }
+
+    /**
+     * Update technician user data by username
+     *
+     * @param $username
+     * @param object $data
+     * @return int
+     */
+    public function updateDataByUsername($username, object $data)
+    {
+        return $this->where("username", $username)->update([
+            "name"          => $data->name,
+            "username"      => $data->username,
+        ]);
+    }
+
+    /**
+     * Update technician biodata
+     *
+     * @param $id
+     * @param object $data
+     * @return int
+     */
+    public function updateTechnicianBiodata($id, object $data)
+    {
+        return DB::table("biodata")->where("biodata_id_users", $id)->update([
+            "jenis_kelamin"         => $data->gender,
+            "alamat"                => $data->address,
+            "nomor_hp"              => $data->phone
+        ]);
+    }
+
+    /**
+     * Update technician password by username
+     *
+     * @param $username
+     * @return int
+     */
     public function updatePasswordByUsername($username)
     {
         return $this->where([

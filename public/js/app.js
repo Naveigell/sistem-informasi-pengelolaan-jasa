@@ -2171,7 +2171,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": null
     },
     username: {
-      type: [String, Object],
+      type: [String, String],
       "default": null
     }
   }
@@ -5375,6 +5375,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5385,12 +5386,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     "reset-password": _Modals_ResetPassword__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   mounted: function mounted() {
-    this.error_test = false;
     this.retrieve();
   },
   data: function data() {
     return {
-      error_test: false,
       user: {
         data: {
           id: "",
@@ -5496,31 +5495,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2$user$data, id, address, email, gender, name, phone, username;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.$api.put(_this2.$endpoints.technicians.update).then(function (response) {
-                  console.log(response);
+                // take some needed data
+                _this2$user$data = _this2.user.data, id = _this2$user$data.id, address = _this2$user$data.address, email = _this2$user$data.email, gender = _this2$user$data.gender, name = _this2$user$data.name, phone = _this2$user$data.phone, username = _this2$user$data.username;
+
+                _this2.$api.put(_this2.$endpoints.technicians.update, {
+                  id: id,
+                  address: address,
+                  email: email,
+                  gender: gender,
+                  name: name,
+                  phone: phone,
+                  username: username,
+                  username_before: _this2.username
+                }).then(function (response) {
+                  if (Math.floor(response.status / 100) === 2) {
+                    _this2.openToast({
+                      type: "success",
+                      message: "Data teknisi berhasil diubah"
+                    });
+                  }
                 })["catch"](function (error) {
-                  if (error.response.status === 422) {
-                    _this2.error_test = true;
+                  if (error.response.status === 422 || error.response.status === 409) {
                     _this2.errors.biodata.data = error.response.data.errors.messages;
                   }
-
-                  console.error(error.response.data.errors);
                 });
 
-              case 1:
+              case 2:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
-    },
-    resetPassword: function resetPassword() {
-      console.log(1);
     }
   }
 });
@@ -5612,8 +5624,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.closeModal(true);
 
           _this.$emit("response", {
-            type: "failed",
-            message: "Reset password berhasil"
+            type: "success",
+            message: "Reset password teknisi berhasil"
           });
         }
       })["catch"](function (error) {
@@ -10891,7 +10903,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "\n.sub-message-error[data-v-53b72126] {\n    display: inline-block;\n    margin-top: 3px;\n    color: var(--error-primary);\n    -webkit-animation: submessageerror 0.2s ease-in-out;\n            animation: submessageerror 0.2s ease-in-out;\n}\n.statistic[data-v-53b72126] {\n    display: flex;\n    flex-direction: row;\n}\n.technician-container[data-v-53b72126] {\n    margin-top: 25px;\n    min-height: 100%;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    justify-content: space-between;\n    position: relative;\n}\n.field-container[data-v-53b72126] {\n    padding: 8px;\n    border: 1px solid #cfcfcf;\n    border-radius: 3px;\n    width: 500px;\n    position:relative;\n}\n.field-container-error[data-v-53b72126] {\n    padding: 8px;\n    border: 1px solid var(--error-primary);\n    border-radius: 3px;\n    width: 500px;\n    position:relative;\n}\n.biodata-container-left[data-v-53b72126] {\n    background: var(--body-primary);\n    display: block;\n    width: 310px;\n    height: 310px;\n    border: 1px solid #ddd;\n}\n.biodata-container-center[data-v-53b72126] {\n    display: block;\n    width: 100%;\n    height: 100%;\n}\n.image[data-v-53b72126] {\n    padding: 20px;\n}\n.image img[data-v-53b72126] {\n    width: 260px;\n    height: 260px;\n}\n.button-image[data-v-53b72126] {\n    width: 260px;\n    height: 35px;\n    margin-left: 20px;\n    border: 1px solid #ddd;\n    background: #fdfdfd;\n    outline: none;\n}\n.button-image[data-v-53b72126]:hover {\n    background: #f9f9f9;\n    transition: all .2s;\n    -o-transition: all .2s;\n    -moz-transition: all .2s;\n    -webkit-transition: all .2s;\n}\n.sub-image-text[data-v-53b72126]:nth-child(even) {\n    margin-top: 10px;\n}\n.sub-image-text[data-v-53b72126] {\n    color: #aaaaaa;\n    display: block;\n    font-size: 12px;\n    text-align: center;\n    margin-top: 0;\n}\n.button-update-biodata[data-v-53b72126], .button-save-biodata[data-v-53b72126], .button-update-password[data-v-53b72126] {\n    padding: 9px 17px;\n    outline: none;\n    border: none;\n    border-radius: 4px;\n}\n.biodata-role[data-v-53b72126] {\n    position: absolute;\n    top: 20px;\n    right: 30px;\n    font-weight: bold;\n    font-size: 20px;\n}\n.button-update-biodata[data-v-53b72126]:hover, .button-update-password[data-v-53b72126]:hover {\n    background: #dfdfdf;\n}\n.button-save-biodata[data-v-53b72126] {\n    background: #1d84ff;\n    color: #fff;\n}\n.button-save-biodata[data-v-53b72126]:hover {\n    background: #56a4ff;\n}\n.button-reset-password[data-v-53b72126] {\n    background: #dfdfdf;\n    color: blue;\n}\n.biodata-change[data-v-53b72126] {\n    color: var(--blue-primary);\n    cursor: pointer;\n}\n.biodata-change[data-v-53b72126]:hover {\n    color: #8ba2ff;\n}\n.biodata-title[data-v-53b72126], .biodata-value[data-v-53b72126] {\n    display: inline-block;\n    color: #222;\n}\n.biodata-title[data-v-53b72126] {\n    width: 220px;\n}\n.biodata-value[data-v-53b72126] {\n    width: 320px;\n    margin-left: 8px;\n}\n.biodata-container-center-form[data-v-53b72126] {\n    margin: 20px 20px 20px 30px;\n    width: 100%;\n    height: 100%;\n}\n.biodata-container-center-form h5[data-v-53b72126] {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: 40px;\n}\n.biodata-container-center-form h5[data-v-53b72126]:first-child {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: -14px;\n}\n.biodata-role[data-v-53b72126] {\n    position: absolute;\n    top: 20px;\n    right: 30px;\n    font-weight: bold;\n    font-size: 20px;\n}\nselect[data-v-53b72126]::-ms-expand {\n    display: none;\n}\nselect[data-v-53b72126] {\n    -webkit-appearance: none;\n    -moz-appearance: none;\n    text-indent: 1px;\n    text-overflow: '';\n}\n", ""]);
+exports.push([module.i, "\n.sub-message-error[data-v-53b72126] {\n    display: inline-block;\n    margin-top: 3px;\n    color: var(--error-primary);\n    -webkit-animation: submessageerror 0.2s ease-in-out;\n            animation: submessageerror 0.2s ease-in-out;\n}\n.statistic[data-v-53b72126] {\n    display: flex;\n    flex-direction: row;\n}\n.technician-container[data-v-53b72126] {\n    margin-top: 25px;\n    min-height: 100%;\n    width: 100%;\n    height: 100%;\n    display: flex;\n    justify-content: space-between;\n    position: relative;\n}\n.field-container[data-v-53b72126] {\n    padding: 8px;\n    border: 1px solid #cfcfcf;\n    border-radius: 3px;\n    width: 500px;\n    position:relative;\n}\n.field-container-error[data-v-53b72126] {\n    padding: 8px;\n    border: 1px solid var(--error-primary);\n    border-radius: 3px;\n    width: 500px;\n    position:relative;\n}\n.field-disabled[data-v-53b72126] {\n    opacity: .7;\n    cursor: no-drop;\n}\n.biodata-container-left[data-v-53b72126] {\n    background: var(--body-primary);\n    display: block;\n    width: 310px;\n    height: 310px;\n    border: 1px solid #ddd;\n}\n.biodata-container-center[data-v-53b72126] {\n    display: block;\n    width: 100%;\n    height: 100%;\n}\n.image[data-v-53b72126] {\n    padding: 20px;\n}\n.image img[data-v-53b72126] {\n    width: 260px;\n    height: 260px;\n}\n.button-image[data-v-53b72126] {\n    width: 260px;\n    height: 35px;\n    margin-left: 20px;\n    border: 1px solid #ddd;\n    background: #fdfdfd;\n    outline: none;\n}\n.button-image[data-v-53b72126]:hover {\n    background: #f9f9f9;\n    transition: all .2s;\n    -o-transition: all .2s;\n    -moz-transition: all .2s;\n    -webkit-transition: all .2s;\n}\n.sub-image-text[data-v-53b72126]:nth-child(even) {\n    margin-top: 10px;\n}\n.sub-image-text[data-v-53b72126] {\n    color: #aaaaaa;\n    display: block;\n    font-size: 12px;\n    text-align: center;\n    margin-top: 0;\n}\n.button-update-biodata[data-v-53b72126], .button-save-biodata[data-v-53b72126], .button-update-password[data-v-53b72126] {\n    padding: 9px 17px;\n    outline: none;\n    border: none;\n    border-radius: 4px;\n}\n.biodata-role[data-v-53b72126] {\n    position: absolute;\n    top: 20px;\n    right: 30px;\n    font-weight: bold;\n    font-size: 20px;\n}\n.button-update-biodata[data-v-53b72126]:hover, .button-update-password[data-v-53b72126]:hover {\n    background: #dfdfdf;\n}\n.button-save-biodata[data-v-53b72126] {\n    background: #1d84ff;\n    color: #fff;\n}\n.button-save-biodata[data-v-53b72126]:hover {\n    background: #56a4ff;\n}\n.button-reset-password[data-v-53b72126] {\n    background: #dfdfdf;\n    color: blue;\n}\n.biodata-change[data-v-53b72126] {\n    color: var(--blue-primary);\n    cursor: pointer;\n}\n.biodata-change[data-v-53b72126]:hover {\n    color: #8ba2ff;\n}\n.biodata-title[data-v-53b72126], .biodata-value[data-v-53b72126] {\n    display: inline-block;\n    color: #222;\n}\n.biodata-title[data-v-53b72126] {\n    width: 220px;\n}\n.biodata-value[data-v-53b72126] {\n    width: 320px;\n    margin-left: 8px;\n}\n.biodata-container-center-form[data-v-53b72126] {\n    margin: 20px 20px 20px 30px;\n    width: 100%;\n    height: 100%;\n}\n.biodata-container-center-form h5[data-v-53b72126] {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: 40px;\n}\n.biodata-container-center-form h5[data-v-53b72126]:first-child {\n    font-size: 16px;\n    font-weight: bold;\n    margin-top: -14px;\n}\n.biodata-role[data-v-53b72126] {\n    position: absolute;\n    top: 20px;\n    right: 30px;\n    font-weight: bold;\n    font-size: 20px;\n}\nselect[data-v-53b72126]::-ms-expand {\n    display: none;\n}\nselect[data-v-53b72126] {\n    -webkit-appearance: none;\n    -moz-appearance: none;\n    text-indent: 1px;\n    text-overflow: '';\n}\n", ""]);
 
 // exports
 
@@ -49370,14 +49382,7 @@ var render = function() {
       [
         _vm.layouts.modals.resetPassword.active
           ? _c("reset-password", {
-              attrs: {
-                username: _vm.username,
-                icon: _vm.layouts.toast.data.icon,
-                background: _vm.layouts.toast.background,
-                title: _vm.layouts.toast.data.title,
-                timer: 2000,
-                subtitle: _vm.layouts.toast.data.message
-              },
+              attrs: { username: _vm.username },
               on: {
                 response: _vm.openToast,
                 onAnimationEnd: function($event) {
@@ -49390,11 +49395,11 @@ var render = function() {
         _vm.layouts.toast.open
           ? _c("TopRightToast", {
               attrs: {
-                subtitle: "Reset password teknisi berhasil",
-                title: "Success!",
-                icon: "fa fa-check",
-                background: this.$colors.successPrimary,
-                timer: 2000
+                icon: _vm.layouts.toast.data.icon,
+                background: _vm.layouts.toast.background,
+                title: _vm.layouts.toast.data.title,
+                timer: 2000,
+                subtitle: _vm.layouts.toast.data.message
               },
               on: {
                 toastEnded: function($event) {
@@ -49414,11 +49419,8 @@ var render = function() {
             staticStyle: { "margin-right": "10px" }
           }),
           _vm._v(
-            _vm._s(
-              _vm.$store.state.user.data == null
-                ? ""
-                : _vm.$store.state.user.data.name
-            ) + "\n            "
+            _vm._s(_vm.user.data.name == null ? "" : _vm.user.data.name) +
+              "\n            "
           )
         ]),
         _vm._v(" "),
@@ -49477,9 +49479,12 @@ var render = function() {
                             border: "none",
                             outline: "none"
                           },
-                          attrs: { type: "text", value: "John Doe" },
+                          attrs: { type: "text" },
                           domProps: { value: _vm.user.data.name },
                           on: {
+                            focus: function($event) {
+                              _vm.errors.biodata.data.name = undefined
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -49511,9 +49516,9 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.error_test
+                    _vm.errors.biodata.data.name !== undefined
                       ? _c("span", { staticClass: "sub-message-error" }, [
-                          _vm._v("Nama harus diisi")
+                          _vm._v(_vm._s(_vm.errors.biodata.data.name[0]))
                         ])
                       : _vm._e()
                   ]),
@@ -49544,9 +49549,12 @@ var render = function() {
                             border: "none",
                             outline: "none"
                           },
-                          attrs: { type: "text", value: "dityajelita12345" },
+                          attrs: { type: "text" },
                           domProps: { value: _vm.user.data.username },
                           on: {
+                            focus: function($event) {
+                              _vm.errors.biodata.data.username = undefined
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -49578,9 +49586,9 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.error_test
+                    _vm.errors.biodata.data.username !== undefined
                       ? _c("span", { staticClass: "sub-message-error" }, [
-                          _vm._v("Username harus diisi")
+                          _vm._v(_vm._s(_vm.errors.biodata.data.username[0]))
                         ])
                       : _vm._e()
                   ]),
@@ -49615,6 +49623,9 @@ var render = function() {
                             },
                             attrs: { id: "gender" },
                             on: {
+                              focus: function($event) {
+                                _vm.errors.biodata.data.gender = undefined
+                              },
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
                                   .call($event.target.options, function(o) {
@@ -49664,9 +49675,9 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.error_test
+                    _vm.errors.biodata.data.gender !== undefined
                       ? _c("span", { staticClass: "sub-message-error" }, [
-                          _vm._v("Gender harus diisi")
+                          _vm._v(_vm._s(_vm.errors.biodata.data.gender[0]))
                         ])
                       : _vm._e()
                   ]),
@@ -49697,12 +49708,12 @@ var render = function() {
                             border: "none",
                             outline: "none"
                           },
-                          attrs: {
-                            type: "text",
-                            value: "Jln. Diponegoro Gang Mawar No.172"
-                          },
+                          attrs: { type: "text" },
                           domProps: { value: _vm.user.data.address },
                           on: {
+                            focus: function($event) {
+                              _vm.errors.biodata.data.address = undefined
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -49747,6 +49758,7 @@ var render = function() {
                     _c(
                       "div",
                       {
+                        staticClass: "field-disabled",
                         class: {
                           "field-container":
                             _vm.errors.biodata.data.email === undefined,
@@ -49767,11 +49779,15 @@ var render = function() {
                           staticStyle: {
                             width: "80%",
                             border: "none",
-                            outline: "none"
+                            outline: "none",
+                            cursor: "no-drop"
                           },
-                          attrs: { type: "text", value: "john.doe@mail.com" },
+                          attrs: { type: "text", disabled: "" },
                           domProps: { value: _vm.user.data.email },
                           on: {
+                            focus: function($event) {
+                              _vm.errors.biodata.data.email = undefined
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -49801,7 +49817,13 @@ var render = function() {
                           [_vm._v("Email")]
                         )
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.biodata.data.email !== undefined
+                      ? _c("span", { staticClass: "sub-message-error" }, [
+                          _vm._v(_vm._s(_vm.errors.biodata.data.email[0]))
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticStyle: { "margin-top": "16px" } }, [
@@ -49830,9 +49852,12 @@ var render = function() {
                             border: "none",
                             outline: "none"
                           },
-                          attrs: { type: "text", value: "089999999999" },
+                          attrs: { type: "text" },
                           domProps: { value: _vm.user.data.phone },
                           on: {
+                            focus: function($event) {
+                              _vm.errors.biodata.data.phone = undefined
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -49862,7 +49887,13 @@ var render = function() {
                           [_vm._v("No Telp")]
                         )
                       ]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.biodata.data.phone !== undefined
+                      ? _c("span", { staticClass: "sub-message-error" }, [
+                          _vm._v(_vm._s(_vm.errors.biodata.data.phone[0]))
+                        ])
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c(

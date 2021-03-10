@@ -71,8 +71,8 @@ export default {
                 if (response.status === 204) {
                     this.closeModal(true);
                     this.$emit("response", {
-                        type: "failed",
-                        message: "Reset password berhasil",
+                        type: "success",
+                        message: "Reset password teknisi berhasil",
                     });
                 }
             }).catch((error) => {
