@@ -17,7 +17,7 @@
                             </div>
                         </div>
                     </div>
-                    <button @click="searchTechnicians()" class="button-search button-success-primary-md">Cari</button>
+                    <button @click="searchUsers()" class="button-search button-success-primary-md">Cari</button>
                 </div>
                 <div class="user-tools">
                     <div class="user-tools-left">
@@ -58,18 +58,22 @@
                 </div>
             </div>
         </div>
+        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="openToast"/>
+        <TopRightToast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
     </div>
 </template>
 
 <script>
-import Test from "../../../../Test";
 import GridList from "./Lists/GridList";
+import Insert from "./Modals/Insert";
+import TopRightToast from "../../../../Toasts/TopRightToast";
 
 export default {
     name: "Body",
     components: {
-        Test,
-        "grid": GridList
+        "grid": GridList,
+        Insert,
+        TopRightToast
     },
     mounted() {
         this.retrieveUrl(this.url.endpoints.current);
@@ -168,7 +172,7 @@ export default {
             //
 
             if (this.search.onSearch) {
-                this.retrieveUrl(this.$endpoints.technicians.search, {
+                this.retrieveUrl(this.$endpoints.users.search, {
                     params: {
                         q: this.search.query,
                         p: index
@@ -178,6 +182,34 @@ export default {
                 let url = this.$url.generateUrl(this.url.uri + "/:page");
 
                 this.retrieveUrl(url(index));
+            }
+        },
+        searchUsers(){
+            this.retrieveUrl(this.$endpoints.users.search, {
+                params: {
+                    q: this.search.query,
+                }
+            });
+        },
+        closeModal(modal) {
+            modal.open = false;
+        },
+        openToast(obj){
+            this.toast.data.message = obj.message;
+
+            if (obj.type === "failed") {
+                this.toast.data.title = "Failed!";
+                this.toast.data.icon = "fa fa-times-circle";
+                this.toast.background = this.$colors.redPrimary;
+            } else if (obj.type === "success") {
+                this.toast.background = this.$colors.successPrimary;
+            }
+
+            this.toast.open = true;
+
+            // reload if child component need reload
+            if (obj.reload) {
+                this.reload();
             }
         },
     }

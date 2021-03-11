@@ -33,7 +33,9 @@ const endpoints = {
         reset_password: "/technicians/reset-password",
     },
     users: {
-        data: "/users"
+        data: "/users",
+        search: "/users/search",
+        insert: "/users",
     }
 }
 

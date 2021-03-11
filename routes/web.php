@@ -46,6 +46,8 @@ Route::group(['prefix' => '/api/v1'], function () {
 //        Route::delete("/{id}", "Api\Technician\TechnicianController@delete");
 //        Route::put("/", "Api\Technician\TechnicianController@update");
 //        Route::post("/reset-password", "Api\Technician\TechnicianController@resetPassword");
+        Route::get("/search", "Api\User\UserController@search");
         Route::get("/{page?}", "Api\User\UserController@retrieveAll");
+        Route::post("/", "Api\User\UserController@create");
     });
 });
