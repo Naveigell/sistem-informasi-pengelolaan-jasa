@@ -250,7 +250,7 @@ class TechnicianController extends Controller
     }
 
     /**
-     * Delete sparepart
+     * Delete technician
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -276,7 +276,7 @@ class TechnicianController extends Controller
             }
         } catch (\Exception $exception) {}
 
-        return json($image, null, 204);
+        return json([], null, 204);
     }
 
     /**

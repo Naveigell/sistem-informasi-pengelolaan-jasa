@@ -73,4 +73,13 @@ class UserModel extends Model
 
             })->paginate(12);
     }
+
+    /**
+     * @param $id
+     * @return int
+     */
+    public function deleteUser($id)
+    {
+        return $this->where("role", $this->role)->where("id_users", $id)->delete();
+    }
 }

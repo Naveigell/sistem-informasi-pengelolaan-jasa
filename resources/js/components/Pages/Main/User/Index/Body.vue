@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-                <grid v-bind:users="users" :on-delete-mode="mode.onDeleteMode"/>
+                <grid @reload="reload" v-bind:users="users" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -161,7 +161,6 @@ export default {
                 self.paginator.totalData    = res.total;
 
                 self.search.onSearch        = res.search;
-                console.log(response);
             }).catch(function (error) {
                 console.error(error)
             });

@@ -20,12 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Technician/TechnicianController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Technician/TechnicianController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/User/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/User/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User/UserModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/User/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/User/Index/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/User/Index/Lists/GridList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/User/Index/Lists/GridList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/User/Index/Modals/Insert.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/User/Index/Modals/Insert.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -364,7 +366,8 @@
       <workItem from="1615350900804" duration="4847000" />
       <workItem from="1615372733230" duration="1149000" />
       <workItem from="1615377306229" duration="3573000" />
-      <workItem from="1615431221958" duration="2670000" />
+      <workItem from="1615431221958" duration="4303000" />
+      <workItem from="1615442642854" duration="1071000" />
     </task>
     <servers />
   </component>

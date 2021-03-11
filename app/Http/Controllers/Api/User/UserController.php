@@ -104,6 +104,36 @@ class UserController extends Controller
     }
 
     /**
+     * Delete user
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $image = $this->biodata->retrieveProfilePicture($id);
+            $delete = $this->user->deleteUser($id);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return error(null, ["server" => "Hapus user gagal"], 500);
+        }
+
+        try {
+            if ($delete && $image != null) {
+                // image is not an array, so we add it into an array
+                $this->deleteMultipleImages("/img/users", [$image->profile_picture]);
+            }
+        } catch (\Exception $exception) {}
+
+        return json([], null, 204);
+    }
+
+    /**
      * Search Users by name
      *
      * @param UserRequestSearch $request

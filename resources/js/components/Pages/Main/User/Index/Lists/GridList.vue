@@ -42,9 +42,16 @@
 </template>
 
 <script>
+import Toast from "../../../../../Toasts/TopRightToast";
+import Delete from "../Modals/Delete";
+
 export default {
     name: "GridList",
     props: ["users", "onDeleteMode"],
+    components: {
+        "delete-modal": Delete,
+        "toast": Toast
+    },
     data() {
         return {
             data: {
@@ -85,13 +92,12 @@ export default {
             }
 
             this.toast.open = true;
+
+            if (obj.reload) {
+                this.$emit("reload");
+            }
         },
         onDeleteModalAnimationEnd(){
-            const self = this;
-            const id = setTimeout(function () {
-                self.users.splice(self.data.index, 1);
-                clearTimeout(id);
-            }, 800);
         }
     }
 }

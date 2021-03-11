@@ -36,6 +36,7 @@ const endpoints = {
         data: "/users",
         search: "/users/search",
         insert: "/users",
+        delete: "/users"
     }
 }
 

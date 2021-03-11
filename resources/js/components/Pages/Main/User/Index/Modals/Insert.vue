@@ -112,7 +112,6 @@ export default {
         },
         save(){
             this.$api.post(this.$endpoints.users.insert, this.data).then((response) => {
-                console.log(response.data)
                 this.emitToParent("success", "Teknisi berhasil ditambahkan", true, true);
             }).catch((error) => {
                 const data = error.response.data;

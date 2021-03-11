@@ -49,5 +49,6 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/search", "Api\User\UserController@search");
         Route::get("/{page?}", "Api\User\UserController@retrieveAll");
         Route::post("/", "Api\User\UserController@create");
+        Route::delete("/{id}", "Api\User\UserController@delete");
     });
 });
