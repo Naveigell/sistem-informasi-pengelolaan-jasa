@@ -15,7 +15,20 @@
 .body-container {
     background: white;
     border: 1px solid #e5e5e5;
+    /*border: 1px solid #edf0f2;*/
     padding: 20px;
+}
+
+.elevation-1 {
+    box-shadow: 0 0 1px #d4cece;
+}
+
+.elevation-2 {
+    box-shadow: 0 0 2px #d4cece;
+}
+
+.elevation-3 {
+    box-shadow: 0 0 3px #d4cece;
 }
 
 .button-success-primary-md {

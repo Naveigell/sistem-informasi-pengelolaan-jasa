@@ -9,7 +9,8 @@ window.Vue = require('vue');
 
 import Vuex from "vuex";
 
-import String from "./prototypes/string";
+import "./prototypes/string";
+import "./prototypes/array";
 
 /**
  * The following block of code may be used to automatically register your

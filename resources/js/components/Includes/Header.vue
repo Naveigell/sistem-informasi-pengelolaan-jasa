@@ -15,11 +15,19 @@
                 </span>
             </div>
             <div class="separator"></div>
-            <div class="account-container">
-                <div class="account">
-                    <img id="account-img" v-bind:src="$basepath + 'img/users/default/placeholder.png'" alt="">
+            <div style="position: relative;" @mouseleave="dropdown.open = false" @mouseover="dropdown.open = true">
+                <div class="account-container">
+                    <div class="account">
+                        <img id="account-img" v-bind:src="$basepath + 'img/users/default/placeholder.png'" alt="">
+                    </div>
+                    <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
                 </div>
-                <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
+                <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
+                    <span>Settings</span>
+                    <span>Biodata</span>
+                    <div class="account-dropdown-separator"></div>
+                    <span>Logout &nbsp <i class="fa fa-sign-out"></i></span>
+                </div>
             </div>
         </div>
     </header>
@@ -32,13 +40,12 @@ export default {
         return {
             user: {
                 data: null
+            },
+            dropdown: {
+                open: false
             }
         };
     },
-    mounted() {
-        const self = this;
-
-    }
 }
 </script>
 
@@ -126,5 +133,36 @@ header {
     justify-content: center;
     align-items: center;
     border-radius: 30px;
+}
+
+.account-dropdown-container {
+    position: absolute;
+    padding: 8px;
+    top: 42px;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px 1px #d4cece;
+    width: 100%;
+}
+
+.account-dropdown-container > span {
+    font-family: InterRegular, Arial, sans-serif;
+    font-weight: 600;
+    padding: 8px;
+    color: #444444;
+    cursor: pointer;
+    display: block;
+    border-radius: 3px;
+}
+
+.account-dropdown-container > span:hover {
+    background-color: #edf0f2;
+}
+
+.account-dropdown-separator {
+    height: 2px;
+    background-color: #edf0f2;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 </style>

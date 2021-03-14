@@ -214,7 +214,7 @@ input[type="checkbox"] {
     display: flex;
     justify-content: center;
     padding: 60px;
-    box-shadow: 0px 0px 2px #8d8989;
+    box-shadow: 0 0 2px #8d8989;
     background: white;
 }
 

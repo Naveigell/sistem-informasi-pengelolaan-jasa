@@ -11,6 +11,7 @@
     <title>Oneya Solutions Login</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/root.css') }}">
     <link rel="stylesheet" href="{{ asset('css/all.css') }}">
