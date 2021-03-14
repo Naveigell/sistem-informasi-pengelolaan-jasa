@@ -18,15 +18,15 @@
             <div style="position: relative;" @mouseleave="dropdown.open = false" @mouseover="dropdown.open = true">
                 <div class="account-container">
                     <div class="account">
-                        <img id="account-img" v-bind:src="$basepath + 'img/users/default/placeholder.png'" alt="">
+                        <img v-if="$store.state.user.picture != null" id="account-img" v-bind:src="$store.state.user.picture" alt="">
                     </div>
                     <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
                 </div>
                 <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
-                    <span>Settings</span>
-                    <span>Biodata</span>
+                    <a href="#">Settings</a>
+                    <a href="#">Biodata</a>
                     <div class="account-dropdown-separator"></div>
-                    <span>Logout &nbsp <i class="fa fa-sign-out"></i></span>
+                    <a @click="logout">Logout &nbsp <i class="fa fa-sign-out"></i></a>
                 </div>
             </div>
         </div>
@@ -46,6 +46,15 @@ export default {
             }
         };
     },
+    methods: {
+        logout(){
+            this.$api.get(this.$endpoints.auth.logout).then((response) => {
+                window.location.reload();
+            }).catch((error) => {
+                console.error(error)
+            });
+        }
+    }
 }
 </script>
 
@@ -145,7 +154,7 @@ header {
     width: 100%;
 }
 
-.account-dropdown-container > span {
+.account-dropdown-container > a {
     font-family: InterRegular, Arial, sans-serif;
     font-weight: 600;
     padding: 8px;
@@ -153,9 +162,10 @@ header {
     cursor: pointer;
     display: block;
     border-radius: 3px;
+    text-decoration: none;
 }
 
-.account-dropdown-container > span:hover {
+.account-dropdown-container > a:hover {
     background-color: #edf0f2;
 }
 

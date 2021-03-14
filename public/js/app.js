@@ -2069,6 +2069,15 @@ __webpack_require__.r(__webpack_exports__);
         open: false
       }
     };
+  },
+  methods: {
+    logout: function logout() {
+      this.$api.get(this.$endpoints.auth.logout).then(function (response) {
+        window.location.reload();
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
   }
 });
 
@@ -27663,7 +27672,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nheader[data-v-0d531f54] {\n    height: var(--header-height);\n    display: flex;\n    position: fixed;\n    top: 0;\n    left: 0;\n    z-index: 10;\n    width: 100%;\n    justify-content: space-between;\n    box-shadow: 0 0 2px 2px #ececec;\n    background: white;\n}\n.separator[data-v-0d531f54] {\n    width: 1px;\n    height: 35px;\n    background: #dedede;\n    margin-right: 20px;\n}\n.username[data-v-0d531f54] {\n    font-weight: bold;\n    margin-right: 14px;\n}\n.tools-container[data-v-0d531f54] {\n    display: flex;\n    justify-content: space-between;\n    margin-right: 20px;\n}\n.tools-container i[data-v-0d531f54] {\n    font-size: 18px;\n}\n.tools-container span[data-v-0d531f54]:hover {\n    background: #f0f0f0;\n}\n.tools-container span[data-v-0d531f54]:nth-child(1) {\n    margin-right: 10px;\n}\n.tools-container span[data-v-0d531f54] {\n    border-radius: 40px;\n    cursor: pointer;\n    width: 40px;\n    height: 40px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n#account-img[data-v-0d531f54] {\n    width: 30px;\n    height: 30px;\n    border-radius: 50%;\n    margin-right: 10px;\n}\n.left-side[data-v-0d531f54] {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.right-side[data-v-0d531f54] {\n    display: flex;\n    align-items: center;\n    margin-right: 40px;\n}\n.account-container[data-v-0d531f54]:hover {\n    background: #f0f0f0;\n}\n.account-container[data-v-0d531f54] {\n    padding: 5px;\n    cursor: pointer;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    border-radius: 30px;\n}\n.account-dropdown-container[data-v-0d531f54] {\n    position: absolute;\n    padding: 8px;\n    top: 42px;\n    background-color: #fff;\n    border-radius: 3px;\n    box-shadow: 0 0 5px 1px #d4cece;\n    width: 100%;\n}\n.account-dropdown-container > span[data-v-0d531f54] {\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    padding: 8px;\n    color: #444444;\n    cursor: pointer;\n    display: block;\n    border-radius: 3px;\n}\n.account-dropdown-container > span[data-v-0d531f54]:hover {\n    background-color: #edf0f2;\n}\n.account-dropdown-separator[data-v-0d531f54] {\n    height: 2px;\n    background-color: #edf0f2;\n    margin-top: 8px;\n    margin-bottom: 8px;\n}\n", ""]);
+exports.push([module.i, "\nheader[data-v-0d531f54] {\n    height: var(--header-height);\n    display: flex;\n    position: fixed;\n    top: 0;\n    left: 0;\n    z-index: 10;\n    width: 100%;\n    justify-content: space-between;\n    box-shadow: 0 0 2px 2px #ececec;\n    background: white;\n}\n.separator[data-v-0d531f54] {\n    width: 1px;\n    height: 35px;\n    background: #dedede;\n    margin-right: 20px;\n}\n.username[data-v-0d531f54] {\n    font-weight: bold;\n    margin-right: 14px;\n}\n.tools-container[data-v-0d531f54] {\n    display: flex;\n    justify-content: space-between;\n    margin-right: 20px;\n}\n.tools-container i[data-v-0d531f54] {\n    font-size: 18px;\n}\n.tools-container span[data-v-0d531f54]:hover {\n    background: #f0f0f0;\n}\n.tools-container span[data-v-0d531f54]:nth-child(1) {\n    margin-right: 10px;\n}\n.tools-container span[data-v-0d531f54] {\n    border-radius: 40px;\n    cursor: pointer;\n    width: 40px;\n    height: 40px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n#account-img[data-v-0d531f54] {\n    width: 30px;\n    height: 30px;\n    border-radius: 50%;\n    margin-right: 10px;\n}\n.left-side[data-v-0d531f54] {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.right-side[data-v-0d531f54] {\n    display: flex;\n    align-items: center;\n    margin-right: 40px;\n}\n.account-container[data-v-0d531f54]:hover {\n    background: #f0f0f0;\n}\n.account-container[data-v-0d531f54] {\n    padding: 5px;\n    cursor: pointer;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    border-radius: 30px;\n}\n.account-dropdown-container[data-v-0d531f54] {\n    position: absolute;\n    padding: 8px;\n    top: 42px;\n    background-color: #fff;\n    border-radius: 3px;\n    box-shadow: 0 0 5px 1px #d4cece;\n    width: 100%;\n}\n.account-dropdown-container > a[data-v-0d531f54] {\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    padding: 8px;\n    color: #444444;\n    cursor: pointer;\n    display: block;\n    border-radius: 3px;\n    text-decoration: none;\n}\n.account-dropdown-container > a[data-v-0d531f54]:hover {\n    background-color: #edf0f2;\n}\n.account-dropdown-separator[data-v-0d531f54] {\n    height: 2px;\n    background-color: #edf0f2;\n    margin-top: 8px;\n    margin-bottom: 8px;\n}\n", ""]);
 
 // exports
 
@@ -83645,13 +83654,15 @@ var render = function() {
             [
               _c("div", { staticClass: "account-container" }, [
                 _c("div", { staticClass: "account" }, [
-                  _c("img", {
-                    attrs: {
-                      id: "account-img",
-                      src: _vm.$basepath + "img/users/default/placeholder.png",
-                      alt: ""
-                    }
-                  })
+                  _vm.$store.state.user.picture != null
+                    ? _c("img", {
+                        attrs: {
+                          id: "account-img",
+                          src: _vm.$store.state.user.picture,
+                          alt: ""
+                        }
+                      })
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("span", {
@@ -83681,13 +83692,16 @@ var render = function() {
                       }
                     },
                     [
-                      _c("span", [_vm._v("Settings")]),
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("Settings")]),
                       _vm._v(" "),
-                      _c("span", [_vm._v("Biodata")]),
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("Biodata")]),
                       _vm._v(" "),
                       _c("div", { staticClass: "account-dropdown-separator" }),
                       _vm._v(" "),
-                      _vm._m(2)
+                      _c("a", { on: { click: _vm.logout } }, [
+                        _vm._v("Logout   "),
+                        _c("i", { staticClass: "fa fa-sign-out" })
+                      ])
                     ]
                   )
                 : _vm._e()
@@ -83716,15 +83730,6 @@ var staticRenderFns = [
       _c("span", {}, [_c("i", { staticClass: "glyphicon glyphicon-th" })]),
       _vm._v(" "),
       _c("span", {}, [_c("i", { staticClass: "fa fa-bell" })])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _vm._v("Logout   "),
-      _c("i", { staticClass: "fa fa-sign-out" })
     ])
   }
 ]
@@ -109696,6 +109701,7 @@ String.prototype.capitalize = function () {
 var endpoints = {
   auth: {
     login: "/auth/login",
+    logout: "/auth/logout",
     check: "/auth/check",
     data: "/auth/session/data"
   },
@@ -109770,7 +109776,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
     user: {
       data: null,
-      check: false
+      check: false,
+      picture: null
     }
   },
   getters: {
@@ -109791,16 +109798,25 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
                   headers: {
                     'Content-Type': 'application/json'
                   }
-                });
+                }); // get user data
+
                 _context.next = 3;
                 return axiosInstance.get('/auth/session/data').then(function (response) {
                   state.user.data = response.data.body;
                 })["catch"](function () {});
 
               case 3:
+                _context.next = 5;
+                return axiosInstance.get('/biodata/image').then(function (response) {
+                  state.user.picture = response.data.body.picture;
+                })["catch"](function (error) {
+                  console.error(error);
+                });
+
+              case 5:
                 state.user.check = true;
 
-              case 4:
+              case 6:
               case "end":
                 return _context.stop();
             }

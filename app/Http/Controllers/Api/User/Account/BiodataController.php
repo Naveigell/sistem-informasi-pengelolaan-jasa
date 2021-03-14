@@ -17,11 +17,11 @@ class BiodataController extends Controller {
 
     use Random;
 
-    private $biodataTable;
+    private $biodata;
 
     public function __construct()
     {
-        $this->biodataTable = new BiodataModel();
+        $this->biodata = new BiodataModel();
     }
 
     public function index() {
@@ -35,7 +35,7 @@ class BiodataController extends Controller {
      * @return JsonResponse
      */
     public function updateBiodata(BiodataUpdateRequest $request) {
-        $code = $this->biodataTable->updateBiodata(auth("user")->id(), $request->alamat, $request->email, $request->jenis_kelamin, $request->name, $request->nomor_hp, $request->username);
+        $code = $this->biodata->updateBiodata(auth("user")->id(), $request->alamat, $request->email, $request->jenis_kelamin, $request->name, $request->nomor_hp, $request->username);
         $message = ["biodata" => "Biodata berhasil diubah"];
 
         // check if username, email or phone are duplicated
@@ -53,7 +53,7 @@ class BiodataController extends Controller {
      */
     public function retrieveBiodata() {
         $user       = auth("user");
-        $biodata    = $this->biodataTable->retrieveBiodata($user->id());
+        $biodata    = $this->biodata->retrieveBiodata($user->id());
 
         if (is_null($biodata)) {
             return error(null, ["biodata" => "Data tidak ditemukan"], 404);
@@ -90,11 +90,11 @@ class BiodataController extends Controller {
                 $userId     = auth("user")->id();
                 $newImage   = $this->addImagePath($imagename);
                 // retrieve old image before profile updated
-                $oldImage   = $this->addImagePath($this->biodataTable->retrieveProfilePicture(auth("user")->id())->profile_picture);
+                $oldImage   = $this->addImagePath($this->biodata->retrieveProfilePicture(auth("user")->id())->profile_picture);
 
                 $this->deleteOldImage($oldImage);
 
-                if ($this->biodataTable->updateProfilePicture($userId, $imagename)) {
+                if ($this->biodata->updateProfilePicture($userId, $imagename)) {
                     return json([
                         "new_image" => $newImage,
                         "old_image" => $oldImage
@@ -107,14 +107,30 @@ class BiodataController extends Controller {
     }
 
     /**
+     * Get profile picture (to display in header)
+     *
+     * @return JsonResponse
+     */
+    public function getProfilePicture()
+    {
+        $data = $this->biodata->retrieveProfilePicture(auth("user")->id());
+        if ($data == null)
+            return error(null, ["message" => "Terjadi masalah saat memuat foto profile"], 404);
+
+        return json(["picture" => $this->addImagePath($data->profile_picture)]);
+    }
+
+    /**
      * check if file exists, then delete
      *
      * @param $imagename
      */
     private function deleteOldImage($imagename) {
-        if (file_exists(public_path("/img/users/$imagename"))) {
-            unlink(public_path("/img/users/$imagename"));
-        }
+        try {
+            if (file_exists(public_path("/img/users/$imagename"))) {
+                unlink(public_path("/img/users/$imagename"));
+            }
+        } catch (\Exception $exception) {}
     }
 
     /**

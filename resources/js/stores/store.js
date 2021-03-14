@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     state: {
         user: {
             data: null,
-            check: false
+            check: false,
+            picture: null
         }
     },
     getters: {
@@ -26,9 +27,17 @@ export const store = new Vuex.Store({
                 }
             });
 
+            // get user data
             await axiosInstance.get('/auth/session/data').then(function (response) {
                 state.user.data = response.data.body;
             }).catch(function (){});
+
+            // get user profile image
+            await axiosInstance.get('/biodata/image').then((response) => {
+                state.user.picture = response.data.body.picture;
+            }).catch((error) => {
+                console.error(error)
+            });
 
             state.user.check = true;
         },

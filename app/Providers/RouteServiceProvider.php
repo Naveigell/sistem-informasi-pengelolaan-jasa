@@ -122,6 +122,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix("/biodata")->group(function (){
             Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
+            Route::get('/image', 'Api\User\Account\BiodataController@getProfilePicture');
             Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
             Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
         });
@@ -133,9 +134,12 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     public function mapAuthRoutes(){
-        Route::post('/auth/login', 'Api\Auth\LoginController@login');
-        Route::get('/auth/check', 'Api\Auth\AuthController@check');
-        Route::get('/auth/session/data', 'Api\Auth\AuthController@sessionData');
+        Route::prefix("/auth")->group(function () {
+            Route::post('/login', 'Api\Auth\LoginController@login');
+            Route::get('/logout', 'Api\Auth\AuthController@logout');
+            Route::get('/check', 'Api\Auth\AuthController@check');
+            Route::get('/session/data', 'Api\Auth\AuthController@sessionData');
+        });
     }
 
     /**

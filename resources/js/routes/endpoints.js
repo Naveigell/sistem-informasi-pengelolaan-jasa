@@ -1,6 +1,7 @@
 const endpoints = {
     auth: {
         login: "/auth/login",
+        logout: "/auth/logout",
         check: "/auth/check",
         data: "/auth/session/data"
     },

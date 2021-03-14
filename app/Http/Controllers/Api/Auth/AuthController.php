@@ -35,4 +35,16 @@ class AuthController extends Controller
             "role"          => $user->role
         ]);
     }
+
+    /**
+     * Do logout
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth("user")->logout();
+
+        return $this->check();
+    }
 }
