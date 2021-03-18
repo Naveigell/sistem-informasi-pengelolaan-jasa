@@ -22,7 +22,8 @@
 </head>
 <body>
     <div id="app">
-        <login-and-dashboard-component></login-and-dashboard-component>
+{{--        <login-and-dashboard-component></login-and-dashboard-component>--}}
+        <layout></layout>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

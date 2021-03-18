@@ -6,17 +6,15 @@
                     <span v-if="!sidebar.isLink">
                         <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
                     </span>
-                    <a v-else v-bind:href="sidebar.to">
+                    <router-link :to="{ path: sidebar.to }" v-else>
                         <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
-                    </a>
+                    </router-link>
                     <span class="sidebar-title-caret" v-if="sidebar.hasDropdown">
                         <i class="fa fa-caret-down"></i>
                     </span>
                 </span>
                 <div class="sidebar-menu" v-if="sidebar.hasDropdown">
-                    <a :href="link.to == null ? '#' : link.to" class="menu" v-for="link in sidebar._links">
-                        {{ link.name }}
-                    </a>
+                    <router-link :key="index" class="menu" v-for="(link, index) in sidebar._links" :to="{ path: link.to }">{{ link.name }}</router-link>
                 </div>
             </div>
         </div>
@@ -35,19 +33,24 @@ export default {
                     hasDropdown: true,
                     _links: [
                         {
+                            name: "Dashboard",
+                            isLink: true,
+                            to: "/"
+                        },
+                        {
                             name: "Data Pelanggan",
                             isLink: true,
-                            to: this.$basepath + "user"
+                            to: "/user"
                         },
                         {
                             name: "Data Spare Part",
                             isLink: true,
-                            to: this.$basepath + "sparepart"
+                            to: "/sparepart"
                         },
                         {
                             name: "Data Teknisi",
                             isLink: true,
-                            to: this.$basepath + "technician"
+                            to: "/technician"
                         }
                     ]
                 },
@@ -56,14 +59,14 @@ export default {
                     icon: "fa fa-user",
                     hasDropdown: false,
                     isLink: true,
-                    to: this.$basepath + "account/biodata"
+                    to: "/account/biodata"
                 },
                 {
                     title: "Service",
                     icon: "fa fa-user",
                     hasDropdown: false,
                     isLink: true,
-                    to: this.$basepath + "service"
+                    to: "/service"
                 }
             ]
         };
@@ -87,6 +90,7 @@ aside {
     cursor: pointer;
     color: #222;
     display: block;
+    text-decoration: none;
 }
 
 .sidebar:nth-child(1n + 0) {

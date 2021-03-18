@@ -25,7 +25,7 @@ class SparepartRequestUpdate extends FormRequest
 
             "description.required"      => "Deskripsi harus diisi",
             "description.min"           => "Panjang karakter deskripsi minimal 10",
-            "description.max"           => "Panjang karakter deskripsi maksimal 500",
+            "description.max"           => "Panjang karakter deskripsi maksimal 3000",
 
             "type.required"             => "Tipe sparepart harus diisi",
             "type.in"                   => "Tipe sparepart harus antara pc, hp atau printer",
@@ -33,12 +33,12 @@ class SparepartRequestUpdate extends FormRequest
             "stock.required"            => "Stok sparepart harus diisi",
             "stock.integer"             => "Stok harus berupa angka",
             "stock.min"                 => "Stok sparepart minimal berjumlah 1",
-            "stock.max"                 => "Stok sparepart maksimal berjumlah 99.999",
+            "stock.max"                 => "Stok sparepart maksimal berjumlah 65.535",
 
             "price.required"            => "Harga sparepart harus diisi",
             "price.integer"             => "Harga harus berupa angka",
             "price.min"                 => "Harga sparepart minimal berjumlah 1",
-            "price.max"                 => "harga sparepart maksimal berjumlah 9.999.999.999",
+            "price.max"                 => "harga sparepart maksimal berjumlah 4.294.967.295",
 
             "images.required"           => "Foto sparepart harus diisi",
             "images.array"              => "Foto sparepart harus berupa array",
@@ -61,10 +61,10 @@ class SparepartRequestUpdate extends FormRequest
     {
         return [
             "name"              => "required|string|min:7|max:70",
-            "description"       => "required|string|min:10|max:500",
+            "description"       => "required|string|min:10|max:3000",
             "type"              => "required|in:pc,hp,printer",
-            "stock"             => "required|integer|min:1|max:99999",
-            "price"             => "required|integer|min:1|max:9999999999",
+            "stock"             => "required|integer|min:1|max:65535",
+            "price"             => "required|integer|min:1|max:4294967295",
 
             "images"            => "required|array|min:1|max:5",
             "images.*"          => "required|mimes:jpg,png,jpeg|max:10000"

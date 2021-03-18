@@ -44,9 +44,9 @@
                     </div>
                     <div class="spare-part-tools-right">
                         <div class="spare-part-tools-right-container">
-                            <a href="/sparepart/new" class="button-add button-success-primary-md" style="padding: 10px 20px;">
+                            <router-link :to="{ path: '/sparepart/add' }" class="button-add button-success-primary-md" style="padding: 10px 20px;">
                                 <i class="fa fa-plus"></i>&nbsp Tambah Spare Part
-                            </a>
+                            </router-link>
                             <div class="view-model">
                                 <div>
                                     <i class="fa fa-list-ul"></i>
@@ -77,18 +77,21 @@
                 </div>
             </div>
         </div>
+        <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
     </div>
 </template>
 
 <script>
 import GridList from "./Lists/GridList";
 import FullOverlay from "../../../../Overlays/FullOverlay";
+import TopRightToast from "../../../../Toasts/TopRightToast";
 
 export default {
     name: "Body",
     components: {
         "grid": GridList,
-        "full-overlay": FullOverlay
+        "full-overlay": FullOverlay,
+        "toast": TopRightToast
     },
     data(){
         return {
@@ -121,13 +124,34 @@ export default {
             },
             overlay: {
                 full: false
+            },
+            toast: {
+                open: false,
+                background: this.$colors.successPrimary,
+                data: {
+                    title: "Success!",
+                    message: "Tambah sparepart berhasil",
+                    icon: "fa fa-check"
+                }
             }
         }
     },
     mounted() {
+        this.resolveRouterParams(this.$router.currentRoute.params);
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
+        resolveRouterParams(params){
+            if (params.toast) {
+                this.toast.open = true;
+                if (params.toast.type === "success") {
+                    this.toast.background = this.$colors.successPrimary;
+                    this.toast.data.title = "Success!";
+                    this.toast.data.message = params.toast.message;
+                    this.toast.data.icon = "fa fa-check";
+                }
+            }
+        },
         retrieveNextUrl(){
             const next = this.url.endpoints.next;
             if (next !== null) {

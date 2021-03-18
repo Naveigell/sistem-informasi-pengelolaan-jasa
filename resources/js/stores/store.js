@@ -30,16 +30,26 @@ export const store = new Vuex.Store({
             // get user data
             await axiosInstance.get('/auth/session/data').then(function (response) {
                 state.user.data = response.data.body;
-            }).catch(function (){});
 
-            // get user profile image
-            await axiosInstance.get('/biodata/image').then((response) => {
-                state.user.picture = response.data.body.picture;
-            }).catch((error) => {
-                console.error(error)
+                // get user profile image if session data check successful and picture is null
+                if (state.user.picture == null) {
+                    axiosInstance.get('/biodata/image').then((response) => {
+                        state.user.picture = response.data.body.picture;
+                    }).catch((error) => {
+                        console.error(error)
+                    });
+                }
+            }).catch(function (error){
+                console.log(error)
             });
 
             state.user.check = true;
         },
+    },
+    actions: {
+        reloadUserData(context) {
+            context.state.user.picture = null;
+            context.commit('retrieveUserData');
+        }
     }
 });

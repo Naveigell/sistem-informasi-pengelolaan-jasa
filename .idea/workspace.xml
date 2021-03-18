@@ -21,11 +21,25 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Auth/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Auth/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/User/Account/BiodataController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/User/Account/BiodataController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Sparepart/SparepartRequestInsert.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Sparepart/SparepartRequestInsert.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Sparepart/SparepartRequestUpdate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Sparepart/SparepartRequestUpdate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/L5ZhI7YW3cAnOLLfWiONUjULsThDZsguNrBVYV4DEnPw0mHWBFYFmaqF4eScUw6Gq7hqbZ1hReBVHQe1kdWRsq7Yd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/spareparts/NNPtHe2USFnQ4u9ZQ5hmmSo0GR9XikrMe7rLVzEjp8619FXVSDKZbeqsLKfHQjuu4ysrnVWKDswheClbSgcqzNgAl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Errors/Errors404.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Errors/Errors404.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Layouts/Layout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Biodata/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Lists/GridList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Insert/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Insert/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Update/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Update/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/prototypes/string.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/prototypes/string.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/stores/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/stores/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,7 +389,16 @@
       <workItem from="1615638307364" duration="559000" />
       <workItem from="1615685641165" duration="3305000" />
       <workItem from="1615699634726" duration="489000" />
-      <workItem from="1615715987209" duration="3790000" />
+      <workItem from="1615715987209" duration="4337000" />
+      <workItem from="1615725239853" duration="1943000" />
+      <workItem from="1615732905005" duration="228000" />
+      <workItem from="1615779637475" duration="5015000" />
+      <workItem from="1615791715044" duration="4026000" />
+      <workItem from="1615880265531" duration="78000" />
+      <workItem from="1615954012780" duration="1590000" />
+      <workItem from="1615982483758" duration="4023000" />
+      <workItem from="1616039588668" duration="2760000" />
+      <workItem from="1616050574462" duration="313000" />
     </task>
     <servers />
   </component>

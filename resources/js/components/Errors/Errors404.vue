@@ -1,7 +1,7 @@
 <template>
     <div class="error-body">
         <h1>404 not found</h1>
-        <a href="/">Kembali ke beranda</a>
+        <router-link :to="{ path: '/' }">Kembali ke beranda</router-link>
     </div>
 </template>
 

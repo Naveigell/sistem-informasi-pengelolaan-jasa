@@ -2,7 +2,7 @@
     <div class="app-container">
         <div class="body-container" style="position:relative;">
             <div class="biodata-role">
-                Admin
+                {{ $store.state.user.data == null ? "" : $store.state.user.data.role.capitalize() }}
             </div>
             <h4>
                 <i class="fa fa-user" style="margin-right: 10px"></i>{{ $store.state.user.data == null ? "" : $store.state.user.data.name }}
@@ -171,13 +171,15 @@ export default {
             const form = new FormData();
             form.append("image", file);
 
-            await this.$api.post(this.$endpoints.biodata.image, form, headers).then(function (response) {
+            await this.$api.post(this.$endpoints.biodata.image, form, headers).then((response) => {
                 updated = true;
                 if (self.user.data != null) {
                     self.user.data.biodata.profile_picture = response.data.body.new_image;
 
                     self.errors.image.data = {};
                     self.errors.image.firstErrorMessage = null;
+
+                    this.$store.dispatch('reloadUserData');
                 }
             }).catch(function (error) {
                 self.errors.image.data = error.response.data.errors.messages;

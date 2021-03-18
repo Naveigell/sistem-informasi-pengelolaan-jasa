@@ -52,10 +52,10 @@
                             </div>
                             <div class="col-md-10 right-column">
                                 <div class="input-container">
-                                    <textarea v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi sparepart" name="" cols="30" rows="10" style="resize: none" v-model="data.description"></textarea>
+                                    <textarea v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi sparepart" cols="30" rows="10" style="resize: none" v-model="data.description"></textarea>
                                 </div>
                                 <span class="error-message" v-if="errors.description != null && errors.description !== undefined">{{ errors.description[0] }}</span>
-                                <span class="word-count">{{ data.description.length }}/500</span>
+                                <span class="word-count">{{ data.description.length }}/3000</span>
                             </div>
                         </div>
                         <br/>
@@ -104,7 +104,7 @@
                         <div class="row">
                             <div class="col-md-2"></div>
                             <div class="col-md-10 right-column">
-                                <button class="button-transparent-sm">Batal</button>
+                                <button @click="back" class="button-transparent-sm">Batal</button>
                                 <button v-on:click="saveSparepart()" class="button-success-primary-sm">Simpan</button>
                             </div>
                         </div>
@@ -112,15 +112,22 @@
                 </div>
             </form>
         </div>
+        <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
     </div>
 </template>
 
 <script>
+
+import TopRightToast from "../../../../Toasts/TopRightToast";
+
 export default {
     name: "Body",
-    props: ["id"],
+    components: {
+        "toast": TopRightToast
+    },
     data(){
         return {
+            id: null,
             images: [
                 {
                     contain: false,
@@ -157,11 +164,24 @@ export default {
                 type: null,
                 stock: null,
                 price: null
+            },
+            toast: {
+                open: false,
+                background: this.$colors.errorPrimary,
+                data: {
+                    title: "Failed!",
+                    message: "Edit sparepart gagal",
+                    icon: "fa fa-times-circle"
+                },
             }
         }
     },
     mounted() {
-        this.retrieve();
+        this.id = this.$router.currentRoute.params.id;
+        // dont give id null
+        if (this.id) {
+            this.retrieve();
+        }
     },
     watch: {
         "data.name": function (newVal, oldVal) {
@@ -170,7 +190,7 @@ export default {
             }
         },
         "data.description": function (newVal, oldVal) {
-            if (newVal.length > 500) {
+            if (newVal.length > 3000) {
                 this.data.description = oldVal;
             }
         },
@@ -230,7 +250,7 @@ export default {
 
                 self.data.id = sparepart.id;
                 self.data.name = sparepart.nama_spare_part;
-                self.data.description = sparepart.deskripsi;
+                self.data.description = sparepart.deskripsi.cutIfGreaterThan(3000);
                 self.data.type = sparepart.tipe === "pc/komputer" ? "pc" : sparepart.tipe;
                 self.data.stock = sparepart.stok;
                 self.data.price = sparepart.harga;
@@ -277,6 +297,9 @@ export default {
 
             const images = this.images;
             for (const index in images) {
+                if (!images.hasOwnProperty(index))
+                    continue;
+
                 if (!images[index].contain) continue;
 
                 const file = images[index].file;
@@ -287,16 +310,24 @@ export default {
                 'Content-Type': 'multipart/form-data; charset=utf-8; boundary=' + Math.random().toString().substr(2)
             };
 
-            this.$api.post(this.$endpoints.sparepart.put, form, { headers }).then(function(response){
-                console.log(response);
-            }).catch(function(error){
+            this.$api.post(this.$endpoints.sparepart.put, form, { headers }).then((response) => {
+                this.$router.push({
+                    name: "sparepart",
+                    params: {
+                        toast: {
+                            type: "success",
+                            message: "Edit sparepart berhasil"
+                        }
+                    }
+                });
+            }).catch((error) => {
                 const data = error.response.data;
 
                 if (error.response.status === 422) {
                     self.errors = JSON.parse(JSON.stringify(data.errors.messages));
+                } else if (error.response.status === 500) {
+                    this.toast.open = true;
                 }
-
-                console.error(data.errors.messages)
             });
         }
     }

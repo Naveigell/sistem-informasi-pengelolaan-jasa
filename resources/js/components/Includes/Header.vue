@@ -59,6 +59,11 @@ export default {
 </script>
 
 <style scoped>
+img {
+    object-fit: cover;
+    object-position: center;
+}
+
 header {
     height: var(--header-height);
     display: flex;

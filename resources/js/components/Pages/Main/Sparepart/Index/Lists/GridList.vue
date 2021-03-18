@@ -4,7 +4,7 @@
             <div class="grid">
                 <div class="product-grid-container">
                     <div class="product-grid" v-for="(sparepart, index) in spareparts">
-                        <a v-bind:href="'/sparepart/' + sparepart.id" style="text-decoration: none;">
+                        <router-link v-bind:to="{ path: '/sparepart/' + sparepart.id }" style="text-decoration: none;">
                             <img width="100%" height="170" :src="sparepart.images[0].picture" alt="sparepart">
                             <hr/>
                             <span class="product-title">
@@ -24,7 +24,7 @@
                                 </span>
                             </div>
                             <br/>
-                        </a>
+                        </router-link>
                         <transition name="product-delete-container-transition">
                             <div key="delete" class="product-delete-container" v-if="onDeleteMode">
                                 <span v-on:click="openDeleteModal(sparepart.id, sparepart, index)">
