@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="openToast"/>
+        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)"/>
     </div>
 </template>
 
@@ -53,17 +53,6 @@ export default {
         closeModal(modal) {
             modal.open = false;
         },
-        openToast(obj){
-            this.$root.$emit("open-toast", {
-                type: obj.type,
-                background: obj.type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
-                data: {
-                    title: obj.type === "failed" ? "Failed!" : "Success!",
-                    message: obj.message,
-                    icon: obj.type === "failed" ? "fa fa-times-circle" : "fa fa-check"
-                }
-            });
-        }
     }
 }
 </script>

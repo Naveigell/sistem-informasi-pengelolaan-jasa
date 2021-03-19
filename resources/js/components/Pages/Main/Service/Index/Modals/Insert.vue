@@ -126,15 +126,20 @@ export default {
                 if (error.response.status === 422) {
                     this.errors = JSON.parse(JSON.stringify(data.errors.messages));
                 } else if (this.$math.status(error) === 5) {
-                    this.$emit("response", {
-                        type: "failed",
-                        message: "Terjadi masalah pada server"
-                    })
+                    this.emitToParent("failed", "Terjadi masalah pada server");
                 }
             })
         },
         emitToParent(type, message, withAnimation){
-            this.$emit("response", { type, message });
+            this.$root.$emit("open-toast", {
+                type: type,
+                background: type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
+                data: {
+                    title: type === "failed" ? "Failed!" : "Success!",
+                    message: message,
+                    icon: type === "failed" ? "fa fa-times-circle" : "fa fa-check"
+                }
+            });
             this.closeModal(withAnimation);
         },
     }
