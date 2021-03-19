@@ -76,11 +76,14 @@ export default {
                             index: this.index
                         });
                 }).catch((error) => {
-                    this.$root.$emit("openToast", {
-                        title: "Error!",
-                        message: "Jasa gagal dihapus",
-                        icon: "fa fa-exclamation-triangle",
-                        background: this.$colors.errorPrimary
+                    this.$root.$emit("open-toast", {
+                        type: "failed",
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: "Jasa gagal dihapus",
+                            icon: "fa fa-times-circle"
+                        }
                     });
                 });
             });

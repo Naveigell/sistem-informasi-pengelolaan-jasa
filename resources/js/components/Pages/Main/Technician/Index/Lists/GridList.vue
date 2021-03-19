@@ -4,7 +4,7 @@
             <div class="grid">
                 <div class="technician-grid-container">
                     <div class="technician-grid" v-for="(technician, index) in technicians" v-if="technicians.length > 0">
-                        <a v-bind:href="'/technician/' + technician.username" style="text-decoration: none;">
+                        <router-link :to="{ path: '/technician/' + technician.username }" style="text-decoration: none;">
                             <img v-if="technician.biodata !== undefined" width="100%" height="170" :src="technician.biodata.profile_picture" alt="technicians">
                             <hr/>
                             <span class="technician-title">
@@ -24,7 +24,7 @@
                                 </span>
                             </div>
                             <br/>
-                        </a>
+                        </router-link>
                         <transition name="technician-delete-container-transition">
                             <div key="delete" class="technician-delete-container" v-if="onDeleteMode">
                                 <span v-on:click="openDeleteModal(technician.id, technician, index)">
@@ -33,8 +33,7 @@
                             </div>
                         </transition>
                     </div>
-                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :technician="data.technician" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
-                    <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
+                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :technician="data.technician" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                 </div>
             </div>
         </div>
@@ -43,14 +42,12 @@
 
 <script>
 import Delete from "../Modals/Delete";
-import Toast from "../../../../../Toasts/TopRightToast";
 
 export default {
     name: "GridList",
     props: ["technicians", "onDeleteMode"],
     components: {
         "delete-modal": Delete,
-        "toast": Toast
     },
     data() {
         return {
@@ -62,15 +59,6 @@ export default {
             modal: {
                 delete: false
             },
-            toast: {
-                open: false,
-                background: this.$colors.bluePrimary,
-                data: {
-                    title: "Success!",
-                    message: "Just sample message",
-                    icon: "fa fa-check"
-                }
-            }
         }
     },
     methods: {
@@ -79,19 +67,6 @@ export default {
             this.data.technician = technician;
             this.data.index = index;
             this.modal.delete = true;
-        },
-        onDeleteModalResponse(obj){
-            this.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.toast.data.title = "Failed!";
-                this.toast.data.icon = "fa fa-times-circle";
-                this.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.toast.background = this.$colors.successPrimary;
-            }
-
-            this.toast.open = true;
         },
         onDeleteModalAnimationEnd(){
             const self = this;

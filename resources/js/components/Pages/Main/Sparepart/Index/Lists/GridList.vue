@@ -33,8 +33,7 @@
                             </div>
                         </transition>
                     </div>
-                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :sparepart="data.sparepart" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
-                    <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
+                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :sparepart="data.sparepart" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                 </div>
             </div>
         </div>
@@ -43,14 +42,12 @@
 
 <script>
 import Delete from "../Modals/Delete";
-import Toast from "../../../../../Toasts/TopRightToast";
 
 export default {
     name: "GridList",
     props: ["spareparts", "onDeleteMode"],
     components: {
         "delete-modal": Delete,
-        "toast": Toast
     },
     data() {
         return {
@@ -62,15 +59,6 @@ export default {
             modal: {
                 delete: false
             },
-            toast: {
-                open: false,
-                background: this.$colors.bluePrimary,
-                data: {
-                    title: "Success!",
-                    message: "Just sample message",
-                    icon: "fa fa-check"
-                }
-            }
         }
     },
     mounted() {
@@ -82,19 +70,6 @@ export default {
             this.data.sparepart = sparepart;
             this.data.index = index;
             this.modal.delete = true;
-        },
-        onDeleteModalResponse(obj){
-            this.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.toast.data.title = "Failed!";
-                this.toast.data.icon = "fa fa-times-circle";
-                this.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.toast.background = this.$colors.successPrimary;
-            }
-
-            this.toast.open = true;
         },
         onDeleteModalAnimationEnd(){
             const self = this;

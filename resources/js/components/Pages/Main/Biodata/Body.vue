@@ -71,7 +71,7 @@
                                 <span v-if="errors.biodata.firstErrorMessage != null && button.saveActive" class="text-danger" style="margin-left: 20px;">{{ errors.biodata.firstErrorMessage }}</span>
                             </div>
                         </form>
-                        <alert-success-biodata v-if="layouts.alerts.success.biodata.active" v-on:destroyed="layouts.alerts.success.biodata.active = false"/>
+<!--                        <alert-success-biodata v-if="layouts.alerts.success.biodata.active" v-on:destroyed="layouts.alerts.success.biodata.active = false"/>-->
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@ export default {
                         }
                     }
                 }
-            }
+            },
         }
     },
     mounted() {
@@ -179,6 +179,16 @@ export default {
                     self.errors.image.data = {};
                     self.errors.image.firstErrorMessage = null;
 
+                    self.$root.$emit("open-toast", {
+                        type: "success",
+                        background: self.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Profile picture berhasil diubah",
+                            icon: "fa fa-check"
+                        }
+                    });
+
                     this.$store.dispatch('reloadUserData');
                 }
             }).catch(function (error) {
@@ -203,7 +213,15 @@ export default {
                 ...this.user.update.biodata
             }).then(function (response) {
                 if (response.status === 200) {
-                    self.layouts.alerts.success.biodata.active = true;
+                    self.$root.$emit("open-toast", {
+                        type: "success",
+                        background: self.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Biodata berhasil diubah",
+                            icon: "fa fa-check"
+                        }
+                    });
 
                     // parse after use
                     const objs = JSON.parse(JSON.stringify(self.user.update.biodata));

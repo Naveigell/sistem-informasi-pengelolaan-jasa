@@ -1,8 +1,7 @@
 <template>
     <div class="app-container">
         <div class="body-container" style="margin-bottom: 20px; position:relative;">
-            <reset-password @response="openToast" @onAnimationEnd="closeModal(layouts.modals.resetPassword)" v-if="layouts.modals.resetPassword.active" :username="username"/>
-            <TopRightToast v-if="layouts.toast.open" @toastEnded="layouts.toast.open = false" :icon="layouts.toast.data.icon" :background="layouts.toast.background" :title="layouts.toast.data.title" :timer="2000" :subtitle="layouts.toast.data.message"/>
+            <reset-password @onAnimationEnd="closeModal(layouts.modals.resetPassword)" v-if="layouts.modals.resetPassword.active" :username="username"/>
             <div class="biodata-role">
                 Teknisi
             </div>
@@ -99,20 +98,21 @@
 
 <script>
 import ResetPassword from "./Modals/ResetPassword";
-import TopRightToast from "../../../../Toasts/TopRightToast";
 
 export default {
     name: "Body",
-    props: ["username"],
     components: {
-        TopRightToast,
         "reset-password": ResetPassword
     },
     mounted() {
-        this.retrieve();
+        this.username = this.$router.currentRoute.params.username;
+        if (this.username) {
+            this.retrieve();
+        }
     },
     data() {
         return {
+            username: null,
             user: {
                 data: {
                     id: "",
@@ -152,34 +152,12 @@ export default {
                         active: false
                     }
                 },
-                toast: {
-                    open: false,
-                    background: this.$colors.bluePrimary,
-                    data: {
-                        title: "Success!",
-                        message: "Just sample message",
-                        icon: "fa fa-check"
-                    }
-                }
             }
         }
     },
     methods: {
         closeModal(modal){
             modal.active = false;
-        },
-        openToast(obj){
-            this.layouts.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.layouts.toast.data.title = "Failed!";
-                this.layouts.toast.data.icon = "fa fa-times-circle";
-                this.layouts.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.layouts.toast.background = this.$colors.successPrimary;
-            }
-
-            this.layouts.toast.open = true;
         },
         async retrieve(){
             this.$api.get(this.$endpoints.technicians.retrieve + "/" + this.username).then((response) => {
@@ -193,9 +171,8 @@ export default {
                 this.user.data.picture      = response.data.body.biodata.profile_picture;
             }).catch((error) => {
                 if (error.response.status === 404) {
-                    window.history.back();
+                    this.back();
                 }
-                console.error(error)
             });
         },
         async updateBiodata(){
@@ -207,9 +184,14 @@ export default {
                 username_before: this.username
             }).then((response) => {
                 if (Math.floor(response.status / 100) === 2) {
-                    this.openToast({
+                    this.$root.$emit("open-toast", {
                         type: "success",
-                        message: "Data teknisi berhasil diubah"
+                        background: this.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Data teknisi berhasil diubah",
+                            icon: "fa fa-check"
+                        }
                     });
                 }
             }).catch((error) => {

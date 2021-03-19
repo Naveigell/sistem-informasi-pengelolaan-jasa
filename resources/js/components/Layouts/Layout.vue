@@ -5,6 +5,7 @@
         <div v-else>
             <login v-if="!hasLoggedIn"/>
             <div v-else>
+                <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
                 <app-header/>
                 <app-sidebar/>
                 <router-view></router-view>
@@ -17,27 +18,15 @@
 import LoginComponent from "../Pages/Login/LoginComponent";
 import FullLoading from "../Loaders/FullLoading";
 import Errors404 from "../Errors/Errors404";
+import TopRightToast from "../Toasts/TopRightToast";
 
 export default {
     name: "Layout",
     components: {
         "full-loading": FullLoading,
         "login": LoginComponent,
-        "error-404": Errors404
-    },
-    props: {
-        el: {
-            type: [String, Object],
-            default: 'div',
-        },
-        id: {
-            type: [String, Number],
-            default: null
-        },
-        username: {
-            type: [String, String],
-            default: null
-        }
+        "error-404": Errors404,
+        "toast": TopRightToast
     },
     data() {
         return {
@@ -47,6 +36,15 @@ export default {
             hasLoggedIn: false,
             routes: {
                 notFound: false
+            },
+            toast: {
+                open: false,
+                background: this.$colors.successPrimary,
+                data: {
+                    title: "Success!",
+                    message: "Tambah sparepart berhasil",
+                    icon: "fa fa-check"
+                }
             }
         }
     },
@@ -58,6 +56,11 @@ export default {
             }
         });
         this.resolve(this.$router.currentRoute);
+        this.$root.$on('open-toast', (data) => {
+            this.toast.open = true;
+            this.toast.background = data.background;
+            this.toast.data = data.data;
+        });
     },
     watch: {
         async '$route' (to, from) {

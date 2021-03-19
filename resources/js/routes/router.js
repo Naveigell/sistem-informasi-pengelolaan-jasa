@@ -10,6 +10,7 @@ import SparepartInsert from "../components/Pages/Main/Sparepart/Insert/Body";
 import UserIndex from "../components/Pages/Main/User/Index/Body";
 
 import TechnicianIndex from "../components/Pages/Main/Technician/Index/Body";
+import TechnicianUpdate from "../components/Pages/Main/Technician/Update/Body";
 
 import Biodata from "../components/Pages/Main/Biodata/Body";
 
@@ -51,6 +52,11 @@ export const router = new VueRouter({
             path: '/technician',
             name: 'technician',
             component: TechnicianIndex,
+        },
+        {
+            path: '/technician/:username',
+            name: 'technician.update',
+            component: TechnicianUpdate,
         },
         {
             path: '/account/biodata',

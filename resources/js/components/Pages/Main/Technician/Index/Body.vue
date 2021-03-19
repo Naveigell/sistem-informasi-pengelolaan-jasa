@@ -58,22 +58,19 @@
                 </div>
             </div>
         </div>
-        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="openToast"/>
-        <TopRightToast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
+        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="reload"/>
     </div>
 </template>
 
 <script>
 import GridList from "./Lists/GridList";
 import Insert from "./Modals/Insert";
-import TopRightToast from "../../../../Toasts/TopRightToast";
 
 export default {
     name: "Body",
     components: {
         grid: GridList,
         Insert,
-        TopRightToast
     },
     data(){
         return {
@@ -111,39 +108,12 @@ export default {
                     open: false
                 }
             },
-            toast: {
-                open: false,
-                background: this.$colors.bluePrimary,
-                data: {
-                    title: "Success!",
-                    message: "Just sample message",
-                    icon: "fa fa-check"
-                }
-            }
         }
     },
     mounted() {
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
-        openToast(obj){
-            this.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.toast.data.title = "Failed!";
-                this.toast.data.icon = "fa fa-times-circle";
-                this.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.toast.background = this.$colors.successPrimary;
-            }
-
-            this.toast.open = true;
-
-            // reload if child component need reload
-            if (obj.reload) {
-                this.reload();
-            }
-        },
         closeModal(modal) {
             modal.open = false;
         },

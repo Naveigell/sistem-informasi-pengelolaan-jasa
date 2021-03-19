@@ -23,20 +23,17 @@
             </div>
         </div>
         <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="openToast"/>
-        <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
     </div>
 </template>
 
 <script>
 import ListView from "./Lists/ListView";
-import TopRightToast from "../../../../Toasts/TopRightToast";
 import Insert from "./Modals/Insert";
 
 export default {
     name: "Body",
     components: {
         "list-view": ListView,
-        "toast": TopRightToast,
         Insert
     },
     data(){
@@ -47,15 +44,6 @@ export default {
                     open: false
                 },
             },
-            toast: {
-                open: false,
-                background: this.$colors.bluePrimary,
-                data: {
-                    title: "Success!",
-                    message: "Just sample message",
-                    icon: "fa fa-check"
-                }
-            }
         }
     },
     methods: {
@@ -66,17 +54,15 @@ export default {
             modal.open = false;
         },
         openToast(obj){
-            this.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.toast.data.title = "Failed!";
-                this.toast.data.icon = "fa fa-times-circle";
-                this.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.toast.background = this.$colors.successPrimary;
-            }
-
-            this.toast.open = true;
+            this.$root.$emit("open-toast", {
+                type: obj.type,
+                background: obj.type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
+                data: {
+                    title: obj.type === "failed" ? "Failed!" : "Success!",
+                    message: obj.message,
+                    icon: obj.type === "failed" ? "fa fa-times-circle" : "fa fa-check"
+                }
+            });
         }
     }
 }

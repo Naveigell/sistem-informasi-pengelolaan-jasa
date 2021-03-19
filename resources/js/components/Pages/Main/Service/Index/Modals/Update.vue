@@ -134,13 +134,17 @@ export default {
                         type: data.type === "pc" ? "pc/komputer" : data.type
                     });
 
-                    this.closeModal(true);
-                    this.$root.$emit("openToast", {
-                        title: "Success!",
-                        message: "Jasa berhasil diubah",
-                        icon: "fa fa-check",
-                        background: this.$colors.successPrimary
+                    this.$root.$emit("open-toast", {
+                        type: "Success",
+                        background: this.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Jasa berhasil diubah",
+                            icon: "fa fa-check"
+                        }
                     });
+
+                    this.closeModal(true);
                 }
             }).catch((error) => {
                 const data = error.response.data;
@@ -148,11 +152,14 @@ export default {
                 if (error.response.status === 422) {
                     this.errors = JSON.parse(JSON.stringify(data.errors.messages));
                 } else if (this.$math.status(error) === 5) {
-                    this.$root.$emit("openToast", {
-                        title: "Error!",
-                        message: "Jasa gagal diubah",
-                        icon: "fa fa-exclamation-triangle",
-                        background: this.$colors.errorPrimary
+                    this.$root.$emit("open-toast", {
+                        type: "failed",
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: "Jasa gagal diubah",
+                            icon: "fa fa-times-circle"
+                        }
                     });
                 }
             })

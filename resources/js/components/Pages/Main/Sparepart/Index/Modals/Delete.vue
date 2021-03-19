@@ -59,11 +59,18 @@ export default {
                 self.emitToParent("success", "Hapus sparepart berhasil", true);
             }).catch(function (error) {
                 self.emitToParent("failed", "Hapus sparepart gagal", false);
-                console.error(error)
             });
         },
         emitToParent(type, message, withAnimation){
-            this.$emit("response", { type, message });
+            this.$root.$emit("open-toast", {
+                type: type,
+                background: type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
+                data: {
+                    title: type === "failed" ? "Failed!" : "Success!",
+                    message: message,
+                    icon: type === "failed" ? "fa fa-times-circle" : "fa fa-check"
+                }
+            });
             this.closeModal(withAnimation);
         },
         closeModal(withAnimation){

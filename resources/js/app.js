@@ -25,51 +25,13 @@ import "./prototypes/array";
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/LoginAndDashboard.vue').default);
-// import LoginAndDashboard from './components/Templates/LoginAndDashboard.vue';
-// import Biodata from "./components/Templates/Biodata";
-// import SparepartIndex from "./components/Templates/Sparepart/Index";
-// import SparepartInsert from "./components/Templates/Sparepart/Insert";
-// import SparepartUpdate from "./components/Templates/Sparepart/Update";
-// import ServiceIndex from "./components/Templates/Service/Index";
-// import TechnicianIndex from "./components/Templates/Technician/Index";
-// import TechnicianUpdate from "./components/Templates/Technician/Update";
-// import UserIndex from "./components/Templates/User/Index";
-
 import Header from "./components/Includes/Header";
 import Sidebar from "./components/Includes/Sidebar";
 import Layout from "./components/Layouts/Layout";
 
-// import FullLoading from "./components/Loaders/FullLoading";
-
-// import FullOverlay from "./components/Overlays/FullOverlay";
-
-// import Test from "./components/Test";
-
-// Vue.component('test', Test);
-
 // includes
 Vue.component('app-header', Header);
 Vue.component('app-sidebar', Sidebar);
-// Vue.component('app-container', Container);
-// Vue.component('app-layout', Layout);
-
-// templates
-// Vue.component('login-and-dashboard-component', LoginAndDashboard);
-// Vue.component('biodata', Biodata);
-// Vue.component('sparepart-index', SparepartIndex);
-// Vue.component('sparepart-insert', SparepartInsert);
-// Vue.component('sparepart-update', SparepartUpdate);
-// Vue.component('service-index', ServiceIndex);
-// Vue.component('technician-index', TechnicianIndex);
-// Vue.component('technician-update', TechnicianUpdate);
-// Vue.component('user-index', UserIndex);
-
-// loader
-// Vue.component('full-loading', FullLoading);
-
-// overlays
-// Vue.component('full-overlay', FullOverlay);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

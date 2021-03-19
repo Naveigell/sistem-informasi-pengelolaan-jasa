@@ -53,7 +53,7 @@ class UserRequestInsert extends FormRequest
             "name"          => "required|string|min:4|max:60",
             "username"      => "required|string|min:6|max:40|no_space",
             "email"         => "required|string|min:6|email",
-            "gender"        => "required|string|in:Laki - laki, Perempuan"
+            "gender"        => "required|string|in:Laki - laki,Perempuan"
         ];
     }
 }

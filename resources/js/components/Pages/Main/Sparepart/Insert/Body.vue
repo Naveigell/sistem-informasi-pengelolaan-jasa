@@ -241,11 +241,15 @@ export default {
             this.$api.post(this.$endpoints.sparepart.insert, form, { headers }).then((response) => {
                 this.$router.push({
                     name: "sparepart",
-                    params: {
-                        toast: {
-                            type: "success",
-                            message: "Tambah sparepart berhasil"
-                        }
+                });
+
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Tambah sparepart berhasil",
+                        icon: "fa fa-check"
                     }
                 });
             }).catch((error) => {
@@ -256,8 +260,6 @@ export default {
                 } else if (error.response.status === 500) {
                     this.toast.open = true;
                 }
-
-                console.log(error)
             });
         }
     }

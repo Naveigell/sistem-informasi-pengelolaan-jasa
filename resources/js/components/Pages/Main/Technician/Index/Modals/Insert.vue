@@ -112,24 +112,36 @@ export default {
         },
         save(){
             this.$api.post(this.$endpoints.technicians.insert, this.data).then((response) => {
-                this.emitToParent("success", "Teknisi berhasil ditambahkan", true, true);
+                this.emitToParent("success", "Teknisi berhasil ditambahkan", true);
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Teknisi berhasil ditambahkan",
+                        icon: "fa fa-check"
+                    }
+                });
             }).catch((error) => {
                 const data = error.response.data;
-                console.error(error);
 
                 if (error.response.status === 422) {
                     this.errors = JSON.parse(JSON.stringify(data.errors.messages));
                 } else if (this.$math.status(error) === 5) {
-                    this.$emit("response", {
+                    this.$root.$emit("open-toast", {
                         type: "failed",
-                        message: "Terjadi masalah pada server",
-                        reload: false
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: "Terjadi masalah pada server",
+                            icon: "fa fa-times-circle"
+                        }
                     });
                 }
             })
         },
-        emitToParent(type, message, withAnimation, reload){
-            this.$emit("response", { type, message, reload });
+        emitToParent(type, message, withAnimation){
+            this.$emit("response");
             this.closeModal(withAnimation);
         },
     }

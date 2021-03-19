@@ -313,11 +313,15 @@ export default {
             this.$api.post(this.$endpoints.sparepart.put, form, { headers }).then((response) => {
                 this.$router.push({
                     name: "sparepart",
-                    params: {
-                        toast: {
-                            type: "success",
-                            message: "Edit sparepart berhasil"
-                        }
+                });
+
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Edit sparepart berhasil",
+                        icon: "fa fa-check"
                     }
                 });
             }).catch((error) => {

@@ -4,7 +4,7 @@
             <div class="grid">
                 <div class="user-grid-container">
                     <div class="user-grid" v-for="(user, index) in users" v-if="users.length > 0">
-                        <a v-bind:href="'/user/' + user.username" style="text-decoration: none;">
+                        <a style="text-decoration: none;">
                             <img v-if="user.biodata !== undefined" :src="user.biodata.profile_picture" width="100%" height="170" alt="users">
                             <hr/>
                             <span class="user-title">
@@ -34,7 +34,6 @@
                         </transition>
                     </div>
                     <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" @response="onDeleteModalResponse" :user="data.user" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
-                    <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
                 </div>
             </div>
         </div>
@@ -42,7 +41,6 @@
 </template>
 
 <script>
-import Toast from "../../../../../Toasts/TopRightToast";
 import Delete from "../Modals/Delete";
 
 export default {
@@ -50,7 +48,6 @@ export default {
     props: ["users", "onDeleteMode"],
     components: {
         "delete-modal": Delete,
-        "toast": Toast
     },
     data() {
         return {
@@ -62,15 +59,6 @@ export default {
             modal: {
                 delete: false
             },
-            toast: {
-                open: false,
-                background: this.$colors.bluePrimary,
-                data: {
-                    title: "Success!",
-                    message: "Just sample message",
-                    icon: "fa fa-check"
-                }
-            }
         }
     },
     methods: {
@@ -81,17 +69,15 @@ export default {
             this.modal.delete = true;
         },
         onDeleteModalResponse(obj){
-            this.toast.data.message = obj.message;
-
-            if (obj.type === "failed") {
-                this.toast.data.title = "Failed!";
-                this.toast.data.icon = "fa fa-times-circle";
-                this.toast.background = this.$colors.redPrimary;
-            } else if (obj.type === "success") {
-                this.toast.background = this.$colors.successPrimary;
-            }
-
-            this.toast.open = true;
+            this.$root.$emit("open-toast", {
+                type: obj.type,
+                background: obj.type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
+                data: {
+                    title: obj.type === "failed" ? "Failed!" : "Success!",
+                    message: obj.message,
+                    icon: obj.type === "failed" ? "fa fa-times-circle" : "fa fa-check"
+                }
+            });
 
             if (obj.reload) {
                 this.$emit("reload");

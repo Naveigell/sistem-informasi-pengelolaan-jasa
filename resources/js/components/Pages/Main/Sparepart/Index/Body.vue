@@ -137,21 +137,9 @@ export default {
         }
     },
     mounted() {
-        this.resolveRouterParams(this.$router.currentRoute.params);
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
-        resolveRouterParams(params){
-            if (params.toast) {
-                this.toast.open = true;
-                if (params.toast.type === "success") {
-                    this.toast.background = this.$colors.successPrimary;
-                    this.toast.data.title = "Success!";
-                    this.toast.data.message = params.toast.message;
-                    this.toast.data.icon = "fa fa-check";
-                }
-            }
-        },
         retrieveNextUrl(){
             const next = this.url.endpoints.next;
             if (next !== null) {

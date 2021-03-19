@@ -20,7 +20,7 @@
                             <span class="sub-title" style="margin-top: 10px;">Password akan otomatis bernilai '123456' setelah direset</span>
                         </form>
                     </div>
-                    <FullOverlay key="overlay"/>
+                    <FullOverlay key="overlay" @clicked="closeModal(true)"/>
                 </transition-group>
             </div>
         </div>
@@ -70,18 +70,28 @@ export default {
             }).then((response) => {
                 if (response.status === 204) {
                     this.closeModal(true);
-                    this.$emit("response", {
+                    this.$root.$emit("open-toast", {
                         type: "success",
-                        message: "Reset password teknisi berhasil",
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Reset password teknisi berhasil",
+                            icon: "fa fa-check"
+                        }
                     });
                 }
             }).catch((error) => {
                 if (error.response.status === 422) {
                     this.errors = error.response.data.errors.messages;
                 } else {
-                    this.$emit("response", {
+                    this.$root.$emit("open-toast", {
                         type: "failed",
-                        message: "Terjadi masalah pada server"
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: "Terjadi masalah pada server",
+                            icon: "fa fa-times-circle"
+                        }
                     });
                 }
             });
