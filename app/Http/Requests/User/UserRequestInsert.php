@@ -30,6 +30,7 @@ class UserRequestInsert extends FormRequest
             "username.min"                  => "Username minimal memiliki 6 karakter",
             "username.max"                  => "Username maksimal memiliki 40 karakter",
             "username.no_space"             => "Username tidak boleh memiliki spasi",
+            "username.lowercase"            => "Username tidak boleh memiliki huruf besar",
 
             "email.required"                => "Email harus diisi",
             "email.min"                     => "Email minimal memiliki 6 karakter",

@@ -26,6 +26,8 @@ class TechnicianRequestUpdate extends FormRequest
             "username.required"             => "Username harus diisi",
             "username.min"                  => "Username minimal memiliki 4 karakter",
             "username.max"                  => "Username maksimal memiliki 40 karakter",
+            "username.no_space"             => "Username tidak boleh memiliki spasi",
+            "username.lowercase"            => "Username tidak boleh memiliki huruf besar",
 
             "username_before.required"      => "Username sebelumnya harus diisi",
             "username_before.min"           => "Username sebelumnya minimal memiliki 4 karakter",
@@ -60,7 +62,7 @@ class TechnicianRequestUpdate extends FormRequest
         return [
             "id"                => "required|integer|min:1",
             "name"              => "required|string|min:6|max:60",
-            "username"          => "required|string|min:6|max:40|lowercase",
+            "username"          => "required|string|min:6|max:40|lowercase|no_space",
             "username_before"   => "required|string|min:6|max:40",
 //            "email"     => "required|string|min:6|max:255|email",
             "gender"            => "required|string|in:Laki - laki,Perempuan",
