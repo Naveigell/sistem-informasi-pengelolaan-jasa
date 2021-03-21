@@ -13,24 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// views
-//Route::view("/", "index");
-//Route::view("/sparepart", 'sparepart.index');
-//Route::view("/sparepart/new", "sparepart.insert");
-//Route::get("/sparepart/{id}", "Views\SparepartController@edit");
-//
-//Route::view("/service", "service.index");
-//Route::view("/technician", "technician.index");
-//Route::get("/technician/{username}", function ($username) {
-//    return view("technician.update", compact("username"));
-//});
-//
-//Route::view("/user", "user.index");
-
-//Route::group(['prefix' => '/account'], function () {
-//    Route::view('/biodata', 'user.account.biodata');
-//});
-
 // v1 api versioning
 Route::group(['prefix' => '/api/v1'], function () {
     // lot of routes had been moved into separated functions on app\Http\Providers\RouteServiceProvider
@@ -39,6 +21,15 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/{page?}", "Api\User\UserController@retrieveAll");
         Route::post("/", "Api\User\UserController@create");
         Route::delete("/{id}", "Api\User\UserController@delete");
+    });
+
+    Route::group(["prefix" => "/dashboard", "middleware" => "auth.global"], function () {
+        Route::get("/total", "Api\Dashboard\DashboardController@total");
+    });
+
+    Route::group(["prefix" => "/orders", "middleware" => "auth.global"], function () {
+        Route::get("/take/{number}/last", "Api\Order\OrderController@takeFromLast");
+        Route::get("/total", "Api\Order\OrderController@getTotalOrders");
     });
 });
 

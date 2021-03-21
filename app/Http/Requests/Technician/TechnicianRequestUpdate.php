@@ -60,7 +60,7 @@ class TechnicianRequestUpdate extends FormRequest
         return [
             "id"                => "required|integer|min:1",
             "name"              => "required|string|min:6|max:60",
-            "username"          => "required|string|min:6|max:40",
+            "username"          => "required|string|min:6|max:40|lowercase",
             "username_before"   => "required|string|min:6|max:40",
 //            "email"     => "required|string|min:6|max:255|email",
             "gender"            => "required|string|in:Laki - laki,Perempuan",

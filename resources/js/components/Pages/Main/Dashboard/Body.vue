@@ -7,8 +7,8 @@
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">32</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Pending Orders</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.orders }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Total Orders</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
@@ -29,8 +29,8 @@
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">142</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Pending Orders</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.technicians }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Technicians</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
@@ -51,8 +51,8 @@
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">142</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Pending Orders</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.users }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Active Users</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
@@ -74,7 +74,7 @@
                             <div class="deck-content row">
                                 <div class="col-8">
                                     <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">170</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Pending Orders</span>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Messages</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
@@ -114,8 +114,12 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="elevation-2 summary-container" style="background-color: white;">
                         <div style="background-color: #f6f7f8; height: 43px;">
-                            <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center;">
+                            <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center; justify-content: space-between;">
                                 <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">PERBAIKAN TERBARU</h5>
+                                <div>
+                                    <span @click="retrieveOrders" style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
+                                    <span style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-plus"></i></span>
+                                </div>
                             </div>
                         </div>
                         <div style="padding: 20px;">
@@ -131,11 +135,15 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="repairment in repairments">
-                                        <td>ORD.00965</td>
-                                        <td>12 menit lalu</td>
-                                        <td>ditya.jelita</td>
+                                        <td>{{ repairment.unique_id }}</td>
+                                        <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
-                                            <span class="status" :class="['status-danger', 'status-warning', 'status-success', 'status-info'].random()">{{ ["Menunggu", "Sedang Dicek", "Pembayaran", "Perbaikan", "Terima"].random() }}</span>
+                                            <router-link :to="{ path: '/technician' }">
+                                                {{ repairment.technician == null ? "-" : repairment.technician.username }}
+                                            </router-link>
+                                        </td>
+                                        <td>
+                                            <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
                                         </td>
                                         <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
                                     </tr>
@@ -182,15 +190,84 @@ export default {
                     },
                 ]
             },
-            repairments: [
-                1, 1,1 ,1 ,1, 1,1 ,1, 1, 1
+            total: {
+                orders: 0,
+                technicians: 0,
+                users: 0
+            },
+            repairments: ['status-danger', 'status-warning', 'status-success', 'status-info'],
+            repairments_info: [
+                {
+                    name: "Menunggu",
+                    class: "status-danger",
+                    enum: "menunggu"
+                },
+                {
+                    name: "Sedang Dicek",
+                    class: "status-danger",
+                    enum: "dicek"
+                },
+                {
+                    name: "Perbaikan",
+                    class: "status-warning",
+                    enum: "perbaikan"
+                },
+                {
+                    name: "Selesai",
+                    class: "status-info",
+                    enum: "selesai"
+                },
+                {
+                    name: "Pembayaran",
+                    class: "status-success",
+                    enum: "pembayaran"
+                },
+                {
+                    name: "Terima",
+                    class: "status-success",
+                    enum: "terima"
+                }
             ]
         }
+    },
+    mounted() {
+        this.retrieveTotal();
+        this.retrieveOrders();
     },
     methods: {
         random(){
             return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
         },
+        retrieveTotal(){
+            this.$api.get(this.$endpoints.dashboard.total).then((response) => {
+                this.total = response.data.body.total;
+            }).catch((error) => {
+                console.error(error)
+            });
+        },
+        async retrieveOrders() {
+            const temporary = this.repairments;
+            this.repairments = [];
+            const url = this.$url.generateUrl(this.$endpoints.orders.last);
+
+            await this.$api.get(url(10)).then((response) => {
+                this.repairments = response.data.body.orders;
+            }).catch((error) => {
+                console.error(error)
+                this.repairments = temporary;
+            });
+        },
+        getStatusOrderInfo(status){
+            if (status !== undefined) {
+                for (const info of this.repairments_info) {
+                    if (info.enum === status) {
+                        return info;
+                    }
+                }
+            }
+
+            return {};
+        }
     }
 }
 </script>
@@ -252,8 +329,9 @@ table > tbody > tr > td:first-child, table > thead > tr > th:first-child {
     padding-left: 20px;
 }
 
-table > tbody > tr > td:first-child, table > tbody > tr > td:nth-child(3) {
+table > tbody > tr > td:first-child, table > tbody > tr > td:nth-child(3) > a {
     color: #5179d6;
+    text-decoration: none;
 }
 
 table > thead > tr > th {

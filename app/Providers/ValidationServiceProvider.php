@@ -27,5 +27,10 @@ class ValidationServiceProvider extends ServiceProvider
         Validator::extend("no_space", function ($attribute, $value, $parameters, $validator) {
             return !preg_match("/\s+/", $value);
         });
+
+        // all string must be lowercase
+        Validator::extend("lowercase", function ($attribute, $value, $parameters, $validator) {
+            return strtolower($value) == $value;
+        });
     }
 }

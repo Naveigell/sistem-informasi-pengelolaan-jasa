@@ -2761,9 +2761,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Shared_Chart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Shared/Chart */ "./resources/js/components/Shared/Chart.js");
-/* harmony import */ var _Shared_Charts_BarChart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Shared/Charts/BarChart */ "./resources/js/components/Shared/Charts/BarChart.js");
-/* harmony import */ var _Shared_Charts_LineChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../Shared/Charts/LineChart */ "./resources/js/components/Shared/Charts/LineChart.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Shared_Chart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Shared/Chart */ "./resources/js/components/Shared/Chart.js");
+/* harmony import */ var _Shared_Charts_BarChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../Shared/Charts/BarChart */ "./resources/js/components/Shared/Charts/BarChart.js");
+/* harmony import */ var _Shared_Charts_LineChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Shared/Charts/LineChart */ "./resources/js/components/Shared/Charts/LineChart.js");
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2921,9 +2943,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
   components: {
-    BarChart: _Shared_Charts_BarChart__WEBPACK_IMPORTED_MODULE_1__["default"],
-    LineChart: _Shared_Charts_LineChart__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Chart: _Shared_Chart__WEBPACK_IMPORTED_MODULE_0__["default"]
+    BarChart: _Shared_Charts_BarChart__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LineChart: _Shared_Charts_LineChart__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Chart: _Shared_Chart__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2943,12 +2965,105 @@ __webpack_require__.r(__webpack_exports__);
           data: [this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random()]
         }]
       },
-      repairments: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      total: {
+        orders: 0,
+        technicians: 0,
+        users: 0
+      },
+      repairments: ['status-danger', 'status-warning', 'status-success', 'status-info'],
+      repairments_info: [{
+        name: "Menunggu",
+        "class": "status-danger",
+        "enum": "menunggu"
+      }, {
+        name: "Sedang Dicek",
+        "class": "status-danger",
+        "enum": "dicek"
+      }, {
+        name: "Perbaikan",
+        "class": "status-warning",
+        "enum": "perbaikan"
+      }, {
+        name: "Selesai",
+        "class": "status-info",
+        "enum": "selesai"
+      }, {
+        name: "Pembayaran",
+        "class": "status-success",
+        "enum": "pembayaran"
+      }, {
+        name: "Terima",
+        "class": "status-success",
+        "enum": "terima"
+      }]
     };
+  },
+  mounted: function mounted() {
+    this.retrieveTotal();
+    this.retrieveOrders();
   },
   methods: {
     random: function random() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+    },
+    retrieveTotal: function retrieveTotal() {
+      var _this = this;
+
+      this.$api.get(this.$endpoints.dashboard.total).then(function (response) {
+        _this.total = response.data.body.total;
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    retrieveOrders: function retrieveOrders() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var temporary, url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                temporary = _this2.repairments;
+                _this2.repairments = [];
+                url = _this2.$url.generateUrl(_this2.$endpoints.orders.last);
+                _context.next = 5;
+                return _this2.$api.get(url(10)).then(function (response) {
+                  _this2.repairments = response.data.body.orders;
+                })["catch"](function (error) {
+                  console.error(error);
+                  _this2.repairments = temporary;
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    getStatusOrderInfo: function getStatusOrderInfo(status) {
+      if (status !== undefined) {
+        var _iterator = _createForOfIteratorHelper(this.repairments_info),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var info = _step.value;
+
+            if (info["enum"] === status) {
+              return info;
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }
+
+      return {};
     }
   }
 });
@@ -3018,17 +3133,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     closeModal: function closeModal(modal) {
       modal.open = false;
-    },
-    openToast: function openToast(obj) {
-      this.$root.$emit("open-toast", {
-        type: obj.type,
-        background: obj.type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
-        data: {
-          title: obj.type === "failed" ? "Failed!" : "Success!",
-          message: obj.message,
-          icon: obj.type === "failed" ? "fa fa-times-circle" : "fa fa-check"
-        }
-      });
     }
   }
 });
@@ -3495,17 +3599,19 @@ __webpack_require__.r(__webpack_exports__);
         if (error.response.status === 422) {
           _this.errors = JSON.parse(JSON.stringify(data.errors.messages));
         } else if (_this.$math.status(error) === 5) {
-          _this.$emit("response", {
-            type: "failed",
-            message: "Terjadi masalah pada server"
-          });
+          _this.emitToParent("failed", "Terjadi masalah pada server");
         }
       });
     },
     emitToParent: function emitToParent(type, message, withAnimation) {
-      this.$emit("response", {
+      this.$root.$emit("open-toast", {
         type: type,
-        message: message
+        background: type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
+        data: {
+          title: type === "failed" ? "Failed!" : "Success!",
+          message: message,
+          icon: type === "failed" ? "fa fa-times-circle" : "fa fa-check"
+        }
       });
       this.closeModal(withAnimation);
     }
@@ -5907,21 +6013,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     closeModal: function closeModal(modal) {
       modal.open = false;
-    },
-    openToast: function openToast(obj) {
-      this.$root.$emit("open-toast", {
-        type: obj.type,
-        background: obj.type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
-        data: {
-          title: obj.type === "failed" ? "Failed!" : "Success!",
-          message: obj.message,
-          icon: obj.type === "failed" ? "fa fa-times-circle" : "fa fa-check"
-        }
-      }); // reload if child component need reload
-
-      if (obj.reload) {
-        this.reload();
-      }
     }
   }
 });
@@ -6258,26 +6349,27 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$api.post(this.$endpoints.users.insert, this.data).then(function (response) {
-        _this.emitToParent("success", "Teknisi berhasil ditambahkan", true, true);
+        _this.emitToParent("success", "Teknisi berhasil ditambahkan", true);
       })["catch"](function (error) {
         var data = error.response.data;
 
         if (error.response.status === 422) {
           _this.errors = JSON.parse(JSON.stringify(data.errors.messages));
         } else if (_this.$math.status(error) === 5) {
-          _this.$emit("response", {
-            type: "failed",
-            message: "Terjadi masalah pada server",
-            reload: false
-          });
+          _this.emitToParent("failed", "Terjadi masalah pada server");
         }
       });
     },
-    emitToParent: function emitToParent(type, message, withAnimation, reload) {
-      this.$emit("response", {
+    emitToParent: function emitToParent(type, message, withAnimation) {
+      this.$emit("response");
+      this.$root.$emit("open-toast", {
         type: type,
-        message: message,
-        reload: reload
+        background: type === "failed" ? this.$colors.redPrimary : this.$colors.successPrimary,
+        data: {
+          title: type === "failed" ? "Failed!" : "Success!",
+          message: message,
+          icon: type === "failed" ? "fa fa-times-circle" : "fa fa-check"
+        }
       });
       this.closeModal(withAnimation);
     }
@@ -27122,7 +27214,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\n.parent-deck[data-v-5f451666] {\n    margin-bottom: 17px;\n}\n.deck[data-v-5f451666] {\n    background: white;\n    height: 150px;\n    position: relative;\n}\n.deck-content[data-v-5f451666] {\n    margin: 10px;\n    /*background-color: red;*/\n    width: 100%;\n    height: calc(100% - 20px);\n    font-family: InterRegular, Arial, sans-serif;\n}\n.deck-content-container[data-v-5f451666] {\n    height: 72%;\n    display: flex;\n    align-items: center;\n}\n.deck-bottom[data-v-5f451666] {\n    background-color: #f6f7f8;\n    height: 28%;\n    display: flex;\n    align-items: center;\n}\n.summary-container[data-v-5f451666] {\n    /*height: 1000px;*/\n}\n.borderless td[data-v-5f451666], .borderless th[data-v-5f451666] {\n    border: none;\n}\n.table-striped > tbody > tr[data-v-5f451666] {\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\ntable > tbody > tr > td[data-v-5f451666] {\n    padding-bottom: 20px;\n    padding-top: 20px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    color: #6c757d;\n}\ntable > tbody > tr > td[data-v-5f451666]:first-child, table > thead > tr > th[data-v-5f451666]:first-child {\n    padding-left: 20px;\n}\ntable > tbody > tr > td[data-v-5f451666]:first-child, table > tbody > tr > td[data-v-5f451666]:nth-child(3) {\n    color: #5179d6;\n}\ntable > thead > tr > th[data-v-5f451666] {\n    padding-bottom: 10px;\n    padding-top: 10px;\n    color: #000;\n    letter-spacing: 1px;\n    line-height: 25px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n}\n.table-striped > tbody > tr[data-v-5f451666]:nth-of-type(odd) {\n    background-color: #f1f4f5;\n}\n.table-striped > tbody > tr[data-v-5f451666]:nth-of-type(even) {\n    background-color: #fff;\n}\n.status[data-v-5f451666] {\n    padding: 5px;\n    border-width: 1px;\n    border-radius: 3px;\n}\n.status-info[data-v-5f451666] {\n    color: #5cace5;\n    background-color: #e0effa;\n}\n.status-danger[data-v-5f451666] {\n    color: #e56767;\n    background-color: #fbeaea;\n}\n.status-warning[data-v-5f451666] {\n    color: #e5ae67;\n    background-color: #fbf4ea;\n}\n.status-success[data-v-5f451666] {\n    color: #30c78d;\n    background-color: #bff0dd;\n}\n", ""]);
+exports.push([module.i, "\n.parent-deck[data-v-5f451666] {\n    margin-bottom: 17px;\n}\n.deck[data-v-5f451666] {\n    background: white;\n    height: 150px;\n    position: relative;\n}\n.deck-content[data-v-5f451666] {\n    margin: 10px;\n    /*background-color: red;*/\n    width: 100%;\n    height: calc(100% - 20px);\n    font-family: InterRegular, Arial, sans-serif;\n}\n.deck-content-container[data-v-5f451666] {\n    height: 72%;\n    display: flex;\n    align-items: center;\n}\n.deck-bottom[data-v-5f451666] {\n    background-color: #f6f7f8;\n    height: 28%;\n    display: flex;\n    align-items: center;\n}\n.summary-container[data-v-5f451666] {\n    /*height: 1000px;*/\n}\n.borderless td[data-v-5f451666], .borderless th[data-v-5f451666] {\n    border: none;\n}\n.table-striped > tbody > tr[data-v-5f451666] {\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\ntable > tbody > tr > td[data-v-5f451666] {\n    padding-bottom: 20px;\n    padding-top: 20px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    color: #6c757d;\n}\ntable > tbody > tr > td[data-v-5f451666]:first-child, table > thead > tr > th[data-v-5f451666]:first-child {\n    padding-left: 20px;\n}\ntable > tbody > tr > td[data-v-5f451666]:first-child, table > tbody > tr > td:nth-child(3) > a[data-v-5f451666] {\n    color: #5179d6;\n    text-decoration: none;\n}\ntable > thead > tr > th[data-v-5f451666] {\n    padding-bottom: 10px;\n    padding-top: 10px;\n    color: #000;\n    letter-spacing: 1px;\n    line-height: 25px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n}\n.table-striped > tbody > tr[data-v-5f451666]:nth-of-type(odd) {\n    background-color: #f1f4f5;\n}\n.table-striped > tbody > tr[data-v-5f451666]:nth-of-type(even) {\n    background-color: #fff;\n}\n.status[data-v-5f451666] {\n    padding: 5px;\n    border-width: 1px;\n    border-radius: 3px;\n}\n.status-info[data-v-5f451666] {\n    color: #5cace5;\n    background-color: #e0effa;\n}\n.status-danger[data-v-5f451666] {\n    color: #e56767;\n    background-color: #fbeaea;\n}\n.status-warning[data-v-5f451666] {\n    color: #e5ae67;\n    background-color: #fbf4ea;\n}\n.status-success[data-v-5f451666] {\n    color: #30c78d;\n    background-color: #bff0dd;\n}\n", ""]);
 
 // exports
 
@@ -84074,7 +84166,126 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "app-container" }, [
     _c("div", { staticStyle: { margin: "20px" } }, [
-      _vm._m(0),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
+          _c("div", { staticClass: "deck elevation-2" }, [
+            _c("div", { staticClass: "deck-content-container" }, [
+              _c("div", { staticClass: "deck-content row" }, [
+                _c("div", { staticClass: "col-8" }, [
+                  _c(
+                    "h3",
+                    {
+                      staticStyle: {
+                        "font-weight": "bolder",
+                        "font-size": "30px",
+                        "font-family": "InterRegular, Arial, sans-serif"
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.total.orders))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticStyle: {
+                        "font-family": "InterRegular, Arial, sans-serif",
+                        "font-size": "16px",
+                        "font-weight": "bold",
+                        color: "#515151"
+                      }
+                    },
+                    [_vm._v("Total Orders")]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
+          _c("div", { staticClass: "deck elevation-2" }, [
+            _c("div", { staticClass: "deck-content-container" }, [
+              _c("div", { staticClass: "deck-content row" }, [
+                _c("div", { staticClass: "col-8" }, [
+                  _c(
+                    "h3",
+                    {
+                      staticStyle: {
+                        "font-weight": "bolder",
+                        "font-size": "30px",
+                        "font-family": "InterRegular, Arial, sans-serif"
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.total.technicians))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticStyle: {
+                        "font-family": "InterRegular, Arial, sans-serif",
+                        "font-size": "16px",
+                        "font-weight": "bold",
+                        color: "#515151"
+                      }
+                    },
+                    [_vm._v("Technicians")]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(3)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
+          _c("div", { staticClass: "deck elevation-2" }, [
+            _c("div", { staticClass: "deck-content-container" }, [
+              _c("div", { staticClass: "deck-content row" }, [
+                _c("div", { staticClass: "col-8" }, [
+                  _c(
+                    "h3",
+                    {
+                      staticStyle: {
+                        "font-weight": "bolder",
+                        "font-size": "30px",
+                        "font-family": "InterRegular, Arial, sans-serif"
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.total.users))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticStyle: {
+                        "font-family": "InterRegular, Arial, sans-serif",
+                        "font-size": "16px",
+                        "font-weight": "bold",
+                        color: "#515151"
+                      }
+                    },
+                    [_vm._v("Active Users")]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(4)
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(5)
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(6)
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -84088,7 +84299,7 @@ var render = function() {
                 staticStyle: { "background-color": "white" }
               },
               [
-                _vm._m(1),
+                _vm._m(7),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -84111,44 +84322,110 @@ var render = function() {
               staticStyle: { "background-color": "white" }
             },
             [
-              _vm._m(2),
+              _c(
+                "div",
+                {
+                  staticStyle: { "background-color": "#f6f7f8", height: "43px" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticStyle: {
+                        "padding-left": "25px",
+                        "padding-right": "20px",
+                        display: "flex",
+                        "align-items": "center",
+                        "justify-content": "space-between"
+                      }
+                    },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticStyle: {
+                            "font-weight": "500",
+                            "letter-spacing": "1px",
+                            "line-height": "25px"
+                          }
+                        },
+                        [_vm._v("PERBAIKAN TERBARU")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c(
+                          "span",
+                          {
+                            staticStyle: {
+                              display: "inline-block",
+                              padding: "3px 8px",
+                              "border-radius": "3px",
+                              background: "#e0e5e8",
+                              cursor: "pointer"
+                            },
+                            on: { click: _vm.retrieveOrders }
+                          },
+                          [_c("i", { staticClass: "fa fa-refresh" })]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(8)
+                      ])
+                    ]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticStyle: { padding: "20px" } }, [
                 _c("table", { staticClass: "table table-striped borderless" }, [
-                  _vm._m(3),
+                  _vm._m(9),
                   _vm._v(" "),
                   _c(
                     "tbody",
                     _vm._l(_vm.repairments, function(repairment) {
                       return _c("tr", [
-                        _c("td", [_vm._v("ORD.00965")]),
+                        _c("td", [_vm._v(_vm._s(repairment.unique_id))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("12 menit lalu")]),
+                        _c("td", [
+                          _vm._v(_vm._s(repairment.created_at_sentences))
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("ditya.jelita")]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              { attrs: { to: { path: "/technician" } } },
+                              [
+                                _vm._v(
+                                  "\n                                                " +
+                                    _vm._s(
+                                      repairment.technician == null
+                                        ? "-"
+                                        : repairment.technician.username
+                                    ) +
+                                    "\n                                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
                         _c("td", [
                           _c(
                             "span",
                             {
                               staticClass: "status",
-                              class: [
-                                "status-danger",
-                                "status-warning",
-                                "status-success",
-                                "status-info"
-                              ].random()
+                              class: _vm.getStatusOrderInfo(
+                                repairment.status_service
+                              ).class
                             },
                             [
                               _vm._v(
                                 _vm._s(
-                                  [
-                                    "Menunggu",
-                                    "Sedang Dicek",
-                                    "Pembayaran",
-                                    "Perbaikan",
-                                    "Terima"
-                                  ].random()
+                                  _vm.getStatusOrderInfo(
+                                    repairment.status_service
+                                  ).name
                                 )
                               )
                             ]
@@ -84178,269 +84455,184 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
-        _c("div", { staticClass: "deck elevation-2" }, [
-          _c("div", { staticClass: "deck-content-container" }, [
-            _c("div", { staticClass: "deck-content row" }, [
-              _c("div", { staticClass: "col-8" }, [
-                _c(
-                  "h3",
-                  {
-                    staticStyle: {
-                      "font-weight": "bolder",
-                      "font-size": "30px",
-                      "font-family": "InterRegular, Arial, sans-serif"
-                    }
-                  },
-                  [_vm._v("32")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: {
-                      "font-family": "InterRegular, Arial, sans-serif",
-                      "font-size": "16px",
-                      "font-weight": "bold",
-                      color: "#515151"
-                    }
-                  },
-                  [_vm._v("Pending Orders")]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-4",
-                  staticStyle: {
-                    "background-color": "transparent",
-                    display: "flex",
-                    "align-items": "center"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "deck-icon-container",
-                      staticStyle: {
-                        "background-color": "#edf0f2",
-                        width: "100%",
-                        "text-align": "center",
-                        padding: "15px",
-                        "border-radius": "3px"
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-shopping-cart",
-                        staticStyle: { "font-size": "30px", color: "#5179d6" }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "deck-bottom" }, [
-            _c(
-              "div",
-              {
-                staticStyle: { "padding-left": "25px", "padding-right": "20px" }
-              },
-              [
-                _c(
-                  "span",
-                  { staticStyle: { color: "#5179d6", "font-weight": "500" } },
-                  [
-                    _vm._v("Lihat Semua Pegawai   "),
-                    _c("i", { staticClass: "fa fa-arrow-right" })
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
-        _c("div", { staticClass: "deck elevation-2" }, [
-          _c("div", { staticClass: "deck-content-container" }, [
-            _c("div", { staticClass: "deck-content row" }, [
-              _c("div", { staticClass: "col-8" }, [
-                _c(
-                  "h3",
-                  {
-                    staticStyle: {
-                      "font-weight": "bolder",
-                      "font-size": "30px",
-                      "font-family": "InterRegular, Arial, sans-serif"
-                    }
-                  },
-                  [_vm._v("142")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: {
-                      "font-family": "InterRegular, Arial, sans-serif",
-                      "font-size": "16px",
-                      "font-weight": "bold",
-                      color: "#515151"
-                    }
-                  },
-                  [_vm._v("Pending Orders")]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-4",
-                  staticStyle: {
-                    "background-color": "transparent",
-                    display: "flex",
-                    "align-items": "center"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "deck-icon-container",
-                      staticStyle: {
-                        "background-color": "#edf0f2",
-                        width: "100%",
-                        "text-align": "center",
-                        padding: "15px",
-                        "border-radius": "3px"
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-users",
-                        staticStyle: { "font-size": "30px", color: "#5179d6" }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "deck-bottom" }, [
-            _c(
-              "div",
-              {
-                staticStyle: { "padding-left": "25px", "padding-right": "20px" }
-              },
-              [
-                _c(
-                  "span",
-                  { staticStyle: { color: "#5179d6", "font-weight": "500" } },
-                  [
-                    _vm._v("Lihat Semua Pegawai   "),
-                    _c("i", { staticClass: "fa fa-arrow-right" })
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
-        _c("div", { staticClass: "deck elevation-2" }, [
-          _c("div", { staticClass: "deck-content-container" }, [
-            _c("div", { staticClass: "deck-content row" }, [
-              _c("div", { staticClass: "col-8" }, [
-                _c(
-                  "h3",
-                  {
-                    staticStyle: {
-                      "font-weight": "bolder",
-                      "font-size": "30px",
-                      "font-family": "InterRegular, Arial, sans-serif"
-                    }
-                  },
-                  [_vm._v("142")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticStyle: {
-                      "font-family": "InterRegular, Arial, sans-serif",
-                      "font-size": "16px",
-                      "font-weight": "bold",
-                      color: "#515151"
-                    }
-                  },
-                  [_vm._v("Pending Orders")]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-4",
-                  staticStyle: {
-                    "background-color": "transparent",
-                    display: "flex",
-                    "align-items": "center"
-                  }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "deck-icon-container",
-                      staticStyle: {
-                        "background-color": "#edf0f2",
-                        width: "100%",
-                        "text-align": "center",
-                        padding: "15px",
-                        "border-radius": "3px"
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-shopping-cart",
-                        staticStyle: { "font-size": "30px", color: "#5179d6" }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "deck-bottom" }, [
-            _c(
-              "div",
-              {
-                staticStyle: { "padding-left": "25px", "padding-right": "20px" }
-              },
-              [
-                _c(
-                  "span",
-                  { staticStyle: { color: "#5179d6", "font-weight": "500" } },
-                  [
-                    _vm._v("Lihat Semua Pegawai   "),
-                    _c("i", { staticClass: "fa fa-arrow-right" })
-                  ]
-                )
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" }, [
+    return _c(
+      "div",
+      {
+        staticClass: "col-4",
+        staticStyle: {
+          "background-color": "transparent",
+          display: "flex",
+          "align-items": "center"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "deck-icon-container",
+            staticStyle: {
+              "background-color": "#edf0f2",
+              width: "100%",
+              "text-align": "center",
+              padding: "15px",
+              "border-radius": "3px"
+            }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-shopping-cart",
+              staticStyle: { "font-size": "30px", color: "#5179d6" }
+            })
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "deck-bottom" }, [
+      _c(
+        "div",
+        { staticStyle: { "padding-left": "25px", "padding-right": "20px" } },
+        [
+          _c(
+            "span",
+            { staticStyle: { color: "#5179d6", "font-weight": "500" } },
+            [
+              _vm._v("Lihat Semua Pegawai   "),
+              _c("i", { staticClass: "fa fa-arrow-right" })
+            ]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "col-4",
+        staticStyle: {
+          "background-color": "transparent",
+          display: "flex",
+          "align-items": "center"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "deck-icon-container",
+            staticStyle: {
+              "background-color": "#edf0f2",
+              width: "100%",
+              "text-align": "center",
+              padding: "15px",
+              "border-radius": "3px"
+            }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-users",
+              staticStyle: { "font-size": "30px", color: "#5179d6" }
+            })
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "deck-bottom" }, [
+      _c(
+        "div",
+        { staticStyle: { "padding-left": "25px", "padding-right": "20px" } },
+        [
+          _c(
+            "span",
+            { staticStyle: { color: "#5179d6", "font-weight": "500" } },
+            [
+              _vm._v("Lihat Semua Pegawai   "),
+              _c("i", { staticClass: "fa fa-arrow-right" })
+            ]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "col-4",
+        staticStyle: {
+          "background-color": "transparent",
+          display: "flex",
+          "align-items": "center"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "deck-icon-container",
+            staticStyle: {
+              "background-color": "#edf0f2",
+              width: "100%",
+              "text-align": "center",
+              padding: "15px",
+              "border-radius": "3px"
+            }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-shopping-cart",
+              staticStyle: { "font-size": "30px", color: "#5179d6" }
+            })
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "deck-bottom" }, [
+      _c(
+        "div",
+        { staticStyle: { "padding-left": "25px", "padding-right": "20px" } },
+        [
+          _c(
+            "span",
+            { staticStyle: { color: "#5179d6", "font-weight": "500" } },
+            [
+              _vm._v("Lihat Semua Pegawai   "),
+              _c("i", { staticClass: "fa fa-arrow-right" })
+            ]
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-3 col-md-6 col-sm-1 parent-deck" },
+      [
         _c("div", { staticClass: "deck elevation-2" }, [
           _c("div", { staticClass: "deck-content-container" }, [
             _c("div", { staticClass: "deck-content row" }, [
@@ -84467,7 +84659,7 @@ var staticRenderFns = [
                       color: "#515151"
                     }
                   },
-                  [_vm._v("Pending Orders")]
+                  [_vm._v("Messages")]
                 )
               ]),
               _vm._v(" "),
@@ -84525,8 +84717,8 @@ var staticRenderFns = [
             )
           ])
         ])
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -84568,34 +84760,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      { staticStyle: { "background-color": "#f6f7f8", height: "43px" } },
-      [
-        _c(
-          "div",
-          {
-            staticStyle: {
-              "padding-left": "25px",
-              "padding-right": "20px",
-              display: "flex",
-              "align-items": "center"
-            }
-          },
-          [
-            _c(
-              "h5",
-              {
-                staticStyle: {
-                  "font-weight": "500",
-                  "letter-spacing": "1px",
-                  "line-height": "25px"
-                }
-              },
-              [_vm._v("PERBAIKAN TERBARU")]
-            )
-          ]
-        )
-      ]
+      "span",
+      {
+        staticStyle: {
+          display: "inline-block",
+          padding: "3px 8px",
+          "border-radius": "3px",
+          background: "#e0e5e8",
+          cursor: "pointer"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-plus" })]
     )
   },
   function() {
@@ -84685,8 +84860,7 @@ var render = function() {
             on: {
               onAnimationEnd: function($event) {
                 return _vm.closeModal(_vm.modal.insert)
-              },
-              response: _vm.openToast
+              }
             }
           })
         : _vm._e()
@@ -89381,7 +89555,7 @@ var render = function() {
               onAnimationEnd: function($event) {
                 return _vm.closeModal(_vm.modal.insert)
               },
-              response: _vm.openToast
+              response: _vm.reload
             }
           })
         : _vm._e()
@@ -110077,6 +110251,9 @@ String.prototype.cutIfGreaterThan = function (number) {
 /***/ (function(module, exports) {
 
 var endpoints = {
+  dashboard: {
+    total: "/dashboard/total"
+  },
   auth: {
     login: "/auth/login",
     logout: "/auth/logout",
@@ -110116,6 +110293,10 @@ var endpoints = {
     search: "/users/search",
     insert: "/users",
     "delete": "/users"
+  },
+  orders: {
+    last: "/orders/take/:number/last",
+    total: "/orders/total"
   }
 };
 module.exports = endpoints;

@@ -32,6 +32,11 @@ class TechnicianModel extends Model
         return $this->hasOne(BiodataModel::class, "biodata_id_users", "id_users")->select(["id_biodata", "biodata_id_users", "jenis_kelamin", "nomor_hp", "alamat", "profile_picture"]);
     }
 
+    public function total()
+    {
+        return $this->where("role", $this->role)->count();
+    }
+
     /**
      * Retrieve technician by username
      *

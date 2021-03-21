@@ -31,6 +31,7 @@ class TechnicianRequestInsert extends FormRequest
             "username.min"                  => "Username minimal memiliki 6 karakter",
             "username.max"                  => "Username maksimal memiliki 40 karakter",
             "username.no_space"             => "Username tidak boleh memiliki spasi",
+            "username.lowercase"            => "Username tidak boleh memiliki huruf besar",
 
             "email.required"                => "Email harus diisi",
             "email.min"                     => "Email minimal memiliki 6 karakter",
@@ -52,7 +53,7 @@ class TechnicianRequestInsert extends FormRequest
     {
         return [
             "name"          => "required|string|min:4|max:60",
-            "username"      => "required|string|min:6|max:40|no_space",
+            "username"      => "required|string|min:6|max:40|no_space|lowercase",
             "email"         => "required|string|min:6|email",
             "gender"        => "required|string|in:Laki - laki,Perempuan"
         ];

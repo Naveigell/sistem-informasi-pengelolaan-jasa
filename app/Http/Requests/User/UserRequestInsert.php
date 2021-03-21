@@ -51,7 +51,7 @@ class UserRequestInsert extends FormRequest
     {
         return [
             "name"          => "required|string|min:4|max:60",
-            "username"      => "required|string|min:6|max:40|no_space",
+            "username"      => "required|string|min:6|max:40|no_space|lowercase",
             "email"         => "required|string|min:6|email",
             "gender"        => "required|string|in:Laki - laki,Perempuan"
         ];

@@ -1,4 +1,7 @@
 const endpoints = {
+    dashboard: {
+        total: "/dashboard/total"
+    },
     auth: {
         login: "/auth/login",
         logout: "/auth/logout",
@@ -38,6 +41,10 @@ const endpoints = {
         search: "/users/search",
         insert: "/users",
         delete: "/users"
+    },
+    orders: {
+        last: "/orders/take/:number/last",
+        total: "/orders/total"
     }
 }
 
