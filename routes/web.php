@@ -30,6 +30,8 @@ Route::group(['prefix' => '/api/v1'], function () {
     Route::group(["prefix" => "/orders", "middleware" => "auth.global"], function () {
         Route::get("/take/{number}/last", "Api\Order\OrderController@takeFromLast");
         Route::get("/total", "Api\Order\OrderController@getTotalOrders");
+        Route::get("/search", "Api\Order\OrderController@search");
+        Route::get("/{page?}", "Api\Order\OrderController@retrieveAll");
     });
 });
 

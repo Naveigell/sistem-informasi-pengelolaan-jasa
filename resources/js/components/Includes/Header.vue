@@ -23,8 +23,13 @@
                     <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
                 </div>
                 <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
-                    <a href="#">Settings</a>
-                    <a href="#">Biodata</a>
+                    <a>Settings</a>
+                    <a>Biodata</a>
+                    <a>
+                        <span style="display: inline-block; float: left;">Messages</span>
+                        <span style="display: inline-block; float: right;"><i class="fa fa-envelope"></i></span>
+                        <div style="clear: both;"></div>
+                    </a>
                     <div class="account-dropdown-separator"></div>
                     <a @click="logout">Logout &nbsp <i class="fa fa-sign-out"></i></a>
                 </div>
@@ -157,6 +162,10 @@ header {
     border-radius: 3px;
     box-shadow: 0 0 5px 1px #d4cece;
     width: 100%;
+}
+
+.account-dropdown-container > a > span {
+    font-family: InterRegular, Arial, sans-serif;
 }
 
 .account-dropdown-container > a {

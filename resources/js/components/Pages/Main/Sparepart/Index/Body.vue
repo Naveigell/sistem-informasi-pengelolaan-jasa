@@ -63,12 +63,12 @@
                 </div>
                 <grid v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
-                    <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
+                    <span @click="retrievePreviousUrl()" class="page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
                         <button @click="jumpIntoPage(i)" v-for="i in paginator.totalPage" v-if="i === 1 || i === paginator.totalPage || i === paginator.currentPage || i === paginator.currentPage - 1 || i === paginator.currentPage + 1" class="pages-button" v-bind:class="{'pages-active': paginator.currentPage === i}">{{ i }}</button>
                         <span v-else-if="(i === paginator.currentPage - 2 || i === paginator.currentPage + 2) && !(i === 1 || i === paginator.totalPage)">&nbsp...&nbsp</span>
                     </div>
-                    <span @click="retrieveNextUrl()" class="to-left-page-pagination page-pagination" style="margin-left: 12px;"><i class="fa fa-angle-right"></i></span>
+                    <span @click="retrieveNextUrl()" class="page-pagination" style="margin-left: 12px;"><i class="fa fa-angle-right"></i></span>
                     <div class="pagination-jumper">
                         <span>Ke halaman : </span>
                         <input v-model="jumper.jumperInput" type="text" class="pagination-jumper-input" placeholder="1">

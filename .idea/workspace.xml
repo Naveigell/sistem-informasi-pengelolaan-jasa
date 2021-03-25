@@ -21,18 +21,15 @@
   <component name="ChangeListManager">
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Views/SparepartController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Views/TechnicianController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestInsert.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestInsert.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestUpdate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Technician/TechnicianRequestUpdate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/User/UserRequestInsert.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/User/UserRequestInsert.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Technician/TechnicianModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Technician/TechnicianModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User/UserModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/ValidationServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/ValidationServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Order/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Order/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Order/OrderModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order/OrderModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Dashboard/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Dashboard/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +47,8 @@
         <option value="tsconfig.json" />
         <option value="package.json" />
         <option value="CSS File" />
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -170,7 +167,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Microservices/backend/services/account-service" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
@@ -179,18 +176,18 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Pages\Main\Technician\Index\Modals" />
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Pages\Main\Technician\Index" />
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Pages\Main\Technician\Index\Lists" />
+      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img\spareparts" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\public\img" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Helpers\Response" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Templates" />
       <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Pages\Main\Technician\Index\Modals" />
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Pages\Main\Technician\Index" />
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\resources\js\components\Pages\Main\Technician\Index\Lists" />
-      <recent name="D:\Application\Project\PHP\Laravel\sistem-informasi-pengelolaan-jasa\app\Dummy\Faker" />
     </key>
   </component>
   <component name="RunManager">
@@ -399,7 +396,13 @@
       <workItem from="1616208842641" duration="4307000" />
       <workItem from="1616218013332" duration="5911000" />
       <workItem from="1616235595160" duration="4319000" />
-      <workItem from="1616299237190" duration="4679000" />
+      <workItem from="1616299237190" duration="5067000" />
+      <workItem from="1616312148633" duration="4079000" />
+      <workItem from="1616328406850" duration="3577000" />
+      <workItem from="1616390246561" duration="3836000" />
+      <workItem from="1616558587261" duration="3933000" />
+      <workItem from="1616590675165" duration="55000" />
+      <workItem from="1616642417339" duration="320000" />
     </task>
     <servers />
   </component>
@@ -423,22 +426,22 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="510" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1615465880530" />
-    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1615287645453">
+    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser" timestamp="1616393524969">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1615287645453" />
+    <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1616393524969" />
     <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607994222161">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1607994222161" />
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1615431465044">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1616560243583">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1615431465044" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1608078580340">
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1616560243583" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1616590729581">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1608078580340" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1616590729581" />
     <state x="429" y="135" key="NewPhpClassDialog" timestamp="1616211836982">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -451,10 +454,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1615257820534" />
-    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1616158875766">
+    <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1616562262413">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1616158875766" />
+    <state x="478" y="11" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1616562262413" />
     <state x="561" y="271" key="scopes" timestamp="1615355473084">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

@@ -14,6 +14,8 @@ import TechnicianUpdate from "../components/Pages/Main/Technician/Update/Body";
 
 import Biodata from "../components/Pages/Main/Biodata/Body";
 
+import OrderIndex from "../components/Pages/Main/Orders/Index/Body";
+
 import ServiceIndex from "../components/Pages/Main/Service/Index/Body";
 
 import Errors404 from "../components/Errors/Errors404";
@@ -67,6 +69,11 @@ export const router = new VueRouter({
             path: '/service',
             name: 'service',
             component: ServiceIndex,
+        },
+        {
+            path: '/orders',
+            name: 'orders',
+            component: OrderIndex,
         },
         {
             path: '*',

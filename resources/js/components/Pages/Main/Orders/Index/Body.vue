@@ -1,0 +1,317 @@
+<template>
+    <div class="app-container">
+        <div style="margin: 20px;">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="elevation-2" style="background: white;">
+                        <div style="background-color: #f6f7f8; height: 60px; font-family: InterRegular, Arial, sans-serif;">
+                            <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center; justify-content: space-between;">
+                                <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 40px; font-size: 16px;">LIST ORDER</h5>
+                                <div style="font-size: 16px;">
+                                    <form style="display: inline-block; margin-right: 5px; background-color: #e0e5e8; padding: 5px 10px; border-radius: 3px;" action="" v-on:submit.prevent>
+                                        <div>
+                                            <input v-model="search.query" v-on:keyup.enter="searchOrder" class="search-input" type="text" style="border: none; display: inline-block; background-color: transparent; outline: none;" placeholder="Search ORDER ID ...">
+                                            <div style="background-color: #e0e5e8; display: inline-block;">
+                                                <span>
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <span v-on:click="reload" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
+                                    <span style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-plus"></i></span>
+                                    <div style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #d9e2f6; color: #25499c; cursor: pointer;">
+                                        <span><i class="fa fa-clock-o"></i></span>
+                                        <span style="font-weight: 500;">&nbspSemua Status&nbsp</span>
+                                        <span><i class="fa fa-caret-down"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 20px;">
+                            <table class="table table-striped borderless">
+                                <thead>
+                                <tr>
+                                    <th>ORDER ID</th>
+                                    <th>DIBUAT</th>
+                                    <th>TEKNISI</th>
+                                    <th>STATUS</th>
+                                    <th>HARGA</th>
+                                    <th>AKSI</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="repairment in repairments">
+                                        <td>{{ repairment.unique_id }}</td>
+                                        <td>{{ repairment.created_at_sentences }}</td>
+                                        <td>
+                                            <router-link :to="{ path: '/technician' }">
+                                                {{ repairment.technician == null ? "-" : repairment.technician.username }}
+                                            </router-link>
+                                        </td>
+                                        <td>
+                                            <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
+                                        </td>
+                                        <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
+                                        <td>
+                                            <span class="status-warning status">Pembayaran</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pagination">
+                                <span @click="retrievePreviousUrl" class="page-pagination">
+                                    <span><i class="fa fa-angle-left"></i></span>
+                                </span>
+                                <span @click="jumpIntoPage(i)" v-for="i in paginator.totalPage" v-if="i === 1 || i === paginator.totalPage || i === paginator.currentPage || i === paginator.currentPage - 1 || i === paginator.currentPage + 1" v-bind:class="{'page-active': paginator.currentPage === i}" class="page-pagination page-button">
+                                    <span>{{ i }}</span>
+                                </span>
+                                <span v-else-if="(i === paginator.currentPage - 2 || i === paginator.currentPage + 2) && !(i === 1 || i === paginator.totalPage)">&nbsp...&nbsp</span>
+                                <span @click="retrieveNextUrl" class="page-pagination">
+                                    <span><i style="font-weight: bold;" class="fa fa-angle-right"></i></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "Body",
+    data() {
+        return {
+            repairments: [],
+            repairments_info: [
+                {
+                    name: "Menunggu",
+                    class: "status-danger",
+                    enum: "menunggu"
+                },
+                {
+                    name: "Sedang Dicek",
+                    class: "status-danger",
+                    enum: "dicek"
+                },
+                {
+                    name: "Perbaikan",
+                    class: "status-warning",
+                    enum: "perbaikan"
+                },
+                {
+                    name: "Selesai",
+                    class: "status-info",
+                    enum: "selesai"
+                },
+                {
+                    name: "Pembayaran",
+                    class: "status-success",
+                    enum: "pembayaran"
+                },
+                {
+                    name: "Terima",
+                    class: "status-success",
+                    enum: "terima"
+                }
+            ],
+            url: {
+                endpoints: {
+                    current: this.$endpoints.orders.data,
+                    next: null,
+                    previous: null
+                },
+                uri: ""
+            },
+            paginator: {
+                perPage: 12,
+                currentPage: 1,
+                lastPage: 1,
+                totalPage: 1,
+                totalData: 0
+            },
+            search: {
+                query: "",
+                onSearch: false
+            },
+        }
+    },
+    mounted() {
+        this.retrieveUrl(this.url.endpoints.current);
+    },
+    methods: {
+        retrieveNextUrl(){
+            const next = this.url.endpoints.next;
+            if (next !== null) {
+                this.retrieveUrl(next);
+            }
+        },
+        retrievePreviousUrl(){
+            const previous = this.url.endpoints.previous;
+            if (previous !== null) {
+                this.retrieveUrl(previous);
+            }
+        },
+        reload(){
+            this.retrieveUrl(this.url.endpoints.current);
+        },
+        retrieveUrl(url, data = {}) {
+            this.repairments = [];
+
+            this.$api.get(url, data).then((response) => {
+                this.repairments = response.data.body.orders;
+
+                this.url.endpoints.next     = response.data.body.pages.next_url;
+                this.url.endpoints.previous = response.data.body.pages.previous_url;
+                this.url.uri                = response.data.body.pages.uri;
+
+                this.paginator.currentPage  = response.data.body.pages.current_page;
+                this.paginator.lastPage     = response.data.body.pages.last_page;
+                this.paginator.perPage      = response.data.body.pages.per_page;
+                this.paginator.totalPage    = Math.ceil(response.data.body.total / response.data.body.pages.per_page);
+                this.paginator.totalData    = response.data.body.total;
+
+                // console.log(response)
+            }).catch((error) => {
+                console.error(error);
+            })
+        },
+        searchOrder(){
+            if (this.search.query.length === 0) {
+                this.retrieveUrl(this.url.endpoints.current);
+            } else {
+                this.retrieveUrl(this.$endpoints.orders.search, {
+                    params: {
+                        id: this.search.query,
+                    }
+                });
+            }
+        },
+        jumpIntoPage(index) {
+            let url = this.$url.generateUrl(this.url.uri + "/:page");
+
+            this.retrieveUrl(url(index));
+        },
+        getStatusOrderInfo(status){
+            if (status !== undefined) {
+                for (const info of this.repairments_info) {
+                    if (info.enum === status) {
+                        return info;
+                    }
+                }
+            }
+
+            return {};
+        }
+    }
+}
+</script>
+
+<style scoped>
+.page-pagination {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border-radius: 3px;
+    background: #e0e5e8;
+    cursor: pointer;
+    font-family: InterRegular, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 2px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.page-button {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.page-active {
+    background: #5179d6;
+    color: #fff;
+}
+
+.page-pagination > span {
+    display: block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.table-striped > tbody > tr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+table > tbody > tr > td {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-family: InterRegular, Arial, sans-serif;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+table > tbody > tr > td:first-child, table > thead > tr > th:first-child {
+    padding-left: 20px;
+}
+
+table > tbody > tr > td:first-child, table > tbody > tr > td:nth-child(3) > a {
+    color: #5179d6;
+    text-decoration: none;
+}
+
+table > thead > tr > th {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #000;
+    letter-spacing: 1px;
+    line-height: 25px;
+    font-family: InterRegular, Arial, sans-serif;
+    font-weight: 600;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f1f4f5;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+    background-color: #fff;
+}
+
+.status {
+    padding: 5px 9px;
+    border-width: 1px;
+    border-radius: 3px;
+}
+
+.status-info {
+    color: #5cace5;
+    background-color: #e0effa;
+}
+
+.status-danger {
+    color: #e56767;
+    background-color: #fbeaea;
+}
+
+.status-warning {
+    color: #e5ae67;
+    background-color: #fbf4ea;
+}
+
+.status-success {
+    color: #30c78d;
+    background-color: #bff0dd;
+}
+</style>

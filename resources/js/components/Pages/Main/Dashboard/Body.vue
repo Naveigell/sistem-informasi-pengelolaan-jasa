@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
-                                        <i style="font-size: 30px; color: #5179d6;" class="fa fa-shopping-cart"></i>
+                                        <i style="font-size: 30px; color: #5179d6;" class="fa fa-user"></i>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +353,7 @@ table > thead > tr > th {
 }
 
 .status {
-    padding: 5px;
+    padding: 5px 9px;
     border-width: 1px;
     border-radius: 3px;
 }

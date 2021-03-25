@@ -67,6 +67,13 @@ export default {
                     hasDropdown: false,
                     isLink: true,
                     to: "/service"
+                },
+                {
+                    title: "Orders",
+                    icon: "fa fa-shopping-cart",
+                    hasDropdown: false,
+                    isLink: true,
+                    to: "/orders"
                 }
             ]
         };
