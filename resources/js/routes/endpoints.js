@@ -46,7 +46,7 @@ const endpoints = {
         last: "/orders/take/:number/last",
         total: "/orders/total",
         data: "/orders",
-        search: "/orders/search"
+        search: "/orders/search",
     }
 }
 

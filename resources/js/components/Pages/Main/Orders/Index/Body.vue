@@ -20,10 +20,15 @@
                                     </form>
                                     <span v-on:click="reload" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
                                     <span style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-plus"></i></span>
-                                    <div style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #d9e2f6; color: #25499c; cursor: pointer;">
-                                        <span><i class="fa fa-clock-o"></i></span>
-                                        <span style="font-weight: 500;">&nbspSemua Status&nbsp</span>
-                                        <span><i class="fa fa-caret-down"></i></span>
+                                    <div style="display: inline-block; position: relative;">
+                                        <div v-on:click="dropdown.open = !dropdown.open; rendered = true;" style="padding: 5px 10px; width: 160px; border-radius: 3px; background: #d9e2f6; color: #25499c; cursor: pointer;">
+                                            <span><i class="fa fa-clock-o"></i></span>
+                                            <span style="font-weight: 500;">&nbsp{{ statuses.selected === "semua" ? "Semua Status" : statuses.selected.capitalize() }}&nbsp</span>
+                                            <span style="display: inline-block; float: right"><i class="fa fa-caret-down"></i></span>
+                                        </div>
+                                        <div v-if="rendered" class="status-dropdown-container elevation-3 dropdown-animation" v-bind:class="{'dropdown-animation-show': dropdown.open, 'dropdown-animation-hide': !dropdown.open}">
+                                            <span v-for="(status, index) in statuses.list" @click="chooseStatus(index)">{{ status === "semua" ? "Semua Status" : status.capitalize() }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -45,8 +50,9 @@
                                         <td>{{ repairment.unique_id }}</td>
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
-                                            <router-link :to="{ path: '/technician' }">
-                                                {{ repairment.technician == null ? "-" : repairment.technician.username }}
+                                            <span v-if="repairment.technician == null">-</span>
+                                            <router-link v-else :to="{ path: '/technician/' + repairment.technician.username }">
+                                                {{ repairment.technician.username }}
                                             </router-link>
                                         </td>
                                         <td>
@@ -136,12 +142,26 @@ export default {
                 query: "",
                 onSearch: false
             },
+            dropdown: {
+                open: false
+            },
+            rendered: false,
+            statuses: {
+                list: ["semua", "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "diterima"],
+                selected: "semua"
+            }
         }
     },
     mounted() {
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
+        chooseStatus(index){
+            this.statuses.selected = this.statuses.list[index];
+            this.dropdown.open = false;
+
+            this.searchOrder();
+        },
         retrieveNextUrl(){
             const next = this.url.endpoints.next;
             if (next !== null) {
@@ -173,26 +193,42 @@ export default {
                 this.paginator.totalPage    = Math.ceil(response.data.body.total / response.data.body.pages.per_page);
                 this.paginator.totalData    = response.data.body.total;
 
-                // console.log(response)
+                this.search.onSearch        = response.data.body.search;
             }).catch((error) => {
                 console.error(error);
             })
         },
         searchOrder(){
-            if (this.search.query.length === 0) {
+            if (this.search.query.length === 0 && this.statuses.selected === "semua") {
                 this.retrieveUrl(this.url.endpoints.current);
             } else {
-                this.retrieveUrl(this.$endpoints.orders.search, {
-                    params: {
-                        id: this.search.query,
-                    }
-                });
+                let params = {};
+
+                if (this.search.query.length > 0) {
+                    params["id"] = this.search.query;
+                }
+
+                if (this.statuses.selected !== "semua") {
+                    params["status"] = this.statuses.selected;
+                }
+
+                this.retrieveUrl(this.$endpoints.orders.search, { params });
             }
         },
         jumpIntoPage(index) {
-            let url = this.$url.generateUrl(this.url.uri + "/:page");
+            if (this.search.onSearch) {
+                const querystring = this.$querystring.parse({
+                    id: this.search.query,
+                    status: this.statuses.selected === "semua" ? "all" : this.statuses.selected,
+                    page: index.toString()
+                });
 
-            this.retrieveUrl(url(index));
+                this.retrieveUrl(this.$endpoints.orders.search + querystring);
+            } else {
+                let url = this.$url.generateUrl(this.url.uri + "/:page");
+
+                this.retrieveUrl(url(index));
+            }
         },
         getStatusOrderInfo(status){
             if (status !== undefined) {
@@ -210,6 +246,72 @@ export default {
 </script>
 
 <style scoped>
+@keyframes showdropdown {
+    0% {
+        transform: translateY(20%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes hidedropdown {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        transform: translateY(20%);
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.dropdown-animation-show {
+    animation: showdropdown 0.45s ease forwards;
+    -o-animation: showdropdown 0.45s ease forwards;
+    -moz-animation: showdropdown 0.45s ease forwards;
+    -webkit-animation: showdropdown 0.45s ease forwards;
+}
+
+.dropdown-animation-hide {
+    animation: hidedropdown 0.45s ease forwards;
+    -o-animation: hidedropdown 0.45s ease forwards;
+    -moz-animation: hidedropdown 0.45s ease forwards;
+    -webkit-animation: hidedropdown 0.45s ease forwards;
+}
+
+.status-dropdown-container {
+    position: absolute;
+    padding: 3px;
+    top: 36px;
+    left: 0;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px 1px #d4cece;
+    width: 100%;
+}
+
+.status-dropdown-container > span {
+    font-family: InterRegular, Arial, sans-serif;
+    font-weight: 600;
+    padding: 12px;
+    color: #444444;
+    cursor: pointer;
+    display: block;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.status-dropdown-container > span:hover {
+    background-color: #edf0f2;
+}
+
 .page-pagination {
     display: inline-block;
     width: 35px;

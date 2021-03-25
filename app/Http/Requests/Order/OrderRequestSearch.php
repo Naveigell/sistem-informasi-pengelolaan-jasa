@@ -24,7 +24,8 @@ class OrderRequestSearch extends FormRequest
     public function rules()
     {
         return [
-            "id"        => "sometimes|string|min:4"
+            "id"        => "sometimes|string",
+            "status"    => "sometimes|string|in:all,menunggu,dicek,perbaikan,selesai,pembayaran,diterima"
         ];
     }
 }

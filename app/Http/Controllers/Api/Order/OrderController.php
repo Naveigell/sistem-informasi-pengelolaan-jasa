@@ -21,6 +21,12 @@ class OrderController extends Controller
         $this->order = new OrderModel;
     }
 
+    /**
+     * Retrieve some orders
+     *
+     * @param int $page
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function retrieveAll($page = 1)
     {
         $page = (int) $page;
@@ -47,23 +53,57 @@ class OrderController extends Controller
                 "next_url"          => $next_url,
                 "uri"               => api_path_v1(self::MAIN_PATH_URL)
             ],
-            "orders"    => $this->addTimeSentences(collect($collections->items())),
+            "orders"        => $this->addTimeSentences(collect($collections->items())),
+            "search"        => false
         ];
 
         return json($data);
     }
 
-    public function search(Request $request)
+    /**
+     * Create a query string with additional data
+     *
+     * @param $id
+     * @param $status
+     * @param $page
+     * @return string
+     */
+    private function createQueryString($id, $status, $page)
     {
-        $page   = (int) $request->get("p");
+        $arr = [];
 
-        if (!$request->id) {
+        if ($id != null) {
+            $arr["id"] = $id;
+        }
+
+        if ($status != null) {
+            $arr["status"] = $status;
+        }
+
+        $arr["page"] = $page;
+
+        return QueryString::parse($arr);
+    }
+
+    /**
+     * Search order by id
+     *
+     * @param OrderRequestSearch $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(OrderRequestSearch $request)
+    {
+        $page   = (int) $request->get("page");
+
+        if (!$request->id && !$request->status) {
             return $this->retrieveAll($page);
         }
 
+        if ($request->status == "all") $request->status = null;
+
         set_current_page($page);
 
-        $collections = $this->order->search($request->id);
+        $collections = $this->order->search($request->id, $request->status);
         $current_page   = $collections->currentPage();
         $last_page      = $collections->lastPage();
 
@@ -71,15 +111,8 @@ class OrderController extends Controller
         $previous_page  = $current_page - 1 > 0 && $current_page <= $last_page ? $current_page - 1 : null;
         $next_page      = $current_page < $last_page && $current_page > 0 ? $current_page + 1 : null;
 
-        $next_url       = QueryString::parse([
-            "id"        => $request->id,
-            "page"      => $next_page
-        ]);
-
-        $previous_url   = QueryString::parse([
-            "id"        => $request->id,
-            "page"      => $previous_page
-        ]);
+        $next_url       = $this->createQueryString($request->id, $request->status, $next_page);
+        $previous_url   = $this->createQueryString($request->id, $request->status, $previous_page);
 
         $data = [
             "total"         => $collections->total(),
@@ -87,11 +120,13 @@ class OrderController extends Controller
                 "current_page"      => $current_page,
                 "last_page"         => $last_page,
                 "per_page"          => $collections->perPage(),
+                "current_url"       => $current_url,
                 "previous_url"      => api_path_v1(self::SEARCH_PATH_URL.$previous_url),
                 "next_url"          => api_path_v1(self::SEARCH_PATH_URL.$next_url),
                 "uri"               => api_path_v1(self::MAIN_PATH_URL)
             ],
-            "orders"    => $this->addTimeSentences(collect($collections->items())),
+            "orders"        => $this->addTimeSentences(collect($collections->items())),
+            "search"        => true
         ];
 
         return json($data);

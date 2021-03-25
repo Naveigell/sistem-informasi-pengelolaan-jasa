@@ -19,19 +19,47 @@ class OrderModel extends Model
         return $this->hasOne(TechnicianModel::class, "id_users", "service_id_teknisi")->select(["id_users", "name", "username", "role"])->where("role", "teknisi");
     }
 
+    /**
+     * Split a same code to a part
+     *
+     * @return OrderModel
+     */
     private function main()
     {
         return $this->with(["technician"])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi"])->orderBy("id_service", "DESC");
     }
 
+    /**
+     * Get order lists
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getOrderList()
     {
         return $this->main()->paginate(12);
     }
 
-    public function search($id)
+    /**
+     * search by unique id
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function search($id, $status)
     {
-        return $this->main()->where("unique_id", $id)->paginate(12);
+        $where = $this->checkWhereClause("unique_id", $id, []);
+        $where = $this->checkWhereClause("status_service", $status, $where);
+
+        return $this->main()->where($where)->paginate(12);
+    }
+
+    private function checkWhereClause($key, $value, $arr)
+    {
+        if ($value != null) {
+            $arr[$key] = $value;
+        }
+
+        return $arr;
     }
 
     /**

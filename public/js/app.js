@@ -3177,6 +3177,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
   data: function data() {
@@ -3225,6 +3231,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       search: {
         query: "",
         onSearch: false
+      },
+      dropdown: {
+        open: false
+      },
+      rendered: false,
+      statuses: {
+        list: ["semua", "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "diterima"],
+        selected: "semua"
       }
     };
   },
@@ -3232,6 +3246,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.retrieveUrl(this.url.endpoints.current);
   },
   methods: {
+    chooseStatus: function chooseStatus(index) {
+      this.statuses.selected = this.statuses.list[index];
+      this.dropdown.open = false;
+      this.searchOrder();
+    },
     retrieveNextUrl: function retrieveNextUrl() {
       var next = this.url.endpoints.next;
 
@@ -3263,25 +3282,43 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         _this.paginator.lastPage = response.data.body.pages.last_page;
         _this.paginator.perPage = response.data.body.pages.per_page;
         _this.paginator.totalPage = Math.ceil(response.data.body.total / response.data.body.pages.per_page);
-        _this.paginator.totalData = response.data.body.total; // console.log(response)
+        _this.paginator.totalData = response.data.body.total;
+        _this.search.onSearch = response.data.body.search;
       })["catch"](function (error) {
         console.error(error);
       });
     },
     searchOrder: function searchOrder() {
-      if (this.search.query.length === 0) {
+      if (this.search.query.length === 0 && this.statuses.selected === "semua") {
         this.retrieveUrl(this.url.endpoints.current);
       } else {
+        var params = {};
+
+        if (this.search.query.length > 0) {
+          params["id"] = this.search.query;
+        }
+
+        if (this.statuses.selected !== "semua") {
+          params["status"] = this.statuses.selected;
+        }
+
         this.retrieveUrl(this.$endpoints.orders.search, {
-          params: {
-            id: this.search.query
-          }
+          params: params
         });
       }
     },
     jumpIntoPage: function jumpIntoPage(index) {
-      var url = this.$url.generateUrl(this.url.uri + "/:page");
-      this.retrieveUrl(url(index));
+      if (this.search.onSearch) {
+        var querystring = this.$querystring.parse({
+          id: this.search.query,
+          status: this.statuses.selected === "semua" ? "all" : this.statuses.selected,
+          page: index.toString()
+        });
+        this.retrieveUrl(this.$endpoints.orders.search + querystring);
+      } else {
+        var url = this.$url.generateUrl(this.url.uri + "/:page");
+        this.retrieveUrl(url(index));
+      }
     },
     getStatusOrderInfo: function getStatusOrderInfo(status) {
       if (status !== undefined) {
@@ -27473,7 +27510,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "\n.page-pagination[data-v-3bd33129] {\n    display: inline-block;\n    width: 35px;\n    height: 35px;\n    border-radius: 3px;\n    background: #e0e5e8;\n    cursor: pointer;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: bold;\n    font-size: 15px;\n    margin-right: 2px;\n    position: relative;\n    overflow-x: hidden;\n}\n.page-button[data-v-3bd33129] {\n    margin-right: 2px;\n    margin-left: 2px;\n}\n.page-active[data-v-3bd33129] {\n    background: #5179d6;\n    color: #fff;\n}\n.page-pagination > span[data-v-3bd33129] {\n    display: block;\n    margin: 0;\n    padding: 0;\n    position: relative;\n    text-align: center;\n    top: 50%;\n    transform: translateY(-50%);\n}\n.borderless td[data-v-3bd33129], .borderless th[data-v-3bd33129] {\n    border: none;\n}\n.table-striped > tbody > tr[data-v-3bd33129] {\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\ntable > tbody > tr > td[data-v-3bd33129] {\n    padding-bottom: 20px;\n    padding-top: 20px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    color: #6c757d;\n}\ntable > tbody > tr > td[data-v-3bd33129]:first-child, table > thead > tr > th[data-v-3bd33129]:first-child {\n    padding-left: 20px;\n}\ntable > tbody > tr > td[data-v-3bd33129]:first-child, table > tbody > tr > td:nth-child(3) > a[data-v-3bd33129] {\n    color: #5179d6;\n    text-decoration: none;\n}\ntable > thead > tr > th[data-v-3bd33129] {\n    padding-bottom: 10px;\n    padding-top: 10px;\n    color: #000;\n    letter-spacing: 1px;\n    line-height: 25px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n}\n.table-striped > tbody > tr[data-v-3bd33129]:nth-of-type(odd) {\n    background-color: #f1f4f5;\n}\n.table-striped > tbody > tr[data-v-3bd33129]:nth-of-type(even) {\n    background-color: #fff;\n}\n.status[data-v-3bd33129] {\n    padding: 5px 9px;\n    border-width: 1px;\n    border-radius: 3px;\n}\n.status-info[data-v-3bd33129] {\n    color: #5cace5;\n    background-color: #e0effa;\n}\n.status-danger[data-v-3bd33129] {\n    color: #e56767;\n    background-color: #fbeaea;\n}\n.status-warning[data-v-3bd33129] {\n    color: #e5ae67;\n    background-color: #fbf4ea;\n}\n.status-success[data-v-3bd33129] {\n    color: #30c78d;\n    background-color: #bff0dd;\n}\n", ""]);
+exports.push([module.i, "\n@-webkit-keyframes showdropdown-data-v-3bd33129 {\n0% {\n        transform: translateY(20%);\n        opacity: 0;\n        visibility: hidden;\n}\n100% {\n        transform: translateY(0);\n        opacity: 1;\n        visibility: visible;\n}\n}\n@keyframes showdropdown-data-v-3bd33129 {\n0% {\n        transform: translateY(20%);\n        opacity: 0;\n        visibility: hidden;\n}\n100% {\n        transform: translateY(0);\n        opacity: 1;\n        visibility: visible;\n}\n}\n@-webkit-keyframes hidedropdown-data-v-3bd33129 {\n0% {\n        transform: translateY(0);\n        opacity: 1;\n        visibility: visible;\n}\n100% {\n        transform: translateY(20%);\n        opacity: 0;\n        visibility: hidden;\n}\n}\n@keyframes hidedropdown-data-v-3bd33129 {\n0% {\n        transform: translateY(0);\n        opacity: 1;\n        visibility: visible;\n}\n100% {\n        transform: translateY(20%);\n        opacity: 0;\n        visibility: hidden;\n}\n}\n.dropdown-animation-show[data-v-3bd33129] {\n    animation: showdropdown-data-v-3bd33129 0.45s ease forwards;\n    -o-animation: showdropdown-data-v-3bd33129 0.45s ease forwards;\n    -moz-animation: showdropdown-data-v-3bd33129 0.45s ease forwards;\n    -webkit-animation: showdropdown-data-v-3bd33129 0.45s ease forwards;\n}\n.dropdown-animation-hide[data-v-3bd33129] {\n    animation: hidedropdown-data-v-3bd33129 0.45s ease forwards;\n    -o-animation: hidedropdown-data-v-3bd33129 0.45s ease forwards;\n    -moz-animation: hidedropdown-data-v-3bd33129 0.45s ease forwards;\n    -webkit-animation: hidedropdown-data-v-3bd33129 0.45s ease forwards;\n}\n.status-dropdown-container[data-v-3bd33129] {\n    position: absolute;\n    padding: 3px;\n    top: 36px;\n    left: 0;\n    background-color: #fff;\n    border-radius: 3px;\n    box-shadow: 0 0 5px 1px #d4cece;\n    width: 100%;\n}\n.status-dropdown-container > span[data-v-3bd33129] {\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    padding: 12px;\n    color: #444444;\n    cursor: pointer;\n    display: block;\n    border-radius: 3px;\n    text-decoration: none;\n}\n.status-dropdown-container > span[data-v-3bd33129]:hover {\n    background-color: #edf0f2;\n}\n.page-pagination[data-v-3bd33129] {\n    display: inline-block;\n    width: 35px;\n    height: 35px;\n    border-radius: 3px;\n    background: #e0e5e8;\n    cursor: pointer;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: bold;\n    font-size: 15px;\n    margin-right: 2px;\n    position: relative;\n    overflow-x: hidden;\n}\n.page-button[data-v-3bd33129] {\n    margin-right: 2px;\n    margin-left: 2px;\n}\n.page-active[data-v-3bd33129] {\n    background: #5179d6;\n    color: #fff;\n}\n.page-pagination > span[data-v-3bd33129] {\n    display: block;\n    margin: 0;\n    padding: 0;\n    position: relative;\n    text-align: center;\n    top: 50%;\n    transform: translateY(-50%);\n}\n.borderless td[data-v-3bd33129], .borderless th[data-v-3bd33129] {\n    border: none;\n}\n.table-striped > tbody > tr[data-v-3bd33129] {\n    margin-top: 20px;\n    margin-bottom: 20px;\n}\ntable > tbody > tr > td[data-v-3bd33129] {\n    padding-bottom: 20px;\n    padding-top: 20px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n    color: #6c757d;\n}\ntable > tbody > tr > td[data-v-3bd33129]:first-child, table > thead > tr > th[data-v-3bd33129]:first-child {\n    padding-left: 20px;\n}\ntable > tbody > tr > td[data-v-3bd33129]:first-child, table > tbody > tr > td:nth-child(3) > a[data-v-3bd33129] {\n    color: #5179d6;\n    text-decoration: none;\n}\ntable > thead > tr > th[data-v-3bd33129] {\n    padding-bottom: 10px;\n    padding-top: 10px;\n    color: #000;\n    letter-spacing: 1px;\n    line-height: 25px;\n    font-family: InterRegular, Arial, sans-serif;\n    font-weight: 600;\n}\n.table-striped > tbody > tr[data-v-3bd33129]:nth-of-type(odd) {\n    background-color: #f1f4f5;\n}\n.table-striped > tbody > tr[data-v-3bd33129]:nth-of-type(even) {\n    background-color: #fff;\n}\n.status[data-v-3bd33129] {\n    padding: 5px 9px;\n    border-width: 1px;\n    border-radius: 3px;\n}\n.status-info[data-v-3bd33129] {\n    color: #5cace5;\n    background-color: #e0effa;\n}\n.status-danger[data-v-3bd33129] {\n    color: #e56767;\n    background-color: #fbeaea;\n}\n.status-warning[data-v-3bd33129] {\n    color: #e5ae67;\n    background-color: #fbf4ea;\n}\n.status-success[data-v-3bd33129] {\n    color: #30c78d;\n    background-color: #bff0dd;\n}\n", ""]);
 
 // exports
 
@@ -85258,7 +85295,98 @@ var render = function() {
                         _vm._v(" "),
                         _vm._m(1),
                         _vm._v(" "),
-                        _vm._m(2)
+                        _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              display: "inline-block",
+                              position: "relative"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  padding: "5px 10px",
+                                  width: "160px",
+                                  "border-radius": "3px",
+                                  background: "#d9e2f6",
+                                  color: "#25499c",
+                                  cursor: "pointer"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.dropdown.open = !_vm.dropdown.open
+                                    _vm.rendered = true
+                                  }
+                                }
+                              },
+                              [
+                                _vm._m(2),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  { staticStyle: { "font-weight": "500" } },
+                                  [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.statuses.selected === "semua"
+                                            ? "Semua Status"
+                                            : _vm.statuses.selected.capitalize()
+                                        ) +
+                                        " "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._m(3)
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.rendered
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "status-dropdown-container elevation-3 dropdown-animation",
+                                    class: {
+                                      "dropdown-animation-show":
+                                        _vm.dropdown.open,
+                                      "dropdown-animation-hide": !_vm.dropdown
+                                        .open
+                                    }
+                                  },
+                                  _vm._l(_vm.statuses.list, function(
+                                    status,
+                                    index
+                                  ) {
+                                    return _c(
+                                      "span",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.chooseStatus(index)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            status === "semua"
+                                              ? "Semua Status"
+                                              : status.capitalize()
+                                          )
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                              : _vm._e()
+                          ]
+                        )
                       ])
                     ]
                   )
@@ -85267,7 +85395,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticStyle: { padding: "20px" } }, [
                 _c("table", { staticClass: "table table-striped borderless" }, [
-                  _vm._m(3),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -85282,21 +85410,27 @@ var render = function() {
                         _c(
                           "td",
                           [
-                            _c(
-                              "router-link",
-                              { attrs: { to: { path: "/technician" } } },
-                              [
-                                _vm._v(
-                                  "\n                                            " +
-                                    _vm._s(
-                                      repairment.technician == null
-                                        ? "-"
-                                        : repairment.technician.username
-                                    ) +
-                                    "\n                                        "
+                            repairment.technician == null
+                              ? _c("span", [_vm._v("-")])
+                              : _c(
+                                  "router-link",
+                                  {
+                                    attrs: {
+                                      to: {
+                                        path:
+                                          "/technician/" +
+                                          repairment.technician.username
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                            " +
+                                        _vm._s(repairment.technician.username) +
+                                        "\n                                        "
+                                    )
+                                  ]
                                 )
-                              ]
-                            )
                           ],
                           1
                         ),
@@ -85328,7 +85462,7 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(4, true)
+                        _vm._m(5, true)
                       ])
                     }),
                     0
@@ -85345,7 +85479,7 @@ var render = function() {
                         staticClass: "page-pagination",
                         on: { click: _vm.retrievePreviousUrl }
                       },
-                      [_vm._m(5)]
+                      [_vm._m(6)]
                     ),
                     _vm._v(" "),
                     _vm._l(_vm.paginator.totalPage, function(i) {
@@ -85382,7 +85516,7 @@ var render = function() {
                         staticClass: "page-pagination",
                         on: { click: _vm.retrieveNextUrl }
                       },
-                      [_vm._m(6)]
+                      [_vm._m(7)]
                     )
                   ],
                   2
@@ -85430,27 +85564,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fa fa-clock-o" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
-      "div",
-      {
-        staticStyle: {
-          display: "inline-block",
-          padding: "5px 10px",
-          "border-radius": "3px",
-          background: "#d9e2f6",
-          color: "#25499c",
-          cursor: "pointer"
-        }
-      },
-      [
-        _c("span", [_c("i", { staticClass: "fa fa-clock-o" })]),
-        _vm._v(" "),
-        _c("span", { staticStyle: { "font-weight": "500" } }, [
-          _vm._v(" Semua Status ")
-        ]),
-        _vm._v(" "),
-        _c("span", [_c("i", { staticClass: "fa fa-caret-down" })])
-      ]
+      "span",
+      { staticStyle: { display: "inline-block", float: "right" } },
+      [_c("i", { staticClass: "fa fa-caret-down" })]
     )
   },
   function() {
@@ -107513,12 +107636,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_file__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./helpers/file */ "./resources/js/helpers/file.js");
 /* harmony import */ var _helpers_color__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./helpers/color */ "./resources/js/helpers/color.js");
 /* harmony import */ var _colors_color__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./colors/color */ "./resources/js/colors/color.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./routes/endpoints */ "./resources/js/routes/endpoints.js");
-/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_routes_endpoints__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./stores/store */ "./resources/js/stores/store.js");
-/* harmony import */ var _routes_router__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./routes/router */ "./resources/js/routes/router.js");
+/* harmony import */ var _helpers_query_string__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./helpers/query_string */ "./resources/js/helpers/query_string.js");
+/* harmony import */ var _helpers_query_string__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_helpers_query_string__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./routes/endpoints */ "./resources/js/routes/endpoints.js");
+/* harmony import */ var _routes_endpoints__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_routes_endpoints__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./stores/store */ "./resources/js/stores/store.js");
+/* harmony import */ var _routes_router__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./routes/router */ "./resources/js/routes/router.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -107568,6 +107693,7 @@ Vue.component('app-sidebar', _components_Includes_Sidebar__WEBPACK_IMPORTED_MODU
 
 
 
+
 Vue.use({
   install: function install(Vue) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -107576,14 +107702,14 @@ Vue.use({
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              axiosInstance = axios__WEBPACK_IMPORTED_MODULE_15___default.a.create({
+              axiosInstance = axios__WEBPACK_IMPORTED_MODULE_16___default.a.create({
                 baseURL: "http://localhost:8000/api/v1/",
                 headers: {
                   'Content-Type': 'application/json'
                 }
               });
               Vue.prototype.$api = axiosInstance;
-              Vue.prototype.$endpoints = _routes_endpoints__WEBPACK_IMPORTED_MODULE_16___default.a;
+              Vue.prototype.$endpoints = _routes_endpoints__WEBPACK_IMPORTED_MODULE_17___default.a;
               Vue.prototype.$math = _helpers_math__WEBPACK_IMPORTED_MODULE_8___default.a;
               Vue.prototype.$basepath = "http://localhost:8000/";
               Vue.prototype.$http = new _helpers_http__WEBPACK_IMPORTED_MODULE_9__["default"](axiosInstance);
@@ -107592,8 +107718,9 @@ Vue.use({
               Vue.prototype.$image = _helpers_file__WEBPACK_IMPORTED_MODULE_12__["default"];
               Vue.prototype.$color = _helpers_color__WEBPACK_IMPORTED_MODULE_13__["default"];
               Vue.prototype.$colors = _colors_color__WEBPACK_IMPORTED_MODULE_14__["default"];
+              Vue.prototype.$querystring = _helpers_query_string__WEBPACK_IMPORTED_MODULE_15___default.a;
 
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }
@@ -107616,8 +107743,8 @@ Vue.mixin({
 });
 var app = new Vue({
   // render: h => h(LoginAndDashboard),
-  store: _stores_store__WEBPACK_IMPORTED_MODULE_17__["store"],
-  router: _routes_router__WEBPACK_IMPORTED_MODULE_18__["router"],
+  store: _stores_store__WEBPACK_IMPORTED_MODULE_18__["store"],
+  router: _routes_router__WEBPACK_IMPORTED_MODULE_19__["router"],
   components: {
     Layout: _components_Layouts_Layout__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
@@ -110947,6 +111074,37 @@ var math = {
   }
 };
 module.exports = math;
+
+/***/ }),
+
+/***/ "./resources/js/helpers/query_string.js":
+/*!**********************************************!*\
+  !*** ./resources/js/helpers/query_string.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var queryString = {
+  parse: function parse() {
+    var arr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var keys = Object.keys(arr);
+    var values = Object.values(arr);
+    var query = "";
+
+    for (var i = 0; i < keys.length; i++) {
+      if (typeof arr[keys[i]] === "string" && arr[keys[i]].length > 0) {
+        query += keys[i] + "=" + values[i];
+
+        if (i < keys.length - 1) {
+          query += "&";
+        }
+      }
+    }
+
+    return "?" + query;
+  }
+};
+module.exports = queryString;
 
 /***/ }),
 

@@ -45,6 +45,7 @@ import Currency from "./helpers/currency";
 import Image from "./helpers/file";
 import Color from "./helpers/color";
 import Colors from "./colors/color";
+import QueryString from "./helpers/query_string";
 
 import axios from "axios";
 import Endpoints from "./routes/endpoints";
@@ -69,6 +70,7 @@ Vue.use({
         Vue.prototype.$image = Image;
         Vue.prototype.$color = Color;
         Vue.prototype.$colors = Colors;
+        Vue.prototype.$querystring = QueryString;
     }
 });
 

@@ -22,15 +22,12 @@
     <list default="true" id="fc14c662-98aa-401e-80c8-2b168dde493c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Order/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Order/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Order/OrderRequestSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Order/OrderRequestSearch.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Order/OrderModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Order/OrderModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Header.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Includes/Sidebar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Dashboard/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Dashboard/Body.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Sparepart/Index/Body.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Main/Orders/Index/Body.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Main/Orders/Index/Body.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/routes/endpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/endpoints.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/routes/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +44,8 @@
         <option value="tsconfig.json" />
         <option value="package.json" />
         <option value="CSS File" />
-        <option value="JavaScript File" />
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -171,7 +168,7 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="ts.external.directory.path" value="D:\Application\Jetbrains\PhpStorm 2020.2.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -402,7 +399,10 @@
       <workItem from="1616390246561" duration="3836000" />
       <workItem from="1616558587261" duration="3933000" />
       <workItem from="1616590675165" duration="55000" />
-      <workItem from="1616642417339" duration="320000" />
+      <workItem from="1616642417339" duration="4804000" />
+      <workItem from="1616657076352" duration="4381000" />
+      <workItem from="1616668502388" duration="3801000" />
+      <workItem from="1616674577299" duration="342000" />
     </task>
     <servers />
   </component>
@@ -430,10 +430,6 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="574" y="94" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1616393524969" />
-    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1607994222161">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="382" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1607994222161" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1616560243583">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -450,10 +446,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1616211826659" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1615257820534">
+    <state x="277" y="57" key="SettingsEditor" timestamp="1616658047087">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1615257820534" />
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1616658047087" />
     <state x="478" y="11" width="579" height="801" key="find.popup" timestamp="1616562262413">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
