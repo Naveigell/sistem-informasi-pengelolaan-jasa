@@ -39,6 +39,7 @@ const endpoints = {
     users: {
         data: "/users",
         search: "/users/search",
+        search_email: "/users/search/email",
         insert: "/users",
         delete: "/users"
     },
@@ -47,6 +48,7 @@ const endpoints = {
         total: "/orders/total",
         data: "/orders",
         search: "/orders/search",
+        insert: "/orders",
     }
 }
 

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => '/api/v1'], function () {
     // lot of routes had been moved into separated functions on app\Http\Providers\RouteServiceProvider
     Route::group(["prefix" => "/users", "middleware" => "auth.global"], function () {
+        Route::get("/search/email", "Api\User\UserController@searchEmail");
         Route::get("/search", "Api\User\UserController@search");
         Route::get("/{page?}", "Api\User\UserController@retrieveAll");
         Route::post("/", "Api\User\UserController@create");
@@ -32,6 +33,7 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/total", "Api\Order\OrderController@getTotalOrders");
         Route::get("/search", "Api\Order\OrderController@search");
         Route::get("/{page?}", "Api\Order\OrderController@retrieveAll");
+        Route::post("/", "Api\Order\OrderController@create");
     });
 });
 

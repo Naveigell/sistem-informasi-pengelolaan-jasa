@@ -38,7 +38,11 @@ class UserRequestInsert extends FormRequest
             "email.email"                   => "Format email tidak valid",
 
             "gender.required"               => "Jenis kelamin harus diisi",
-            "gender.in"                     => "Jenis kelamin harus antara laki - laki dan perempuan"
+            "gender.in"                     => "Jenis kelamin harus antara laki - laki dan perempuan",
+
+            "address.required"              => "Alamat harus diisi",
+            "address.min"                   => "Alamat minimal memiliki 8 karakter",
+            "address.max"                   => "Alamat maksimal memiliki 100 karakter"
         ];
     }
 
@@ -54,7 +58,8 @@ class UserRequestInsert extends FormRequest
             "name"          => "required|string|min:4|max:60",
             "username"      => "required|string|min:6|max:40|no_space|lowercase",
             "email"         => "required|string|min:6|email",
-            "gender"        => "required|string|in:Laki - laki,Perempuan"
+            "gender"        => "required|string|in:Laki - laki,Perempuan",
+            "address"       => "required|string|min:8|max:100"
         ];
     }
 }

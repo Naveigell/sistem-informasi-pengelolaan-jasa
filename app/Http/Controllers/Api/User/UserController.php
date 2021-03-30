@@ -14,6 +14,7 @@ use App\Models\User\UserModel;
 use App\Traits\Files\FilesHandler;
 use App\Traits\Random;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -77,7 +78,7 @@ class UserController extends Controller
      */
     public function create(UserRequestInsert $request)
     {
-        $data = (object) $request->only(["name", "username", "email", "gender"]);
+        $data = (object) $request->only(["name", "username", "email", "gender", "address"]);
         $data->avatar = $this->randomStringImage().".png";
 
         $defaultImagePath = public_path("/img/users/default/placeholder.png");
@@ -93,14 +94,14 @@ class UserController extends Controller
 
                     DB::commit();
 
-                    return json(["message" => "Tambah teknisi berhasil"], null, 201);
+                    return json(["message" => "Tambah teknisi user"], null, 201);
                 } catch (\Exception $exception) {
                     DB::rollBack();
                 }
             }
         }
 
-        return error(null, ["server" => "Terjadi masalah saat menambah teknisi"]);
+        return error(null, ["server" => "Terjadi masalah saat menambah user"]);
     }
 
     /**
@@ -131,6 +132,19 @@ class UserController extends Controller
         } catch (\Exception $exception) {}
 
         return json([], null, 204);
+    }
+
+    /**
+     * Search user email
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function searchEmail(Request $request)
+    {
+        return json([
+            "users"         => $this->user->searchEmail($request->get("query"))
+        ]);
     }
 
     /**

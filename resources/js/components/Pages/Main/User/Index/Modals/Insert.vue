@@ -33,6 +33,11 @@
                             <span class="error-message" v-if="errors.email != null && errors.email !== undefined">{{ errors.email[0] }}</span>
                         </div>
                         <div class="input-container">
+                            <label for="">Alamat</label>
+                            <textarea v-bind:class="{'input-error': errors.address != null && errors.address !== undefined}" @focus="errors.address = null;" placeholder="Alamat User" v-model="data.address"></textarea>
+                            <span class="error-message" v-if="errors.address != null && errors.address !== undefined">{{ errors.address[0] }}</span>
+                        </div>
+                        <div class="input-container">
                             <span>Password otomatis akan bernilai 123456</span>
                         </div>
                         <button class="button-success-primary-sm" @click="save()">
@@ -56,16 +61,18 @@ export default {
         return {
             inAnimation: false,
             data: {
-                name: "aaaaaaaaaa",
-                username: "sadfsadf",
-                email: "asds@mgmg.com",
+                name: "",
+                username: "",
+                email: "",
                 gender: "Laki - laki",
+                address: ""
             },
             errors: {
                 name: null,
                 username: null,
                 email: null,
                 gender: null,
+                address: null
             }
         }
     },
@@ -91,6 +98,11 @@ export default {
                 this.data.gender = oldVal;
             }
         },
+        "data.address": function (newVal, oldVal) {
+            if (newVal.length > 100) {
+                this.data.address = oldVal;
+            }
+        }
     },
     mounted() {
         this.inAnimation = true;
@@ -112,7 +124,7 @@ export default {
         },
         save(){
             this.$api.post(this.$endpoints.users.insert, this.data).then((response) => {
-                this.emitToParent("success", "Teknisi berhasil ditambahkan", true);
+                this.emitToParent("success", "User berhasil ditambahkan", true);
             }).catch((error) => {
                 const data = error.response.data;
 

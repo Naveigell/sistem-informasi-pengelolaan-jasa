@@ -60,7 +60,7 @@ class BiodataModel extends Model
             "jenis_kelamin"         => $data->gender,
             "nomor_hp"              => null,
             "profile_picture"       => $data->avatar,
-            "alamat"                => null,
+            "alamat"                => $data->address,
             "created_at"            => now(),
             "updated_at"            => now()
         ]);

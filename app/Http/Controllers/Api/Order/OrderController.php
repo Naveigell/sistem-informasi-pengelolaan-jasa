@@ -5,20 +5,24 @@ namespace App\Http\Controllers\Api\Order;
 use App\Helpers\Times\Time;
 use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\OrderRequestInsert;
 use App\Http\Requests\Order\OrderRequestSearch;
 use App\Models\Order\OrderModel;
+use App\Models\User\UserModel;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class OrderController extends Controller
 {
-    private $order;
+    private $order, $user;
     private const MAIN_PATH_URL = "/orders";
     private const SEARCH_PATH_URL = "/orders/search";
 
     public function __construct()
     {
         $this->order = new OrderModel;
+        $this->user  = new UserModel;
     }
 
     /**
@@ -83,6 +87,31 @@ class OrderController extends Controller
         $arr["page"] = $page;
 
         return QueryString::parse($arr);
+    }
+
+    /**
+     * Create new order
+     *
+     * @param OrderRequestInsert $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function create(OrderRequestInsert $request)
+    {
+        $user = $this->user->getIdByEmail($request->email);
+        if ($user == null) {
+            return error(null, ["message" => "Email tidak ditemukan, silakan membuat email"]);
+        }
+
+        try {
+
+            $created = $this->order->createOrder($user->id_users, strtoupper(uniqid()), (object) $request->all());
+            if ($created) {
+                return json(null, null, 204);
+            }
+
+        } catch (QueryException $exception) {}
+
+        return error(null, ["message" => "Terjadi masalah pada server"]);
     }
 
     /**
@@ -162,7 +191,7 @@ class OrderController extends Controller
     private function addTimeSentences(Collection $collection)
     {
         return $collection->map(function ($item, $index){
-            $item["created_at_sentences"] = (new Time())->toSentences($item["created_at"]);
+            $item["created_at_sentences"] = $item["created_at"] == null ? "-" : (new Time())->toSentences($item["created_at"]);
             return $item;
         });
     }

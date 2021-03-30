@@ -53,6 +53,36 @@ class OrderModel extends Model
         return $this->main()->where($where)->paginate(12);
     }
 
+    /**
+     * Create new order
+     *
+     * @param $data
+     * @return bool
+     */
+    public function createOrder($id_user, $unique_id, object $data)
+    {
+        return $this->insert([
+            "service_id_user"                       => $id_user,
+            "unique_id"                             => $unique_id,
+            "nama_pemilik"                          => $data->name,
+            "alamat_pemilik"                        => $data->address,
+            "nama_perangkat"                        => $data->device_name,
+            "keluhan"                               => $data->device_problem,
+            "jenis_perangkat"                       => $data->device_type == "pc" ? "pc/komputer" : $data->device_type,
+            "merk"                                  => $data->device_brand,
+            "created_at"                            => now(),
+            "updated_at"                            => now()
+        ]);
+    }
+
+    /**
+     * Add where clause
+     *
+     * @param $key
+     * @param $value
+     * @param $arr
+     * @return mixed
+     */
     private function checkWhereClause($key, $value, $arr)
     {
         if ($value != null) {

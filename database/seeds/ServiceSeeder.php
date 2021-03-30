@@ -94,6 +94,8 @@ class ServiceSeeder extends Seeder
                 $tanggalSelesai     = $this->addingHoursFromNow($hours + rand(14, 24));
                 $estimasiSelesai    = rand(5, 24 * 4);
 
+                $namaPerangkat      = strtoupper($keluhan->tipe." ".rand(100, 999));
+
                 if (!in_array($status, ["selesai", "pembayaran", "terima"])) {
                     $biayaTotal = null;
                     $tanggalSelesai = null;
@@ -107,10 +109,12 @@ class ServiceSeeder extends Seeder
                 try {
                     DB::table('service')->insert([
                         "service_id_teknisi"            => $teknisi->id_users,
+                        "service_id_user"               => $id,
                         "service_id_jasa"               => $jasa->id_jasa,
                         "unique_id"                     => $uniqueID,
                         "nama_pemilik"                  => $name,
                         "alamat_pemilik"                => $address,
+                        "nama_perangkat"                => $namaPerangkat,
                         "keluhan"                       => $keluhan->keluhan,
                         "jenis_perangkat"               => $keluhan->tipe,
                         "merk"                          => $keluhan->merk,
@@ -128,9 +132,11 @@ class ServiceSeeder extends Seeder
 
                 error_log($uniqueID);
                 error_log($teknisi->id_users);
+                error_log($id);
                 error_log($jasa->id_jasa);
                 error_log($name);
                 error_log($address);
+                error_log($namaPerangkat);
                 error_log($keluhan->keluhan." -> ($keluhan->tipe)");
                 error_log($keluhan->merk);
                 error_log($biayaTotal == null ? "-" : $biayaTotal);

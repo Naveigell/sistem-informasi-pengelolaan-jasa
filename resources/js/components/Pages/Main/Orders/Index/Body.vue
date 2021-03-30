@@ -19,7 +19,9 @@
                                         </div>
                                     </form>
                                     <span v-on:click="reload" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
-                                    <span style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-plus"></i></span>
+                                    <router-link :to="{ path: '/orders/add' }" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer; color: #000">
+                                        <i class="fa fa-plus"></i>
+                                    </router-link>
                                     <div style="display: inline-block; position: relative;">
                                         <div v-on:click="dropdown.open = !dropdown.open; rendered = true;" style="padding: 5px 10px; width: 160px; border-radius: 3px; background: #d9e2f6; color: #25499c; cursor: pointer;">
                                             <span><i class="fa fa-clock-o"></i></span>
@@ -175,7 +177,7 @@ export default {
             }
         },
         reload(){
-            this.retrieveUrl(this.url.endpoints.current);
+            this.jumpIntoPage(this.paginator.currentPage);
         },
         retrieveUrl(url, data = {}) {
             this.repairments = [];

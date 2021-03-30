@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Models\User\Account\BiodataModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -48,6 +49,31 @@ class UserModel extends Model
             "created_at"    => now(),
             "updated_at"    => now()
         ]);
+    }
+
+    /**
+     * Get id by email
+     *
+     * @param $email
+     * @return UserModel|Model|object|null
+     */
+    public function getIdByEmail($email)
+    {
+        return $this->select(["id_users"])->where([
+            "email" => $email,
+            "role"  => $this->role
+        ])->first();
+    }
+
+    /**
+     * Search user email, to take to form
+     *
+     * @param $email
+     * @return UserModel[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function searchEmail($email)
+    {
+        return $this->select(["id_users", "email", "name"])->with(["biodata:id_biodata,biodata_id_users,nomor_hp,alamat"])->whereRaw("email LIKE ? AND role = ?", ["%$email%", $this->role])->take(5)->get();
     }
 
     /**
