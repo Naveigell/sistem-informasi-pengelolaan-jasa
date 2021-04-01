@@ -49,7 +49,11 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="repairment in repairments">
-                                        <td>{{ repairment.unique_id }}</td>
+                                        <td>
+                                            <router-link :to="{ path: '/orders/' + repairment.unique_id }">
+                                                {{ repairment.unique_id }}
+                                            </router-link>
+                                        </td>
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
                                             <span v-if="repairment.technician == null">-</span>
@@ -62,7 +66,12 @@
                                         </td>
                                         <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
                                         <td>
-                                            <span class="status-warning status">Pembayaran</span>
+                                            <button class="button-warning-primary-tag">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                            <button class="button-danger-primary-tag">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -370,7 +379,7 @@ table > tbody > tr > td:first-child, table > thead > tr > th:first-child {
     padding-left: 20px;
 }
 
-table > tbody > tr > td:first-child, table > tbody > tr > td:nth-child(3) > a {
+table > tbody > tr > td:first-child, table > tbody > tr > td:nth-child(3) > a, table > tbody > tr > td:first-child > a {
     color: #5179d6;
     text-decoration: none;
 }
