@@ -49,6 +49,8 @@ const endpoints = {
         data: "/orders",
         search: "/orders/search",
         insert: "/orders",
+        retrieve: "/orders/retrieve/:id",
+        delete: "/orders",
     }
 }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Order;
 
+use App\Helpers\Arrays\Arrays;
 use App\Helpers\Times\Time;
 use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
@@ -62,6 +63,88 @@ class OrderController extends Controller
         ];
 
         return json($data);
+    }
+
+    /**
+     * Retrieve single order by id
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function retrieve($id)
+    {
+        $data = $this->order->retrieve($id);
+        if ($data == null) {
+            return error(null, ["message" => "Data tidak ditemukan"], 404);
+        }
+
+        $data = $data->toArray();
+
+        $data["spareparts"] = Arrays::replaceKey([
+            "service_spare_part_id_service"     => "service_id",
+            "service_spare_part_id_spare_part"  => "spare_part_id",
+            "id_service_spare_part"             => "id",
+            "nama_spare_part"                   => "nama"
+        ], $data["spareparts"]);
+
+        $data["spareparts"] = $this->replaceSparepartImagesKey($data["spareparts"]);
+
+        $data["user"] = Arrays::replaceKey([
+            "id_users"      => "id"
+        ], $data["user"]);
+
+        $data["technician"] = Arrays::replaceKey([
+            "id_users"      => "id"
+        ], $data["technician"]);
+
+        $data = Arrays::replaceKey([
+            "id_service"            => "id",
+            "service_id_teknisi"    => "teknisi_id",
+            "service_id_user"       => "user_id",
+            "jenis_perangkat"       => "jenis",
+            "status_service"        => "status",
+            "alamat_pemilik"        => "alamat"
+        ], $data);
+
+        return json(["order" => $data]);
+    }
+
+    /**
+     * Replace some keys in sparepart images and insert
+     * sparepart picture url
+     *
+     * @param array $spareparts
+     * @return array
+     */
+    private function replaceSparepartImagesKey(array $spareparts)
+    {
+        foreach ($spareparts as &$sparepart) {
+            for ($i = 0; $i < count($sparepart["images"]); $i++) {
+                $sparepart["images"][$i] = Arrays::replaceKey([
+                    "id_foto_spare_part"                => "id",
+                    "foto_spare_part_id_spare_part"     => "sparepart_id",
+                ], $sparepart["images"][$i]);
+
+                $sparepart["images"][$i]["picture"] = sparepart_picture($sparepart["images"][$i]["picture"]);
+            }
+        }
+
+        return $spareparts;
+    }
+
+    /**
+     * Delete order by id
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        $deleted = $this->order->deleteOrder($id);
+        if (!$deleted) {
+            return error(null, ["server" => "Hapus order gagal"], 500);
+        }
+        return json(null, null, 204);
     }
 
     /**

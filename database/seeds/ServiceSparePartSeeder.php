@@ -61,6 +61,7 @@ class ServiceSparePartSeeder extends Seeder
 
                     $data = [
                         "service_spare_part_id_spare_part"  => $sparePart->id_spare_part,
+                        "service_spare_part_id_service"     => $service->id_service,
                         "nama_spare_part"                   => $sparePart->nama_spare_part,
                         "jumlah"                            => $jumlah,
                         "harga"                             => $sparePart->harga

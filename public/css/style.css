@@ -49,6 +49,15 @@
     padding: 5px 14px;
 }
 
+.button-success-primary-tag {
+    background: var(--blue-primary);
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 4px 10px;
+}
+
 .button-warning-primary-sm {
     background: var(--warning-primary);
     border-radius: 4px;
@@ -127,7 +136,7 @@
 
 .button-transparent-sm:focus, .button-success-primary-sm:focus, .button-success-primary-md:focus, .button-transparent-md:focus,
 .button-danger-md:focus, .button-danger-sm:focus, .button-green-primary-tag:focus, .button-danger-primary-tag:focus,
-.button-warning-primary-sm, .button-warning-primary-tag
+.button-warning-primary-sm:focus, .button-warning-primary-tag:focus, .button-success-primary-tag:focus
 {
     outline: none;
 }

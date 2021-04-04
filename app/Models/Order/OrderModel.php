@@ -3,6 +3,7 @@
 namespace App\Models\Order;
 
 use App\Models\Technician\TechnicianModel;
+use App\Models\User\UserModel;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderModel extends Model
 {
     protected $table = "service";
+    protected $primaryKey = "id_service";
 
     public function technician()
     {
@@ -51,6 +53,39 @@ class OrderModel extends Model
         $where = $this->checkWhereClause("status_service", $status, $where);
 
         return $this->main()->where($where)->paginate(12);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(UserModel::class, "id_users", "service_id_user");
+    }
+
+    public function retrieve($unique_id)
+    {
+        return $this->with([
+            "user:id_users,name,email",
+            "spareparts:service_spare_part_id_service,service_spare_part_id_spare_part,id_service_spare_part,nama_spare_part,jumlah,harga",
+            "spareparts.images:id_foto_spare_part,foto_spare_part_id_spare_part,picture",
+            "technician"
+        ])
+        ->select(["id_service", "service_id_teknisi", "service_id_user", "nama_pemilik", "alamat_pemilik", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service"])
+        ->where("unique_id", $unique_id)->first();
+    }
+
+    public function spareparts()
+    {
+        return $this->hasMany(OrderSparepartModel::class, "service_spare_part_id_service", "id_service");
+    }
+
+    /**
+     * Delete order by id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function deleteOrder($id)
+    {
+        return $this->where("id_service", $id)->delete();
     }
 
     /**

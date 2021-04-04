@@ -17,6 +17,7 @@ class CreateServiceSparePartTable extends Migration
             Schema::create('service_spare_part', function (Blueprint $table) {
                 $table->bigIncrements('id_service_spare_part');
                 $table->unsignedBigInteger('service_spare_part_id_spare_part')->nullable()->index();
+                $table->unsignedBigInteger('service_spare_part_id_service')->nullable()->index();
                 $table->string('nama_spare_part', 120);
                 $table->unsignedSmallInteger('jumlah');
                 $table->unsignedInteger('harga');
@@ -24,6 +25,7 @@ class CreateServiceSparePartTable extends Migration
 
                 // foreign
                 $table->foreign('service_spare_part_id_spare_part')->references('id_spare_part')->on('spare_part')->onUpdate('cascade')->onDelete('SET NULL');
+                $table->foreign('service_spare_part_id_service')->references('id_service')->on('service')->onUpdate('cascade')->onDelete('SET NULL');
             });
         }
     }

@@ -69,7 +69,7 @@
                                             <button class="button-warning-primary-tag">
                                                 <i class="fa fa-print"></i>
                                             </button>
-                                            <button class="button-danger-primary-tag">
+                                            <button @click="openDeleteModal(repairment)" class="button-danger-primary-tag">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </td>
@@ -93,12 +93,18 @@
                 </div>
             </div>
         </div>
+        <Delete @response="reload" v-if="modal.delete.open" :order="modal.delete.data" @closeModal="modal.delete.open = false;"/>
     </div>
 </template>
 
 <script>
+import Delete from "./Modals/Delete";
+
 export default {
     name: "Body",
+    components: {
+        Delete
+    },
     data() {
         return {
             repairments: [],
@@ -160,6 +166,15 @@ export default {
             statuses: {
                 list: ["semua", "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "diterima"],
                 selected: "semua"
+            },
+            modal: {
+                delete: {
+                    open: false,
+                    data: {
+                        id: -1,
+                        order: {}
+                    }
+                }
             }
         }
     },
@@ -167,6 +182,10 @@ export default {
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
+        openDeleteModal(data){
+            this.modal.delete.open = true;
+            this.modal.delete.data = data;
+        },
         chooseStatus(index){
             this.statuses.selected = this.statuses.list[index];
             this.dropdown.open = false;

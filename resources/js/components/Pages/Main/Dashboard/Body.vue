@@ -135,7 +135,11 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="repairment in repairments">
-                                        <td>{{ repairment.unique_id }}</td>
+                                        <td>
+                                            <router-link :to="{ path: '/orders/' + repairment.unique_id }">
+                                                {{ repairment.unique_id }}
+                                            </router-link>
+                                        </td>
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
                                             <router-link :to="{ path: '/technician' }">
@@ -329,7 +333,7 @@ table > tbody > tr > td:first-child, table > thead > tr > th:first-child {
     padding-left: 20px;
 }
 
-table > tbody > tr > td:first-child, table > tbody > tr > td:nth-child(3) > a {
+table > tbody > tr > td:first-child > a, table > tbody > tr > td:nth-child(3) > a {
     color: #5179d6;
     text-decoration: none;
 }
