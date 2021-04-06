@@ -51,6 +51,8 @@ const endpoints = {
         insert: "/orders",
         retrieve: "/orders/retrieve/:id",
         delete: "/orders",
+        take: "/orders/take",
+        update_status: "/orders/status"
     }
 }
 

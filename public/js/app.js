@@ -3200,6 +3200,24 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
@@ -3276,6 +3294,25 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.retrieveUrl(this.url.endpoints.current);
   },
   methods: {
+    take: function take(index) {
+      var _this = this;
+
+      var id = this.repairments[index].id_service;
+      this.$api.post(this.$endpoints.orders.take, {
+        id: id
+      }).then(function (response) {
+        var data = _this.repairments[index];
+        data.technician = response.data.body.technician;
+        data.status_service = response.data.body.status;
+
+        _this.$set(_this.repairments, index, data);
+      })["catch"](function (error) {});
+    },
+    toggleTakeButton: function toggleTakeButton(index, take) {
+      var data = this.repairments[index];
+      data.take = take;
+      this.$set(this.repairments, index, data);
+    },
     openDeleteModal: function openDeleteModal(data) {
       this.modal["delete"].open = true;
       this.modal["delete"].data = data;
@@ -3303,24 +3340,26 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.jumpIntoPage(this.paginator.currentPage);
     },
     retrieveUrl: function retrieveUrl(url) {
-      var _this = this;
+      var _this2 = this;
 
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       this.repairments = [];
       this.$api.get(url, data).then(function (response) {
-        _this.repairments = response.data.body.orders;
-        _this.url.endpoints.next = response.data.body.pages.next_url;
-        _this.url.endpoints.previous = response.data.body.pages.previous_url;
-        _this.url.uri = response.data.body.pages.uri;
-        _this.paginator.currentPage = response.data.body.pages.current_page;
-        _this.paginator.lastPage = response.data.body.pages.last_page;
-        _this.paginator.perPage = response.data.body.pages.per_page;
-        _this.paginator.totalPage = Math.ceil(response.data.body.total / response.data.body.pages.per_page);
-        _this.paginator.totalData = response.data.body.total;
-        _this.search.onSearch = response.data.body.search;
-      })["catch"](function (error) {
-        console.error(error);
-      });
+        _this2.repairments = response.data.body.orders;
+        _this2.url.endpoints.next = response.data.body.pages.next_url;
+        _this2.url.endpoints.previous = response.data.body.pages.previous_url;
+        _this2.url.uri = response.data.body.pages.uri;
+        _this2.paginator.currentPage = response.data.body.pages.current_page;
+        _this2.paginator.lastPage = response.data.body.pages.last_page;
+        _this2.paginator.perPage = response.data.body.pages.per_page;
+        _this2.paginator.totalPage = Math.ceil(response.data.body.total / response.data.body.pages.per_page);
+        _this2.paginator.totalData = response.data.body.total;
+        _this2.search.onSearch = response.data.body.search;
+
+        if (_this2.$store.state.user.data.role === "teknisi") {
+          _this2.addTakeOrderBehaviour();
+        }
+      })["catch"](function (error) {});
     },
     searchOrder: function searchOrder() {
       if (this.search.query.length === 0 && this.statuses.selected === "semua") {
@@ -3340,6 +3379,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           params: params
         });
       }
+    },
+    addTakeOrderBehaviour: function addTakeOrderBehaviour() {
+      this.repairments = this.repairments.map(function (item) {
+        if (item.status_service === "menunggu") {
+          item.take = false;
+        }
+
+        return item;
+      });
     },
     jumpIntoPage: function jumpIntoPage(index) {
       if (this.search.onSearch) {
@@ -4076,6 +4124,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
@@ -4085,6 +4134,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       data: {
+        id: "",
         name: "",
         email: "",
         address: "",
@@ -4115,6 +4165,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var url = this.$url.generateUrl(this.$endpoints.orders.retrieve);
       this.$api.get(url(this.$router.currentRoute.params.unique_id)).then(function (response) {
+        _this.data.id = response.data.body.order.id;
         _this.data.name = response.data.body.order.nama_pemilik;
         _this.data.email = response.data.body.order.user.email;
         _this.data.address = response.data.body.order.alamat;
@@ -4146,6 +4197,45 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return status.capitalize();
+    },
+    updateStatusService: function updateStatusService(status) {
+      var _this2 = this;
+
+      var id = this.data.id;
+      this.$api.put(this.$endpoints.orders.update_status, {
+        status: status,
+        id: id
+      }).then(function (response) {
+        _this2.data.status = response.data.body.status;
+
+        _this2.$root.$emit("open-toast", {
+          type: "success",
+          background: _this2.$colors.successPrimary,
+          data: {
+            title: "Success!",
+            message: "Status service berhasil diubah",
+            icon: "fa fa-check"
+          }
+        });
+      })["catch"](function (error) {
+        console.error(error.response);
+      });
+    },
+    updateStatusAuthorized: function updateStatusAuthorized(status) {
+      var notAuthorized = function notAuthorized() {
+        var array = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+        return !array.includes(status);
+      };
+
+      var role = this.$store.state.user.data.role;
+
+      if (role === "teknisi") {
+        return notAuthorized(["pembayaran", "terima"]);
+      } else if (role === "admin") {
+        return notAuthorized(["menunggu", "dicek", "perbaikan", "selesai"]);
+      }
+
+      return false;
     }
   }
 });
@@ -86430,21 +86520,23 @@ var render = function() {
                               [_c("i", { staticClass: "fa fa-refresh" })]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticStyle: {
-                                  display: "inline-block",
-                                  padding: "5px 10px",
-                                  "border-radius": "3px",
-                                  background: "#e0e5e8",
-                                  cursor: "pointer",
-                                  color: "#000"
-                                },
-                                attrs: { to: { path: "/orders/add" } }
-                              },
-                              [_c("i", { staticClass: "fa fa-plus" })]
-                            ),
+                            _vm.$store.state.user.data.role !== "teknisi"
+                              ? _c(
+                                  "router-link",
+                                  {
+                                    staticStyle: {
+                                      display: "inline-block",
+                                      padding: "5px 10px",
+                                      "border-radius": "3px",
+                                      background: "#e0e5e8",
+                                      cursor: "pointer",
+                                      color: "#000"
+                                    },
+                                    attrs: { to: { path: "/orders/add" } }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-plus" })]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             _c(
                               "div",
@@ -86555,7 +86647,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(_vm.repairments, function(repairment) {
+                        _vm._l(_vm.repairments, function(repairment, index) {
                           return _c("tr", [
                             _c(
                               "td",
@@ -86642,22 +86734,118 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._m(4, true),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "button-danger-primary-tag",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.openDeleteModal(repairment)
-                                    }
-                                  }
-                                },
-                                [_c("i", { staticClass: "fa fa-trash" })]
-                              )
-                            ])
+                            _vm.$store.state.user.data.role !== "teknisi"
+                              ? _c("td", [
+                                  _vm._m(4, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "button-danger-primary-tag",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.openDeleteModal(repairment)
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-trash" })]
+                                  )
+                                ])
+                              : _vm.$store.state.user.data.role === "teknisi" &&
+                                repairment.status_service === "menunggu"
+                              ? _c("td", [
+                                  repairment.take
+                                    ? _c("div", [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "button-green-primary-tag",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.take(index)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-check"
+                                            }),
+                                            _vm._v(
+                                              " Iya\n                                            "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "button-danger-primary-tag",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.toggleTakeButton(
+                                                  index,
+                                                  false
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-times"
+                                            }),
+                                            _vm._v(
+                                              " Tidak\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    : _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "button-success-primary-tag",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.toggleTakeButton(
+                                                index,
+                                                true
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            Ambil\n                                        "
+                                          )
+                                        ]
+                                      )
+                                ])
+                              : _c(
+                                  "td",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "button-warning-primary-tag",
+                                        attrs: {
+                                          to: {
+                                            path:
+                                              "/orders/" + repairment.unique_id
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                            Lihat\n                                        "
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
                           ])
                         }),
                         0
@@ -88216,7 +88404,28 @@ var render = function() {
                                       _vm._s(_vm.createOrderStatusText(status))
                                     )
                                   ]
-                                )
+                                ),
+                                _vm._v(" "),
+                                _vm.updateStatusAuthorized(status)
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass: "button-transparent-tag",
+                                        staticStyle: {
+                                          position: "absolute",
+                                          bottom: "-40px"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateStatusService(
+                                              status
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Pilih")]
+                                    )
+                                  : _vm._e()
                               ]
                             )
                       ])
@@ -115199,7 +115408,9 @@ var endpoints = {
     search: "/orders/search",
     insert: "/orders",
     retrieve: "/orders/retrieve/:id",
-    "delete": "/orders"
+    "delete": "/orders",
+    take: "/orders/take",
+    update_status: "/orders/status"
   }
 };
 module.exports = endpoints;

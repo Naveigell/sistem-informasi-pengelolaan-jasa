@@ -31,67 +31,74 @@
     box-shadow: 0 0 3px #d4cece;
 }
 
-.button-success-primary-md {
+.button-success-primary-md, .button-success-primary-md:hover {
     background: var(--blue-primary);
     border-radius: 4px;
     border: none;
     outline: none;
     color: white;
     padding: 8px 20px;
+    text-decoration: none;
 }
 
-.button-success-primary-sm {
+.button-success-primary-sm, .button-success-primary-sm:hover {
     background: var(--blue-primary);
     border-radius: 4px;
     border: 1px solid var(--blue-primary);
     outline: none;
     color: white;
     padding: 5px 14px;
+    text-decoration: none;
 }
 
-.button-success-primary-tag {
+.button-success-primary-tag, .button-success-primary-tag:hover {
     background: var(--blue-primary);
     border-radius: 4px;
     border: none;
     outline: none;
     color: white;
     padding: 4px 10px;
+    text-decoration: none;
 }
 
-.button-warning-primary-sm {
+.button-warning-primary-sm, .button-warning-primary-sm:hover {
     background: var(--warning-primary);
     border-radius: 4px;
     border: 1px solid var(--warning-primary);
     outline: none;
     color: white;
     padding: 5px 14px;
+    text-decoration: none;
 }
 
-.button-warning-primary-tag {
+.button-warning-primary-tag, .button-warning-primary-tag:hover {
     background: var(--warning-primary);
     border-radius: 4px;
     border: none;
     outline: none;
     color: white;
     padding: 4px 10px;
+    text-decoration: none;
 }
 
-.button-green-primary-tag {
+.button-green-primary-tag, .button-green-primary-tag:hover {
     background: var(--success-primary);
     border-radius: 4px;
     border: none;
     outline: none;
     color: white;
     padding: 4px 10px;
+    text-decoration: none;
 }
 
-.button-danger-primary-tag {
+.button-danger-primary-tag, .button-danger-primary-tag:hover {
     background: var(--red-primary);
     border-radius: 4px;
     border: none;
     outline: none;
     color: white;
     padding: 4px 10px;
+    text-decoration: none;
 }
 
 .button-transparent-md {
@@ -101,6 +108,7 @@
     outline: none;
     color: #444;
     padding: 8px 20px;
+    text-decoration: none;
 }
 
 .button-transparent-sm {
@@ -110,6 +118,17 @@
     outline: none;
     color: #444;
     padding: 5px 14px;
+    text-decoration: none;
+}
+
+.button-transparent-tag {
+    background: transparent;
+    border-radius: 4px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+    color: #444;
+    padding: 4px 10px;
+    text-decoration: none;
 }
 
 .button-transparent-md:hover, .button-transparent-sm:hover {
@@ -123,6 +142,7 @@
     outline: none;
     color: #fff;
     padding: 8px 20px;
+    text-decoration: none;
 }
 
 .button-danger-sm {
@@ -132,11 +152,12 @@
     outline: none;
     color: #fff;
     padding: 5px 14px;
+    text-decoration: none;
 }
 
 .button-transparent-sm:focus, .button-success-primary-sm:focus, .button-success-primary-md:focus, .button-transparent-md:focus,
 .button-danger-md:focus, .button-danger-sm:focus, .button-green-primary-tag:focus, .button-danger-primary-tag:focus,
-.button-warning-primary-sm:focus, .button-warning-primary-tag:focus, .button-success-primary-tag:focus
+.button-warning-primary-sm:focus, .button-warning-primary-tag:focus, .button-success-primary-tag:focus, .button-transparent-tag:focus
 {
     outline: none;
 }

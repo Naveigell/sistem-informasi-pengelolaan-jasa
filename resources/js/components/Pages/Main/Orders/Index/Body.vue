@@ -19,7 +19,7 @@
                                         </div>
                                     </form>
                                     <span v-on:click="reload" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
-                                    <router-link :to="{ path: '/orders/add' }" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer; color: #000">
+                                    <router-link :to="{ path: '/orders/add' }" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer; color: #000" v-if="$store.state.user.data.role !== 'teknisi'">
                                         <i class="fa fa-plus"></i>
                                     </router-link>
                                     <div style="display: inline-block; position: relative;">
@@ -48,7 +48,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="repairment in repairments">
+                                    <tr v-for="(repairment, index) in repairments">
                                         <td>
                                             <router-link :to="{ path: '/orders/' + repairment.unique_id }">
                                                 {{ repairment.unique_id }}
@@ -65,13 +65,31 @@
                                             <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
                                         </td>
                                         <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
-                                        <td>
+                                        <td v-if="$store.state.user.data.role !== 'teknisi'">
                                             <button class="button-warning-primary-tag">
                                                 <i class="fa fa-print"></i>
                                             </button>
                                             <button @click="openDeleteModal(repairment)" class="button-danger-primary-tag">
                                                 <i class="fa fa-trash"></i>
                                             </button>
+                                        </td>
+                                        <td v-else-if="$store.state.user.data.role === 'teknisi' && repairment.status_service === 'menunggu'">
+                                            <div v-if="repairment.take">
+                                                <button class="button-green-primary-tag" @click="take(index)">
+                                                    <i class="fa fa-check"></i> Iya
+                                                </button>
+                                                <button class="button-danger-primary-tag" @click="toggleTakeButton(index, false)">
+                                                    <i class="fa fa-times"></i> Tidak
+                                                </button>
+                                            </div>
+                                            <button class="button-success-primary-tag" v-else @click="toggleTakeButton(index, true)">
+                                                Ambil
+                                            </button>
+                                        </td>
+                                        <td v-else>
+                                            <router-link :to="{ path: '/orders/' + repairment.unique_id }" class="button-warning-primary-tag">
+                                                Lihat
+                                            </router-link>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -182,6 +200,26 @@ export default {
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
+        take(index){
+            const id = this.repairments[index].id_service;
+            this.$api.post(this.$endpoints.orders.take, {
+                id
+            }).then((response) => {
+                const data = this.repairments[index];
+                data.technician     = response.data.body.technician;
+                data.status_service = response.data.body.status;
+
+                this.$set(this.repairments, index, data);
+            }).catch((error) => {
+
+            })
+        },
+        toggleTakeButton(index, take){
+            const data = this.repairments[index];
+            data.take = take;
+
+            this.$set(this.repairments, index, data);
+        },
         openDeleteModal(data){
             this.modal.delete.open = true;
             this.modal.delete.data = data;
@@ -224,8 +262,12 @@ export default {
                 this.paginator.totalData    = response.data.body.total;
 
                 this.search.onSearch        = response.data.body.search;
+
+                if (this.$store.state.user.data.role === "teknisi") {
+                    this.addTakeOrderBehaviour();
+                }
             }).catch((error) => {
-                console.error(error);
+
             })
         },
         searchOrder(){
@@ -244,6 +286,14 @@ export default {
 
                 this.retrieveUrl(this.$endpoints.orders.search, { params });
             }
+        },
+        addTakeOrderBehaviour(){
+            this.repairments = this.repairments.map((item) => {
+                if (item.status_service === "menunggu") {
+                    item.take = false;
+                }
+                return item;
+            });
         },
         jumpIntoPage(index) {
             if (this.search.onSearch) {

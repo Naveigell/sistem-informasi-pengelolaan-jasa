@@ -35,6 +35,8 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/{page?}", "Api\Order\OrderController@retrieveAll");
         Route::get("/retrieve/{id}", "Api\Order\OrderController@retrieve");
         Route::post("/", "Api\Order\OrderController@create");
+        Route::post("/take", "Api\Order\OrderController@take");
+        Route::put("/status", "Api\Order\OrderController@updateStatusService");
         Route::delete("/{id}", "Api\Order\OrderController@delete");
     });
 });

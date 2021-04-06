@@ -8,6 +8,8 @@ use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderRequestInsert;
 use App\Http\Requests\Order\OrderRequestSearch;
+use App\Http\Requests\Order\OrderRequestTake;
+use App\Http\Requests\Order\OrderRequestUpdateStatusService;
 use App\Models\Order\OrderModel;
 use App\Models\User\UserModel;
 use Illuminate\Database\QueryException;
@@ -17,6 +19,7 @@ use Illuminate\Support\Collection;
 class OrderController extends Controller
 {
     private $order, $user;
+    private $auth;
     private const MAIN_PATH_URL = "/orders";
     private const SEARCH_PATH_URL = "/orders/search";
 
@@ -24,6 +27,8 @@ class OrderController extends Controller
     {
         $this->order = new OrderModel;
         $this->user  = new UserModel;
+
+        $this->auth  = auth("user");
     }
 
     /**
@@ -37,8 +42,7 @@ class OrderController extends Controller
         $page = (int) $page;
 
         set_current_page($page);
-
-        $collections = $this->order->getOrderList();
+        $collections = $this->order->getOrderList($this->auth->user()->role == "teknisi" ? $this->auth->id() : null);
 
         $current_page   = $collections->currentPage();
         $last_page      = $collections->lastPage();
@@ -80,6 +84,7 @@ class OrderController extends Controller
 
         $data = $data->toArray();
 
+        // CHANGE KEY OF ARRAY (FOR EASY READ IN FRONT END)
         $data["spareparts"] = Arrays::replaceKey([
             "service_spare_part_id_service"     => "service_id",
             "service_spare_part_id_spare_part"  => "spare_part_id",
@@ -215,7 +220,7 @@ class OrderController extends Controller
 
         set_current_page($page);
 
-        $collections = $this->order->search($request->id, $request->status);
+        $collections = $this->order->search($request->id, $request->status, $this->auth->user()->role == "teknisi" ? $this->auth->id() : null);
         $current_page   = $collections->currentPage();
         $last_page      = $collections->lastPage();
 
@@ -252,7 +257,91 @@ class OrderController extends Controller
      */
     public function takeFromLast($number)
     {
-        return json(["orders" => $this->addTimeSentences($this->order->takeFromLast($number)->collect())]);
+        $data = [];
+        if ($this->auth->user()->role == "teknisi") {
+            $data = $this->order->takeFromLast($number, $this->auth->id());
+        } else {
+            $data = $this->order->takeFromLast($number);
+        }
+        return json(["orders" => $this->addTimeSentences($data->collect())]);
+    }
+
+    /**
+     * Check if status is authorized depends on role
+     *
+     * @param $status
+     * @return bool
+     */
+    private function isUpdateStatusAuthorized($status) : bool
+    {
+        $notAuthorized = function ($array) use($status) : bool {
+            return !in_array($status, $array);
+        };
+
+        if ($this->auth->user()->role == "teknisi") {
+            return $notAuthorized(["pembayaran", "terima"]);
+        } else if ($this->auth->user()->role == "admin") {
+            return $notAuthorized(["menunggu", "dicek", "perbaikan", "selesai"]);
+        }
+        return false;
+    }
+
+    /**
+     * Update status service
+     *
+     * @param OrderRequestUpdateStatusService $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateStatusService(OrderRequestUpdateStatusService $request)
+    {
+        $index      = array_search($request->status, OrderModel::STATUS_SERVICE);
+        $status     = OrderModel::STATUS_SERVICE;
+        if (!empty($index)) {
+            $array = array_splice($status, $index + 1);
+
+            // check status authorization before update
+            if ($this->isUpdateStatusAuthorized($request->status)) {
+                $updated = $this->order->updateStatusService($request->id, $this->auth->id(), $request->status, $array);
+                if ($updated) {
+                    return json([
+                        "message"   => "Status service berhasil diubah",
+                        "status"    => $status[$index]
+                    ]);
+                }
+            } else {
+                return error(null, ["message" => "Tidak bisa melakukan update status"], 401);
+            }
+        }
+
+        return error(null, [
+            "status"    => ["Status berbeda"]
+        ], 422);
+    }
+
+    /**
+     * Technician take the order, just technician can do this
+     *
+     * @param OrderRequestTake $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function take(OrderRequestTake $request)
+    {
+        $updated = $this->order->takeOrder($request->id, $this->auth->id());
+        if ($updated) {
+            $user = $this->auth->user();
+
+            return json([
+                "technician" => [
+                    "id_users"          => $this->auth->id(),
+                    "name"              => $user->name,
+                    "role"              => "teknisi",
+                    "username"          => $user->username
+                ],
+                "status"     => "dicek"
+            ]);
+        }
+
+        return error(null, ["message" => "Terjadi masalah saat mengambil order"]);
     }
 
     /**

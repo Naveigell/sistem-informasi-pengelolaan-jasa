@@ -24,6 +24,7 @@
                                             <i class="fa fa-clock-o" style="color: white; font-size: 20px;"></i>
                                         </div>
                                         <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
+                                        <button v-if="updateStatusAuthorized(status)" @click="updateStatusService(status)" class="button-transparent-tag" style="position: absolute; bottom: -40px;">Pilih</button>
                                     </div>
 <!--                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
 <!--                                        <div style="background: #d40d0daa; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
@@ -213,6 +214,7 @@ export default {
     data() {
         return {
             data: {
+                id: "",
                 name: "",
                 email: "",
                 address: "",
@@ -243,6 +245,7 @@ export default {
         retrieve(){
             const url = this.$url.generateUrl(this.$endpoints.orders.retrieve);
             this.$api.get(url(this.$router.currentRoute.params.unique_id)).then((response) => {
+                this.data.id                = response.data.body.order.id;
                 this.data.name              = response.data.body.order.nama_pemilik;
                 this.data.email             = response.data.body.order.user.email;
                 this.data.address           = response.data.body.order.alamat;
@@ -258,6 +261,7 @@ export default {
                 if (this.data.technician.name === "") {
                     this.data.technician.name = "-";
                 }
+
                 console.log(response)
             }).catch((error) => {
                 console.error(error);
@@ -273,6 +277,36 @@ export default {
 
             return status.capitalize();
         },
+        updateStatusService(status) {
+            const id = this.data.id;
+            this.$api.put(this.$endpoints.orders.update_status, { status, id }).then((response) => {
+                this.data.status = response.data.body.status;
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Status service berhasil diubah",
+                        icon: "fa fa-check"
+                    }
+                });
+            }).catch((error) => {
+                console.error(error.response)
+            })
+        },
+        updateStatusAuthorized(status){
+            const notAuthorized = function (array = []) {
+                return !array.includes(status);
+            };
+
+            const role = this.$store.state.user.data.role;
+            if (role === "teknisi"){
+                return notAuthorized(["pembayaran", "terima"]);
+            } else if (role === "admin") {
+                return notAuthorized(["menunggu", "dicek", "perbaikan", "selesai"]);
+            }
+            return false;
+        }
     }
 }
 </script>
