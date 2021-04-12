@@ -32,6 +32,8 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/take/{number}/last", "Api\Order\OrderController@takeFromLast");
         Route::get("/total", "Api\Order\OrderController@getTotalOrders");
         Route::get("/search", "Api\Order\OrderController@search");
+        Route::get("/search/spareparts", "Api\Order\OrderController@searchSparepart");
+        Route::post("/search/spareparts", "Api\Order\OrderController@saveSparepart");
         Route::get("/{page?}", "Api\Order\OrderController@retrieveAll");
         Route::get("/retrieve/{id}", "Api\Order\OrderController@retrieve");
         Route::post("/", "Api\Order\OrderController@create");

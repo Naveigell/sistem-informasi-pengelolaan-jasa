@@ -41,6 +41,10 @@ class Arrays
         }
     }
 
+    public static function replaceValue(){
+
+    }
+
     /**
      * Check if given array is multidimensional
      *
@@ -71,7 +75,7 @@ class Arrays
     {
         $keys = array_keys($replacements);
         foreach ($keys as $key) {
-            if (!empty($item[$key]) || $item[$key] == null) {
+            if (!empty($item[$key])) {
                 $item[$replacements[$key]] = $item[$key];
                 unset($item[$key]);
             }

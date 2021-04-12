@@ -26,51 +26,7 @@
                                         <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
                                         <button v-if="updateStatusAuthorized(status)" @click="updateStatusService(status)" class="button-transparent-tag" style="position: absolute; bottom: -40px;">Pilih</button>
                                     </div>
-<!--                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                        <div style="background: #d40d0daa; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                            <i class="fa fa-times" style="color: white; font-size: 20px;"></i>-->
-<!--                                        </div>-->
-<!--                                        <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>-->
-<!--                                    </div>-->
                                 </div>
-<!--                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                    <div style="background: #39b474DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                        <i class="fa fa-check" style="color: white; font-size: 20px;"></i>-->
-<!--                                    </div>-->
-<!--                                    <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">Menunggu</span>-->
-<!--                                </div>-->
-<!--                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                    <div style="background: #39b474DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                        <i class="fa fa-check" style="color: white; font-size: 20px;"></i>-->
-<!--                                    </div>-->
-<!--                                    <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">Sedang Dicek</span>-->
-<!--                                </div>-->
-<!--                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                    <div style="background: #39b474DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                        <i class="fa fa-check" style="color: white; font-size: 20px;"></i>-->
-<!--                                    </div>-->
-<!--                                    <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">Dalam Perbaikan</span>-->
-<!--                                </div>-->
-<!--                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                    <div style="background: white; border-radius: 30000px; height: 64px; width: 64px; display: flex; align-items: center; justify-content: center; border: 4px solid #39b474DD;">-->
-<!--                                        <div style="background: #39b474DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                            <i class="fa fa-check" style="color: white; font-size: 20px;"></i>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">Pembayaran</span>-->
-<!--                                </div>-->
-<!--                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                    <div style="background: #d40d0daa; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                        <i class="fa fa-times" style="color: white; font-size: 20px;"></i>-->
-<!--                                    </div>-->
-<!--                                    <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">Selesai</span>-->
-<!--                                </div>-->
-<!--                                <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">-->
-<!--                                    <div style="background: #808080DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">-->
-<!--                                        <i class="fa fa-clock-o" style="color: white; font-size: 20px;"></i>-->
-<!--                                    </div>-->
-<!--                                    <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">Diterima</span>-->
-<!--                                </div>-->
                             </div>
                         </div>
                         <div style="background: white; padding: 80px 50px 50px 50px;">
@@ -121,11 +77,51 @@
                                             </div>
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
-                                                    <button @click="modals.sparepart.open = true;" class="button-success-primary-sm">Lihat</button>
+                                                    <button v-if="$store.state.user.data.role !== 'teknisi'" @click="modals.show_sparepart.open = true;" class="button-success-primary-sm">Lihat</button>
+                                                    <button v-else @click="modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
                                                 </div>
+                                                <span v-if="$store.state.user.data.role === 'teknisi'" style="display: inline-block; margin-top: 10px; color: #999;">Sparepart hanya bisa diperbarui saat status service dibawah "SELESAI"</span>
                                             </div>
                                         </div>
                                         <br/>
+                                        <div v-if="spareparts.length > 0 && $store.state.user.data.role === 'teknisi'">
+                                            <div class="row">
+                                                <div class="col-md-2 left-column"></div>
+                                                <div class="col-md-10 right-column">
+                                                    <table style="border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;">
+                                                        <thead>
+                                                            <tr style="background-color: #fafafa;">
+                                                                <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal; text-align: center;">Nama</th>
+                                                                <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal;">Harga</th>
+                                                                <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 60px; font-weight: normal;">Jumlah</th>
+                                                                <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 40px; font-weight: normal;">Aksi</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="(sparepart, index) in spareparts">
+                                                                <td style="max-width: 100px;text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ sparepart.nama }}</td>
+                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(sparepart.harga) }}</td>
+                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 60px; font-weight: normal; position: relative;">
+                                                                    <div class="input-container" v-if="$store.state.user.data.role === 'teknisi'">
+                                                                        <input type="text" v-model="sparepart.jumlah">
+                                                                    </div>
+                                                                    <span v-else>x{{ sparepart.jumlah }}</span>
+                                                                </td>
+                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;"><i @click="spareparts.splice(index, 1)" class="fa fa-trash" style="color: #999; cursor: pointer;"></i></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-md-2 left-column"></div>
+                                                <div class="col-md-10">
+                                                    <button @click="saveSparepart" class="button-success-primary-sm">Simpan</button>
+                                                </div>
+                                            </div>
+                                           <br/>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-2 left-column">
                                                 <span>* Nama Perangkat</span>
@@ -185,6 +181,21 @@
                                             </div>
                                         </div>
                                         <br/>
+                                        <div v-if="$store.state.user.data.role === 'user'">
+                                            <div class="row">
+                                                <div class="col-md-2 left-column">
+                                                    <span>
+                                                        * Buat Komplain
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-10 right-column">
+                                                    <div class="input-container">
+                                                        <button class="button-danger-sm">Buat</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-2"></div>
                                             <div class="col-md-10 right-column">
@@ -198,18 +209,20 @@
                     </div>
                 </div>
             </div>
-            <Sparepart :spareparts="data.spareparts" v-if="modals.sparepart.open" @close="modals.sparepart.open = false;"/>
+            <ShowSparepart :spareparts="data.spareparts" v-if="modals.show_sparepart.open" @close="modals.show_sparepart.open = false;"/>
+            <ChooseSparepart @sparepart="addSparepart" v-if="modals.choose_sparepart.open" @close="modals.choose_sparepart.open = false;"/>
         </div>
     </div>
 </template>
 
 <script>
-import Sparepart from "./Modals/Sparepart";
+import ShowSparepart from "./Modals/ShowSparepart";
+import ChooseSparepart from "./Modals/ChooseSparepart";
 
 export default {
     name: "Body",
     components: {
-        Sparepart
+        ShowSparepart, ChooseSparepart
     },
     data() {
         return {
@@ -228,8 +241,12 @@ export default {
                 device_type: "pc",
                 device_brand: ""
             },
+            spareparts: [],
             modals: {
-                sparepart: {
+                show_sparepart: {
+                    open: false
+                },
+                choose_sparepart: {
                     open: false
                 }
             },
@@ -242,6 +259,47 @@ export default {
         this.retrieve()
     },
     methods: {
+        saveSparepart(){
+            console.log(this.spareparts)
+            const spareparts = this.spareparts.map(function (item, index, array) {
+                const id = item.spare_part_id === undefined ? item.id : item.spare_part_id;
+
+                return {
+                    id,
+                    jumlah: item.jumlah
+                };
+            });
+
+            if (spareparts.length <= 0)
+                return;
+
+            this.$api.post(this.$endpoints.orders.save_sparepart, { spareparts, id: this.data.id }).then((response) => {
+                if (response.status === 204) {
+                    this.$root.$emit("open-toast", {
+                        type: "success",
+                        background: this.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Sparepart berhasil diubah",
+                            icon: "fa fa-check"
+                        }
+                    });
+                }
+            }).catch((error) => {
+                this.$root.$emit("open-toast", {
+                    type: "failed",
+                    background: this.$colors.errorPrimary,
+                    data: {
+                        title: "Failed!",
+                        message: error.response.data.errors.messages.message,
+                        icon: "fa fa-check"
+                    }
+                });
+            })
+        },
+        addSparepart(sparepart){
+            this.spareparts.push(sparepart);
+        },
         retrieve(){
             const url = this.$url.generateUrl(this.$endpoints.orders.retrieve);
             this.$api.get(url(this.$router.currentRoute.params.unique_id)).then((response) => {
@@ -257,6 +315,10 @@ export default {
                 this.data.device_type       = response.data.body.order.jenis === "pc/komputer" ? "pc" : response.data.body.order.jenis;
                 this.data.device_problem    = response.data.body.order.keluhan;
                 this.data.device_brand      = response.data.body.order.merk;
+
+                this.spareparts             = this.data.spareparts;
+
+                console.log(this.spareparts);
 
                 if (this.data.technician.name === "") {
                     this.data.technician.name = "-";

@@ -25,11 +25,11 @@
                 <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
                     <a>Settings</a>
                     <a>Biodata</a>
-                    <a>
+                    <router-link :to="{ path: 'suggestions' }">
                         <span style="display: inline-block; float: left;">Messages</span>
                         <span style="display: inline-block; float: right;"><i class="fa fa-envelope"></i></span>
                         <div style="clear: both;"></div>
-                    </a>
+                    </router-link>
                     <div class="account-dropdown-separator"></div>
                     <a @click="logout">Logout &nbsp <i class="fa fa-sign-out"></i></a>
                 </div>

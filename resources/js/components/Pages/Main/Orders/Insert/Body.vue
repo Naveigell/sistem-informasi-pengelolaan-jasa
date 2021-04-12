@@ -136,7 +136,7 @@
 
 <script>
 import FullOverlay from "../../../../Overlays/FullOverlay";
-import Search from "../Index/Modals/Search";
+import Search from "./Modals/Search";
 import Insert from "../../User/Index/Modals/Insert";
 
 export default {

@@ -20,6 +20,8 @@ import OrderShow from "../components/Pages/Main/Orders/Show/Body";
 
 import ServiceIndex from "../components/Pages/Main/Service/Index/Body";
 
+import SuggestionsIndex from "../components/Pages/Main/SuggestionsAndFeedback/Index/Body";
+
 import Errors404 from "../components/Errors/Errors404";
 
 Vue.use(VueRouter);
@@ -86,6 +88,11 @@ export const router = new VueRouter({
             path: '/orders/:unique_id',
             name: 'orders.show',
             component: OrderShow
+        },
+        {
+            path: '/suggestions',
+            name: 'suggestions',
+            component: SuggestionsIndex
         },
         {
             path: '*',

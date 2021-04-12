@@ -84,6 +84,41 @@ class SparepartModel extends Model
     }
 
     /**
+     * Search sparepart in Order Show, just technician can do this
+     *
+     * @param $query
+     * @param $type
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function searchSparepart($query, $type)
+    {
+        return $this->with(["images"])->select(["id_spare_part", "nama_spare_part", "harga", "stok"])->whereRaw("nama_spare_part LIKE ? AND tipe = ? AND stok > 0", ["%$query%", $type])->take(5)->get();
+    }
+
+    /**
+     * Select sparepart by its ids
+     *
+     * @param $ids
+     * @return \Illuminate\Support\Collection
+     */
+    public function selectInId($ids)
+    {
+        return $this->select([$this->primaryKey, "nama_spare_part", "stok", "tipe", "harga", "terjual"])->whereIn($this->primaryKey, $ids)->get();
+    }
+
+    /**
+     * Update stock of spareparts
+     *
+     * @param string $query
+     * @param array $data
+     * @return int
+     */
+    public function updateStockSold(string $query, array $data)
+    {
+        return DB::statement($query, $data);
+    }
+
+    /**
      * @param mixed|string $q
      * @param null|string $t
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator

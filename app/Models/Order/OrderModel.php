@@ -90,6 +90,21 @@ class OrderModel extends Model
     }
 
     /**
+     * Check if this order belongs to technician
+     *
+     * @param $id
+     * @param $id_teknisi
+     * @return bool
+     */
+    public function isOrderBelongsToTechnician($id, $id_teknisi)
+    {
+        return $this->where([
+            "id_service"            => $id,
+            "service_id_teknisi"    => $id_teknisi
+        ])->exists();
+    }
+
+    /**
      * Search by unique id or status service
      *
      * @param $id

@@ -4,7 +4,7 @@
             <div class="search-container">
                 <div style="background-color: #f6f7f8; height: 43px; font-family: InterRegular, Arial, sans-serif;">
                     <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center; justify-content: space-between;">
-                        <h5 @click="users.push(1)" style="font-weight: 500; letter-spacing: 1px; line-height: 25px; font-size: 16px;">CARI PENGGUNA</h5>
+                        <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px; font-size: 16px;">CARI PENGGUNA</h5>
                         <span @click="closeModal" style="display: inline-block; cursor: pointer;">
                             <i class="fa fa-times" style="font-size: 26px; color: #ff2b5d;"></i>
                         </span>

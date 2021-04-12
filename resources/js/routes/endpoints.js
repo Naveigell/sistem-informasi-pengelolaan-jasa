@@ -48,6 +48,8 @@ const endpoints = {
         total: "/orders/total",
         data: "/orders",
         search: "/orders/search",
+        search_sparepart: "/orders/search/spareparts",
+        save_sparepart: "/orders/search/spareparts",
         insert: "/orders",
         retrieve: "/orders/retrieve/:id",
         delete: "/orders",
