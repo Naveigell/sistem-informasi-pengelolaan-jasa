@@ -19,7 +19,7 @@ class CreatePengaduanTable extends Migration
                 $table->unsignedBigInteger('pengaduan_id_users')->nullable()->index();
                 $table->unsignedBigInteger('pengaduan_id_teknisi')->nullable()->index();
                 $table->text('isi');
-                $table->unsignedTinyInteger('stars');
+                $table->unsignedTinyInteger('stars')->default(3);
                 $table->enum('tipe', ['saran', 'komplain']);
                 $table->timestamps();
 

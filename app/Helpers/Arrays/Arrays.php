@@ -41,10 +41,6 @@ class Arrays
         }
     }
 
-    public static function replaceValue(){
-
-    }
-
     /**
      * Check if given array is multidimensional
      *

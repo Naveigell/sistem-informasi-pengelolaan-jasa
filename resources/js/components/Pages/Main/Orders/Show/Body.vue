@@ -99,7 +99,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr v-for="(sparepart, index) in spareparts">
-                                                                <td style="max-width: 100px;text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ sparepart.nama }}</td>
+                                                                <td style="max-width: 100px; text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ sparepart.nama }}</td>
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(sparepart.harga) }}</td>
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 60px; font-weight: normal; position: relative;">
                                                                     <div class="input-container" v-if="$store.state.user.data.role === 'teknisi'">
@@ -318,13 +318,9 @@ export default {
 
                 this.spareparts             = this.data.spareparts;
 
-                console.log(this.spareparts);
-
                 if (this.data.technician.name === "") {
                     this.data.technician.name = "-";
                 }
-
-                console.log(response)
             }).catch((error) => {
                 console.error(error);
             })

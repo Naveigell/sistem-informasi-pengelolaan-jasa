@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Order;
 
 use App\Helpers\Arrays\Arrays;
-use App\Helpers\Databases\BulkQuery;
 use App\Helpers\Times\Time;
 use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
@@ -13,19 +12,22 @@ use App\Http\Requests\Order\OrderRequestSearch;
 use App\Http\Requests\Order\OrderRequestSearchSparepart;
 use App\Http\Requests\Order\OrderRequestTake;
 use App\Http\Requests\Order\OrderRequestUpdateStatusService;
+use App\Interfaces\TimeSentences;
 use App\Models\Order\OrderModel;
 use App\Models\Order\OrderSparepartModel;
 use App\Models\Sparepart\SparepartModel;
 use App\Models\User\UserModel;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class OrderController extends Controller
+class OrderController extends Controller implements TimeSentences
 {
-    private $order, $user, $sparepart, $orderSparepart;
+    private OrderSparepartModel $orderSparepart;
+    private SparepartModel $sparepart;
+    private UserModel $user;
+    private OrderModel $order;
+
     private $auth;
     private const MAIN_PATH_URL = "/orders";
     private const SEARCH_PATH_URL = "/orders/search";
@@ -319,13 +321,13 @@ class OrderController extends Controller
                         return error(null, ["message" => "Server error, update failed"]);
 
                     } else {
-                        return error(null, ["message" => "Salah satu stok melebihi batas", $spareparts->toArray(), $amounts], 422);
+                        return error(null, ["message" => "Salah satu stok melebihi batas"], 422);
                     }
                 }
             } catch (\Exception $exception) {
                 DB::rollBack();
 
-                return error(null, ["message" => "Terjadi masalah saat mengupdate sparepart", "amounts" => $amounts, "obj" => $objects->values()->all(), "sp" => $spareparts]);
+                return error(null, ["message" => "Terjadi masalah saat mengupdate sparepart"]);
             }
         }
 
@@ -525,8 +527,19 @@ class OrderController extends Controller
     private function addTimeSentences(Collection $collection)
     {
         return $collection->map(function ($item, $index){
-            $item["created_at_sentences"] = $item["created_at"] == null ? "-" : (new Time())->toSentences($item["created_at"]);
+            $item["created_at_sentences"] = $item["created_at"] == null ? "-" : $this->toSentences($item["created_at"]);
             return $item;
         });
+    }
+
+    /**
+     * Return a sentences from date time
+     *
+     * @param \DateTime $time
+     * @return string
+     */
+    public function toSentences(\DateTime $time): string
+    {
+        return (new Time())->toSentences($time);
     }
 }

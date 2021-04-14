@@ -1,7 +1,52 @@
 {
     "pengaduan": {
         "saran": [
-            ""
+            {
+                "judul": "Tingkatkan pelayanan",
+                "content": "Pelayanan toko sudah sangat baik, bisa ditingkatkan dengan membuat aplikasi berbasis mobile kedepannya"
+            },
+            {
+                "judul": "Tingkatkan pelayanan",
+                "content": "Kedepannya mungkin bisa ditambahkan notifikasi agar bisa memantau perangkat kita secara real time"
+            },
+            {
+                "judul": "Perbesar tempat parkir",
+                "content": "Parkir selalu penuh, tidak ada tempat untuk memarkir motor, mohon segera diatasi"
+            },
+            {
+                "judul": "Kinerja baik",
+                "content": "Kinerja sudah sangat baik, admin yang ramah dan juga perangkat yang diperbaiki selesai tepat waktu"
+            },
+            {
+                "judul": "Pelayanan memuaskan",
+                "content": "Pelayanan sangat memuaskan, admin cepat tanggap, biaya service terjangkau dan perangkat diselesaikan tepat waktu"
+            }
+        ],
+        "komplain": [
+            {
+                "judul": "Lampu masih tidak menyala",
+                "content": "Lampu lcd masih tidak dapat menyala, gestur detector masih tidak terbaca, mohon segera diselesaikan"
+            },
+            {
+                "judul": "Kipas laptop mati",
+                "content": "Kipas laptop mati, masih tidak bisa berputar"
+            },
+            {
+                "judul": "Casing hp ada keretakan",
+                "content": "Terdapat keretakan pada casing hp, gestur detector tidak bisa dibaca di daerah yang mengalami keretakan"
+            },
+            {
+                "judul": "Laptop blank",
+                "content": "Laptop masih hitam total, mohon segera diperbaiki kembali"
+            },
+            {
+                "judul": "Tidak berfungsi",
+                "content": "Speaker laptop masih sember dan tidak berbunyi sama sekali"
+            },
+            {
+                "judul": "Keyboard tidak berfungsi",
+                "content": "Keyboard masih tidak berfungsi sebagaimana mestinya"
+            }
         ]
     }
 }
