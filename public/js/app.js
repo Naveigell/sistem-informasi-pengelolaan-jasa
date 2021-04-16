@@ -6408,16 +6408,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
@@ -6436,15 +6426,34 @@ __webpack_require__.r(__webpack_exports__);
     moveInto: function moveInto(id) {
       this.$router.push("suggestions/".concat(id));
     },
-    retrieveAll: function retrieveAll() {
+    retrieveAll: function retrieveAll(last_id, next) {
       var _this = this;
 
-      this.$api.get(this.$endpoints.suggestions.data).then(function (response) {
-        console.log(response);
+      var params = {};
+
+      if (last_id !== null) {
+        params.id = last_id;
+        params.next = next;
+      }
+
+      this.$api.get(this.$endpoints.suggestions.data, {
+        params: params
+      }).then(function (response) {
+        // console.log(response.data.body.suggestions);
+        var suggestions = response.data.body.suggestions;
+        console.log(suggestions[0].id, suggestions[suggestions.length - 1].id);
         _this.suggestions = response.data.body.suggestions;
       })["catch"](function (error) {
         console.error(error);
       });
+    },
+    next: function next() {
+      var last_id = this.suggestions[this.suggestions.length - 1].id;
+      this.retrieveAll(last_id, true);
+    },
+    previous: function previous() {
+      var first_id = this.suggestions[0].id;
+      this.retrieveAll(first_id, false);
     }
   }
 });
@@ -6546,19 +6555,18 @@ __webpack_require__.r(__webpack_exports__);
       this.$api.post(this.$endpoints.suggestions.insert, {
         text: text
       }).then(function (response) {
-        _this.$root.$emit("open-toast", {
-          type: "success",
-          background: _this.$colors.successPrimary,
-          data: {
-            title: "Success!",
-            message: "Saran berhasil dikirim",
-            icon: "fa fa-check"
-          }
-        });
-
-        _this.$router.push({
-          name: "suggestions"
-        });
+        console.log(response); // this.$root.$emit("open-toast", {
+        //     type: "success",
+        //     background: this.$colors.successPrimary,
+        //     data: {
+        //         title: "Success!",
+        //         message: "Saran berhasil dikirim",
+        //         icon: "fa fa-check"
+        //     }
+        // });
+        // this.$router.push({
+        //     name: "suggestions"
+        // });
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors.messages;
@@ -6668,14 +6676,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Body",
   data: function data() {
     return {
       data: {
         content: "",
-        date: ""
+        date: "",
+        suggestion: {}
       }
     };
   },
@@ -6690,7 +6698,11 @@ __webpack_require__.r(__webpack_exports__);
       this.$api.get(url(id)).then(function (response) {
         _this.data.content = response.data.body.suggestion.content;
         _this.data.date = response.data.body.suggestion.created_at_sentences;
-      })["catch"](function (error) {});
+        _this.data.suggestion = response.data.body.suggestion;
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -29393,7 +29405,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../../node_mod
 
 
 // module
-exports.push([module.i, "\n.mail-box aside[data-v-b07711fe] {\n    display: table-cell;\n    float: none;\n    height: 100%;\n    padding: 0;\n    vertical-align: top;\n}\n.user-head .inbox-avatar img[data-v-b07711fe] {\n    border-radius: 4px;\n}\n.user-head .user-name h5[data-v-b07711fe] {\n    font-size: 14px;\n    font-weight: 300;\n    margin-bottom: 0;\n    margin-top: 15px;\n}\n.user-head .user-name h5 a[data-v-b07711fe] {\n    color: #fff;\n}\n.user-head .user-name span a[data-v-b07711fe] {\n    color: #87e2e7;\n    font-size: 12px;\n}\nul.inbox-nav li[data-v-b07711fe] {\n    display: inline-block;\n    line-height: 45px;\n    width: 100%;\n}\nul.inbox-nav li a[data-v-b07711fe] {\n    color: #6a6a6a;\n    display: inline-block;\n    line-height: 45px;\n    padding: 0 20px;\n    width: 100%;\n}\nul.inbox-nav li a[data-v-b07711fe]:hover, ul.inbox-nav li.active a[data-v-b07711fe], ul.inbox-nav li a[data-v-b07711fe]:focus {\n    background: none repeat scroll 0 0 #d5d7de;\n    color: #6a6a6a;\n}\nul.inbox-nav li a i[data-v-b07711fe] {\n    color: #6a6a6a;\n    font-size: 16px;\n    padding-right: 10px;\n}\nul.labels-info li h4[data-v-b07711fe] {\n    color: #5c5c5e;\n    font-size: 13px;\n    padding-left: 15px;\n    padding-right: 15px;\n    padding-top: 5px;\n    text-transform: uppercase;\n}\nul.labels-info li[data-v-b07711fe] {\n    margin: 0;\n}\nul.labels-info li a[data-v-b07711fe] {\n    border-radius: 0;\n    color: #6a6a6a;\n}\nul.labels-info li a[data-v-b07711fe]:hover, ul.labels-info li a[data-v-b07711fe]:focus {\n    background: none repeat scroll 0 0 #d5d7de;\n    color: #6a6a6a;\n}\nul.labels-info li a i[data-v-b07711fe] {\n    padding-right: 10px;\n}\n.nav.nav-pills.nav-stacked.labels-info p[data-v-b07711fe] {\n    color: #9d9f9e;\n    font-size: 11px;\n    margin-bottom: 0;\n    padding: 0 22px;\n}\n.inbox-head h3[data-v-b07711fe] {\n    display: inline-block;\n    font-weight: 300;\n    margin: 0;\n    padding-top: 6px;\n}\n.inbox-head .sr-input[data-v-b07711fe] {\n    border: medium none;\n    border-radius: 4px 0 0 4px;\n    box-shadow: none;\n    color: #8a8a8a;\n    float: left;\n    height: 40px;\n    padding: 0 10px;\n}\n.inbox-head .sr-btn[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #00a6b2;\n    border: medium none;\n    border-radius: 0 4px 4px 0;\n    color: #fff;\n    height: 40px;\n    padding: 0 20px;\n}\n.table-inbox[data-v-b07711fe] {\n    border: 1px solid #d3d3d3;\n    margin-bottom: 0;\n}\n.table-inbox tr td[data-v-b07711fe] {\n    padding: 12px !important;\n}\n.table-inbox tr td[data-v-b07711fe]:hover {\n    cursor: pointer;\n}\n.table-inbox tr td .fa-star.inbox-started[data-v-b07711fe], .table-inbox tr td .fa-star[data-v-b07711fe]:hover {\n    color: #f78a09;\n}\n.table-inbox tr td .fa-star[data-v-b07711fe] {\n    color: #d5d5d5;\n}\n.table-inbox tr.unread td[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #f7f7f7;\n    font-weight: 600;\n}\nul.inbox-pagination[data-v-b07711fe] {\n    float: right;\n}\nul.inbox-pagination li[data-v-b07711fe] {\n    float: left;\n}\n.mail-option[data-v-b07711fe] {\n    display: inline-block;\n    margin-bottom: 10px;\n    width: 100%;\n}\n.mail-option .chk-all[data-v-b07711fe], .mail-option .btn-group[data-v-b07711fe] {\n    margin-right: 5px;\n}\n.mail-option .chk-all[data-v-b07711fe], .mail-option .btn-group a.btn[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #fcfcfc;\n    border: 1px solid #e7e7e7;\n    border-radius: 3px !important;\n    color: #afafaf;\n    display: inline-block;\n    padding: 5px 10px;\n}\n.inbox-pagination a.np-btn[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #fcfcfc;\n    border: 1px solid #e7e7e7;\n    border-radius: 3px !important;\n    color: #afafaf;\n    display: inline-block;\n    padding: 5px 15px;\n}\n.mail-option .chk-all input[type=\"checkbox\"][data-v-b07711fe] {\n    margin-top: 0;\n}\n.mail-option .btn-group a.all[data-v-b07711fe] {\n    border: medium none;\n    padding: 0;\n}\n.inbox-pagination a.np-btn[data-v-b07711fe] {\n    margin-left: 5px;\n}\n.inbox-pagination li span[data-v-b07711fe] {\n    display: inline-block;\n    margin-right: 5px;\n    margin-top: 7px;\n}\n.inbox-body .modal .modal-body input[data-v-b07711fe], .inbox-body .modal .modal-body textarea[data-v-b07711fe] {\n    border: 1px solid #e6e6e6;\n    box-shadow: none;\n}\n.modal-header h4.modal-title[data-v-b07711fe] {\n    font-family: \"Open Sans\",sans-serif;\n    font-weight: 300;\n}\n.modal-body label[data-v-b07711fe] {\n    font-family: \"Open Sans\",sans-serif;\n    font-weight: 400;\n}\n.heading-inbox h4[data-v-b07711fe] {\n    border-bottom: 1px solid #ddd;\n    color: #444;\n    font-size: 18px;\n    margin-top: 20px;\n    padding-bottom: 10px;\n}\n.sender-info img[data-v-b07711fe] {\n    height: 30px;\n    width: 30px;\n}\n.view-mail a[data-v-b07711fe] {\n    color: #ff6c60;\n}\n.attachment-mail ul[data-v-b07711fe] {\n    display: inline-block;\n    margin-bottom: 30px;\n    width: 100%;\n}\n.attachment-mail ul li[data-v-b07711fe] {\n    float: left;\n    margin-bottom: 10px;\n    margin-right: 10px;\n    width: 150px;\n}\n.attachment-mail ul li img[data-v-b07711fe] {\n    width: 100%;\n}\n.attachment-mail ul li span[data-v-b07711fe] {\n    float: right;\n}\n.fileinput-button input[data-v-b07711fe] {\n    cursor: pointer;\n    direction: ltr;\n    font-size: 23px;\n    margin: 0;\n    opacity: 0;\n    position: absolute;\n    right: 0;\n    top: 0;\n    transform: translate(-300px, 0px) scale(4);\n}\n@media (max-width: 767px) {\n.files .btn span[data-v-b07711fe] {\n        display: none;\n}\n.files .preview *[data-v-b07711fe] {\n        width: 40px;\n}\n.files .name *[data-v-b07711fe] {\n        display: inline-block;\n        width: 80px;\n        word-wrap: break-word;\n}\n.files .progress[data-v-b07711fe] {\n        width: 20px;\n}\n.files .delete[data-v-b07711fe] {\n        width: 60px;\n}\n}\nul[data-v-b07711fe] {\n    list-style-type: none;\n    padding: 0px;\n    margin: 0px;\n}\n\n", ""]);
+exports.push([module.i, "\n.mail-box aside[data-v-b07711fe] {\n    display: table-cell;\n    float: none;\n    height: 100%;\n    padding: 0;\n    vertical-align: top;\n}\n.user-head .inbox-avatar img[data-v-b07711fe] {\n    border-radius: 4px;\n}\n.user-head .user-name h5[data-v-b07711fe] {\n    font-size: 14px;\n    font-weight: 300;\n    margin-bottom: 0;\n    margin-top: 15px;\n}\n.user-head .user-name h5 a[data-v-b07711fe] {\n    color: #fff;\n}\n.user-head .user-name span a[data-v-b07711fe] {\n    color: #87e2e7;\n    font-size: 12px;\n}\nul.inbox-nav li[data-v-b07711fe] {\n    display: inline-block;\n    line-height: 45px;\n    width: 100%;\n}\nul.inbox-nav li a[data-v-b07711fe] {\n    color: #6a6a6a;\n    display: inline-block;\n    line-height: 45px;\n    padding: 0 20px;\n    width: 100%;\n}\nul.inbox-nav li a[data-v-b07711fe]:hover, ul.inbox-nav li.active a[data-v-b07711fe], ul.inbox-nav li a[data-v-b07711fe]:focus {\n    background: none repeat scroll 0 0 #d5d7de;\n    color: #6a6a6a;\n}\nul.inbox-nav li a i[data-v-b07711fe] {\n    color: #6a6a6a;\n    font-size: 16px;\n    padding-right: 10px;\n}\nul.labels-info li h4[data-v-b07711fe] {\n    color: #5c5c5e;\n    font-size: 13px;\n    padding-left: 15px;\n    padding-right: 15px;\n    padding-top: 5px;\n    text-transform: uppercase;\n}\nul.labels-info li[data-v-b07711fe] {\n    margin: 0;\n}\nul.labels-info li a[data-v-b07711fe] {\n    border-radius: 0;\n    color: #6a6a6a;\n}\nul.labels-info li a[data-v-b07711fe]:hover, ul.labels-info li a[data-v-b07711fe]:focus {\n    background: none repeat scroll 0 0 #d5d7de;\n    color: #6a6a6a;\n}\nul.labels-info li a i[data-v-b07711fe] {\n    padding-right: 10px;\n}\n.nav.nav-pills.nav-stacked.labels-info p[data-v-b07711fe] {\n    color: #9d9f9e;\n    font-size: 11px;\n    margin-bottom: 0;\n    padding: 0 22px;\n}\n.inbox-head h3[data-v-b07711fe] {\n    display: inline-block;\n    font-weight: 300;\n    margin: 0;\n    padding-top: 6px;\n}\n.inbox-head .sr-input[data-v-b07711fe] {\n    border: medium none;\n    border-radius: 4px 0 0 4px;\n    box-shadow: none;\n    color: #8a8a8a;\n    float: left;\n    height: 40px;\n    padding: 0 10px;\n}\n.inbox-head .sr-btn[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #00a6b2;\n    border: medium none;\n    border-radius: 0 4px 4px 0;\n    color: #fff;\n    height: 40px;\n    padding: 0 20px;\n}\n.table-inbox[data-v-b07711fe] {\n    border: 1px solid #d3d3d3;\n    margin-bottom: 0;\n}\n.table-inbox tr td[data-v-b07711fe] {\n    padding: 12px !important;\n}\n.table-inbox tr td[data-v-b07711fe]:hover {\n    cursor: pointer;\n}\n.table-inbox tr td .fa-star.inbox-started[data-v-b07711fe], .table-inbox tr td .fa-star[data-v-b07711fe]:hover {\n    color: #f78a09;\n}\n.table-inbox tr td .fa-star[data-v-b07711fe] {\n    color: #d5d5d5;\n}\n.table-inbox tr.unread td[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #f7f7f7;\n    font-weight: 600;\n}\nul.inbox-pagination[data-v-b07711fe] {\n    float: right;\n}\nul.inbox-pagination li[data-v-b07711fe] {\n    float: left;\n}\nul.inbox-pagination li[data-v-b07711fe]:not(:first-child) {\n    cursor: pointer;\n}\n.mail-option[data-v-b07711fe] {\n    display: inline-block;\n    margin-bottom: 10px;\n    width: 100%;\n}\n.mail-option .chk-all[data-v-b07711fe], .mail-option .btn-group[data-v-b07711fe] {\n    margin-right: 5px;\n}\n.mail-option .chk-all[data-v-b07711fe], .mail-option .btn-group a.btn[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #fcfcfc;\n    border: 1px solid #e7e7e7;\n    border-radius: 3px !important;\n    color: #afafaf;\n    display: inline-block;\n    padding: 5px 10px;\n}\n.inbox-pagination a.np-btn[data-v-b07711fe] {\n    background: none repeat scroll 0 0 #fcfcfc;\n    border: 1px solid #e7e7e7;\n    border-radius: 3px !important;\n    color: #afafaf;\n    display: inline-block;\n    padding: 5px 15px;\n}\n.mail-option .chk-all input[type=\"checkbox\"][data-v-b07711fe] {\n    margin-top: 0;\n}\n.mail-option .btn-group a.all[data-v-b07711fe] {\n    border: medium none;\n    padding: 0;\n}\n.inbox-pagination a.np-btn[data-v-b07711fe] {\n    margin-left: 5px;\n}\n.inbox-pagination li span[data-v-b07711fe] {\n    display: inline-block;\n    margin-right: 5px;\n    margin-top: 7px;\n}\n.inbox-body .modal .modal-body input[data-v-b07711fe], .inbox-body .modal .modal-body textarea[data-v-b07711fe] {\n    border: 1px solid #e6e6e6;\n    box-shadow: none;\n}\n.modal-header h4.modal-title[data-v-b07711fe] {\n    font-family: \"Open Sans\",sans-serif;\n    font-weight: 300;\n}\n.modal-body label[data-v-b07711fe] {\n    font-family: \"Open Sans\",sans-serif;\n    font-weight: 400;\n}\n.heading-inbox h4[data-v-b07711fe] {\n    border-bottom: 1px solid #ddd;\n    color: #444;\n    font-size: 18px;\n    margin-top: 20px;\n    padding-bottom: 10px;\n}\n.sender-info img[data-v-b07711fe] {\n    height: 30px;\n    width: 30px;\n}\n.view-mail a[data-v-b07711fe] {\n    color: #ff6c60;\n}\n.attachment-mail ul[data-v-b07711fe] {\n    display: inline-block;\n    margin-bottom: 30px;\n    width: 100%;\n}\n.attachment-mail ul li[data-v-b07711fe] {\n    float: left;\n    margin-bottom: 10px;\n    margin-right: 10px;\n    width: 150px;\n}\n.attachment-mail ul li img[data-v-b07711fe] {\n    width: 100%;\n}\n.attachment-mail ul li span[data-v-b07711fe] {\n    float: right;\n}\n.fileinput-button input[data-v-b07711fe] {\n    cursor: pointer;\n    direction: ltr;\n    font-size: 23px;\n    margin: 0;\n    opacity: 0;\n    position: absolute;\n    right: 0;\n    top: 0;\n    transform: translate(-300px, 0px) scale(4);\n}\n@media (max-width: 767px) {\n.files .btn span[data-v-b07711fe] {\n        display: none;\n}\n.files .preview *[data-v-b07711fe] {\n        width: 40px;\n}\n.files .name *[data-v-b07711fe] {\n        display: inline-block;\n        width: 80px;\n        word-wrap: break-word;\n}\n.files .progress[data-v-b07711fe] {\n        width: 20px;\n}\n.files .delete[data-v-b07711fe] {\n        width: 60px;\n}\n}\nul[data-v-b07711fe] {\n    list-style-type: none;\n    padding: 0px;\n    margin: 0px;\n}\n\n", ""]);
 
 // exports
 
@@ -93744,7 +93756,23 @@ var render = function() {
                 "div",
                 { staticStyle: { padding: "20px", "min-height": "300px" } },
                 [
-                  _vm._m(1),
+                  _c("div", { staticClass: "mail-option" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("ul", { staticClass: "unstyled inbox-pagination" }, [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("li", { on: { click: _vm.previous } }, [_vm._m(6)]),
+                      _vm._v(" "),
+                      _c("li", { on: { click: _vm.next } }, [_vm._m(7)])
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
                     "table",
@@ -93763,15 +93791,21 @@ var render = function() {
                               }
                             },
                             [
-                              _vm._m(2, true),
+                              _vm._m(8, true),
                               _vm._v(" "),
-                              _vm._m(3, true),
+                              _vm._m(9, true),
                               _vm._v(" "),
                               _c(
                                 "td",
                                 { staticClass: "view-message dont-show" },
                                 [
-                                  _vm._v("Kepada: Admin "),
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.$store.state.user.data.role === "user"
+                                        ? "Kepada: Admin"
+                                        : suggestion.user.name
+                                    ) + " "
+                                  ),
                                   suggestion.type === "komplain"
                                     ? _c(
                                         "span",
@@ -93857,63 +93891,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mail-option" }, [
-      _c("div", { staticClass: "chk-all" }, [
-        _c("input", {
-          staticClass: "mail-checkbox mail-group-checkbox",
-          attrs: { type: "checkbox" }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "btn-group" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn mini all",
-              attrs: {
-                "data-toggle": "dropdown",
-                href: "#",
-                "aria-expanded": "false"
-              }
-            },
-            [
-              _vm._v(
-                "\n                                            All\n                                            "
-              ),
-              _c("i", { staticClass: "fa fa-angle-down " })
-            ]
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "dropdown-menu" }, [
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(" None")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(" Read")])]),
-            _vm._v(" "),
-            _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(" Unread")])])
-          ])
-        ])
-      ]),
+    return _c("div", { staticClass: "chk-all" }, [
+      _c("input", {
+        staticClass: "mail-checkbox mail-group-checkbox",
+        attrs: { type: "checkbox" }
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "btn-group" }, [
         _c(
           "a",
           {
-            staticClass: "btn mini tooltips",
-            attrs: {
-              "data-original-title": "Refresh",
-              "data-placement": "top",
-              "data-toggle": "dropdown",
-              href: "#"
-            }
-          },
-          [_c("i", { staticClass: " fa fa-refresh" })]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "btn-group hidden-phone" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn mini blue",
+            staticClass: "btn mini all",
             attrs: {
               "data-toggle": "dropdown",
               href: "#",
@@ -93922,94 +93910,156 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                                        More\n                                        "
+              "\n                                        All\n                                        "
             ),
             _c("i", { staticClass: "fa fa-angle-down " })
           ]
         ),
         _vm._v(" "),
         _c("ul", { staticClass: "dropdown-menu" }, [
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-pencil" }),
-              _vm._v(" Mark as Read")
-            ])
-          ]),
+          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(" None")])]),
           _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-ban" }),
-              _vm._v(" Spam")
-            ])
-          ]),
+          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(" Read")])]),
           _vm._v(" "),
-          _c("li", { staticClass: "divider" }),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-trash-o" }),
-              _vm._v(" Delete")
-            ])
-          ])
+          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(" Unread")])])
         ])
-      ]),
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn mini tooltips",
+          attrs: {
+            "data-original-title": "Refresh",
+            "data-placement": "top",
+            "data-toggle": "dropdown",
+            href: "#"
+          }
+        },
+        [_c("i", { staticClass: " fa fa-refresh" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group hidden-phone" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn mini blue",
+          attrs: {
+            "data-toggle": "dropdown",
+            href: "#",
+            "aria-expanded": "false"
+          }
+        },
+        [
+          _vm._v(
+            "\n                                    More\n                                    "
+          ),
+          _c("i", { staticClass: "fa fa-angle-down " })
+        ]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn mini blue",
-            attrs: { "data-toggle": "dropdown", href: "#" }
-          },
-          [
-            _vm._v(
-              "\n                                        Move to\n                                        "
-            ),
-            _c("i", { staticClass: "fa fa-angle-down " })
-          ]
-        ),
-        _vm._v(" "),
-        _c("ul", { staticClass: "dropdown-menu" }, [
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-pencil" }),
-              _vm._v(" Mark as Read")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-ban" }),
-              _vm._v(" Spam")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "divider" }),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { href: "#" } }, [
-              _c("i", { staticClass: "fa fa-trash-o" }),
-              _vm._v(" Delete")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "unstyled inbox-pagination" }, [
-        _c("li", [_c("span", [_vm._v("1-50 of 234")])]),
-        _vm._v(" "),
+      _c("ul", { staticClass: "dropdown-menu" }, [
         _c("li", [
-          _c("a", { staticClass: "np-btn", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-angle-left  pagination-left" })
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-pencil" }),
+            _vm._v(" Mark as Read")
           ])
         ]),
         _vm._v(" "),
         _c("li", [
-          _c("a", { staticClass: "np-btn", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "fa fa-angle-right pagination-right" })
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-ban" }),
+            _vm._v(" Spam")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "divider" }),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-trash-o" }),
+            _vm._v(" Delete")
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn mini blue",
+          attrs: { "data-toggle": "dropdown", href: "#" }
+        },
+        [
+          _vm._v(
+            "\n                                    Move to\n                                    "
+          ),
+          _c("i", { staticClass: "fa fa-angle-down " })
+        ]
+      ),
+      _vm._v(" "),
+      _c("ul", { staticClass: "dropdown-menu" }, [
+        _c("li", [
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-pencil" }),
+            _vm._v(" Mark as Read")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-ban" }),
+            _vm._v(" Spam")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "divider" }),
+        _vm._v(" "),
+        _c("li", [
+          _c("a", { attrs: { href: "#" } }, [
+            _c("i", { staticClass: "fa fa-trash-o" }),
+            _vm._v(" Delete")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("span", [_vm._v("1-50 of 234")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "np-btn" }, [
+      _c("i", { staticClass: "fa fa-angle-left  pagination-left" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "np-btn" }, [
+      _c("i", { staticClass: "fa fa-angle-right pagination-right" })
     ])
   },
   function() {
@@ -94320,32 +94370,42 @@ var render = function() {
                         staticStyle: { padding: "10px", "min-height": "200px" }
                       },
                       [
-                        _c("div", { staticClass: "header" }, [
-                          _vm.$store.state.user.data.role === "admin"
-                            ? _c("img", {
-                                staticClass: "avatar",
-                                attrs: {
-                                  src:
-                                    "https://bootdey.com/img/Content/avatar/avatar1.png"
-                                }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.$store.state.user.data.role === "admin"
-                            ? _c("div", { staticClass: "from" }, [
-                                _c("span", [_vm._v("Lukasz Holeczek")]),
-                                _vm._v(
-                                  "\n                                                lukasz@bootstrapmaster.com\n                                            "
-                                )
+                        _vm.data.suggestion.user !== undefined
+                          ? _c("div", { staticClass: "header" }, [
+                              _vm.$store.state.user.data.role === "admin" &&
+                              _vm.data.suggestion.user !== null
+                                ? _c("img", {
+                                    staticClass: "avatar",
+                                    attrs: {
+                                      src:
+                                        _vm.data.suggestion.user.biodata
+                                          .profile_picture
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.$store.state.user.data.role === "admin"
+                                ? _c("div", { staticClass: "from" }, [
+                                    _c("span", [
+                                      _vm._v(
+                                        _vm._s(_vm.data.suggestion.user.name)
+                                      )
+                                    ]),
+                                    _vm._v(
+                                      "\n                                            " +
+                                        _vm._s(_vm.data.suggestion.user.email) +
+                                        "\n                                        "
+                                    )
+                                  ])
+                                : _c("div", { staticClass: "from" }, [
+                                    _c("span", [_vm._v("Kepada: Admin")])
+                                  ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "date" }, [
+                                _c("b", [_vm._v(_vm._s(_vm.data.date))])
                               ])
-                            : _c("div", { staticClass: "from" }, [
-                                _c("span", [_vm._v("Kepada: Admin")])
-                              ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "date" }, [
-                            _c("b", [_vm._v(_vm._s(_vm.data.date))])
-                          ])
-                        ]),
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("div", {
                           staticClass: "content",
@@ -118275,9 +118335,9 @@ var endpoints = {
     update_status: "/orders/status"
   },
   suggestions: {
-    data: "/suggestions",
+    data: "/suggestions/:last_id",
     insert: "/suggestions",
-    retrieve: "/suggestions/:id"
+    retrieve: "/suggestions/retrieve/:id"
   }
 };
 module.exports = endpoints;

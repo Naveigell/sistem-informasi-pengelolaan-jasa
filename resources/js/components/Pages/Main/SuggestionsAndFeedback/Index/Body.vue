@@ -64,32 +64,22 @@
 
                                 <ul class="unstyled inbox-pagination">
                                     <li><span>1-50 of 234</span></li>
-                                    <li>
-                                        <a class="np-btn" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
+                                    <li @click="previous">
+                                        <a class="np-btn"><i class="fa fa-angle-left  pagination-left"></i></a>
                                     </li>
-                                    <li>
-                                        <a class="np-btn" href="#"><i class="fa fa-angle-right pagination-right"></i></a>
+                                    <li @click="next">
+                                        <a class="np-btn"><i class="fa fa-angle-right pagination-right"></i></a>
                                     </li>
                                 </ul>
                             </div>
                             <table class="table table-inbox table-hover">
                                 <tbody>
-<!--                                    <tr class="unread">-->
-<!--                                        <td class="inbox-small-cells">-->
-<!--                                            <input type="checkbox" class="mail-checkbox">-->
-<!--                                        </td>-->
-<!--                                        <td class="inbox-small-cells"><i class="fa fa-star"></i></td>-->
-<!--                                        <td class="view-message dont-show">Kepada: Admin<span class="label label-danger pull-right">complain</span></td>-->
-<!--                                        <td class="view-message">Added a new class: Login Class Fast Site</td>-->
-<!--                                        <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>-->
-<!--                                        <td class="view-message text-right">9:27 AM</td>-->
-<!--                                    </tr>-->
                                     <tr class="" v-for="(suggestion, index) in suggestions" @click="moveInto(suggestion.id)">
                                         <td class="inbox-small-cells">
                                             <input type="checkbox" class="mail-checkbox">
                                         </td>
                                         <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                                        <td class="view-message dont-show">Kepada: Admin <span v-if="suggestion.type === 'komplain'" class="label label-danger pull-right">complain</span></td>
+                                        <td class="view-message dont-show">{{ $store.state.user.data.role === 'user' ? "Kepada: Admin" : suggestion.user.name }} <span v-if="suggestion.type === 'komplain'" class="label label-danger pull-right">complain</span></td>
                                         <td class="view-message" style="text-overflow: ellipsis; overflow-x: hidden; max-width: 700px; white-space: nowrap;">{{ suggestion.content.cutIfGreaterThan(30000) }}</td>
                                         <td class="view-message inbox-small-cells"></td>
                                         <td class="view-message text-right">{{ suggestion.created_at_sentences }}</td>
@@ -121,15 +111,31 @@ export default {
         moveInto(id){
             this.$router.push(`suggestions/${id}`);
         },
-        retrieveAll(){
-            this.$api.get(this.$endpoints.suggestions.data).then((response) => {
-                console.log(response);
+        retrieveAll(last_id, next){
+            const params = {};
+
+            if (last_id !== null) {
+                params.id = last_id;
+                params.next = next;
+            }
+
+            this.$api.get(this.$endpoints.suggestions.data, { params }).then((response) => {
+                // console.log(response.data.body.suggestions);
+                const suggestions = response.data.body.suggestions;
+                console.log(suggestions[0].id, suggestions[suggestions.length - 1].id);
                 this.suggestions = response.data.body.suggestions;
             }).catch((error) => {
                 console.error(error);
             })
         },
-
+        next(){
+            const last_id = this.suggestions[this.suggestions.length - 1].id;
+            this.retrieveAll(last_id, true);
+        },
+        previous() {
+            const first_id = this.suggestions[0].id;
+            this.retrieveAll(first_id, false);
+        }
     }
 }
 </script>
@@ -255,6 +261,9 @@ ul.inbox-pagination {
 }
 ul.inbox-pagination li {
     float: left;
+}
+ul.inbox-pagination li:not(:first-child) {
+    cursor: pointer;
 }
 .mail-option {
     display: inline-block;

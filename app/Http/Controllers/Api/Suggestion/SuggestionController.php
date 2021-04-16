@@ -6,10 +6,11 @@ use App\Helpers\Arrays\Arrays;
 use App\Helpers\Regex\RegexHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Suggestion\SuggestionRequestInsert;
-use App\Interfaces\Rolable;
+use App\Http\Requests\Suggestion\SuggestionRequestPaginate;
 use App\Interfaces\TimeSentences;
 use App\Models\Suggestion\SuggestionModel;
 use App\Traits\Roles;
+use Illuminate\Support\Collection;
 
 class SuggestionController extends Controller implements TimeSentences
 {
@@ -27,21 +28,24 @@ class SuggestionController extends Controller implements TimeSentences
     /**
      * Retrieve all messages
      *
+     * @param SuggestionRequestPaginate $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function retrieveAll()
+    public function retrieveAll(SuggestionRequestPaginate $request)
     {
-        $data = [];
-        if ($this->auth->user()->role == "user") {
-            $data = $this->suggestions->retrieveAll($this->auth->id());
-        }
+        $data = $this->suggestions->retrieveAll(
+            $this->auth->id(),
+            $this->auth->user()->role,
+            $request->next == "true",
+            $request->id
+        );
 
         $data = Arrays::replaceKey([
             "id_pengaduan"              => "id",
             "pengaduan_id_users"        => "user_id",
             "isi"                       => "content",
             "tipe"                      => "type",
-        ], $data->toArray());
+        ], $data instanceof Collection ? $data->toArray() : $data);
 
         $data = collect($data)->map(function ($item) {
             $item["created_at_sentences"]   = $item["created_at"] == null ? null : $this->toSentences(new \DateTime($item["created_at"]));
@@ -49,6 +53,14 @@ class SuggestionController extends Controller implements TimeSentences
 
             return $item;
         })->toArray();
+
+        $data = collect($data)->map(function ($item) {
+            $item["user"] = Arrays::replaceKey([
+                "id_users"  => "id"
+            ], $item["user"]);
+
+            return $item;
+        });
 
         return json(["suggestions" => $data]);
     }
@@ -61,19 +73,31 @@ class SuggestionController extends Controller implements TimeSentences
      */
     public function retrieveSingle($id)
     {
-        $data = $this->suggestions->retrieveSingle($id, $this->auth->id());
+        $data = $this->suggestions->retrieveSingle($id, $this->auth->user()->role == "user" ? $this->auth->id() : null, $this->auth->id());
 
         if ($data == null) {
             return error(null, ["message" => "Data tidak ditemukan"], 404);
         }
 
+        $data = collect($data);
+
         $data = Arrays::replaceKey([
             "id_pengaduan"          => "id",
             "pengaduan_id_users"    => "user_id",
             "isi"                   => "content"
-        ], $data->getAttributes());
+        ], $data->toArray());
+
+        $data["user"] = Arrays::replaceKey([
+            "id_users"              => "id"
+        ], $data["user"]);
+
+        $data["user"]["biodata"] = Arrays::replaceKey([
+            "id_biodata"            => "id",
+            "biodata_id_users"      => "user_id",
+        ], $data["user"]["biodata"]);
 
         $data["created_at_sentences"] = $data["created_at"] == null ? null : $this->toSentences(new \DateTime($data["created_at"]));
+        $data["user"]["biodata"]["profile_picture"] = user_picture($data["user"]["biodata"]["profile_picture"]);
 
         return json(["suggestion" => $data]);
     }

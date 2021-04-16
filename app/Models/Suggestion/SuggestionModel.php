@@ -2,7 +2,9 @@
 
 namespace App\Models\Suggestion;
 
+use App\Models\User\UserModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class SuggestionModel
@@ -17,17 +19,39 @@ class SuggestionModel extends Model
     private $type = "saran";
 
     /**
-     * Retrieve all suggestions
+     * Retrieve all suggestions and paginate by the latest id
      *
-     * @param $id
+     * @param $id_users
+     * @param $role
+     * @param $next
+     * @param null $last_suggestion_id
      * @return SuggestionModel[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function retrieveAll($id)
+    public function retrieveAll($id_users, $role, $next, $last_suggestion_id = null)
     {
-        return $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "created_at"])->where([
-            "pengaduan_id_users"    => $id,
-            "tipe"                  => $this->type
-        ])->orderBy("id_pengaduan", "DESC")->get();
+        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "created_at"])
+                     ->orderBy("id_pengaduan", "DESC");
+
+        if ($last_suggestion_id != null) {
+            $last_suggestion_id = $next ? $last_suggestion_id : $last_suggestion_id + 15 + 1;
+            $main->where("id_pengaduan", "<", $last_suggestion_id);
+        }
+
+        if ($role == "user") {
+            return $main->where([
+                "pengaduan_id_users"    => $id_users,
+                "tipe"                  => $this->type
+            ])->take(15)->get();
+        } else {
+            return $main->where([
+                "tipe"                  => $this->type
+            ])->take(15)->with(["user:id_users,name,username"])->get();
+        }
+    }
+
+    public function user()
+    {
+        return $this->hasOne(UserModel::class, "id_users", "pengaduan_id_users");
     }
 
     /**
@@ -53,13 +77,24 @@ class SuggestionModel extends Model
      *
      * @param $id
      * @param $id_users
+     * @param $role
      * @return SuggestionModel|Model|object|null
      */
-    public function retrieveSingle($id, $id_users)
+    public function retrieveSingle($id, $id_users, $role)
     {
-        return $this->where([
-            "id_pengaduan"          => $id,
-            "pengaduan_id_users"    => $id_users
-        ])->select(["id_pengaduan", "pengaduan_id_users", "isi", "created_at"])->first();
+        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "created_at"]);
+
+        if ($role == "user") {
+            return $main->where([
+                "id_pengaduan"          => $id,
+                "pengaduan_id_users"    => $id_users,
+                "tipe"                  => $this->type
+            ])->first();
+        } else {
+            return $main->where([
+                "id_pengaduan"          => $id,
+                "tipe"                  => $this->type
+            ])->with(["user:id_users,name,username,email", "user.biodata:id_biodata,biodata_id_users,profile_picture"])->first();
+        }
     }
 }

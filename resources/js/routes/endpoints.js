@@ -57,9 +57,9 @@ const endpoints = {
         update_status: "/orders/status"
     },
     suggestions: {
-        data: "/suggestions",
+        data: "/suggestions/:last_id",
         insert: "/suggestions",
-        retrieve: "/suggestions/:id"
+        retrieve: "/suggestions/retrieve/:id"
     }
 }
 

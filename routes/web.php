@@ -25,9 +25,9 @@ Route::group(['prefix' => '/api/v1'], function () {
     });
 
     Route::group(["prefix" => "/suggestions", "middleware" => "auth.global"], function () {
-        Route::get("/", "Api\Suggestion\SuggestionController@retrieveAll");
+        Route::get("/{last_id}", "Api\Suggestion\SuggestionController@retrieveAll");
         Route::post("/", "Api\Suggestion\SuggestionController@store");
-        Route::get("/{id}", "Api\Suggestion\SuggestionController@retrieveSingle");
+        Route::get("/retrieve/{id}", "Api\Suggestion\SuggestionController@retrieveSingle");
     });
 
     Route::group(["prefix" => "/dashboard", "middleware" => "auth.global"], function () {

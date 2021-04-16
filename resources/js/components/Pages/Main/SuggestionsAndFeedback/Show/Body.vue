@@ -53,16 +53,15 @@
                                         </div>
                                     </div>
                                     <div class="details" style="padding: 10px; min-height: 200px;">
-                                        <div class="header">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" v-if="$store.state.user.data.role === 'admin'">
+                                        <div class="header" v-if="data.suggestion.user !== undefined">
+                                            <img class="avatar" :src="data.suggestion.user.biodata.profile_picture" v-if="$store.state.user.data.role === 'admin' && data.suggestion.user !== null">
                                             <div class="from" v-if="$store.state.user.data.role === 'admin'">
-                                                <span>Lukasz Holeczek</span>
-                                                lukasz@bootstrapmaster.com
+                                                <span>{{ data.suggestion.user.name }}</span>
+                                                {{ data.suggestion.user.email }}
                                             </div>
                                             <div class="from" v-else>
                                                 <span>Kepada: Admin</span>
                                             </div>
-<!--                                            <div class="date">Today, <b>3:47 PM</b></div>-->
                                             <div class="date"><b>{{ data.date }}</b></div>
                                         </div>
                                         <div class="content" v-html="data.content">
@@ -86,7 +85,8 @@ export default {
         return {
             data: {
                 content: "",
-                date: ""
+                date: "",
+                suggestion: {}
             }
         }
     },
@@ -97,9 +97,13 @@ export default {
         retrieve(id){
             const url = this.$url.generateUrl(this.$endpoints.suggestions.retrieve);
             this.$api.get(url(id)).then((response) => {
-                this.data.content   = response.data.body.suggestion.content;
-                this.data.date      = response.data.body.suggestion.created_at_sentences;
+                this.data.content       = response.data.body.suggestion.content;
+                this.data.date          = response.data.body.suggestion.created_at_sentences;
+                this.data.suggestion    = response.data.body.suggestion;
+
+                console.log(response)
             }).catch((error) => {
+                console.log(error)
             })
         }
     }
