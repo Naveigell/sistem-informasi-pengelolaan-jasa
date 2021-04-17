@@ -81,19 +81,18 @@ export default {
         send(){
             const text = this.$refs.text.value;
             this.$api.post(this.$endpoints.suggestions.insert, { text }).then((response) => {
-                console.log(response)
-                // this.$root.$emit("open-toast", {
-                //     type: "success",
-                //     background: this.$colors.successPrimary,
-                //     data: {
-                //         title: "Success!",
-                //         message: "Saran berhasil dikirim",
-                //         icon: "fa fa-check"
-                //     }
-                // });
-                // this.$router.push({
-                //     name: "suggestions"
-                // });
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Saran berhasil dikirim",
+                        icon: "fa fa-check"
+                    }
+                });
+                this.$router.push({
+                    name: "suggestions"
+                });
             }).catch((error) => {
                 if (error.response.status === 422) {
                     this.errors = error.response.data.errors.messages;

@@ -64,7 +64,32 @@
                                             </div>
                                             <div class="date"><b>{{ data.date }}</b></div>
                                         </div>
-                                        <div class="content" v-html="data.content">
+                                        <div class="content" v-html="data.content"></div>
+                                    </div>
+                                    <div v-if="data.suggestion.user !== undefined">
+                                        <div v-if="data.suggestion.reply === null && $store.state.user.data.role === 'admin'">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 right-column">
+                                                <div class="input-container">
+                                                    <textarea v-model="data.reply" v-bind:class="{'input-error': errors.reply != null && errors.reply !== undefined}" @focus="errors.reply = null;" ref="reply" placeholder="Tulis balasan saran disini ..." name="" cols="30" rows="10" style="resize: none; padding: 10px;"></textarea>
+                                                </div>
+                                                <span class="error-message" v-if="errors.reply != null && errors.reply !== undefined">{{ errors.reply[0] }}</span>
+                                                <span class="word-count">{{ data.reply.length }}/3000</span>
+                                            </div>
+                                            <br/>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 right-column" style="margin-top: 10px;">
+                                                <button @click="back" class="button-transparent-sm">Batal</button>
+                                                <button @click="send" class="button-success-primary-sm"><i class="fa fa-paper-plane"></i>&nbsp&nbspKirim</button>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <div class="details" style="padding: 10px; min-height: 200px;">
+                                                <div class="header" v-if="data.suggestion.user !== undefined">
+                                                    <div class="from">
+                                                        <span>Dari: Admin</span>
+                                                    </div>
+                                                </div>
+                                                <div class="content" v-html="data.suggestion.reply"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </main>
@@ -86,9 +111,20 @@ export default {
             data: {
                 content: "",
                 date: "",
-                suggestion: {}
+                suggestion: {},
+                reply: ""
+            },
+            errors: {
+                reply: null
             }
         }
+    },
+    watch: {
+        "data.reply": function (newVal, oldVal) {
+            if (newVal.length > 3000) {
+                this.data.reply = oldVal;
+            }
+        },
     },
     mounted() {
         this.retrieve(this.$router.currentRoute.params.id);
@@ -102,9 +138,48 @@ export default {
                 this.data.suggestion    = response.data.body.suggestion;
 
                 console.log(response)
+
+                this.$nextTick(_ => {})
             }).catch((error) => {
                 console.log(error)
             })
+        },
+        send(){
+            if (this.$refs.reply !== undefined) {
+                const url = this.$url.generateUrl(this.$endpoints.suggestions.reply);
+                const id = this.$router.currentRoute.params.id;
+                const reply = this.$refs.reply.value;
+
+                this.$api.put(url(id), {
+                    reply
+                }).then((response) => {
+                    this.data.suggestion.reply = response.data.body.reply;
+
+                    this.$root.$emit("open-toast", {
+                        type: "success",
+                        background: this.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Balasan berhasil dikirim",
+                            icon: "fa fa-check"
+                        }
+                    });
+                }).catch((error) => {
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors.messages;
+                    } else {
+                        this.$root.$emit("open-toast", {
+                            type: "failed",
+                            background: this.$colors.redPrimary,
+                            data: {
+                                title: "Failed!",
+                                message: "Balasan gagal dikirim",
+                                icon: "fa fa-times"
+                            }
+                        });
+                    }
+                })
+            }
         }
     }
 }
@@ -224,5 +299,40 @@ body{margin-top:20px;}
     .email-app .message .header .date {
         flex: 0 0 100%;
     }
+}
+
+.error-message {
+    margin-top: 5px;
+    display: inline-block;
+    color: var(--error-primary);
+    opacity: 1;
+}
+
+.input-container-price input {
+    margin-left: 10px;
+    width: 100%;
+    font-size: 14px;
+    outline: none;
+    border: none;
+}
+
+.input-container input, .input-container textarea, .input-container select {
+    width: 100%;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid #cfcfcf;
+    border-radius: 3px;
+    padding: 7px 7px 7px 9px;
+}
+
+.input-container .input-error, .input-error {
+    border: 1px solid var(--error-primary);
+}
+
+.word-count {
+    margin-top: 5px;
+    display: inline-block;
+    color: #999;
+    float: right;
 }
 </style>

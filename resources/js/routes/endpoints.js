@@ -59,7 +59,9 @@ const endpoints = {
     suggestions: {
         data: "/suggestions/:last_id",
         insert: "/suggestions",
-        retrieve: "/suggestions/retrieve/:id"
+        retrieve: "/suggestions/retrieve/:id",
+        delete: "/suggestions",
+        reply: "/suggestions/:id/reply"
     }
 }
 

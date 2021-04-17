@@ -18,17 +18,12 @@
                         <div style="padding: 20px; min-height: 300px;">
                             <div class="mail-option">
                                 <div class="chk-all">
-                                    <input type="checkbox" class="mail-checkbox mail-group-checkbox">
+                                    <input v-model="checkboxes.root" @change="toggleCheckAll($event)" type="checkbox" class="mail-checkbox mail-group-checkbox">
+                                    &nbsp
                                     <div class="btn-group">
-                                        <a data-toggle="dropdown" href="#" class="btn mini all" aria-expanded="false">
+                                        <a class="btn mini all" aria-expanded="false">
                                             All
-                                            <i class="fa fa-angle-down "></i>
                                         </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#"> None</a></li>
-                                            <li><a href="#"> Read</a></li>
-                                            <li><a href="#"> Unread</a></li>
-                                        </ul>
                                     </div>
                                 </div>
 
@@ -48,6 +43,11 @@
                                         <li class="divider"></li>
                                         <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
                                     </ul>
+                                </div>
+                                <div class="btn-group hidden-phone" @click="openDeleteModal">
+                                    <a class="btn mini blue" aria-expanded="false">
+                                        <i class="fa fa-trash"></i>&nbsp Delete
+                                    </a>
                                 </div>
                                 <div class="btn-group">
                                     <a data-toggle="dropdown" href="#" class="btn mini blue">
@@ -74,9 +74,9 @@
                             </div>
                             <table class="table table-inbox table-hover">
                                 <tbody>
-                                    <tr class="" v-for="(suggestion, index) in suggestions" @click="moveInto(suggestion.id)">
+                                    <tr class="" v-for="(suggestion, index) in suggestions" @click="moveInto(suggestion.id, $event)">
                                         <td class="inbox-small-cells">
-                                            <input type="checkbox" class="mail-checkbox">
+                                            <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">
                                         </td>
                                         <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
                                         <td class="view-message dont-show">{{ $store.state.user.data.role === 'user' ? "Kepada: Admin" : suggestion.user.name }} <span v-if="suggestion.type === 'komplain'" class="label label-danger pull-right">complain</span></td>
@@ -91,25 +91,39 @@
                 </div>
             </div>
         </div>
+        <YesNoDialogDelete :title="'Hapus?'" :message="'Saran yang dicentang akan dihapus secara permanen'" v-if="modals.delete.open" @delete="del" @closeModal="modals.delete.open = false"/>
     </div>
 </template>
 
 <script>
-import Test from "../../../../Test";
+import YesNoDialogDelete from "../../../../Dialogs/DialogDelete";
+
 export default {
     name: "Body",
-    components: {Test},
+    components: {
+        YesNoDialogDelete
+    },
     data(){
         return {
-            suggestions: []
+            suggestions: [],
+            checkboxes: {
+                root: ""
+            },
+            modals: {
+                delete: {
+                    open: false
+                }
+            }
         };
     },
     mounted() {
         this.retrieveAll();
     },
     methods: {
-        moveInto(id){
-            this.$router.push(`suggestions/${id}`);
+        moveInto(id, event){
+            if (event.target.type !== "checkbox") {
+                this.$router.push(`suggestions/${id}`);
+            }
         },
         retrieveAll(last_id, next){
             const params = {};
@@ -121,9 +135,10 @@ export default {
 
             this.$api.get(this.$endpoints.suggestions.data, { params }).then((response) => {
                 // console.log(response.data.body.suggestions);
-                const suggestions = response.data.body.suggestions;
-                console.log(suggestions[0].id, suggestions[suggestions.length - 1].id);
+
                 this.suggestions = response.data.body.suggestions;
+                this.$nextTick(() => {});
+                this.toggleCheckAll(null, false);
             }).catch((error) => {
                 console.error(error);
             })
@@ -135,6 +150,70 @@ export default {
         previous() {
             const first_id = this.suggestions[0].id;
             this.retrieveAll(first_id, false);
+        },
+        toggleCheckAll(event, toggle) {
+            // if checked is null, it's mean the user not click checkbox all feature
+            const checked = event === null ? null : event.target.checked;
+            if (checked === null) {
+                this.checkboxes.root = false;
+            }
+
+            if (this.$refs.checkboxes !== undefined) {
+                this.$refs.checkboxes.map(item => item.checked = checked === null ? toggle : checked);
+            }
+        },
+        isAllCheckboxChecked(){
+            return this.$refs.checkboxes.findIndex((item) => {
+                return !item.checked;
+            }) === -1;
+        },
+        isSomeCheckboxChecked(){
+            return this.$refs.checkboxes.findIndex((item) => {
+                return item.checked;
+            }) > -1;
+        },
+        check(){
+            if (this.$refs.checkboxes !== undefined) {
+                this.checkboxes.root = this.isAllCheckboxChecked();
+            }
+        },
+        del(){
+            const ids = [];
+            this.$refs.checkboxes.map((item, index) => {
+                if (item.checked) {
+                    ids.push(this.suggestions[index].id);
+                }
+            });
+
+            if (ids.length > 0) {
+                this.$api.delete(this.$endpoints.suggestions.delete, { params: { ids } }).then((response) => {
+                    this.$root.$emit("open-toast", {
+                        type: "success",
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Hapus saran berhasil",
+                            icon: "fa fa-check"
+                        }
+                    });
+                    this.retrieveAll();
+                }).catch((error) => {
+                    this.$root.$emit("open-toast", {
+                        type: "failed",
+                        background: this.$colors.redPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: error.response.data.errors.messages.message,
+                            icon: "fa fa-times-circle"
+                        }
+                    });
+                });
+            }
+        },
+        openDeleteModal(){
+            if (this.isSomeCheckboxChecked()) {
+                this.modals.delete.open = true;
+            }
         }
     }
 }

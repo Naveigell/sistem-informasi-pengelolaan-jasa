@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api\Suggestion;
 use App\Helpers\Arrays\Arrays;
 use App\Helpers\Regex\RegexHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Suggestion\SuggestionRequestDelete;
 use App\Http\Requests\Suggestion\SuggestionRequestInsert;
 use App\Http\Requests\Suggestion\SuggestionRequestPaginate;
+use App\Http\Requests\Suggestion\SuggestionRequestReply;
 use App\Interfaces\TimeSentences;
 use App\Models\Suggestion\SuggestionModel;
 use App\Traits\Roles;
@@ -66,6 +68,40 @@ class SuggestionController extends Controller implements TimeSentences
     }
 
     /**
+     * Reply suggestion (just admin can do this)
+     *
+     * @param SuggestionRequestReply $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function replySuggestion(SuggestionRequestReply $request, $id)
+    {
+        $replied = $this->suggestions->replySuggestion($id, $request->reply);
+        if ($replied) {
+            return json([
+                "reply"         => $request->reply
+            ]);
+        }
+        return error(null, ["message" => "Terjadi masalah saat mengirim balasan"]);
+    }
+
+    /**
+     * Delete multiple suggestions
+     *
+     * @param SuggestionRequestDelete $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteMultipleSuggestions(SuggestionRequestDelete $request)
+    {
+        $deleted = $this->suggestions->deleteMultipleSuggestions($request->ids);
+        if ($deleted) {
+            return json(null, null, 204);
+        }
+
+        return error(null, ["message" => "Terjadi masalah saat menghapus saran"]);
+    }
+
+    /**
      * Retrieve single suggestion
      *
      * @param $id
@@ -84,7 +120,8 @@ class SuggestionController extends Controller implements TimeSentences
         $data = Arrays::replaceKey([
             "id_pengaduan"          => "id",
             "pengaduan_id_users"    => "user_id",
-            "isi"                   => "content"
+            "isi"                   => "content",
+            "balasan"               => "reply"
         ], $data->toArray());
 
         $data["user"] = Arrays::replaceKey([

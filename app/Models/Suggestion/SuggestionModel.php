@@ -4,7 +4,6 @@ namespace App\Models\Suggestion;
 
 use App\Models\User\UserModel;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class SuggestionModel
@@ -29,11 +28,12 @@ class SuggestionModel extends Model
      */
     public function retrieveAll($id_users, $role, $next, $last_suggestion_id = null)
     {
+        $take = 15;
         $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "created_at"])
                      ->orderBy("id_pengaduan", "DESC");
 
         if ($last_suggestion_id != null) {
-            $last_suggestion_id = $next ? $last_suggestion_id : $last_suggestion_id + 15 + 1;
+            $last_suggestion_id = $next ? $last_suggestion_id : $last_suggestion_id + $take + 1;
             $main->where("id_pengaduan", "<", $last_suggestion_id);
         }
 
@@ -41,12 +41,39 @@ class SuggestionModel extends Model
             return $main->where([
                 "pengaduan_id_users"    => $id_users,
                 "tipe"                  => $this->type
-            ])->take(15)->get();
+            ])->take($take)->get();
         } else {
             return $main->where([
                 "tipe"                  => $this->type
-            ])->take(15)->with(["user:id_users,name,username"])->get();
+            ])->take($take)->with(["user:id_users,name,username"])->get();
         }
+    }
+
+    /**
+     * Delete suggestions
+     *
+     * @param $ids
+     * @return mixed
+     */
+    public function deleteMultipleSuggestions($ids)
+    {
+        return $this->whereIn("id_pengaduan", $ids)->delete();
+    }
+
+    /**
+     * Reply suggestions
+     *
+     * @param $id
+     * @param $reply
+     * @return int
+     */
+    public function replySuggestion($id, $reply)
+    {
+        return $this->where([
+            "id_pengaduan"              => $id,
+        ])->whereNotNull("isi")->update([
+            "balasan"                   => $reply
+        ]);
     }
 
     public function user()
@@ -82,7 +109,7 @@ class SuggestionModel extends Model
      */
     public function retrieveSingle($id, $id_users, $role)
     {
-        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "created_at"]);
+        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "balasan", "created_at"]);
 
         if ($role == "user") {
             return $main->where([
