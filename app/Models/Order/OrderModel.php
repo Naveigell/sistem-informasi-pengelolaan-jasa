@@ -36,10 +36,34 @@ class OrderModel extends Model
     {
         return $this->where([
             "id_service"            => $id_service,
-            "service_id_teknisi"    => $id_teknisi
+            "service_id_teknisi"    => $id_teknisi,
+            "updated_at"            => date("Y-m-d H:i:s")
         ])->whereNotIn("status_service", $arr)->update([
             "status_service"        => $status
         ]);
+    }
+
+    /**
+     * Get total of status service of last and this month, to convert it to graph
+     *
+     * @param $id_teknisi
+     * @return OrderModel[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function retrieveTotalOrdersInLastAndThisMonth($id_teknisi)
+    {
+        DB::statement("SET sql_mode = ''");
+
+        return $this->select(["status_service", "updated_at", "service_id_teknisi", DB::raw("COUNT(status_service) AS total"), DB::raw("MONTH(updated_at) AS bulan")])
+                    ->where(function (\Illuminate\Database\Eloquent\Builder $query) {
+                        $query->whereMonth("updated_at", date("m") - 1)
+                              ->orWhereMonth("updated_at", date("m"));
+                    })
+                    ->whereYear("updated_at", date("Y"))
+                    ->where("service_id_teknisi", $id_teknisi)
+                    ->groupBy("status_service", "bulan")
+                    ->orderBy("bulan")
+                    ->orderBy("status_service")
+                    ->get();
     }
 
     public function technician()

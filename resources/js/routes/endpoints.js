@@ -10,7 +10,8 @@ const endpoints = {
     },
     biodata: {
         data: "/biodata",
-        image: "/biodata/image"
+        image: "/biodata/image",
+        graph: "/biodata/graph"
     },
     sparepart: {
         data: "/spareparts",

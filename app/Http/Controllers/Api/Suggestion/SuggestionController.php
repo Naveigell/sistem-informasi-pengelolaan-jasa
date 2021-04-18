@@ -9,15 +9,12 @@ use App\Http\Requests\Suggestion\SuggestionRequestDelete;
 use App\Http\Requests\Suggestion\SuggestionRequestInsert;
 use App\Http\Requests\Suggestion\SuggestionRequestPaginate;
 use App\Http\Requests\Suggestion\SuggestionRequestReply;
-use App\Interfaces\TimeSentences;
+use App\Interfaces\Time\TimeSentences;
 use App\Models\Suggestion\SuggestionModel;
-use App\Traits\Roles;
 use Illuminate\Support\Collection;
 
 class SuggestionController extends Controller implements TimeSentences
 {
-    use Roles;
-
     private SuggestionModel $suggestions;
     private $auth;
 

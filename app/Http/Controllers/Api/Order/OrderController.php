@@ -12,7 +12,7 @@ use App\Http\Requests\Order\OrderRequestSearch;
 use App\Http\Requests\Order\OrderRequestSearchSparepart;
 use App\Http\Requests\Order\OrderRequestTake;
 use App\Http\Requests\Order\OrderRequestUpdateStatusService;
-use App\Interfaces\TimeSentences;
+use App\Interfaces\Time\TimeSentences;
 use App\Models\Order\OrderModel;
 use App\Models\Order\OrderSparepartModel;
 use App\Models\Sparepart\SparepartModel;

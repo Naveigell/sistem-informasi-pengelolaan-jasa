@@ -123,6 +123,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix("/biodata")->group(function (){
             Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
             Route::get('/image', 'Api\User\Account\BiodataController@getProfilePicture');
+            Route::get('/graph', 'Api\User\Account\GraphController@retrieveData');
             Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
             Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
         });

@@ -71,22 +71,34 @@
                                 <span v-if="errors.biodata.firstErrorMessage != null && button.saveActive" class="text-danger" style="margin-left: 20px;">{{ errors.biodata.firstErrorMessage }}</span>
                             </div>
                         </form>
-<!--                        <alert-success-biodata v-if="layouts.alerts.success.biodata.active" v-on:destroyed="layouts.alerts.success.biodata.active = false"/>-->
                     </div>
                 </div>
             </div>
             <span class="alert alert-danger" style="padding: 10px 15px;" v-if="errors.image.firstErrorMessage != null">{{ errors.image.firstErrorMessage }}</span>
+        </div>
+
+        <div class="elevation-2" style="background-color: white; margin-top: 20px; margin-bottom: 20px;" v-if="$store.state.user.data.role === 'teknisi'">
+            <div style="background-color: #f6f7f8; height: 43px;">
+                <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center;">
+                    <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">GRAFIK PERBAIKAN BULAN INI DAN KEMARIN</h5>
+                </div>
+            </div>
+            <div style="padding: 20px;">
+                <BarChart v-bind:data="graph.data"/>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import BiodataUpdateSuccess from "../../../Alerts/BiodataUpdateSuccess";
+import BarChart from "../../../Shared/Charts/BarChart";
 
 export default {
     name: "Body",
     components: {
-        'alert-success-biodata': BiodataUpdateSuccess
+        'alert-success-biodata': BiodataUpdateSuccess,
+        BarChart
     },
     data() {
         return {
@@ -117,12 +129,28 @@ export default {
                     }
                 }
             },
+            graph: {
+                data: {
+
+                }
+            },
         }
     },
     mounted() {
         this.retrieveUserBiodata();
+        this.retrieveGraphData();
     },
     methods: {
+        random(){
+            return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+        },
+        retrieveGraphData(){
+            this.$api.get(this.$endpoints.biodata.graph).then((response) => {
+                this.graph.data = response.data.body.graph.data;
+            }).catch((error) => {
+                console.error(error);
+            })
+        },
         retrieveUserBiodata(){
             const self = this;
             this.$api.get(this.$endpoints.biodata.data).then(function (response) {
