@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\Graph\GraphDataInterface;
 use App\Interfaces\Graph\GraphProcessInterface;
 use App\Models\Order\OrderModel;
+use Carbon\Carbon;
 
 class GraphController extends Controller implements GraphProcessInterface, GraphDataInterface
 {
@@ -25,13 +26,14 @@ class GraphController extends Controller implements GraphProcessInterface, Graph
      */
     public function retrieveData()
     {
-        return $this->toData();
+        return $this->process();
+//        dd($this->datasets());
     }
 
     /**
      * Convert of graph data
      */
-    public function toData()
+    public function process()
     {
         return json([
             "graph"                 => [
@@ -50,7 +52,13 @@ class GraphController extends Controller implements GraphProcessInterface, Graph
      */
     public function labels(): array
     {
-        return ["Sedang Dicek", "Perbaikan", "Selesai", "Pembayaran", "Terima"];
+        $labels = [];
+        for ($i = 7; $i >= 1; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            array_push($labels, strftime("%B", $date->getTimestamp())." ".$date->toArray()["year"]);
+        }
+
+        return $labels;
     }
 
     /**
@@ -60,36 +68,16 @@ class GraphController extends Controller implements GraphProcessInterface, Graph
      */
     public function datasets(): array
     {
-        $data = $this->orders->retrieveTotalOrdersInLastAndThisMonth($this->auth->id());
-        $data = Arrays::replaceKey([
-            "status_service"            => "status",
-            "service_id_teknisi"        => "teknisi_id",
-            "bulan"                     => "month"
-        ], $data->toArray());
-
-        $data = collect($data)->groupBy("month")
-                              ->map(function ($item) {
-                                  return $item->pluck("total");
-                              })
-                              ->toArray();
-
-        $lastMonth = $data[array_key_first($data)];
-        $thisMonth = $data[array_key_last($data)];
+        $data = $this->orders->retrieveTotalFinishedOrdersInLast6Months($this->auth->id());
 
         return [
             [
-                "label"             => "Bulan sebelumnya",
-                "borderColor"       => "rgb(255, 99, 132)",
-                "backgroundColor"   => "rgba(255, 99, 132, 0.2)",
-                "borderWidth"       => 1,
-                "data"              => $lastMonth
-            ],
-            [
-                "label"             => "Bulan ini",
+                "label"             => "Keberhasilan",
                 "borderColor"       => "rgb(54, 162, 235)",
                 "backgroundColor"   => "rgba(54, 162, 235, 0.2)",
                 "borderWidth"       => 1,
-                "data"              => $thisMonth
+                "data"              => $data,
+                "lineTension"       => 0.3
             ]
         ];
     }

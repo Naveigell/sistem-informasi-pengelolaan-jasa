@@ -44,7 +44,7 @@
                                     <th>TEKNISI</th>
                                     <th>STATUS</th>
                                     <th>HARGA</th>
-                                    <th>AKSI</th>
+                                    <th v-if="$store.state.user.data.role !== 'user'">AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -65,7 +65,7 @@
                                             <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
                                         </td>
                                         <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
-                                        <td v-if="$store.state.user.data.role !== 'teknisi'">
+                                        <td v-if="$store.state.user.data.role === 'admin'">
                                             <button class="button-warning-primary-tag">
                                                 <i class="fa fa-print"></i>
                                             </button>
@@ -86,7 +86,7 @@
                                                 Ambil
                                             </button>
                                         </td>
-                                        <td v-else>
+                                        <td v-else-if="$store.state.user.data.role === 'teknisi' && repairment.status_service !== 'menunggu'">
                                             <router-link :to="{ path: '/orders/' + repairment.unique_id }" class="button-warning-primary-tag">
                                                 Lihat
                                             </router-link>

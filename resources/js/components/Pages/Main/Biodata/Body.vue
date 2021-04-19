@@ -80,11 +80,11 @@
         <div class="elevation-2" style="background-color: white; margin-top: 20px; margin-bottom: 20px;" v-if="$store.state.user.data.role === 'teknisi'">
             <div style="background-color: #f6f7f8; height: 43px;">
                 <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center;">
-                    <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">GRAFIK PERBAIKAN BULAN INI DAN KEMARIN</h5>
+                    <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">GRAFIK PERBAIKAN 6 BULAN SEBELUMNYA</h5>
                 </div>
             </div>
             <div style="padding: 20px;">
-                <BarChart v-bind:data="graph.data"/>
+                <LineChart v-bind:data="graph.data"/>
             </div>
         </div>
     </div>
@@ -92,13 +92,13 @@
 
 <script>
 import BiodataUpdateSuccess from "../../../Alerts/BiodataUpdateSuccess";
-import BarChart from "../../../Shared/Charts/BarChart";
+import LineChart from "../../../Shared/Charts/LineChart";
 
 export default {
     name: "Body",
     components: {
         'alert-success-biodata': BiodataUpdateSuccess,
-        BarChart
+        LineChart
     },
     data() {
         return {
@@ -130,15 +130,15 @@ export default {
                 }
             },
             graph: {
-                data: {
-
-                }
+                data: {}
             },
         }
     },
     mounted() {
         this.retrieveUserBiodata();
-        this.retrieveGraphData();
+        if (this.$store.state.user.data.role === 'teknisi') {
+            this.retrieveGraphData();
+        }
     },
     methods: {
         random(){
@@ -147,6 +147,7 @@ export default {
         retrieveGraphData(){
             this.$api.get(this.$endpoints.biodata.graph).then((response) => {
                 this.graph.data = response.data.body.graph.data;
+                console.log(this.graph.data)
             }).catch((error) => {
                 console.error(error);
             })

@@ -4,7 +4,10 @@ namespace App\Models\Order;
 
 use App\Models\Technician\TechnicianModel;
 use App\Models\User\UserModel;
+use App\Traits\DateTime\DateTimeRepeaterAndSanitizer;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -14,6 +17,8 @@ use Illuminate\Support\Facades\DB;
  */
 class OrderModel extends Model
 {
+    use DateTimeRepeaterAndSanitizer;
+
     protected $table = "service";
     protected $primaryKey = "id_service";
 
@@ -44,6 +49,31 @@ class OrderModel extends Model
     }
 
     /**
+     * Retrieve last finished total order
+     * VERY VERY VERY VERY BAD CODE AND BAD PRACTICE, WILL FIX IT LATER
+     *
+     * @param $id_teknisi
+     * @return array
+     */
+    public function retrieveTotalFinishedOrdersInLast6Months($id_teknisi)
+    {
+        $arr = [];
+        for ($i = 7; $i >= 1; $i--){
+            $date = Carbon::now()->subMonths($i)->toArray();
+            $result = $this->whereMonth("updated_at", $date["month"])
+                           ->whereYear("updated_at", $date["year"])
+                           ->where("status_service", "terima")
+                           ->where("service_id_teknisi", $id_teknisi)->count();
+
+            setlocale(LC_ALL, 'IND');
+
+            array_push($arr, $result);
+        }
+
+        return $arr;
+    }
+
+    /**
      * Get total of status service of last and this month, to convert it to graph
      *
      * @param $id_teknisi
@@ -53,10 +83,36 @@ class OrderModel extends Model
     {
         DB::statement("SET sql_mode = ''");
 
+        /**
+            SELECT *
+            FROM (
+                SELECT COUNT(id_service) AS total, status_service FROM service WHERE service_id_teknisi = 13 GROUP BY status_service
+                UNION SELECT 0 AS total, 'menunggu' AS status_service
+                UNION SELECT 0 AS total, 'dicek' AS status_service
+                UNION SELECT 0 AS total, 'perbaikan' AS status_service
+                UNION SELECT 0 AS total, 'selesai' AS status_service
+                UNION SELECT 0 AS total, 'pembayaran' AS status_service
+                UNION SELECT 0 AS total, 'terima' AS status_service
+            ) service
+            GROUP BY status_service
+         */
+
+        /**
+         * Pure Query
+         *
+         * SELECT status_service, updated_at, service_id_teknisi, COUNT(status_service) AS total, MONTH(updated_at) AS bulan
+         * FROM service
+         * WHERE (MONTH(updated_at) = 3? OR MONTH(updated_at) = 4?) AND YEAR(updated_at) = 2021? AND service_id_teknisi = 13?
+         * GROUP BY status_service, bulan
+         * ORDER BY bulan ASC, status_service ASC
+         */
         return $this->select(["status_service", "updated_at", "service_id_teknisi", DB::raw("COUNT(status_service) AS total"), DB::raw("MONTH(updated_at) AS bulan")])
                     ->where(function (\Illuminate\Database\Eloquent\Builder $query) {
-                        $query->whereMonth("updated_at", date("m") - 1)
-                              ->orWhereMonth("updated_at", date("m"));
+                        $lastMonth = $this->repeatMonth(date("m") - 1);
+                        $thisMonth = $this->repeatMonth(date("m"));
+
+                        $query->whereMonth("updated_at", $lastMonth)
+                              ->orWhereMonth("updated_at", $thisMonth);
                     })
                     ->whereYear("updated_at", date("Y"))
                     ->where("service_id_teknisi", $id_teknisi)
@@ -84,15 +140,22 @@ class OrderModel extends Model
     /**
      * Get order lists
      *
-     * @param null $id
+     * @param null $id_teknisi
+     * @param null $id_user
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getOrderList($id = null)
+    public function getOrderList($id_teknisi = null, $id_user = null)
     {
-        if ($id == null) {
+        // if user is admin
+        if ($id_teknisi == null && $id_user == null) {
             return $this->main()->paginate(12);
+        } else if ($id_teknisi == null) { // if user is normal user
+            return $this->main()->where("service_id_user", $id_user)->paginate(12);
         }
-        return $this->main()->where("service_id_teknisi", $id)->orWhere("status_service", "menunggu")->paginate(12);
+        // if user is a technician
+        return $this->main()->where("service_id_teknisi", $id_teknisi)
+                            ->orWhere("status_service", "menunggu")
+                            ->paginate(12);
     }
 
     /**

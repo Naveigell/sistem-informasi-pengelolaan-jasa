@@ -6,5 +6,5 @@ interface GraphProcessInterface
     /**
      * Convert of graph data
      */
-    public function toData();
+    public function process();
 }
