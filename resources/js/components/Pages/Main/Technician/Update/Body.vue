@@ -88,9 +88,6 @@
                         <span style="display: block; font-size: 14px; margin-top: 5px;">Service diselesaikan</span>
                     </div>
                 </div>
-<!--                <div class="statistic-graph" style="margin-top: 30px;">-->
-<!--                    Here is the graph-->
-<!--                </div>-->
             </div>
         </div>
     </div>

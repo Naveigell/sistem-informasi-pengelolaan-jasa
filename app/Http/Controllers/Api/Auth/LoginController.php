@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\AuthRequestLogin;
 
 class LoginController extends Controller
 {
     /**
-     * @param LoginRequest $request
+     * @param AuthRequestLogin $request
      * @return \Illuminate\Http\JsonResponse login for user
      */
-    public function login(LoginRequest $request) {
-
+    public function login(AuthRequestLogin $request) {
         $credentials = [
             "email"     => $request->email,
             "password"  => $request->password

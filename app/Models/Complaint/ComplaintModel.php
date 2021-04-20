@@ -2,6 +2,7 @@
 
 namespace App\Models\Complaint;
 
+use App\Models\Order\OrderModel;
 use App\Models\User\UserModel;
 use Illuminate\Database\Eloquent\Model;
 
@@ -123,7 +124,7 @@ class ComplaintModel extends Model
      */
     public function retrieve($id, $id_users, $role)
     {
-        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "balasan", "disetujui_user", "dikerjakan_teknisi", "created_at"]);
+        $main = $this->with(["order:unique_id,id_service"])->select(["id_pengaduan", "pengaduan_id_users", "pengaduan_id_service", "isi", "balasan", "disetujui_user", "dikerjakan_teknisi", "created_at"]);
 
         if ($role == "user") {
             return $main->where([
@@ -137,6 +138,11 @@ class ComplaintModel extends Model
                 "tipe"                  => $this->type
             ])->with(["user:id_users,name,username,email", "user.biodata:id_biodata,biodata_id_users,profile_picture"])->first();
         }
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(OrderModel::class, "pengaduan_id_service", "id_service");
     }
 
     public function user()

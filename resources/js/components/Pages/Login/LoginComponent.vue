@@ -61,35 +61,23 @@
         },
         methods: {
             async login(evt){
-                const self = this;
                 this.loading.buttonLoading = true;
 
-                this.$http.onResponse(function (response) {
+                this.$api.post(this.$endpoints.auth.login, {...this.input}).then((response) => {
                     if (response.status === 200) {
-                        self.$store.commit('retrieveUserData');
+                        this.$store.commit("retrieveUserData");
                     }
-                });
+                    this.loading.buttonLoading = false;
+                }).catch((error) => {
+                    const status = error.response.status;
 
-                this.$http.onError(function (error) {
-                    const status = self.$math.status(error);
-
-                    if (status === 4) {
-                        self.errors = error.response.data.errors.messages;
-                        self.errors.server = null;
-                    } else if (status === 5) {
-                        self.errors.server = error.response.data.errors.messages.server[0];
+                    if (status === 422 || status === 404) {
+                        this.errors = error.response.data.errors.messages;
+                        this.errors.server = null;
+                    } else if (status === 500) {
+                        this.errors.server = error.response.data.errors.messages.server[0];
                     }
-                });
-
-                await this.$http.post(this.$endpoints.auth.login, {
-                    email: this.input.email,
-                    password: this.input.password
-                });
-
-                self.$store.watch(function (state) {
-                    if (state.user.check) {
-                        self.loading.buttonLoading = false;
-                    }
+                    this.loading.buttonLoading = false;
                 });
             }
         }

@@ -6,7 +6,8 @@ const endpoints = {
         login: "/auth/login",
         logout: "/auth/logout",
         check: "/auth/check",
-        data: "/auth/session/data"
+        data: "/auth/session/data",
+        change_password: "/auth/change-password",
     },
     biodata: {
         data: "/biodata",

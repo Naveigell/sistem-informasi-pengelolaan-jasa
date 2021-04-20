@@ -192,6 +192,12 @@
                                                 <div class="col-md-2 left-column">
                                                     <span>
                                                         * {{ complaint.exists ? '' : 'Buat' }} Komplain
+                                                        <span>
+                                                            <br>
+                                                            <router-link :to="{ path: '/complaints/' + complaint.data.id_pengaduan }" style="display: inline-block;">
+                                                                <a style="color: #0000EE; cursor: pointer;">(Link komplain)</a>
+                                                            </router-link>
+                                                        </span>
                                                     </span>
                                                 </div>
                                                 <div class="col-md-10 right-column" v-if="complaint.exists">

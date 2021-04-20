@@ -137,6 +137,7 @@ class RouteServiceProvider extends ServiceProvider
     public function mapAuthRoutes(){
         Route::prefix("/auth")->group(function () {
             Route::post('/login', 'Api\Auth\LoginController@login');
+            Route::post('/change-password', 'Api\Auth\AuthController@changePassword');
             Route::get('/logout', 'Api\Auth\AuthController@logout');
             Route::get('/check', 'Api\Auth\AuthController@check');
             Route::get('/session/data', 'Api\Auth\AuthController@sessionData');

@@ -9,9 +9,6 @@
                                 <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 40px; font-size: 16px;">COMPLAINT</h5>
                                 <div style="font-size: 16px;">
                                     <span style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
-                                    <router-link :to="{ path: '/complaints/add' }" style="display: inline-block; padding: 5px 10px; border-radius: 3px; background: #e0e5e8; cursor: pointer; color: #000">
-                                        <i class="fa fa-plus"></i>
-                                    </router-link>
                                 </div>
                             </div>
                         </div>

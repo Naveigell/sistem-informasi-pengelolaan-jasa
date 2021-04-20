@@ -11,6 +11,9 @@
                             </div>
                         </div>
                         <div style="padding: 40px;">
+                            <router-link v-if="data.complaint.order !== undefined && data.complaint.order !== null" style="color: #5179d6; text-decoration: none;" :to="{ path: '/orders/' + data.complaint.order.unique_id }">
+                                <h3>{{ data.complaint.order.unique_id }}</h3>
+                            </router-link>
                             <span v-if="Object.keys(data.complaint).length > 0" class="label" v-bind:class="{'label-danger': data.complaint.dikerjakan_teknisi === 0 && data.complaint.disetujui_user === 0, 'label-info': data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_user === 0, 'label-success': data.complaint.disetujui_user === 1 && data.complaint.dikerjakan_teknisi}" style="display: inline-block; margin-bottom: 20px;">
                                 {{ data.complaint.disetujui_user === 1 && data.complaint.dikerjakan_teknisi === 1 ? "Disetujui user" : data.complaint.dikerjakan_teknisi === 1 ? "Selesai dikerjakan" : "complain" }}
                             </span>

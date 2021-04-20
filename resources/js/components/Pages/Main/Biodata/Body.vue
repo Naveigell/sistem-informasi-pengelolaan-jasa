@@ -24,7 +24,6 @@
                 <div class="biodata-container-center">
                     <div class="biodata-container-center-form">
                         <form v-if="user.data !== null" action="" v-on:submit.prevent>
-<!--                            <div v-if="button.saveActive" class="alert-success">Biodata berhasil diubah</div>-->
                             <h5>Profil Saya</h5>
                             <div v-bind:class="{'biodata-table': !button.saveActive, 'biodata-table-save-button-active': button.saveActive}">
                                 <span class="biodata-title">Nama</span>
@@ -35,7 +34,6 @@
                                 <span class="biodata-title">Username</span>
                                 <span v-if="!button.saveActive" class="biodata-value">{{ user.data.biodata.username }}</span>
                                 <input v-model="user.update.biodata.username" v-else type="text" class="biodata-input">
-<!--                                <span v-if="button.saveActive" class="biodata-error-message">Field tidak boleh kosong</span>-->
                             </div>
                             <div v-bind:class="{'biodata-table': !button.saveActive, 'biodata-table-save-button-active': button.saveActive}">
                                 <span class="biodata-title">Jenis Kelamin</span>
@@ -49,7 +47,6 @@
                                 <span class="biodata-title">Alamat</span>
                                 <span style="margin-left: 11px;" v-if="!button.saveActive" class="biodata-value">{{ user.data.biodata.alamat }}</span>
                                 <textarea style="margin-left: 12px; resize: none;" v-model="user.update.biodata.alamat" v-else type="text" class="biodata-input"></textarea>
-<!--                                <span v-if="button.saveActive" class="biodata-error-message">Field tidak boleh kosong</span>-->
                             </div>
 
                             <h5>Kontak Saya</h5>
@@ -65,7 +62,7 @@
                             </div>
 
                             <div class="button-update-container" style="margin-top: 20px">
-                                <button class="button-update-password">Ubah Password</button>
+                                <button @click="layouts.modals.changePassword.active = true;" class="button-update-password">Ubah Password</button>
                                 <button class="button-update-biodata" v-on:click="button.saveActive = !button.saveActive;">{{ button.saveActive ? "Batal" : "Ubah Biodata" }}</button>
                                 <button class="button-save-biodata" v-on:click="updateBiodata()" style="margin-left: 3px" v-if="button.saveActive">Simpan</button>
                                 <span v-if="errors.biodata.firstErrorMessage != null && button.saveActive" class="text-danger" style="margin-left: 20px;">{{ errors.biodata.firstErrorMessage }}</span>
@@ -87,18 +84,21 @@
                 <LineChart v-bind:data="graph.data"/>
             </div>
         </div>
+        <ChangePassword @onAnimationEnd="layouts.modals.changePassword.active = false" v-if="layouts.modals.changePassword.active"/>
     </div>
 </template>
 
 <script>
 import BiodataUpdateSuccess from "../../../Alerts/BiodataUpdateSuccess";
 import LineChart from "../../../Shared/Charts/LineChart";
+import ChangePassword from "./Modals/ChangePassword";
 
 export default {
     name: "Body",
     components: {
         'alert-success-biodata': BiodataUpdateSuccess,
-        LineChart
+        LineChart,
+        ChangePassword
     },
     data() {
         return {
@@ -126,6 +126,11 @@ export default {
                         biodata: {
                             active: false
                         }
+                    }
+                },
+                modals: {
+                    changePassword: {
+                        active: false
                     }
                 }
             },
