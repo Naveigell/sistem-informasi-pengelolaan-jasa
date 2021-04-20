@@ -65,7 +65,7 @@
                                             <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
                                             <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_user === 0) : false">Komplain</span>
                                         </td>
-                                        <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
+                                        <td>{{ pricesString(repairment) }}</td>
                                         <td v-if="$store.state.user.data.role === 'admin'">
                                             <button class="button-warning-primary-tag">
                                                 <i class="fa fa-print"></i>
@@ -201,6 +201,16 @@ export default {
         this.retrieveUrl(this.url.endpoints.current);
     },
     methods: {
+        pricesString(item){
+            switch (item.status_service) {
+                case "selesai":
+                case "pembayaran":
+                case "terima":
+                    return `Rp. ${this.$currency.indonesian(item.price)}`;
+                default:
+                    return "-";
+            }
+        },
         take(index){
             const id = this.repairments[index].id_service;
             this.$api.post(this.$endpoints.orders.take, {
@@ -211,9 +221,7 @@ export default {
                 data.status_service = response.data.body.status;
 
                 this.$set(this.repairments, index, data);
-            }).catch((error) => {
-
-            })
+            }).catch((error) => {})
         },
         toggleTakeButton(index, take){
             const data = this.repairments[index];

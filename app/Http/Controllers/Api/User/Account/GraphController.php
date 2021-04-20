@@ -68,7 +68,7 @@ class GraphController extends Controller implements GraphProcessInterface, Graph
      */
     public function datasets(): array
     {
-        $data = $this->orders->retrieveTotalFinishedOrdersInLast6Months($this->auth->id());
+        $data = $this->orders->retrieveTotalFinishedOrdersInLast7Months($this->auth->id());
 
         return [
             [
@@ -80,5 +80,15 @@ class GraphController extends Controller implements GraphProcessInterface, Graph
                 "lineTension"       => 0.3
             ]
         ];
+    }
+
+    /**
+     * Create options for graph
+     *
+     * @return array
+     */
+    public function options(): array
+    {
+        return [];
     }
 }

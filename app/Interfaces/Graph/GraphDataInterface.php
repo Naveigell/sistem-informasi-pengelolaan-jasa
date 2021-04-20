@@ -16,4 +16,11 @@ interface GraphDataInterface
      * @return mixed
      */
     public function datasets(): array;
+
+    /**
+     * Create options for graph
+     *
+     * @return array
+     */
+    public function options(): array;
 }

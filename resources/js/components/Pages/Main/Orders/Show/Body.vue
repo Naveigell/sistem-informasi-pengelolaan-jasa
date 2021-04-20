@@ -187,6 +187,17 @@
                                             </div>
                                         </div>
                                         <br/>
+                                        <div class="row">
+                                            <div class="col-md-2 left-column">
+                                                <span>* Total Pembayaran</span>
+                                            </div>
+                                            <div class="col-md-10 right-column">
+                                                <div class="input-container">
+                                                    <input disabled type="text" v-model="totalPrices">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
                                         <div v-if="['selesai', 'pembayaran', 'terima'].includes(data.status)">
                                             <div class="row">
                                                 <div class="col-md-2 left-column">
@@ -271,7 +282,8 @@ export default {
                 device_name: "",
                 device_problem: "",
                 device_type: "pc",
-                device_brand: ""
+                device_brand: "",
+                total_price: 0
             },
             spareparts: [],
             modals: {
@@ -302,6 +314,23 @@ export default {
                 this.complaint.text = oldVal;
             }
         }
+    },
+    computed: {
+        totalPrices: {
+            get(){
+                switch (this.data.status) {
+                    case "selesai":
+                    case "pembayaran":
+                    case "terima":
+                        return `Rp. ${this.$currency.indonesian(this.data.total_price)}`;
+                    default:
+                        return "-";
+                }
+            },
+            set(value) {
+                this.data.total_price = value;
+            }
+        },
     },
     mounted() {
         this.retrieve()
@@ -399,6 +428,7 @@ export default {
                 this.data.device_type       = response.data.body.order.jenis === "pc/komputer" ? "pc" : response.data.body.order.jenis;
                 this.data.device_problem    = response.data.body.order.keluhan;
                 this.data.device_brand      = response.data.body.order.merk;
+                this.data.total_price       = response.data.body.order.price;
 
                 this.spareparts             = this.data.spareparts;
 

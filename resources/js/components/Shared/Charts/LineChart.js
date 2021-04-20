@@ -6,6 +6,9 @@ export default {
     watch: {
         data: function () {
             this.renderGraph();
+        },
+        options: function () {
+            this.renderGraph();
         }
     },
     mounted () {

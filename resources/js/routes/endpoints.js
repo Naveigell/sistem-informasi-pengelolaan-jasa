@@ -1,6 +1,7 @@
 const endpoints = {
     dashboard: {
-        total: "/dashboard/total"
+        total: "/dashboard/total",
+        graph: "/dashboard/graph"
     },
     auth: {
         login: "/auth/login",

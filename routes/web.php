@@ -34,6 +34,7 @@ Route::group(['prefix' => '/api/v1'], function () {
 
     Route::group(["prefix" => "/dashboard", "middleware" => "auth.global"], function () {
         Route::get("/total", "Api\Dashboard\DashboardController@total");
+        Route::get("/graph", "Api\Dashboard\GraphController@retrieveData");
     });
 
     Route::group(["prefix" => "/complaints", "middleware" => "auth.global"], function () {

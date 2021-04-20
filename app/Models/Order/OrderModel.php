@@ -55,7 +55,7 @@ class OrderModel extends Model
      * @param $id_teknisi
      * @return array
      */
-    public function retrieveTotalFinishedOrdersInLast6Months($id_teknisi)
+    public function retrieveTotalFinishedOrdersInLast7Months($id_teknisi)
     {
         $arr = [];
         for ($i = 7; $i >= 1; $i--){
@@ -134,7 +134,7 @@ class OrderModel extends Model
      */
     private function main()
     {
-        return $this->with(["technician", "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe"])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi"])->orderBy("id_service", "DESC");
+        return $this->with(["technician", "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe", "spareparts:id_service_spare_part,service_spare_part_id_service,jumlah,harga"])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi"])->orderBy("id_service", "DESC");
     }
 
     /**

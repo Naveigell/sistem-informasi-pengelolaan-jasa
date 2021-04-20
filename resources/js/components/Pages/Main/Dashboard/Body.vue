@@ -91,24 +91,22 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-bottom: 17px;">
+            <div v-if="$store.state.user.data.role === 'admin'" class="row" style="margin-bottom: 17px;">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="elevation-2 summary-container" style="background-color: white;">
                         <div style="background-color: #f6f7f8; height: 43px;">
-                            <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center;">
-                                <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">PENDAPATAN MINGGU INI</h5>
+                            <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center; justify-content: space-between;">
+                                <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">PENDAPATAN DARI BULAN KE BULAN</h5>
+                                <div>
+                                    <span style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-print"></i></span>
+                                </div>
                             </div>
                         </div>
                         <div style="padding: 20px;">
-                            <BarChart v-bind:data="data"/>
+                            <BarChart v-bind:data="graph.data" :options="graph.options"/>
                         </div>
                     </div>
                 </div>
-<!--                <div class="col-sm-12 col-md-12 col-lg-4">-->
-<!--                    <div class="elevation-2 summary-container" style="background-color: white;">-->
-<!--                        11111111111111111-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
@@ -162,7 +160,6 @@
 </template>
 
 <script>
-import Chart from "../../../Shared/Chart";
 import BarChart from "../../../Shared/Charts/BarChart";
 import LineChart from "../../../Shared/Charts/LineChart";
 
@@ -171,28 +168,12 @@ export default {
     components: {
         BarChart,
         LineChart,
-        Chart
     },
     data() {
         return {
-            data: {
-                labels: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"],
-                datasets: [
-                    {
-                        label: 'Minggu Sebelumnya',
-                        borderColor: ["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75,192,192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
-                        backgroundColor: ["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
-                        borderWidth: 1,
-                        data: [this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random()]
-                    },
-                    {
-                        label: 'Minggu Ini',
-                        borderColor: ["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
-                        backgroundColor: ["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
-                        borderWidth: 1,
-                        data: [this.random(), this.random(), this.random(), this.random(), this.random(), this.random(), this.random()]
-                    },
-                ]
+            graph: {
+                data: {},
+                options: {}
             },
             total: {
                 orders: 0,
@@ -237,8 +218,39 @@ export default {
     mounted() {
         this.retrieveTotal();
         this.retrieveOrders();
+        this.retrieveGraph();
     },
     methods: {
+        retrieveGraph(){
+            this.$api.get(this.$endpoints.dashboard.graph).then((response) => {
+                const data = response.data.body.graph.data;
+                const options = response.data.body.graph.options;
+
+                // part of options
+                const firstYAxes = options?.scales.yAxes[0];
+                const tooltips = options?.tooltips;
+
+                if (firstYAxes !== null) {
+                    firstYAxes.ticks.callback = (value, index, values) => {
+                        return `Rp. ${this.$currency.indonesian(value)}`;
+                    }
+                }
+
+                if (tooltips !== null) {
+                    tooltips.callbacks = {
+                        label: (item, data) => {
+                            return "Pemasukan: Rp. " + this.$currency.indonesian(item.yLabel);
+                        }
+                    }
+                }
+
+                this.graph.options = options;
+                this.graph.data = data;
+
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
         random(){
             return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
         },

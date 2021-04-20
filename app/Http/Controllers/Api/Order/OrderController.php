@@ -65,6 +65,13 @@ class OrderController extends Controller implements TimeSentences
         $previous_url   = $current_page - 1 > 0 && $current_page <= $last_page ? api_path_v1(self::MAIN_PATH_URL."/".($current_page - 1)) : null;
         $next_url       = $current_page < $last_page && $current_page > 0 ? api_path_v1(self::MAIN_PATH_URL."/".($current_page + 1)) : null;
 
+        $orders         = $this->addTimeSentences(collect($collections->items()));
+        // add prices
+        $orders         = $orders->map(function ($item) {
+            $item["price"] = $this->calculateSparepartTotalPrice($item["spareparts"]->toArray());
+            return $item;
+        })->toArray();
+
         $data = [
             "total"         => $collections->total(),
             "pages"         => [
@@ -76,11 +83,26 @@ class OrderController extends Controller implements TimeSentences
                 "next_url"          => $next_url,
                 "uri"               => api_path_v1(self::MAIN_PATH_URL)
             ],
-            "orders"        => $this->addTimeSentences(collect($collections->items())),
+            "orders"        => $orders,
             "search"        => false
         ];
 
         return json($data);
+    }
+
+    /**
+     *
+     *
+     * @param array $spareparts
+     * @return int
+     */
+    private function calculateSparepartTotalPrice(array $spareparts): int
+    {
+        $price = 0;
+        foreach ($spareparts as $sparepart) {
+            $price += $sparepart["harga"] * $sparepart["jumlah"];
+        }
+        return $price;
     }
 
     /**
@@ -107,6 +129,7 @@ class OrderController extends Controller implements TimeSentences
         ], $data["spareparts"]);
 
         $data["spareparts"] = $this->replaceSparepartImagesKey($data["spareparts"]);
+        $data["price"] = $this->calculateSparepartTotalPrice($data["spareparts"]);
 
         $data["user"] = Arrays::replaceKey([
             "id_users"      => "id"
