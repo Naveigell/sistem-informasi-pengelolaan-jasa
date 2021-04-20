@@ -81,7 +81,7 @@
                                                 <button @click="send" class="button-success-primary-sm"><i class="fa fa-paper-plane"></i>&nbsp&nbspKirim</button>
                                             </div>
                                         </div>
-                                        <div v-else>
+                                        <div v-else-if="data.suggestion.reply !== null">
                                             <div class="details" style="padding: 10px; min-height: 200px;">
                                                 <div class="header" v-if="data.suggestion.user !== undefined">
                                                     <div class="from">

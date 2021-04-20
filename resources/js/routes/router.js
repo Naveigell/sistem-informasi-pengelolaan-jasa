@@ -24,6 +24,9 @@ import SuggestionsIndex from "../components/Pages/Main/SuggestionsAndFeedback/In
 import SuggestionsInsert from "../components/Pages/Main/SuggestionsAndFeedback/Insert/Body";
 import SuggestionsShow from "../components/Pages/Main/SuggestionsAndFeedback/Show/Body";
 
+import ComplaintIndex from "../components/Pages/Main/Complaint/Index/Body";
+import ComplaintShow from "../components/Pages/Main/Complaint/Show/Body";
+
 import Errors404 from "../components/Errors/Errors404";
 
 Vue.use(VueRouter);
@@ -105,6 +108,16 @@ export const router = new VueRouter({
             path: '/suggestions/:id',
             name: 'suggestions.show',
             component: SuggestionsShow
+        },
+        {
+            path: '/complaints',
+            name: 'complaints',
+            component: ComplaintIndex
+        },
+        {
+            path: '/complaints/:id',
+            name: 'complaints.show',
+            component: ComplaintShow
         },
         {
             path: '*',

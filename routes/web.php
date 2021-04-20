@@ -36,12 +36,20 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/total", "Api\Dashboard\DashboardController@total");
     });
 
+    Route::group(["prefix" => "/complaints", "middleware" => "auth.global"], function () {
+        Route::get("/", "Api\Complaint\ComplaintController@retrieveAll");
+        Route::get("/retrieve/{id}", "Api\Complaint\ComplaintController@retrieve");
+        Route::put("/do-complaint/{id}", "Api\Complaint\ComplaintController@doComplaint");
+        Route::put("/do-accept/{id}", "Api\Complaint\ComplaintController@doAccept");
+    });
+
     Route::group(["prefix" => "/orders", "middleware" => "auth.global"], function () {
         Route::get("/take/{number}/last", "Api\Order\OrderController@takeFromLast");
         Route::get("/total", "Api\Order\OrderController@getTotalOrders");
         Route::get("/search", "Api\Order\OrderController@search");
         Route::get("/search/spareparts", "Api\Order\OrderController@searchSparepart");
         Route::post("/search/spareparts", "Api\Order\OrderController@saveSparepart");
+        Route::post("/complaint", "Api\Complaint\ComplaintController@saveComplaint");
         Route::get("/{page?}", "Api\Order\OrderController@retrieveAll");
         Route::get("/retrieve/{id}", "Api\Order\OrderController@retrieve");
         Route::post("/", "Api\Order\OrderController@create");

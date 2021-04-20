@@ -44,7 +44,7 @@
                                     <th>TEKNISI</th>
                                     <th>STATUS</th>
                                     <th>HARGA</th>
-                                    <th v-if="$store.state.user.data.role !== 'user'">AKSI</th>
+                                    <th>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -63,6 +63,7 @@
                                         </td>
                                         <td>
                                             <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
+                                            <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_user === 0) : false">Komplain</span>
                                         </td>
                                         <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
                                         <td v-if="$store.state.user.data.role === 'admin'">
@@ -86,7 +87,7 @@
                                                 Ambil
                                             </button>
                                         </td>
-                                        <td v-else-if="$store.state.user.data.role === 'teknisi' && repairment.status_service !== 'menunggu'">
+                                        <td v-else-if="($store.state.user.data.role === 'teknisi' && repairment.status_service !== 'menunggu') || $store.state.user.data.role === 'user'">
                                             <router-link :to="{ path: '/orders/' + repairment.unique_id }" class="button-warning-primary-tag">
                                                 Lihat
                                             </router-link>
@@ -266,6 +267,8 @@ export default {
                 if (this.$store.state.user.data.role === "teknisi") {
                     this.addTakeOrderBehaviour();
                 }
+
+                console.log(response.data.body.orders)
             }).catch((error) => {
 
             })

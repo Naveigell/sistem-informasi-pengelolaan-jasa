@@ -54,9 +54,11 @@ class SuggestionController extends Controller implements TimeSentences
         })->toArray();
 
         $data = collect($data)->map(function ($item) {
-            $item["user"] = Arrays::replaceKey([
-                "id_users"  => "id"
-            ], $item["user"]);
+            if (!empty($item["user"])) {
+                $item["user"] = Arrays::replaceKey([
+                    "id_users"  => "id"
+                ], $item["user"]);
+            }
 
             return $item;
         });

@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
          $this->call(SparePartPictureSeeder::class);
          $this->call(ServiceSparePartSeeder::class);
          $this->call(SaranSeeder::class);
+         $this->call(ComplaintSeeder::class);
     }
 }

@@ -63,7 +63,6 @@
                                 </div>
 
                                 <ul class="unstyled inbox-pagination">
-                                    <li><span>1-50 of 234</span></li>
                                     <li @click="previous">
                                         <a class="np-btn"><i class="fa fa-angle-left  pagination-left"></i></a>
                                     </li>
@@ -144,12 +143,20 @@ export default {
             })
         },
         next(){
-            const last_id = this.suggestions[this.suggestions.length - 1].id;
-            this.retrieveAll(last_id, true);
+            if (this.suggestions.length <= 0) {
+                this.retrieveAll();
+            } else {
+                const last_id = this.suggestions[this.suggestions.length - 1].id;
+                this.retrieveAll(last_id, true);
+            }
         },
         previous() {
-            const first_id = this.suggestions[0].id;
-            this.retrieveAll(first_id, false);
+            if (this.suggestions.length <= 0) {
+                this.retrieveAll();
+            } else {
+                const first_id = this.suggestions[0].id;
+                this.retrieveAll(first_id, false);
+            }
         },
         toggleCheckAll(event, toggle) {
             // if checked is null, it's mean the user not click checkbox all feature
@@ -340,8 +347,6 @@ ul.inbox-pagination {
 }
 ul.inbox-pagination li {
     float: left;
-}
-ul.inbox-pagination li:not(:first-child) {
     cursor: pointer;
 }
 .mail-option {

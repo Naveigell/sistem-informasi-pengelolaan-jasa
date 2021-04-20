@@ -55,7 +55,8 @@ const endpoints = {
         retrieve: "/orders/retrieve/:id",
         delete: "/orders",
         take: "/orders/take",
-        update_status: "/orders/status"
+        update_status: "/orders/status",
+        complaint: "/orders/complaint",
     },
     suggestions: {
         data: "/suggestions/:last_id",
@@ -63,6 +64,12 @@ const endpoints = {
         retrieve: "/suggestions/retrieve/:id",
         delete: "/suggestions",
         reply: "/suggestions/:id/reply"
+    },
+    complaints: {
+        data: "/complaints",
+        retrieve: "/complaints/retrieve/:id",
+        do_complaint: "/complaints/do-complaint/:id",
+        do_accept: "/complaints/do-accept/:id"
     }
 }
 

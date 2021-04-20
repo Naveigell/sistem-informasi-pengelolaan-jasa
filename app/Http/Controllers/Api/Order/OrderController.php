@@ -386,7 +386,12 @@ class OrderController extends Controller implements TimeSentences
 
         set_current_page($page);
 
-        $collections = $this->order->search($request->id, $request->status, $this->auth->user()->role == "teknisi" ? $this->auth->id() : null);
+        $collections = $this->order->search(
+            $request->id,
+            $request->status,
+            $this->auth->user()->role == "teknisi" ? $this->auth->id() : null,
+            $this->auth->user()->role == "user" ? $this->auth->id() : null,
+        );
         $current_page   = $collections->currentPage();
         $last_page      = $collections->lastPage();
 

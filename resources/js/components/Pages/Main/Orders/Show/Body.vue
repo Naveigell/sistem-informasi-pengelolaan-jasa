@@ -33,6 +33,12 @@
                             <form @submit.prevent>
                                 <div class="orders-information-container">
                                     <h4 style="font-weight: bold;">Informasi Perangkat</h4>
+                                    <br/>
+                                    <div v-if="complaint.exists">
+                                        <span class="status status-danger" v-if="complaint.data.dikerjakan_teknisi === 0" style="font-weight: bold; font-size: 16px;">Komplain</span>
+                                        <span class="status status-info" v-else-if="complaint.data.dikerjakan_teknisi === 1 && complaint.data.disetujui_user === 0" style="font-weight: bold; font-size: 16px;">Komplain selesai dikerjakan</span>
+                                        <span class="status status-success" v-else-if="complaint.data.disetujui_user === 1" style="font-weight: bold; font-size: 16px;">Komplain disetujui</span>
+                                    </div>
                                     <div class="information-container">
                                         <div class="row">
                                             <div class="col-md-2 left-column">
@@ -181,22 +187,42 @@
                                             </div>
                                         </div>
                                         <br/>
-                                        <div v-if="$store.state.user.data.role === 'user'">
+                                        <div v-if="['selesai', 'pembayaran', 'terima'].includes(data.status)">
                                             <div class="row">
                                                 <div class="col-md-2 left-column">
                                                     <span>
-                                                        * Buat Komplain
+                                                        * {{ complaint.exists ? '' : 'Buat' }} Komplain
                                                     </span>
                                                 </div>
-                                                <div class="col-md-10 right-column">
+                                                <div class="col-md-10 right-column" v-if="complaint.exists">
                                                     <div class="input-container">
-                                                        <button class="button-danger-sm">Buat</button>
+                                                        <textarea v-model="complaint.data.isi" disabled name="" cols="30" rows="10" style="resize: none"></textarea>
+                                                    </div>
+                                                    <div v-if="complaint.data.dikerjakan_teknisi !== 1">
+                                                        <span class="text-danger" style="font-size: 15px;">{{ $store.state.user.data.role === 'teknisi' ? "Mohon segera mengerjakan komplain" : "Komplain belum dikerjakan, mohon menunggu." }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-10 right-column" v-else>
+                                                    <div class="input-container">
+                                                        <button v-if="!complaint.form.show" @click="complaint.form.show = true;" class="button-danger-sm">Buat</button>
+                                                        <textarea v-model="complaint.text" @focus="complaint.errors.text = null" ref="complaint" v-bind:class="{'input-error': complaint.errors.text !== null && complaint.errors.text !== undefined}" v-else name="" cols="30" rows="10" placeholder="Tulis komplain disini" style="resize: none"></textarea>
+                                                    </div>
+                                                    <div v-if="complaint.form.show">
+                                                        <span class="error-message" v-if="complaint.errors.text != null && complaint.errors.text !== undefined">{{ complaint.errors.text[0] }}</span>
+                                                        <span class="word-count">{{ complaint.text.length }}/3000</span>
+                                                    </div>
+                                                    <div v-if="complaint.form.show">
+                                                        <br/>
+                                                        <div>
+                                                            <button @click="sendComplaint" class="button-success-primary-sm">Kirim</button>
+                                                            <button @click="complaint.form.show = false;" class="button-transparent-sm">Batal</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <br/>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" v-if="!complaint.form.show">
                                             <div class="col-md-2"></div>
                                             <div class="col-md-10 right-column">
                                                 <button @click="$router.back()" class="button-transparent-sm">Kembali</button>
@@ -252,15 +278,67 @@ export default {
             },
             statuses: [
                 "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "terima"
-            ]
+            ],
+            complaint: {
+                exists: false,
+                form: {
+                    show: false
+                },
+                data: {},
+                errors: {},
+                text: ""
+            }
+        }
+    },
+    watch: {
+        "complaint.text": function (newVal, oldVal) {
+            if (newVal.length > 3000) {
+                this.complaint.text = oldVal;
+            }
         }
     },
     mounted() {
         this.retrieve()
     },
     methods: {
+        sendComplaint(){
+            if (this.$refs.complaint !== undefined) {
+                const text  = this.$refs.complaint.value;
+                const id    = this.data.id;
+
+                this.$api.post(this.$endpoints.orders.complaint, { text, id }).then((response) => {
+                    this.complaint.form.show = false;
+                    this.complaint.data.dikerjakan_teknisi = 0;
+                    this.complaint.data.isi = text;
+                    this.complaint.exists = true;
+
+                    this.$root.$emit("open-toast", {
+                        type: "Success",
+                        background: this.$colors.successPrimary,
+                        data: {
+                            title: "Success!",
+                            message: "Komplain berhasil dikirim",
+                            icon: "fa fa-check"
+                        }
+                    });
+                }).catch((error) => {
+                    if (error.response.status === 422) {
+                        this.complaint.errors = error.response.data.errors.messages;
+                    } else {
+                        this.$root.$emit("open-toast", {
+                            type: "Failed",
+                            background: this.$colors.errorPrimary,
+                            data: {
+                                title: "Failed!",
+                                message: "Komplain gagal dikirim",
+                                icon: "fa fa-times"
+                            }
+                        });
+                    }
+                });
+            }
+        },
         saveSparepart(){
-            console.log(this.spareparts)
             const spareparts = this.spareparts.map(function (item, index, array) {
                 const id = item.spare_part_id === undefined ? item.id : item.spare_part_id;
 
@@ -321,6 +399,13 @@ export default {
                 if (this.data.technician.name === "") {
                     this.data.technician.name = "-";
                 }
+
+                if (response.data.body.order.complaint !== null) {
+                    this.complaint.exists = true;
+                    this.complaint.data = response.data.body.order.complaint;
+                }
+
+                console.log(response.data.body)
             }).catch((error) => {
                 console.error(error);
             })
@@ -435,5 +520,44 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
     -moz-appearance:textfield;
+}
+
+.status-danger {
+    color: #e56767;
+    background-color: #fbeaea;
+}
+
+.status {
+    padding: 5px 9px;
+    border-width: 1px;
+    border-radius: 3px;
+}
+
+.status-info {
+    color: #5cace5;
+    background-color: #e0effa;
+}
+
+.status-success {
+    color: #30c78d;
+    background-color: #bff0dd;
+}
+
+.input-container .input-error, .input-error {
+    border: 1px solid var(--error-primary);
+}
+
+.error-message {
+    margin-top: 5px;
+    display: inline-block;
+    color: var(--error-primary);
+    opacity: 1;
+}
+
+.word-count {
+    margin-top: 5px;
+    display: inline-block;
+    color: #999;
+    float: right;
 }
 </style>

@@ -30,6 +30,11 @@
                         <span style="display: inline-block; float: right;"><i class="fa fa-envelope"></i></span>
                         <div style="clear: both;"></div>
                     </router-link>
+                    <router-link :to="{ path: 'complaints' }">
+                        <span style="display: inline-block; float: left;">Complaints</span>
+                        <span style="display: inline-block; float: right;"><i class="fa fa-times-circle"></i></span>
+                        <div style="clear: both;"></div>
+                    </router-link>
                     <div class="account-dropdown-separator"></div>
                     <a @click="logout">Logout &nbsp <i class="fa fa-sign-out"></i></a>
                 </div>

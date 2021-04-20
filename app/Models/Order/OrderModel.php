@@ -2,12 +2,12 @@
 
 namespace App\Models\Order;
 
+use App\Models\Complaint\ComplaintModel;
 use App\Models\Technician\TechnicianModel;
 use App\Models\User\UserModel;
 use App\Traits\DateTime\DateTimeRepeaterAndSanitizer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -134,7 +134,7 @@ class OrderModel extends Model
      */
     private function main()
     {
-        return $this->with(["technician"])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi"])->orderBy("id_service", "DESC");
+        return $this->with(["technician", "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe"])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi"])->orderBy("id_service", "DESC");
     }
 
     /**
@@ -192,6 +192,21 @@ class OrderModel extends Model
     }
 
     /**
+     * Get technician id, (just the id)
+     *
+     * @param $id_service
+     * @param $id_user
+     * @return OrderModel|Model|object|null
+     */
+    public function getTechnicianIdByServiceIdAndUserId($id_service, $id_user)
+    {
+        return $this->select(["service_id_teknisi"])->where([
+            "id_service"        => $id_service,
+            "service_id_user"   => $id_user
+        ])->first();
+    }
+
+    /**
      * Search by unique id or status service
      *
      * @param $id
@@ -199,12 +214,14 @@ class OrderModel extends Model
      * @param null $teknisi_id
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function search($id, $status, $teknisi_id = null)
+    public function search($id, $status, $teknisi_id = null, $user_id = null)
     {
         $where = $this->addWhereClause("unique_id", $id, []);
         $where = $this->addWhereClause("status_service", $status, $where);
 
-        if ($status != "menunggu") {
+        if ($user_id != null) {
+            $where = $this->addWhereClause("service_id_user", $user_id, $where);
+        } else if ($status != "menunggu" && $teknisi_id != null) {
             $where = $this->addWhereClause("service_id_teknisi", $teknisi_id, $where);
         }
 
@@ -228,7 +245,8 @@ class OrderModel extends Model
             "user:id_users,name,email",
             "spareparts:service_spare_part_id_service,service_spare_part_id_spare_part,id_service_spare_part,nama_spare_part,jumlah,harga",
             "spareparts.images:id_foto_spare_part,foto_spare_part_id_spare_part,picture",
-            "technician"
+            "technician",
+            "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe"
         ])
         ->select(["id_service", "service_id_teknisi", "service_id_user", "nama_pemilik", "alamat_pemilik", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service"])
         ->where("unique_id", $unique_id)->first();
@@ -237,6 +255,11 @@ class OrderModel extends Model
     public function spareparts()
     {
         return $this->hasMany(OrderSparepartModel::class, "service_spare_part_id_service", "id_service");
+    }
+
+    public function complaint()
+    {
+        return $this->hasOne(ComplaintModel::class, "pengaduan_id_service", "id_service");
     }
 
     /**
