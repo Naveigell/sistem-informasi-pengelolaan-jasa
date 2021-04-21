@@ -21,6 +21,7 @@ class CreateSparePartTable extends Migration {
                 $table->enum('tipe', ['hp', 'pc/komputer', 'printer']);
                 $table->unsignedSmallInteger('stok');
                 $table->unsignedInteger('terjual')->default(0);
+                $table->unsignedInteger('harga_asli');
                 $table->unsignedInteger('harga');
                 $table->timestamps();
             });

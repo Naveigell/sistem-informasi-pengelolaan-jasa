@@ -28,7 +28,8 @@ class SparepartModel extends Model
             "deskripsi"             => $data->description,
             "tipe"                  => $data->type == "pc" ? "pc/komputer" : $data->type,
             "stok"                  => $data->stock,
-            "harga"                 => $data->price
+            "harga_asli"            => $data->real_price,
+            "harga"                 => $data->price,
         ]);
     }
 
@@ -57,6 +58,7 @@ class SparepartModel extends Model
             "deskripsi"                 => $data->description,
             "tipe"                      => $data->type == "pc" ? "pc/komputer" : $data->type,
             "stok"                      => $data->stock,
+            "harga_asli"            => $data->real_price,
             "harga"                     => $data->price
         ]);
     }

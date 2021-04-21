@@ -89,6 +89,20 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-2 left-column">
+                                <span>* Harga Asli</span>
+                            </div>
+                            <div class="col-md-10 right-column">
+                                <div class="input-container-price" v-bind:class="{'input-error': errors.real_price != null && errors.real_price !== undefined}">
+                                    <span>Rp</span>
+                                    <span class="separator"></span>
+                                    <input v-model="data.real_price" type="number" placeholder="Harga Asli" @focus="errors.real_price = null">
+                                </div>
+                                <span class="error-message" v-if="errors.real_price != null && errors.real_price !== undefined">{{ errors.real_price[0] }}</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-2 left-column">
                                 <span>* Harga</span>
                             </div>
                             <div class="col-md-10 right-column">
@@ -215,6 +229,14 @@ export default {
             if (isNaN(newVal) || newVal < 0 || newVal > 9999999999) {
                 this.data.price = oldVal;
             }
+        },
+        "data.real_price": function (newVal, oldVal) {
+            // return if new value is not a number
+            // or new value is less than 0
+            // or new value is greater than 9.999.999.999
+            if (isNaN(newVal) || newVal < 0 || newVal > 9999999999) {
+                this.data.real_price = oldVal;
+            }
         }
     },
     methods: {
@@ -254,6 +276,7 @@ export default {
                 self.data.type = sparepart.tipe === "pc/komputer" ? "pc" : sparepart.tipe;
                 self.data.stock = sparepart.stok;
                 self.data.price = sparepart.harga;
+                self.data.real_price = sparepart.harga_asli;
 
                 if (self.$refs.images !== null && sparepart.images !== null) {
                     for (let i = 0; i < sparepart.images.length; i++) {
@@ -293,6 +316,7 @@ export default {
             form.append("type", this.data.type);
             form.append("stock", this.data.stock);
             form.append("price", this.data.price);
+            form.append("real_price", this.data.real_price);
             form.append("_method", "PUT");
 
             const images = this.images;

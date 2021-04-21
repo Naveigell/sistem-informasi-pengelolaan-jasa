@@ -328,41 +328,13 @@ class OrderController extends Controller implements TimeSentences
                             ]);
                         });
 
-                        $service = $this->order->getOrderStatusById($request->id, $this->auth->id());
-                        $isStatusFinished = false;
-                        $stockUpdated = false;
-
-                        if ($service != null) {
-                            if ($service->status == "selesai") {
-                                $isStatusFinished = true;
-
-                                // create an array for update stock
-                                $stocks = $spareparts->map(function ($item, $key) use ($objects) {
-                                    $jumlah = $objects->values()->all()[$key]['jumlah'];
-
-                                    $item["stok"] = (int) $item["stok"] - (int) $jumlah;
-                                    $item["terjual"] = $item["terjual"] + $jumlah;
-
-                                    return $item;
-                                });
-
-                                $query = $this->bulkStockUpdate($stocks->toArray());
-                                $sparepartSaved = $this->sparepart->updateStockSold($query[0], $query[1]);
-
-                                $stockUpdated = $sparepartSaved;
-                            }
-                        }
-
                         $lastSparepartDeleted = $this->orderSparepart->deleteSparepart($request->id, $spareparts->pluck("id_spare_part"));
 
-                        $orderSaved = $this->orderSparepart->saveSparepart($collections->toArray());
+                        $newSparepartSaved = $this->orderSparepart->saveSparepart($collections->toArray());
 
                         DB::commit();
 
-                        $allUpdated = $isStatusFinished && $stockUpdated && $orderSaved && $lastSparepartDeleted;
-                        $allUpdated = $orderSaved && $lastSparepartDeleted;
-
-                        if ($allUpdated) {
+                        if ($newSparepartSaved && $lastSparepartDeleted) {
                             return json([], null, 204);
                         }
 

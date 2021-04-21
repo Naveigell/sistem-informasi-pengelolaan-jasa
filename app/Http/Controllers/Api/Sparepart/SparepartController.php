@@ -34,16 +34,16 @@ class SparepartController extends Controller {
     /**
      * @var SparepartModel App\Models\Sparepart\SparepartModel
      */
-    private SparepartModel $sparePartModel;
+    private SparepartModel $sparepart;
 
     /**
      * @var FotoSparepartModel App\Models\Sparepart\FotoSparepartModel
      */
-    private FotoSparepartModel $fotoSparepartModel;
+    private FotoSparepartModel $fotoSparepart;
 
     public function __construct() {
-        $this->sparePartModel = new SparepartModel();
-        $this->fotoSparepartModel = new FotoSparepartModel();
+        $this->sparepart = new SparepartModel();
+        $this->fotoSparepart = new FotoSparepartModel();
     }
 
     /**
@@ -58,13 +58,13 @@ class SparepartController extends Controller {
         $images     = $this->storeMultipleImages(public_path("/img/spareparts"), $files);
 
         // cast to object
-        $data = (object) $request->only(["name", "description", "type", "stock", "price"]);
+        $data = (object) $request->only(["name", "description", "type", "stock", "real_price", "price"]);
 
         DB::beginTransaction();
         try {
 
-            $id = $this->sparePartModel->createSparepart($data);
-            $this->fotoSparepartModel->createImages($id, $images);
+            $id = $this->sparepart->createSparepart($data);
+            $this->fotoSparepart->createImages($id, $images);
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -87,7 +87,7 @@ class SparepartController extends Controller {
 
         set_current_page($pages);
 
-        $collections    = $this->sparePartModel->getSparePartList();
+        $collections    = $this->sparepart->getSparePartList();
         $spareparts     = $this->collectSpareparts(collect($collections->items()));
 
         $current_page   = $collections->currentPage();
@@ -120,7 +120,7 @@ class SparepartController extends Controller {
         $images     = $this->storeMultipleImages(public_path("/img/spareparts"), $files);
 
         // cast to object
-        $data = (object) $request->only(["name", "description", "type", "stock", "price"]);
+        $data = (object) $request->only(["name", "description", "type", "stock", "real_price", "price"]);
         $id = $request->get("id");
 
         DB::beginTransaction();
@@ -128,10 +128,10 @@ class SparepartController extends Controller {
 
             // update sparepart data and create a new images, then delete
             // the last images
-            $this->sparePartModel->updateSparepart($id, $data);
-            $lastImages = $this->fotoSparepartModel->getImages($id);
-            $deleted = $this->fotoSparepartModel->deleteLastImages($id);
-            $this->fotoSparepartModel->createImages($id, $images);
+            $this->sparepart->updateSparepart($id, $data);
+            $lastImages = $this->fotoSparepart->getImages($id);
+            $deleted = $this->fotoSparepart->deleteLastImages($id);
+            $this->fotoSparepart->createImages($id, $images);
 
             if ($deleted) {
                 $this->deleteMultipleImages("/img/spareparts", $lastImages);
@@ -155,7 +155,7 @@ class SparepartController extends Controller {
      */
     public function retrieve($id)
     {
-        $spareparts[]   = $this->sparePartModel->with("images")->find($id, ["id_spare_part", "nama_spare_part", "deskripsi", "tipe", "stok", "harga"]);
+        $spareparts[]   = $this->sparepart->with("images")->find($id, ["id_spare_part", "nama_spare_part", "deskripsi", "tipe", "stok", "harga_asli", "harga"]);
         $sparepart      = $this->collectSpareparts(collect($spareparts))->toArray()[0];
 
         return json(["sparepart" => $sparepart]);
@@ -171,8 +171,8 @@ class SparepartController extends Controller {
     {
         DB::beginTransaction();
         try {
-            $images = $this->fotoSparepartModel->getImages($id);
-            $delete = $this->sparePartModel->deleteSparepart($id);
+            $images = $this->fotoSparepart->getImages($id);
+            $delete = $this->sparepart->deleteSparepart($id);
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -203,7 +203,7 @@ class SparepartController extends Controller {
 
         set_current_page($page);
 
-        $collections    = $this->sparePartModel->search($query, $type);
+        $collections    = $this->sparepart->search($query, $type);
         $spareparts     = $this->collectSpareparts(collect($collections->items()));
 
         $current_page   = $collections->currentPage();

@@ -40,6 +40,12 @@ class SparepartRequestInsert extends FormRequest
             "price.min"                 => "Harga sparepart minimal berjumlah 1",
             "price.max"                 => "harga sparepart maksimal berjumlah 4.294.967.295",
 
+            "real_price.required"       => "Harga asli sparepart harus diisi",
+            "real_price.integer"        => "Harga asli harus berupa angka",
+            "real_price.min"            => "Harga asli sparepart minimal berjumlah 1",
+            "real_price.max"            => "Harga asli sparepart maksimal berjumlah 4.294.967.295",
+            "real_price.lt"             => "Harga asli tidak boleh melebihi atau sama dengan harga jual",
+
             "images.required"           => "Foto sparepart harus diisi",
             "images.array"              => "Foto sparepart harus berupa array",
             "images.min"                => "Jumlah foto minimal 1",
@@ -65,6 +71,7 @@ class SparepartRequestInsert extends FormRequest
             "type"              => "required|in:pc,hp,printer",
             "stock"             => "required|integer|min:1|max:65535",
             "price"             => "required|integer|min:1|max:4294967295",
+            "real_price"        => "required|integer|min:1|max:4294967295|lt:price",
 
             "images"            => "required|array|min:1|max:5",
             "images.*"          => "required|mimes:jpg,png,jpeg|max:10000"
