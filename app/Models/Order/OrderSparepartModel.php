@@ -73,11 +73,10 @@ class OrderSparepartModel extends Model
      * Delete sparepart
      *
      * @param $id_service
-     * @param $id_sparepart
      * @return mixed
      */
-    public function deleteSparepart($id_service, $id_sparepart)
+    public function deleteSparepart($id_service)
     {
-        return $this->where("service_spare_part_id_service", $id_service)->whereIn("service_spare_part_id_spare_part", $id_sparepart)->delete();
+        return $this->where("service_spare_part_id_service", $id_service)->delete();
     }
 }

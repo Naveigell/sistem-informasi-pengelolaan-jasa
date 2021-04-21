@@ -20,6 +20,7 @@ class CreateServiceSparePartTable extends Migration
                 $table->unsignedBigInteger('service_spare_part_id_service')->nullable()->index();
                 $table->string('nama_spare_part', 120);
                 $table->unsignedSmallInteger('jumlah');
+                $table->unsignedBigInteger('harga_asli');
                 $table->unsignedBigInteger('harga');
                 $table->timestamps();
 

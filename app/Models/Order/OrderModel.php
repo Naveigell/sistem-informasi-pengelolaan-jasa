@@ -32,17 +32,21 @@ class OrderModel extends Model
      * Update service status
      *
      * @param $id_service
-     * @param $id_teknisi
+     * @param $id
+     * @param $role
      * @param $status
      * @param $arr
      * @return int
      */
-    public function updateStatusService($id_service, $id_teknisi, $status, $arr)
+    public function updateStatusService($id_service, $id, $role, $status, $arr)
     {
-        return $this->where([
-            "id_service"            => $id_service,
-            "service_id_teknisi"    => $id_teknisi,
-        ])->whereNotIn("status_service", $arr)->update([
+        $where = ["id_service" => $id_service];
+
+        if ($role == "teknisi") {
+            $where["service_id_teknisi"]    = $id;
+        }
+
+        return $this->where($where)->whereNotIn("status_service", $arr)->update([
             "status_service"        => $status,
             "updated_at"            => date("Y-m-d H:i:s")
         ]);

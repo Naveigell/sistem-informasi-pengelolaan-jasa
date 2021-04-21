@@ -323,12 +323,13 @@ class OrderController extends Controller implements TimeSentences
                                 "nama_spare_part",
                                 "jumlah",
                                 "harga",
+                                "harga_asli",
                                 "created_at",
                                 "updated_at"
                             ]);
                         });
 
-                        $lastSparepartDeleted = $this->orderSparepart->deleteSparepart($request->id, $spareparts->pluck("id_spare_part"));
+                        $lastSparepartDeleted = $this->orderSparepart->deleteSparepart($request->id);
 
                         $newSparepartSaved = $this->orderSparepart->saveSparepart($collections->toArray());
 
@@ -525,11 +526,9 @@ class OrderController extends Controller implements TimeSentences
             if ($this->isUpdateStatusAuthorized($request->status)) {
                 DB::beginTransaction();
                 try {
-
-                    $updated = $this->order->updateStatusService($request->id, $this->auth->id(), $request->status, $array);
+                    $updated = $this->order->updateStatusService($request->id, $this->auth->id(), $this->auth->user()->role, $request->status, $array);
                     if ($updated) {
-                        if ($request->status == "selesai") {
-
+                        if ($request->status == "selesai" && $this->auth->user()->role == "teknisi") {
                             try {
                                 $spareparts = $this->orderSparepart->retrieveSparepartByIdOrder($request->id);
                                 $stockUpdated = $this->reduceSparepartStock($spareparts->toArray());
@@ -555,10 +554,12 @@ class OrderController extends Controller implements TimeSentences
                             "status"    => $status[$index]
                         ]);
                     }
+
+                    return error(null, ["message" => "Status tidak bisa diubah"]);
                 } catch (\Exception $exception) {
                     DB::rollBack();
 
-                    return error(null, ["message" => "Terjadi masalah saat mengubah status", $exception->getMessage()]);
+                    return error(null, ["message" => "Terjadi masalah saat mengubah status"]);
                 }
             } else {
                 return error(null, ["message" => "Tidak bisa melakukan update status"], 401);

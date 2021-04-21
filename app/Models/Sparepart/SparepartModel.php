@@ -105,7 +105,7 @@ class SparepartModel extends Model
      */
     public function selectInId($ids)
     {
-        return $this->select([$this->primaryKey, "nama_spare_part", "stok", "tipe", "harga", "terjual"])->whereIn($this->primaryKey, $ids)->get();
+        return $this->select([$this->primaryKey, "nama_spare_part", "stok", "tipe", "harga", "harga_asli", "terjual"])->whereIn($this->primaryKey, $ids)->get();
     }
 
     /**
