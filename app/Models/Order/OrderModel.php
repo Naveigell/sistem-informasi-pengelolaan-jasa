@@ -42,9 +42,9 @@ class OrderModel extends Model
         return $this->where([
             "id_service"            => $id_service,
             "service_id_teknisi"    => $id_teknisi,
-            "updated_at"            => date("Y-m-d H:i:s")
         ])->whereNotIn("status_service", $arr)->update([
-            "status_service"        => $status
+            "status_service"        => $status,
+            "updated_at"            => date("Y-m-d H:i:s")
         ]);
     }
 
@@ -71,6 +71,21 @@ class OrderModel extends Model
         }
 
         return $arr;
+    }
+
+    /**
+     * Get status service
+     *
+     * @param $id
+     * @param $id_teknisi
+     * @return OrderModel|Model|object|null
+     */
+    public function getOrderStatusById($id, $id_teknisi)
+    {
+        return $this->select([DB::raw("status_service AS status")])->where([
+            "id_service"            => $id,
+            "service_id_teknisi"    => $id_teknisi
+        ])->first();
     }
 
     /**

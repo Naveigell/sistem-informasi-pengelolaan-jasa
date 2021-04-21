@@ -84,7 +84,7 @@
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
                                                     <button v-if="$store.state.user.data.role !== 'teknisi'" @click="modals.show_sparepart.open = true;" class="button-success-primary-sm">Lihat</button>
-                                                    <button v-else @click="modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
+                                                    <button :disabled="['selesai', 'pembayaran', 'terima'].includes(data.status)" v-else @click="['selesai', 'pembayaran', 'terima'].includes(data.status) ? modals.choose_sparepart.open = false : modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
                                                 </div>
                                                 <span v-if="$store.state.user.data.role === 'teknisi'" style="display: inline-block; margin-top: 10px; color: #999;">Sparepart hanya bisa diperbarui saat status service dibawah "SELESAI"</span>
                                             </div>
@@ -109,7 +109,7 @@
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(sparepart.harga) }}</td>
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 60px; font-weight: normal; position: relative;">
                                                                     <div class="input-container" v-if="$store.state.user.data.role === 'teknisi'">
-                                                                        <input type="text" v-model="sparepart.jumlah">
+                                                                        <input type="text" v-bind:disabled="['selesai', 'pembayaran', 'terima'].includes(data.status)" v-model="sparepart.jumlah">
                                                                     </div>
                                                                     <span v-else>x{{ sparepart.jumlah }}</span>
                                                                 </td>
@@ -458,6 +458,13 @@ export default {
         },
         updateStatusService(status) {
             const id = this.data.id;
+
+            if (status === "selesai") {
+                const conf = confirm("Anda tidak akan bisa mengubah sparepart setelah selesai");
+                if (!conf)
+                    return;
+            }
+
             this.$api.put(this.$endpoints.orders.update_status, { status, id }).then((response) => {
                 this.data.status = response.data.body.status;
                 this.$root.$emit("open-toast", {
@@ -469,8 +476,22 @@ export default {
                         icon: "fa fa-check"
                     }
                 });
+                console.log(response)
             }).catch((error) => {
                 console.error(error.response)
+                if (error.response.status === 500) {
+                    const message = error.response.data.errors.messages.main_message !== null ? error.response.data.errors.messages.main_message : error.response.data.errors.messages.message;
+
+                    this.$root.$emit("open-toast", {
+                        type: "failed",
+                        background: this.$colors.errorPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: message,
+                            icon: "fa fa-check"
+                        }
+                    });
+                }
             })
         },
         updateStatusAuthorized(status){

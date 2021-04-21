@@ -24,7 +24,7 @@ class OrderRequestSearchSparepart extends FormRequest
     public function rules()
     {
         return [
-            "q"             => "required|string|min:3",
+            "q"             => "required|string|min:1",
             "t"             => "required|in:hp,pc,printer"
         ];
     }

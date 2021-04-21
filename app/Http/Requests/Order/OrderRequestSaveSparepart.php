@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @property mixed spareparts
+ * @property mixed id
  */
 class OrderRequestSaveSparepart extends FormRequest
 {

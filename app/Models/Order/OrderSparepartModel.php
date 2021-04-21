@@ -32,6 +32,17 @@ class OrderSparepartModel extends Model
     }
 
     /**
+     * Get sparepart by id sparepart
+     *
+     * @param $id
+     * @return \Illuminate\Support\Collection
+     */
+    public function retrieveSparepartByIdOrder($id)
+    {
+        return $this->select(["id_service_spare_part", "service_spare_part_id_service", "jumlah", "service_spare_part_id_spare_part"])->where("service_spare_part_id_service", $id)->get();
+    }
+
+    /**
      * Retrieve total income from 6 month ago
      *
      * @return array

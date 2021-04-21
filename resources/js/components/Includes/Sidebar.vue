@@ -74,6 +74,13 @@ export default {
                     hasDropdown: false,
                     isLink: true,
                     to: "/orders"
+                },
+                {
+                    title: "Print",
+                    icon: "fa fa-print",
+                    hasDropdown: false,
+                    isLink: true,
+                    to: "/prints"
                 }
             ]
         };

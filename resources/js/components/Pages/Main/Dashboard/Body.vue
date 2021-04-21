@@ -73,7 +73,7 @@
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">170</h3>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.messages }}</h3>
                                     <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Messages</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="$store.state.user.data.role === 'admin'" class="row" style="margin-bottom: 17px;">
+            <div v-if="$store.state.user.data.role === 'admin' && Object.keys(graph.data).length > 0" class="row" style="margin-bottom: 17px;">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="elevation-2 summary-container" style="background-color: white;">
                         <div style="background-color: #f6f7f8; height: 43px;">
@@ -178,7 +178,8 @@ export default {
             total: {
                 orders: 0,
                 technicians: 0,
-                users: 0
+                users: 0,
+                messages: 0
             },
             repairments: ['status-danger', 'status-warning', 'status-success', 'status-info'],
             repairments_info: [

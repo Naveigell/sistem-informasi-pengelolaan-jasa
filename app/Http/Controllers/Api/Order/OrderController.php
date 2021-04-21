@@ -274,25 +274,32 @@ class OrderController extends Controller implements TimeSentences
     {
         // check if the real technician take this order
         if (!$this->order->isOrderBelongsToTechnician($request->id, $this->auth->id())) {
-            return "You cannot save sparepart into this order, the order is not belongs to you";
+            return error(null, ["message" => "You cannot save sparepart into this order, the order is not belongs to you"], 401);
         }
 
+        // sort and pluck the objects
         $objects    = collect($request->spareparts)->sortBy("id");
         $ids        = collect($objects->values()->all())->pluck("id");
         $amounts    = collect($objects->values()->all())->pluck("jumlah");
 
+        // check if the length of ids and amounts is same
         if (count($ids) == count($amounts)) {
+            // get sparepart database
             $spareparts = $this->sparepart->selectInId($ids);
 
             DB::beginTransaction();
             try {
+                // check again if amounts and spareparts length is same
                 if (count($amounts) == count($spareparts)) {
+
+                    // filtering the stock
                     $collections = collect($spareparts->toArray())->filter(function($item, $key) use ($amounts) {
                         $index = $key;
 
                         return $item["stok"] >= $amounts[$index];
                     });
 
+                    // check filtered collections length with spareparts length
                     if ($collections->count() == $spareparts->count()) {
 
                         $collections = $collections->map(function ($item, $key) use ($request, $objects) {
@@ -321,29 +328,45 @@ class OrderController extends Controller implements TimeSentences
                             ]);
                         });
 
-                        $stocks = $spareparts->map(function ($item, $key) use ($objects) {
-                            $jumlah = $objects->values()->all()[$key]['jumlah'];
+                        $service = $this->order->getOrderStatusById($request->id, $this->auth->id());
+                        $isStatusFinished = false;
+                        $stockUpdated = false;
 
-                            $item["stok"] = (int) $item["stok"] - (int) $jumlah;
-                            $item["terjual"] = $item["terjual"] + $jumlah;
+                        if ($service != null) {
+                            if ($service->status == "selesai") {
+                                $isStatusFinished = true;
 
-                            return $item;
-                        });
+                                // create an array for update stock
+                                $stocks = $spareparts->map(function ($item, $key) use ($objects) {
+                                    $jumlah = $objects->values()->all()[$key]['jumlah'];
 
-                        $query = $this->bulkStockUpdate($stocks->toArray());
+                                    $item["stok"] = (int) $item["stok"] - (int) $jumlah;
+                                    $item["terjual"] = $item["terjual"] + $jumlah;
+
+                                    return $item;
+                                });
+
+                                $query = $this->bulkStockUpdate($stocks->toArray());
+                                $sparepartSaved = $this->sparepart->updateStockSold($query[0], $query[1]);
+
+                                $stockUpdated = $sparepartSaved;
+                            }
+                        }
 
                         $lastSparepartDeleted = $this->orderSparepart->deleteSparepart($request->id, $spareparts->pluck("id_spare_part"));
 
                         $orderSaved = $this->orderSparepart->saveSparepart($collections->toArray());
-                        $sparepartSaved = $this->sparepart->updateStockSold($query[0], $query[1]);
 
                         DB::commit();
 
-                        if ($sparepartSaved && $orderSaved && $lastSparepartDeleted) {
+                        $allUpdated = $isStatusFinished && $stockUpdated && $orderSaved && $lastSparepartDeleted;
+                        $allUpdated = $orderSaved && $lastSparepartDeleted;
+
+                        if ($allUpdated) {
                             return json([], null, 204);
                         }
 
-                        return error(null, ["message" => "Server error, update failed"]);
+                        return error(null, ["message" => "Server error, terjadi kesalahan"]);
 
                     } else {
                         return error(null, ["message" => "Salah satu stok melebihi batas"], 422);
@@ -468,16 +491,48 @@ class OrderController extends Controller implements TimeSentences
      */
     private function isUpdateStatusAuthorized($status) : bool
     {
-        $notAuthorized = function ($array) use($status) : bool {
-            return !in_array($status, $array);
+        $authorized = function ($array) use($status) : bool {
+            return in_array($status, $array);
         };
 
         if ($this->auth->user()->role == "teknisi") {
-            return $notAuthorized(["pembayaran", "terima"]);
+            return $authorized(["menunggu", "dicek", "perbaikan", "selesai"]);
         } else if ($this->auth->user()->role == "admin") {
-            return $notAuthorized(["menunggu", "dicek", "perbaikan", "selesai"]);
+            return $authorized(["pembayaran", "terima"]);
         }
         return false;
+    }
+
+    /**
+     * VERY VERY VERY BAD CODE, WILL FIX IT LATER
+     * reduce stock from database
+     *
+     * @param array $spareparts
+     * @throws \Exception
+     */
+    public function reduceSparepartStock(array $spareparts)
+    {
+        $collections = collect($spareparts);
+        foreach ($collections as $item) {
+            $sparepart = DB::table("spare_part")->select(["stok", "id_spare_part", "terjual"])->where("id_spare_part", $item["service_spare_part_id_spare_part"])->first();
+            if ($sparepart == null) {
+                throw new \Exception("Sparepart tidak ditemukan", 404);
+            }
+
+            if ($sparepart->stok >= $item["jumlah"]) {
+                $stok = $sparepart->stok -= $item["jumlah"];
+                $updated = DB::table("spare_part")->where("id_spare_part", $sparepart->id_spare_part)->update([
+                    "stok"      => $stok,
+                    "terjual"   => $sparepart->terjual + $item["jumlah"]
+                ]);
+
+                if (!$updated) {
+                    throw new \Exception("Terjadi masalah saat mengupdate sparepart", 500);
+                }
+            } else {
+                throw new \Exception("Salah satu stok sparepart kurang", 500);
+            }
+        }
     }
 
     /**
@@ -490,17 +545,48 @@ class OrderController extends Controller implements TimeSentences
     {
         $index      = array_search($request->status, OrderModel::STATUS_SERVICE);
         $status     = OrderModel::STATUS_SERVICE;
+
         if (!empty($index)) {
             $array = array_splice($status, $index + 1);
 
             // check status authorization before update
             if ($this->isUpdateStatusAuthorized($request->status)) {
-                $updated = $this->order->updateStatusService($request->id, $this->auth->id(), $request->status, $array);
-                if ($updated) {
-                    return json([
-                        "message"   => "Status service berhasil diubah",
-                        "status"    => $status[$index]
-                    ]);
+                DB::beginTransaction();
+                try {
+
+                    $updated = $this->order->updateStatusService($request->id, $this->auth->id(), $request->status, $array);
+                    if ($updated) {
+                        if ($request->status == "selesai") {
+
+                            try {
+                                $spareparts = $this->orderSparepart->retrieveSparepartByIdOrder($request->id);
+                                $stockUpdated = $this->reduceSparepartStock($spareparts->toArray());
+
+                            } catch (\Exception $exception) {
+                                return error(null, ["message" => "Terjadi masalah saat mengubah status", "main_message" => $exception->getMessage()]);
+                            }
+
+                            DB::commit();
+
+                            if ($stockUpdated) {
+                                return json([
+                                    "message"   => "Status service berhasil diubah",
+                                    "status"    => $status[$index]
+                                ]);
+                            }
+                        } else {
+                            DB::commit();
+                        }
+
+                        return json([
+                            "message"   => "Status service berhasil diubah",
+                            "status"    => $status[$index]
+                        ]);
+                    }
+                } catch (\Exception $exception) {
+                    DB::rollBack();
+
+                    return error(null, ["message" => "Terjadi masalah saat mengubah status", $exception->getMessage()]);
                 }
             } else {
                 return error(null, ["message" => "Tidak bisa melakukan update status"], 401);

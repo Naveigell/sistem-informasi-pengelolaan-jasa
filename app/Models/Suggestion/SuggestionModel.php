@@ -61,6 +61,16 @@ class SuggestionModel extends Model
     }
 
     /**
+     * Take total off suggestions
+     *
+     * @return int
+     */
+    public function total()
+    {
+        return $this->where("tipe", $this->type)->count();
+    }
+
+    /**
      * Reply suggestions
      *
      * @param $id
