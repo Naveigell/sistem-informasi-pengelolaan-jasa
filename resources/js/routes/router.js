@@ -20,12 +20,14 @@ import OrderShow from "../components/Pages/Main/Orders/Show/Body";
 
 import ServiceIndex from "../components/Pages/Main/Service/Index/Body";
 
-import SuggestionsIndex from "../components/Pages/Main/SuggestionsAndFeedback/Index/Body";
-import SuggestionsInsert from "../components/Pages/Main/SuggestionsAndFeedback/Insert/Body";
-import SuggestionsShow from "../components/Pages/Main/SuggestionsAndFeedback/Show/Body";
+import SuggestionsIndex from "../components/Pages/Main/Suggestion/Index/Body";
+import SuggestionsInsert from "../components/Pages/Main/Suggestion/Insert/Body";
+import SuggestionsShow from "../components/Pages/Main/Suggestion/Show/Body";
 
 import ComplaintIndex from "../components/Pages/Main/Complaint/Index/Body";
 import ComplaintShow from "../components/Pages/Main/Complaint/Show/Body";
+
+import ReportsIndex from "../components/Pages/Main/Reports/Index/Body";
 
 import Errors404 from "../components/Errors/Errors404";
 
@@ -118,6 +120,11 @@ export const router = new VueRouter({
             path: '/complaints/:id',
             name: 'complaints.show',
             component: ComplaintShow
+        },
+        {
+            path: '/reports',
+            name: 'reports',
+            component: ReportsIndex
         },
         {
             path: '*',

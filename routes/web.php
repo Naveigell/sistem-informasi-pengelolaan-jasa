@@ -58,6 +58,8 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::put("/status", "Api\Order\OrderController@updateStatusService");
         Route::delete("/{id}", "Api\Order\OrderController@delete");
     });
+
+    Route::get("/reports/finance/excel", "Api\Reports\FinanceController@excelConverter");
 });
 
 Route::view('/{any}', "index")->where('any', '^(?!api).*');

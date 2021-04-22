@@ -19,7 +19,7 @@
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Pegawai &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Perbaikan &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Pegawai &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua User &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Pegawai &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Pesan &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>

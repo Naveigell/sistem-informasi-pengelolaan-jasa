@@ -72,6 +72,11 @@ const endpoints = {
         retrieve: "/complaints/retrieve/:id",
         do_complaint: "/complaints/do-complaint/:id",
         do_accept: "/complaints/do-accept/:id"
+    },
+    exports: {
+        finance: {
+            excel: "/reports/:name/:type"
+        }
     }
 }
 

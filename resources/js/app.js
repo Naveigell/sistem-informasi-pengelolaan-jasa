@@ -46,6 +46,7 @@ import Image from "./helpers/file";
 import Color from "./helpers/color";
 import Colors from "./colors/color";
 import QueryString from "./helpers/query_string";
+import Exporter from "./helpers/exporter";
 
 import axios from "axios";
 import Endpoints from "./routes/endpoints";
@@ -71,6 +72,7 @@ Vue.use({
         Vue.prototype.$color = Color;
         Vue.prototype.$colors = Colors;
         Vue.prototype.$querystring = QueryString;
+        Vue.prototype.$exporter = Exporter;
     }
 });
 

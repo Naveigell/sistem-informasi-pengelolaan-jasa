@@ -29,7 +29,7 @@ export default {
             sidebars: [
                 {
                     title: "Dashboard",
-                    icon: "fa fa-dashboard",
+                    icon: "fa fa-home",
                     hasDropdown: true,
                     _links: [
                         {
@@ -76,11 +76,11 @@ export default {
                     to: "/orders"
                 },
                 {
-                    title: "Print",
+                    title: "Laporan",
                     icon: "fa fa-print",
                     hasDropdown: false,
                     isLink: true,
-                    to: "/prints"
+                    to: "/reports"
                 }
             ]
         };
