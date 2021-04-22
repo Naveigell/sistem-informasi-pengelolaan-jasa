@@ -59,6 +59,7 @@ const endpoints = {
         take: "/orders/take",
         update_status: "/orders/status",
         complaint: "/orders/complaint",
+        print: "/orders/:unique_id/print"
     },
     suggestions: {
         data: "/suggestions/:last_id",

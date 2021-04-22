@@ -47,6 +47,7 @@ Route::group(['prefix' => '/api/v1'], function () {
     Route::group(["prefix" => "/orders", "middleware" => "auth.global"], function () {
         Route::get("/take/{number}/last", "Api\Order\OrderController@takeFromLast");
         Route::get("/total", "Api\Order\OrderController@getTotalOrders");
+        Route::get("/{unique_id}/print", "Api\Order\OrderController@printOrder");
         Route::get("/search", "Api\Order\OrderController@search");
         Route::get("/search/spareparts", "Api\Order\OrderController@searchSparepart");
         Route::post("/search/spareparts", "Api\Order\OrderController@saveSparepart");
@@ -59,7 +60,9 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::delete("/{id}", "Api\Order\OrderController@delete");
     });
 
-    Route::get("/reports/finance/excel", "Api\Reports\FinanceController@excelConverter");
+    Route::group(["prefix" => "/reports", "middleware" => "auth.global"], function () {
+        Route::get("/finance/excel", "Api\Reports\FinanceController@excelConverter");
+    });
 });
 
 Route::view('/{any}', "index")->where('any', '^(?!api).*');

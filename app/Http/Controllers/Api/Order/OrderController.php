@@ -91,6 +91,24 @@ class OrderController extends Controller implements TimeSentences
     }
 
     /**
+     * Retrieve data for order
+     *
+     * @param $unique_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function printOrder($unique_id)
+    {
+        $data = $this->order->printOrder($unique_id);
+        if ($data == null) {
+            return error(null, ["message" => "Data tidak ditemukan"], 404);
+        }
+
+        return json([
+            "order"     => $data
+        ]);
+    }
+
+    /**
      *
      *
      * @param array $spareparts

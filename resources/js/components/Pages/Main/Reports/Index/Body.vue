@@ -87,7 +87,7 @@ export default {
 
             this.startAnimation();
 
-            this.info.failed = 
+            this.info.failed =
             this.info.success = false;
 
             const url = this.$url.generateUrl(this.$endpoints.exports.finance.excel);

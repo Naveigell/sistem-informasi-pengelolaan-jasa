@@ -36,12 +36,19 @@ class FinanceController extends Controller implements ExportGeneratorInterface
         ob_end_clean();
         ob_start();
 
-//        ini_set('max_execution_time', 2000);
-//        ini_set('memory_limit', '2000M');
-
         $uuid = Str::uuid();
         $name = "excel-$uuid.xlsx";
 
         return Excel::download(new FinanceExcelExporter($this->month, $this->year), $name);
+    }
+
+    /**
+     * Create generator for pdf
+     *
+     * @return mixed
+     */
+    public function pdf()
+    {
+
     }
 }

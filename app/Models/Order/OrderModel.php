@@ -78,6 +78,19 @@ class OrderModel extends Model
     }
 
     /**
+     * Get data for order form
+     *
+     * @param $unique_id
+     * @return OrderModel|Model|object|null
+     */
+    public function printOrder($unique_id)
+    {
+        return $this->with(["user:id_users,email", "user.biodata:id_biodata,biodata_id_users,nomor_hp"])
+                    ->select(["unique_id", "nama_pemilik", "service_id_user", "alamat_pemilik", "nama_perangkat", "keluhan", "jenis_perangkat", "merk"])
+                    ->where("unique_id", $unique_id)->first();
+    }
+
+    /**
      * Get status service
      *
      * @param $id

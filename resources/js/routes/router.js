@@ -17,6 +17,7 @@ import Biodata from "../components/Pages/Main/Biodata/Body";
 import OrderIndex from "../components/Pages/Main/Orders/Index/Body";
 import OrderInsert from "../components/Pages/Main/Orders/Insert/Body";
 import OrderShow from "../components/Pages/Main/Orders/Show/Body";
+import OrderPrint from "../components/Pages/Main/Orders/Prints/Body";
 
 import ServiceIndex from "../components/Pages/Main/Service/Index/Body";
 
@@ -95,6 +96,14 @@ export const router = new VueRouter({
             path: '/orders/:unique_id',
             name: 'orders.show',
             component: OrderShow
+        },
+        {
+            path: '/orders/:unique_id/print',
+            name: 'orders.print',
+            component: OrderPrint,
+            meta: {
+                fullscreen: true
+            }
         },
         {
             path: '/suggestions',

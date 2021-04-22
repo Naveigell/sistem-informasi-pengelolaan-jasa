@@ -9,4 +9,11 @@ interface ExportGeneratorInterface
      * @return mixed
      */
     public function excel();
+
+    /**
+     * Create generator for pdf
+     *
+     * @return mixed
+     */
+    public function pdf();
 }

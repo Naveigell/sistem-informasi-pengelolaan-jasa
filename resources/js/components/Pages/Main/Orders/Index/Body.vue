@@ -67,9 +67,9 @@
                                         </td>
                                         <td>{{ pricesString(repairment) }}</td>
                                         <td v-if="$store.state.user.data.role === 'admin'">
-                                            <button class="button-warning-primary-tag">
+                                            <router-link :to="{ path: `/orders/${repairment.unique_id}/print` }" class="button-warning-primary-tag">
                                                 <i class="fa fa-print"></i>
-                                            </button>
+                                            </router-link>
                                             <button @click="openDeleteModal(repairment)" class="button-danger-primary-tag">
                                                 <i class="fa fa-trash"></i>
                                             </button>

@@ -6,8 +6,8 @@
             <login v-if="!hasLoggedIn"/>
             <div v-else>
                 <toast @toastEnded="toast.open = false" v-if="toast.open" :icon="toast.data.icon" :background="toast.background" :title="toast.data.title" :timer="2000" :subtitle="toast.data.message"/>
-                <app-header/>
-                <app-sidebar/>
+                <app-header v-if="!fullScreen"/>
+                <app-sidebar v-if="!fullScreen"/>
                 <router-view></router-view>
             </div>
         </div>
@@ -45,7 +45,8 @@ export default {
                     message: "Tambah sparepart berhasil",
                     icon: "fa fa-check"
                 }
-            }
+            },
+            fullScreen: false
         }
     },
     mounted() {
@@ -61,13 +62,13 @@ export default {
             this.toast.background = data.background;
             this.toast.data = data.data;
         });
+        this.wantsFullScreen();
     },
     watch: {
         async '$route' (to, from) {
             this.resolve(to);
 
-            // UNCOMMENT IT LATER
-            // UNCOMMENT IT LATER
+            this.wantsFullScreen();
 
             this.loading.fullLoading = true;
             this.hasLoggedIn = false;
@@ -77,6 +78,10 @@ export default {
     methods: {
         resolve(route){
             this.routes.notFound = route.name === "notfound";
+        },
+        wantsFullScreen(){
+            this.fullScreen =   (this.$router.currentRoute.meta.fullscreen !== undefined &&
+                                this.$router.currentRoute.meta.fullscreen);
         }
     }
 }
