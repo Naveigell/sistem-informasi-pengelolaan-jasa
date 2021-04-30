@@ -71,10 +71,10 @@ class Arrays
     {
         $keys = array_keys($replacements);
         foreach ($keys as $key) {
-//            if ($item[$key] == null) {
-//                $item[$replacements[$key]] = null;
-//                unset($item[$key]);
-//            }
+            if (is_null($item[$key])) {
+                $item[$replacements[$key]] = null;
+                unset($item[$key]);
+            }
 
             if (!empty($item[$key])) {
                 $item[$replacements[$key]] = $item[$key];
