@@ -480,7 +480,7 @@ export default {
             }).catch((error) => {
                 console.error(error.response)
                 if (error.response.status === 500) {
-                    const message = error.response.data.errors.messages.main_message !== null ? error.response.data.errors.messages.main_message : error.response.data.errors.messages.message;
+                    const message = error.response.data.errors.messages.exception !== null ? error.response.data.errors.messages.exception : error.response.data.errors.messages.message;
 
                     this.$root.$emit("open-toast", {
                         type: "failed",
@@ -488,6 +488,16 @@ export default {
                         data: {
                             title: "Failed!",
                             message: message,
+                            icon: "fa fa-check"
+                        }
+                    });
+                } else if (error.response.status === 422) {
+                    this.$root.$emit("open-toast", {
+                        type: "failed",
+                        background: this.$colors.errorPrimary,
+                        data: {
+                            title: "Failed!",
+                            message: error.response.data.errors.messages.message,
                             icon: "fa fa-check"
                         }
                     });

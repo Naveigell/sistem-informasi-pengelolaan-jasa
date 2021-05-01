@@ -39,6 +39,21 @@ class ComplaintModel extends Model
     }
 
     /**
+     * Check if order has not finished complaint
+     *
+     * @param $id_service
+     * @param $id_teknisi
+     * @return bool
+     */
+    public function orderHasComplaint($id_service)
+    {
+        return $this->where([
+            "pengaduan_id_service"  => $id_service,
+            "disetujui_user"        => 0
+        ])->exists();
+    }
+
+    /**
      * Retrieve complaint
      *
      * @param $id_users

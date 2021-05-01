@@ -13,6 +13,7 @@ use App\Http\Requests\Order\OrderRequestSearchSparepart;
 use App\Http\Requests\Order\OrderRequestTake;
 use App\Http\Requests\Order\OrderRequestUpdateStatusService;
 use App\Interfaces\Time\TimeSentences;
+use App\Models\Complaint\ComplaintModel;
 use App\Models\Order\OrderModel;
 use App\Models\Order\OrderSparepartModel;
 use App\Models\Sparepart\SparepartModel;
@@ -27,6 +28,7 @@ class OrderController extends Controller implements TimeSentences
     private SparepartModel $sparepart;
     private UserModel $user;
     private OrderModel $order;
+    private ComplaintModel $complaint;
 
     private $auth;
     private const MAIN_PATH_URL = "/orders";
@@ -38,6 +40,7 @@ class OrderController extends Controller implements TimeSentences
         $this->user             = new UserModel;
         $this->sparepart        = new SparepartModel;
         $this->orderSparepart   = new OrderSparepartModel;
+        $this->complaint        = new ComplaintModel;
 
         $this->auth  = auth("user");
     }
@@ -527,6 +530,17 @@ class OrderController extends Controller implements TimeSentences
     }
 
     /**
+     * Check if order has complaint and not finished yet
+     *
+     * @param $id
+     * @return bool
+     */
+    private function hasComplaintAndNotFinished($id) : bool
+    {
+        return $this->auth->user()->role === "admin" && $this->complaint->orderHasComplaint($id);
+    }
+
+    /**
      * Update status service
      *
      * @param OrderRequestUpdateStatusService $request
@@ -542,17 +556,27 @@ class OrderController extends Controller implements TimeSentences
 
             // check status authorization before update
             if ($this->isUpdateStatusAuthorized($request->status)) {
+
+                // prevent admin to change status service into pembayaran if
+                // the order has complaint and not finished
+                if ($this->hasComplaintAndNotFinished($request->id)) {
+                    return error(null, ["message" => "Complaint belum dikerjakan teknisi"], 422);
+                }
+
                 DB::beginTransaction();
                 try {
                     $updated = $this->order->updateStatusService($request->id, $this->auth->id(), $this->auth->user()->role, $request->status, $array);
                     if ($updated) {
+                        // if the request status is 'selesai' and role is 'teknisi'
+                        // reduce sparepart stock in database then commit
+                        // otherwise, just commit
                         if ($request->status == "selesai" && $this->auth->user()->role == "teknisi") {
                             try {
                                 $spareparts = $this->orderSparepart->retrieveSparepartByIdOrder($request->id);
                                 $stockUpdated = $this->reduceSparepartStock($spareparts->toArray());
 
                             } catch (\Exception $exception) {
-                                return error(null, ["message" => "Terjadi masalah saat mengubah status", "main_message" => $exception->getMessage()]);
+                                return error(null, ["message" => "Terjadi masalah saat mengubah status", "exception" => $exception->getMessage()]);
                             }
 
                             DB::commit();
