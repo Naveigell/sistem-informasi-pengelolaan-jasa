@@ -70,8 +70,7 @@ class ComplaintModel extends Model
                      ->orderBy("id_pengaduan", "DESC");
 
         if ($last_suggestion_id != null) {
-            $last_suggestion_id = $next ? $last_suggestion_id : $last_suggestion_id + $take + 1;
-            $main->where("id_pengaduan", "<", $last_suggestion_id);
+            $main->where("id_pengaduan", "<=", $last_suggestion_id);
         }
 
         if ($role == "user") {

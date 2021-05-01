@@ -105,6 +105,7 @@ export default {
     data(){
         return {
             suggestions: [],
+            pagination_items: [],
             checkboxes: {
                 root: ""
             },
@@ -136,6 +137,11 @@ export default {
                 // console.log(response.data.body.suggestions);
 
                 this.suggestions = response.data.body.suggestions;
+
+                if (last_id === undefined && next === undefined) {
+                    this.pagination_items.push(this.suggestions[0].id);
+                }
+
                 this.$nextTick(() => {});
                 this.toggleCheckAll(null, false);
             }).catch((error) => {
@@ -144,17 +150,28 @@ export default {
         },
         next(){
             if (this.suggestions.length <= 0) {
+                this.pagination_items = [];
                 this.retrieveAll();
             } else {
-                const last_id = this.suggestions[this.suggestions.length - 1].id;
+                let last_id = this.suggestions[this.suggestions.length - 1].id;
+                this.pagination_items.push(--last_id);
                 this.retrieveAll(last_id, true);
             }
         },
         previous() {
             if (this.suggestions.length <= 0) {
+                this.pagination_items = [];
                 this.retrieveAll();
             } else {
-                const first_id = this.suggestions[0].id;
+                let first_id = this.pagination_items[0];
+                if (this.pagination_items.length > 1) {
+                    first_id = this.pagination_items[this.pagination_items.length - 2];
+                }
+
+                if (this.pagination_items.length > 1) {
+                    this.pagination_items.pop();
+                }
+
                 this.retrieveAll(first_id, false);
             }
         },
