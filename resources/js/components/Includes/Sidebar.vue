@@ -2,7 +2,7 @@
     <aside>
         <div class="sidebar-container">
             <div class="sidebar" v-for="sidebar in sidebars">
-                <span class="sidebar-title">
+                <span class="sidebar-title" v-if="show(sidebar)">
                     <span v-if="!sidebar.isLink">
                         <i v-bind:class="sidebar.icon" style="margin-right: 10px;"></i> {{ sidebar.title }}
                     </span>
@@ -14,7 +14,7 @@
                     </span>
                 </span>
                 <div class="sidebar-menu" v-if="sidebar.hasDropdown">
-                    <router-link :key="index" class="menu" v-for="(link, index) in sidebar._links" :to="{ path: link.to }">{{ link.name }}</router-link>
+                    <router-link :key="index" v-if="show(link)" class="menu" v-for="(link, index) in sidebar._links" :to="{ path: link.to }">{{ link.name }}</router-link>
                 </div>
             </div>
         </div>
@@ -24,63 +24,80 @@
 <script>
 export default {
     name: "Sidebar",
+    methods: {
+        show(obj){
+            if (obj.roles === undefined)
+                return false;
+
+            return obj.roles.includes(this.$store.state.user.data.role);
+        }
+    },
     data() {
         return {
             sidebars: [
                 {
-                    title: "Dashboard",
+                    title: "Home",
                     icon: "fa fa-home",
                     hasDropdown: true,
                     _links: [
                         {
                             name: "Dashboard",
                             isLink: true,
-                            to: "/"
+                            to: "/",
+                            roles: ["admin", "teknisi", "user"]
                         },
                         {
                             name: "Data Pelanggan",
                             isLink: true,
-                            to: "/user"
+                            to: "/user",
+                            roles: ["admin"]
                         },
                         {
                             name: "Data Spare Part",
                             isLink: true,
-                            to: "/sparepart"
+                            to: "/sparepart",
+                            roles: ["admin", "teknisi"]
                         },
                         {
                             name: "Data Teknisi",
                             isLink: true,
-                            to: "/technician"
+                            to: "/technician",
+                            roles: ["admin", "user"]
                         }
-                    ]
+                    ],
+                    roles: ["admin", "teknisi", "user"]
                 },
                 {
                     title: "Biodata",
                     icon: "fa fa-user",
                     hasDropdown: false,
                     isLink: true,
-                    to: "/account/biodata"
+                    to: "/account/biodata",
+                    roles: ["admin", "teknisi", "user"]
                 },
                 {
                     title: "Service",
                     icon: "fa fa-user",
                     hasDropdown: false,
                     isLink: true,
-                    to: "/service"
+                    to: "/service",
+                    roles: ["admin"]
                 },
                 {
                     title: "Orders",
                     icon: "fa fa-shopping-cart",
                     hasDropdown: false,
                     isLink: true,
-                    to: "/orders"
+                    to: "/orders",
+                    roles: ["admin", "teknisi", "user"]
                 },
                 {
                     title: "Laporan",
                     icon: "fa fa-print",
                     hasDropdown: false,
                     isLink: true,
-                    to: "/reports"
+                    to: "/reports",
+                    roles: ["admin"]
                 }
             ]
         };

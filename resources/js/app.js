@@ -47,6 +47,7 @@ import Color from "./helpers/color";
 import Colors from "./colors/color";
 import QueryString from "./helpers/query_string";
 import Exporter from "./helpers/exporter";
+import Role from "./helpers/role";
 
 import axios from "axios";
 import Endpoints from "./routes/endpoints";
@@ -73,6 +74,7 @@ Vue.use({
         Vue.prototype.$colors = Colors;
         Vue.prototype.$querystring = QueryString;
         Vue.prototype.$exporter = Exporter;
+        Vue.prototype.$role = Role;
     }
 });
 
@@ -88,6 +90,12 @@ Vue.mixin({
     methods: {
         back(msg){
             this.$router.back();
+        },
+        moveTo(path) {
+            console.log(path)
+            this.$router.push({
+                path
+            });
         }
     }
 });

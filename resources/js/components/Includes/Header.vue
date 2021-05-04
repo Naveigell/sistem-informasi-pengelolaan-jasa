@@ -2,7 +2,7 @@
     <header>
         <div class="left-side">
             <div class="logo-container">
-                Logo
+
             </div>
         </div>
         <div class="right-side" v-if="$store.state.user.data != null">
@@ -15,7 +15,7 @@
                 </span>
             </div>
             <div class="separator"></div>
-            <div style="position: relative;" @mouseleave="dropdown.open = false" @mouseover="dropdown.open = true">
+            <div style="position: relative; min-width: 200px;" @mouseleave="dropdown.open = false" @mouseover="dropdown.open = true">
                 <div class="account-container">
                     <div class="account">
                         <img v-if="$store.state.user.picture != null" id="account-img" v-bind:src="$store.state.user.picture" alt="">
@@ -59,7 +59,12 @@ export default {
     methods: {
         logout(){
             this.$api.get(this.$endpoints.auth.logout).then((response) => {
-                window.location.reload();
+                this.$store.commit("logout");
+                if (this.$router.currentRoute.path !== "/") {
+                    this.$router.push({ path: "/" });
+                } else {
+                    this.$root.$emit("reload-page");
+                }
             }).catch((error) => {
                 console.error(error)
             });

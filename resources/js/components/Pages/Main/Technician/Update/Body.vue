@@ -78,16 +78,14 @@
             </div>
         </div>
 
-        <div class="body-container" style="margin-bottom: 20px;">
-            <div class="statistic-container">
-                <h4>Statistik</h4>
-                <span>Statistik dari teknisi ini</span>
-                <div class="statistic" style="margin-top: 40px; margin-bottom: 10px;">
-                    <div v-for="i in 4" style="flex-basis: 25%; text-align: center; border-left: 1px solid rgba(227, 227, 227, 1)">
-                        <span style="display: block; font-weight: bold; font-size: 16px; color: #2673dd;">0</span>
-                        <span style="display: block; font-size: 14px; margin-top: 5px;">Service diselesaikan</span>
-                    </div>
+        <div class="elevation-2" style="background-color: white; margin-top: 20px; margin-bottom: 20px;">
+            <div style="background-color: #f6f7f8; height: 43px;">
+                <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center;">
+                    <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">GRAFIK PERBAIKAN 6 BULAN SEBELUMNYA</h5>
                 </div>
+            </div>
+            <div style="padding: 20px;">
+                <LineChart v-bind:data="graph.data"/>
             </div>
         </div>
     </div>
@@ -95,11 +93,13 @@
 
 <script>
 import ResetPassword from "./Modals/ResetPassword";
+import LineChart from "../../../../Shared/Charts/LineChart";
 
 export default {
     name: "Body",
     components: {
-        "reset-password": ResetPassword
+        "reset-password": ResetPassword,
+        LineChart
     },
     mounted() {
         this.username = this.$router.currentRoute.params.username;
@@ -149,7 +149,10 @@ export default {
                         active: false
                     }
                 },
-            }
+            },
+            graph: {
+                data: {}
+            },
         }
     },
     methods: {
@@ -166,10 +169,20 @@ export default {
                 this.user.data.address      = response.data.body.biodata.alamat;
                 this.user.data.phone        = response.data.body.biodata.nomor_hp;
                 this.user.data.picture      = response.data.body.biodata.profile_picture;
+
+                this.retrieveGraph(this.user.data.id)
             }).catch((error) => {
                 if (error.response.status === 404) {
                     this.back();
                 }
+            });
+        },
+        retrieveGraph(id){
+            const url = this.$url.generateUrl(this.$endpoints.technicians.graph)
+            this.$api.get(url(id)).then((response) => {
+                this.graph.data = response.data.body.graph.data;
+            }).catch((error) => {
+
             });
         },
         async updateBiodata(){

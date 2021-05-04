@@ -27,7 +27,6 @@ class GraphController extends Controller implements GraphProcessInterface, Graph
     public function retrieveData()
     {
         return $this->process();
-//        dd($this->datasets());
     }
 
     /**

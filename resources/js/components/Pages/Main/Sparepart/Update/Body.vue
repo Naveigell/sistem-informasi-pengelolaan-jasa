@@ -7,11 +7,11 @@
                     <span>Format gambar harus diantara .jpg, .jpeg dan .png</span>
                     <div class="image-container">
                         <div v-for="(item, index) in images" style="display: flex; flex-direction: column; align-items: center">
-                            <div v-if="!images[index].contain" class="image-dashed" v-on:click="chooseImage(index)">
-                                <i class="fa fa-plus-circle"></i>
+                            <div v-if="!images[index].contain" :class="{'image-dashed': !disabled, 'image-dashed-disabled': disabled}" v-on:click="chooseImage(index)">
+                                <i class="fa" :class="{'image-icon fa-plus-circle': !disabled, 'image-icon-disabled': disabled}"></i>
                             </div>
                             <div v-show="images[index].contain" class="image-fill">
-                                <div class="layer">
+                                <div class="layer" v-if="['admin'].includes($store.state.user.data.role)">
                                     <div class="insert-overlay"></div>
                                     <div class="remove-image-overlay">
                                         <span v-on:click="removeImage(index)"><i class="fa fa-times-circle"></i></span>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <span style="display: block; text-align: center; margin-top: 60px; color: #aaaaaa;">
+                <span style="display: block; text-align: center; margin-top: 60px; color: #aaaaaa;" v-if="['admin'].includes($store.state.user.data.role)">
                     Ukuran maksimal gambar yang diperbolehkan <br/> adalah 10 MB atau 10.000KB
                 </span>
                 <div class="spare-part-information-container">
@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-md-10 right-column">
                                 <div class="input-container">
-                                    <input v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" placeholder="Masukkan nama sparepart" v-model="data.name" maxlength="70">
+                                    <input :disabled="disabled" v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" placeholder="Masukkan nama sparepart" v-model="data.name" maxlength="70">
                                 </div>
                                 <span class="error-message" v-if="errors.name != null && errors.name !== undefined">{{ errors.name[0] }}</span>
                                 <span class="word-count">{{ data.name.length }}/70</span>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="col-md-10 right-column">
                                 <div class="input-container">
-                                    <textarea v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi sparepart" cols="30" rows="10" style="resize: none" v-model="data.description"></textarea>
+                                    <textarea :disabled="disabled" v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi sparepart" cols="30" rows="10" style="resize: none" v-model="data.description"></textarea>
                                 </div>
                                 <span class="error-message" v-if="errors.description != null && errors.description !== undefined">{{ errors.description[0] }}</span>
                                 <span class="word-count">{{ data.description.length }}/3000</span>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-md-10 right-column">
                                 <div class="input-container">
-                                    <select v-bind:class="{'input-error': errors.type != null && errors.type !== undefined}" @focus="errors.type = null" v-model="data.type" name="" id="">
+                                    <select :disabled="disabled" v-bind:class="{'input-error': errors.type != null && errors.type !== undefined}" @focus="errors.type = null" v-model="data.type" name="" id="">
                                         <option value="pc">Pc/Komputer</option>
                                         <option value="hp">Handphone</option>
                                         <option value="printer">Printer</option>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-md-10 right-column">
                                 <div class="input-container">
-                                    <input v-bind:class="{'input-error': errors.stock != null && errors.stock !== undefined}" @focus="errors.stock = null" v-model="data.stock" type="number" placeholder="Stok" value="0">
+                                    <input :disabled="disabled" v-bind:class="{'input-error': errors.stock != null && errors.stock !== undefined}" @focus="errors.stock = null" v-model="data.stock" type="number" placeholder="Stok" value="0">
                                     <span class="error-message" v-if="errors.stock != null && errors.stock !== undefined">{{ errors.stock[0] }}</span>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                 <div class="input-container-price" v-bind:class="{'input-error': errors.real_price != null && errors.real_price !== undefined}">
                                     <span>Rp</span>
                                     <span class="separator"></span>
-                                    <input v-model="data.real_price" type="number" placeholder="Harga Asli" @focus="errors.real_price = null">
+                                    <input :disabled="disabled" v-model="data.real_price" type="number" placeholder="Harga Asli" @focus="errors.real_price = null">
                                 </div>
                                 <span class="error-message" v-if="errors.real_price != null && errors.real_price !== undefined">{{ errors.real_price[0] }}</span>
                             </div>
@@ -109,7 +109,7 @@
                                 <div class="input-container-price" v-bind:class="{'input-error': errors.price != null && errors.price !== undefined}">
                                     <span>Rp</span>
                                     <span class="separator"></span>
-                                    <input v-model="data.price" type="number" placeholder="Harga" @focus="errors.price = null">
+                                    <input :disabled="disabled" v-model="data.price" type="number" placeholder="Harga" @focus="errors.price = null">
                                 </div>
                                 <span class="error-message" v-if="errors.price != null && errors.price !== undefined">{{ errors.price[0] }}</span>
                             </div>
@@ -118,8 +118,8 @@
                         <div class="row">
                             <div class="col-md-2"></div>
                             <div class="col-md-10 right-column">
-                                <button @click="back" class="button-transparent-sm">Batal</button>
-                                <button v-on:click="saveSparepart()" class="button-success-primary-sm">Simpan</button>
+                                <button @click="back" class="button-transparent-sm">Kembali</button>
+                                <button v-if="$role.isAdmin" v-on:click="saveSparepart()" class="button-success-primary-sm">Simpan</button>
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,8 @@ export default {
                     message: "Edit sparepart gagal",
                     icon: "fa fa-times-circle"
                 },
-            }
+            },
+            disabled: true
         }
     },
     mounted() {
@@ -196,6 +197,8 @@ export default {
         if (this.id) {
             this.retrieve();
         }
+
+        this.disabled = !['admin'].includes(this.$store.state.user.data.role);
     },
     watch: {
         "data.name": function (newVal, oldVal) {
@@ -241,7 +244,7 @@ export default {
     },
     methods: {
         chooseImage(index){
-            if (this.$refs.input_images !== undefined) {
+            if (this.$refs.input_images !== undefined && ['admin'].includes(this.$store.state.user.data.role)) {
                 this.$refs.input_images[index].click();
             }
         },
@@ -502,8 +505,26 @@ img {
     justify-content: center;
 }
 
-.fa-plus-circle {
+.image-dashed-disabled {
+    width: 170px;
+    height: 170px;
+    border: 1px dashed #bababa;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-icon {
     color: var(--blue-primary);
+    font-size: 40px;
+}
+
+.image-icon-disabled {
+    color: #bababa;
     font-size: 40px;
 }
 

@@ -152,7 +152,6 @@ export default {
         retrieveGraphData(){
             this.$api.get(this.$endpoints.biodata.graph).then((response) => {
                 this.graph.data = response.data.body.graph.data;
-                console.log(this.graph.data)
             }).catch((error) => {
                 console.error(error);
             })

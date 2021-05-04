@@ -35,14 +35,8 @@
                 <div class="spare-part-tools">
                     <div class="spare-part-tools-left">
                         <h4>{{ this.paginator.totalData }} Spare Part Aktif</h4>
-<!--                        <div class="product-count-bar-container">-->
-<!--                            <div class="product-count-bar">-->
-<!--                                <div class="product-progress-bar-width"></div>-->
-<!--                                <span class="counter">{{ spareparts.length }} / {{ this.paginator.totalData }}</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     </div>
-                    <div class="spare-part-tools-right">
+                    <div class="spare-part-tools-right" v-if="['admin'].includes($store.state.user.data.role)">
                         <div class="spare-part-tools-right-container">
                             <router-link :to="{ path: '/sparepart/add' }" class="button-add button-success-primary-md" style="padding: 10px 20px;">
                                 <i class="fa fa-plus"></i>&nbsp Tambah Spare Part

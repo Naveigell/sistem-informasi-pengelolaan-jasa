@@ -2,6 +2,7 @@
 
 namespace App\Models\Order;
 
+use App\Interfaces\Total\Countable;
 use App\Models\Complaint\ComplaintModel;
 use App\Models\Technician\TechnicianModel;
 use App\Models\User\UserModel;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\DB;
  * @mixin \Illuminate\Database\Eloquent\Builder
  * @package App\Models\Order
  */
-class OrderModel extends Model
+class OrderModel extends Model implements Countable
 {
     use DateTimeRepeaterAndSanitizer;
 
@@ -166,7 +167,12 @@ class OrderModel extends Model
      */
     private function main()
     {
-        return $this->with(["technician", "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe", "spareparts:id_service_spare_part,service_spare_part_id_service,jumlah,harga"])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi"])->orderBy("id_service", "DESC");
+        return $this->with([
+            "technician",
+            "user:id_users,name,email,username",
+            "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe",
+            "spareparts:id_service_spare_part,service_spare_part_id_service,jumlah,harga"
+        ])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi", "service_id_user"])->orderBy("id_service", "DESC");
     }
 
     /**
@@ -358,5 +364,22 @@ class OrderModel extends Model
             return $this->main()->take($number)->get();
         }
         return $this->main()->where("service_id_teknisi", $id)->take($number)->get();
+    }
+
+    /**
+     * Count the total of data
+     *
+     * @param $id
+     * @param $role
+     * @return mixed
+     */
+    public function total($id, $role)
+    {
+        if ($role === "user") {
+            return $this->where("service_id_user", $id)->count();
+        } else if ($role === "teknisi") {
+            return $this->where("service_id_teknisi", $id)->count();
+        }
+        return $this->count();
     }
 }

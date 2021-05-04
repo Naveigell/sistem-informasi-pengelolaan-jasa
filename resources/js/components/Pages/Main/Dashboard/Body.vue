@@ -1,91 +1,91 @@
 <template>
     <div class="app-container">
         <div style="margin: 20px;">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-1 parent-deck">
+            <div class="row" v-if="Object.keys(total).length > 0">
+                <div class="col-md-6 col-sm-1 parent-deck" :class="{'col-lg-3': !this.$role.isTechnician, 'col-lg-6': this.$role.isTechnician}">
                     <div class="deck elevation-2">
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.orders }}</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Total Orders</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total[Object.keys(total)[0]].count }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Total {{ total[Object.keys(total)[0]].text }}</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
-                                        <i style="font-size: 30px; color: #5179d6;" class="fa fa-shopping-cart"></i>
+                                        <i style="font-size: 30px; color: #5179d6;" class="fa" :class="total[Object.keys(total)[0]].icon"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Perbaikan &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500; cursor: pointer;" @click="moveTo(total[Object.keys(total)[0]].route)">Lihat Semua {{ total[Object.keys(total)[0]].text }} &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-1 parent-deck">
+                <div class="col-md-6 col-sm-1 parent-deck" :class="{'col-lg-3': !this.$role.isTechnician, 'col-lg-6': this.$role.isTechnician}">
                     <div class="deck elevation-2">
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.technicians }}</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Technicians</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total[Object.keys(total)[1]].count }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Total {{ total[Object.keys(total)[1]].text }}</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
-                                        <i style="font-size: 30px; color: #5179d6;" class="fa fa-users"></i>
+                                        <i style="font-size: 30px; color: #5179d6;" class="fa" :class="total[Object.keys(total)[1]].icon"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Pegawai &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500; cursor: pointer;" @click="moveTo(total[Object.keys(total)[1]].route)">Lihat Semua {{ total[Object.keys(total)[1]].text }} &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-1 parent-deck">
+                <div class="col-lg-3 col-md-6 col-sm-1 parent-deck" v-if="!this.$role.isTechnician">
                     <div class="deck elevation-2">
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.users }}</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Active Users</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total[Object.keys(total)[2]].count }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Total {{ total[Object.keys(total)[2]].text }}</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
-                                        <i style="font-size: 30px; color: #5179d6;" class="fa fa-user"></i>
+                                        <i style="font-size: 30px; color: #5179d6;" class="fa" :class="total[Object.keys(total)[2]].icon"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua User &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500; cursor: pointer;" @click="moveTo(total[Object.keys(total)[2]].route)">Lihat Semua {{ total[Object.keys(total)[2]].text }} &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-1 parent-deck">
+                <div class="col-lg-3 col-md-6 col-sm-1 parent-deck" v-if="!this.$role.isTechnician">
                     <div class="deck elevation-2">
                         <div class="deck-content-container">
                             <div class="deck-content row">
                                 <div class="col-8">
-                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total.messages }}</h3>
-                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Messages</span>
+                                    <h3 style="font-weight: bolder; font-size: 30px; font-family: InterRegular, Arial, sans-serif;">{{ total[Object.keys(total)[3]].count }}</h3>
+                                    <span style="font-family: InterRegular, Arial, sans-serif; font-size: 16px; font-weight: bold; color: #515151;">Total {{ total[Object.keys(total)[3]].text }}</span>
                                 </div>
                                 <div class="col-4" style="background-color: transparent; display: flex; align-items: center;">
                                     <div class="deck-icon-container" style="background-color: #edf0f2; width: 100%; text-align: center; padding: 15px; border-radius: 3px;">
-                                        <i style="font-size: 30px; color: #5179d6;" class="fa fa-envelope"></i>
+                                        <i style="font-size: 30px; color: #5179d6;" class="fa" :class="total[Object.keys(total)[3]].icon"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="deck-bottom">
                             <div style="padding-left: 25px; padding-right: 20px;">
-                                <span style="color: #5179d6; font-weight: 500;">Lihat Semua Pesan &nbsp <i class="fa fa-arrow-right"></i></span>
+                                <span style="color: #5179d6; font-weight: 500; cursor: pointer;" @click="moveTo(total[Object.keys(total)[3]].route)">Lihat Semua {{ total[Object.keys(total)[3]].text }} &nbsp <i class="fa fa-arrow-right"></i></span>
                             </div>
                         </div>
                     </div>
@@ -126,9 +126,8 @@
                                     <tr>
                                         <th>ORDER ID</th>
                                         <th>DIBUAT</th>
-                                        <th>TEKNISI</th>
+                                        <th>{{ this.$role.isTechnician ? "PEMILIK" : "TEKNISI" }}</th>
                                         <th>STATUS</th>
-                                        <th>HARGA</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -140,14 +139,16 @@
                                         </td>
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
-                                            <router-link :to="{ path: '/technician' }">
+                                            <router-link :to="{ path: '/technician' }" v-if="!$role.isTechnician">
                                                 {{ repairment.technician == null ? "-" : repairment.technician.username }}
+                                            </router-link>
+                                            <router-link :to="{ path: '/user' }" v-else>
+                                                {{ repairment.user == null ? "-" : repairment.user.username }}
                                             </router-link>
                                         </td>
                                         <td>
                                             <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
                                         </td>
-                                        <td>{{ Math.random() > 0.7 ? "-" : "Rp 20.000" }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -175,12 +176,7 @@ export default {
                 data: {},
                 options: {}
             },
-            total: {
-                orders: 0,
-                technicians: 0,
-                users: 0,
-                messages: 0
-            },
+            total: {},
             repairments: ['status-danger', 'status-warning', 'status-success', 'status-info'],
             repairments_info: [
                 {
@@ -219,7 +215,9 @@ export default {
     mounted() {
         this.retrieveTotal();
         this.retrieveOrders();
-        this.retrieveGraph();
+        if (this.$role.isAdmin) {
+            this.retrieveGraph();
+        }
     },
     methods: {
         retrieveGraph(){
@@ -251,9 +249,6 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
-        },
-        random(){
-            return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
         },
         retrieveTotal(){
             this.$api.get(this.$endpoints.dashboard.total).then((response) => {

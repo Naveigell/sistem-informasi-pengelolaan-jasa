@@ -23,7 +23,7 @@
                     <div class="technician-tools-left">
                         <h4>{{ paginator.totalData }} Teknisi Aktif</h4>
                     </div>
-                    <div class="technician-tools-right">
+                    <div class="technician-tools-right" v-if="this.$role.isAdmin">
                         <div class="technician-tools-right-container">
                             <button @click="modal.insert.open = true" class="button-add button-success-primary-md" style="padding: 10px 20px;">
                                 <i class="fa fa-plus"></i>&nbsp Tambah Teknisi

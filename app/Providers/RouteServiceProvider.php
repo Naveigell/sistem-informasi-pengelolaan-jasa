@@ -88,6 +88,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix("/technicians")->group(function () {
             Route::get("/search", "Api\Technician\TechnicianController@search");
             Route::get("/{page?}", "Api\Technician\TechnicianController@retrieveAll");
+            Route::get("/{id}/graph", "Api\Technician\GraphController@retrieve");
             Route::get("/username/{username}", "Api\Technician\TechnicianController@retrieveByUsername");
             Route::post("/", "Api\Technician\TechnicianController@create");
             Route::delete("/{id}", "Api\Technician\TechnicianController@delete");

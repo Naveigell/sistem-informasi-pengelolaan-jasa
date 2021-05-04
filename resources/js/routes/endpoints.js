@@ -38,6 +38,7 @@ const endpoints = {
         update: "/technicians",
         retrieve: "/technicians/username",
         reset_password: "/technicians/reset-password",
+        graph: "/technicians/:id/graph"
     },
     users: {
         data: "/users",

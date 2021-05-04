@@ -40,105 +40,163 @@ export const router = new VueRouter({
         {
             path: '/',
             name: 'dashboard',
-            component: Dashboard
+            component: Dashboard,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/sparepart',
             name: 'sparepart',
             component: SparepartIndex,
+            meta: {
+                roles: ["admin", "teknisi"]
+            }
         },
         {
             path: '/sparepart/add',
             name: 'sparepart.insert',
             component: SparepartInsert,
+            meta: {
+                roles: ["admin"]
+            }
         },
         {
             path: '/sparepart/:id',
             name: 'sparepart.update',
             component: SparepartUpdate,
+            meta: {
+                roles: ["admin", "teknisi"]
+            }
         },
         {
             path: '/user',
             name: 'user',
             component: UserIndex,
+            meta: {
+                roles: ["admin"]
+            }
         },
         {
             path: '/technician',
             name: 'technician',
             component: TechnicianIndex,
+            meta: {
+                roles: ["admin", "user"]
+            }
         },
         {
             path: '/technician/:username',
             name: 'technician.update',
             component: TechnicianUpdate,
+            meta: {
+                roles: ["admin"]
+            }
         },
         {
             path: '/account/biodata',
             name: 'biodata',
             component: Biodata,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/service',
             name: 'service',
             component: ServiceIndex,
+            meta: {
+                roles: ["admin"]
+            }
         },
         {
             path: '/orders',
             name: 'orders',
             component: OrderIndex,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/orders/add',
             name: 'orders.add',
-            component: OrderInsert
+            component: OrderInsert,
+            meta: {
+                roles: ["admin"]
+            }
         },
         {
             path: '/orders/:unique_id',
             name: 'orders.show',
-            component: OrderShow
+            component: OrderShow,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/orders/:unique_id/print',
             name: 'orders.print',
             component: OrderPrint,
             meta: {
-                fullscreen: true
+                fullscreen: true,
+                roles: ["admin"]
             }
         },
         {
             path: '/suggestions',
             name: 'suggestions',
-            component: SuggestionsIndex
+            component: SuggestionsIndex,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/suggestions/add',
             name: 'suggestions.add',
-            component: SuggestionsInsert
+            component: SuggestionsInsert,
+            meta: {
+                roles: ["user"]
+            }
         },
         {
             path: '/suggestions/:id',
             name: 'suggestions.show',
-            component: SuggestionsShow
+            component: SuggestionsShow,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/complaints',
             name: 'complaints',
-            component: ComplaintIndex
+            component: ComplaintIndex,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/complaints/:id',
             name: 'complaints.show',
-            component: ComplaintShow
+            component: ComplaintShow,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         },
         {
             path: '/reports',
             name: 'reports',
-            component: ReportsIndex
+            component: ReportsIndex,
+            meta: {
+                roles: ["admin"]
+            }
         },
         {
             path: '*',
             name: 'notfound',
-            component: Errors404
+            component: Errors404,
+            meta: {
+                roles: ["admin", "teknisi", "user"]
+            }
         }
     ],
 });

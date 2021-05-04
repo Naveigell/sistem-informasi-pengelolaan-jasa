@@ -19,6 +19,10 @@ export const store = new Vuex.Store({
         }
     },
     mutations: {
+        logout(state){
+            state.user.data = state.user.picture = null;
+            state.user.check = false;
+        },
         async retrieveUserData(state){
             const axiosInstance = axios.create({
                 baseURL: "http://localhost:8000/api/v1/",

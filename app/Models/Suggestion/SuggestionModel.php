@@ -2,6 +2,7 @@
 
 namespace App\Models\Suggestion;
 
+use App\Interfaces\Total\Countable;
 use App\Models\User\UserModel;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Illuminate\Database\Eloquent\Builder
  * @package App\Models\Suggestion
  */
-class SuggestionModel extends Model
+class SuggestionModel extends Model implements Countable
 {
     protected $table = "pengaduan";
     protected $primaryKey = "id_pengaduan";
@@ -62,11 +63,17 @@ class SuggestionModel extends Model
     /**
      * Take total off suggestions
      *
+     * @param $id
+     * @param $role
      * @return int
      */
-    public function total()
+    public function total($id, $role)
     {
-        return $this->where("tipe", $this->type)->count();
+        $query = $this->where("tipe", $this->type);
+        if ($role === "user") {
+            $query = $query->where("pengaduan_id_users", $id);
+        }
+        return $query->count();
     }
 
     /**

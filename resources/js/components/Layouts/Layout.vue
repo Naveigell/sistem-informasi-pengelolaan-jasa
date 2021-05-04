@@ -2,6 +2,7 @@
     <div class="application">
         <full-loading v-if="loading.fullLoading"/>
         <error-404 v-else-if="!loading.fullLoading && routes.notFound"/>
+        <error-403 v-else-if="!loading.fullLoading && routes.unauthorized"/>
         <div v-else>
             <login v-if="!hasLoggedIn"/>
             <div v-else>
@@ -18,6 +19,7 @@
 import LoginComponent from "../Pages/Login/LoginComponent";
 import FullLoading from "../Loaders/FullLoading";
 import Errors404 from "../Errors/Errors404";
+import Errors403 from "../Errors/Errors403";
 import TopRightToast from "../Toasts/TopRightToast";
 
 export default {
@@ -26,6 +28,7 @@ export default {
         "full-loading": FullLoading,
         "login": LoginComponent,
         "error-404": Errors404,
+        "error-403": Errors403,
         "toast": TopRightToast
     },
     data() {
@@ -35,15 +38,16 @@ export default {
             },
             hasLoggedIn: false,
             routes: {
-                notFound: false
+                notFound: false,
+                unauthorized: false
             },
             toast: {
                 open: false,
                 background: this.$colors.successPrimary,
                 data: {
-                    title: "Success!",
-                    message: "Tambah sparepart berhasil",
-                    icon: "fa fa-check"
+                    title: "",
+                    message: "",
+                    icon: ""
                 }
             },
             fullScreen: false
@@ -54,15 +58,23 @@ export default {
             if (state.user.check) {
                 this.loading.fullLoading = false;
                 this.hasLoggedIn = state.user.data !== null;
+                if (state.user.data !== null) {
+                    this.$role.setRole(state.user.data.role);
+                    this.checkAuthorization();
+                }
             }
         });
-        this.resolve(this.$router.currentRoute);
+
         this.$root.$on('open-toast', (data) => {
             this.toast.open = true;
             this.toast.background = data.background;
             this.toast.data = data.data;
         });
-        this.wantsFullScreen();
+
+        this.$root.$on('reload-page', () => {
+            this.reload();
+        });
+        this.reload();
     },
     watch: {
         async '$route' (to, from) {
@@ -76,6 +88,20 @@ export default {
         },
     },
     methods: {
+        async reload(){
+            this.loading.fullLoading = true;
+            this.hasLoggedIn =
+            this.routes.notFound =
+            this.routes.unauthorized = false;
+
+            await this.$store.commit('retrieveUserData');
+
+            this.resolve(this.$router.currentRoute);
+            this.wantsFullScreen();
+        },
+        checkAuthorization(){
+            this.routes.unauthorized = !this.$router.currentRoute.meta.roles.includes(this.$store.state.user.data.role);
+        },
         resolve(route){
             this.routes.notFound = route.name === "notfound";
         },
