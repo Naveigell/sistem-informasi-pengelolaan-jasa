@@ -92,7 +92,6 @@ Vue.mixin({
             this.$router.back();
         },
         moveTo(path) {
-            console.log(path)
             this.$router.push({
                 path
             });

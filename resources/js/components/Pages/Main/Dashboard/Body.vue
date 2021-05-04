@@ -225,13 +225,23 @@ export default {
                 const data = response.data.body.graph.data;
                 const options = response.data.body.graph.options;
 
+                const max = Math.max(...data.datasets[0].data);
+
+                this.$currency.sentences.parseMax(max);
+                this.$currency.sentences.setSentencesOption(this.$currency.sentences.FULL_SENTENCES)
+
                 // part of options
                 const firstYAxes = options?.scales.yAxes[0];
                 const tooltips = options?.tooltips;
 
                 if (firstYAxes !== null) {
                     firstYAxes.ticks.callback = (value, index, values) => {
-                        return `Rp. ${this.$currency.indonesian(value)}`;
+                        let cur = this.$currency.sentences.parse(value);
+                        // const val = this.$currency.indonesian(value);
+                        if (value <= 0) {
+                            cur = 0;
+                        }
+                        return `Rp. ${cur}`;
                     }
                 }
 

@@ -64,7 +64,7 @@ class OrderSparepartModel extends Model
             ->whereMonth("service_spare_part.updated_at", $date->toArray()["month"])
             ->whereYear("service_spare_part.updated_at", $date->toArray()["year"])->sum("harga");
 
-            array_push($arr, $result);
+            array_push($arr, (int) $result);
         }
         return $arr;
     }
