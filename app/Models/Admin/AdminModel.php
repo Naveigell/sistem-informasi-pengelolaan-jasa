@@ -4,6 +4,7 @@ namespace App\Models\Admin;
 
 use App\Models\User\Account\BiodataModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserModel
@@ -29,5 +30,24 @@ class AdminModel extends Model
     public function biodata()
     {
         return $this->hasOne(BiodataModel::class, "biodata_id_users", "id_users")->select(["id_biodata", "biodata_id_users", "jenis_kelamin", "nomor_hp", "alamat", "profile_picture"]);
+    }
+
+    /**
+     * Insert technician
+     *
+     * @param object $data
+     * @return int
+     */
+    public function insertAdmin(object $data)
+    {
+        return $this->insertGetId([
+            "name"          => $data->name,
+            "username"      => $data->username,
+            "email"         => $data->email,
+            "password"      => Hash::make(123456),
+            "role"          => $this->role,
+            "created_at"    => now(),
+            "updated_at"    => now()
+        ]);
     }
 }

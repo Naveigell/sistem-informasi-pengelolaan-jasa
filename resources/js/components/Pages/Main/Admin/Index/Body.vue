@@ -55,16 +55,19 @@
                 </div>
             </div>
         </div>
+        <Insert v-if="modal.insert.open" @onAnimationEnd="closeModal(modal.insert)" @response="reload"/>
     </div>
 </template>
 
 <script>
 import GridList from "./Lists/GridList";
+import Insert from "./Modals/Insert";
 
 export default {
     name: "Body",
     components: {
         grid: GridList,
+        Insert
     },
     data(){
         return {

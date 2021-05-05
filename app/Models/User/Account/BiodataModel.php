@@ -58,9 +58,9 @@ class BiodataModel extends Model
         return $this->insert([
             "biodata_id_users"      => $id,
             "jenis_kelamin"         => $data->gender,
-            "nomor_hp"              => null,
+            "nomor_hp"              => property_exists($data, 'phone') ? $data->phone : null,
             "profile_picture"       => $data->avatar,
-            "alamat"                => $data->address,
+            "alamat"                => property_exists($data, 'address') ? $data->address : null,
             "created_at"            => now(),
             "updated_at"            => now()
         ]);

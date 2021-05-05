@@ -33,6 +33,7 @@ const endpoints = {
     admins: {
         data: "/admins",
         search: "/admins/search",
+        insert: "/admins",
     },
     technicians: {
         data: "/technicians",

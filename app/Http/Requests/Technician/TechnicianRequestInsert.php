@@ -58,12 +58,4 @@ class TechnicianRequestInsert extends FormRequest
             "gender"        => "required|string|in:Laki - laki,Perempuan"
         ];
     }
-
-//    protected function prepareForValidation()
-//    {
-//        $data = $this->request->all();
-//        $data["username"] = RegexHelper::removeSpace($this->request->get("username"));
-//
-//        $this->replace($data);
-//    }
 }

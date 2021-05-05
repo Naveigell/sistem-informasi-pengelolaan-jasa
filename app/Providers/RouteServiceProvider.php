@@ -105,6 +105,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix("/admins")->group(function () {
             Route::get("/{page?}", "Api\Admin\AdminController@retrieveAll");
+            Route::post("/", "Api\Admin\AdminController@create")->middleware("should.has.role:admin");
         });
     }
 
