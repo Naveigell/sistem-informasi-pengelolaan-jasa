@@ -65,7 +65,9 @@ class ServiceSparePartSeeder extends Seeder
                         "nama_spare_part"                   => $sparePart->nama_spare_part,
                         "jumlah"                            => $jumlah,
                         "harga"                             => $sparePart->harga,
-                        "harga_asli"                        => $sparePart->harga_asli
+                        "harga_asli"                        => $sparePart->harga_asli,
+                        "created_at"                        => $service->created_at,
+                        "updated_at"                        => $service->updated_at
                     ];
 
                     $inserted = DB::table('service_spare_part')->insert($data);

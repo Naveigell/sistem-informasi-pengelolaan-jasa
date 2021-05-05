@@ -61,6 +61,8 @@ export default {
                 if (state.user.data !== null) {
                     this.$role.setRole(state.user.data.role);
                     this.checkAuthorization();
+                } else if (this.$router.currentRoute.path !== "/") {
+                    this.routes.unauthorized = true;
                 }
             }
         });

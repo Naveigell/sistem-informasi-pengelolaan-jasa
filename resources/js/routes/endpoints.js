@@ -30,6 +30,10 @@ const endpoints = {
         delete: "/service",
         update: "/service"
     },
+    admins: {
+        data: "/admins",
+        search: "/admins/search",
+    },
     technicians: {
         data: "/technicians",
         search: "/technicians/search",

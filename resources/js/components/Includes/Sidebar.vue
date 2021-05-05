@@ -59,6 +59,12 @@ export default {
                             roles: ["admin", "teknisi"]
                         },
                         {
+                            name: "Data Admin",
+                            isLink: true,
+                            to: "/admins",
+                            roles: ["admin", "user"]
+                        },
+                        {
                             name: "Data Teknisi",
                             isLink: true,
                             to: "/technician",

@@ -58,6 +58,7 @@ class RouteServiceProvider extends ServiceProvider
                     $this->mapJasaRoutes();
                     $this->mapSparepartRoutes();
                     $this->mapTechnicianRoutes();
+                    $this->mapAdminRoutes();
                 });
             });
     }
@@ -94,6 +95,16 @@ class RouteServiceProvider extends ServiceProvider
             Route::delete("/{id}", "Api\Technician\TechnicianController@delete")->middleware("should.has.role:admin");
             Route::put("/", "Api\Technician\TechnicianController@update")->middleware("should.has.role:admin");
             Route::post("/reset-password", "Api\Technician\TechnicianController@resetPassword")->middleware("should.has.role:admin");
+        });
+    }
+
+    /**
+     * Define admin routes
+     */
+    public function mapAdminRoutes()
+    {
+        Route::prefix("/admins")->group(function () {
+            Route::get("/{page?}", "Api\Admin\AdminController@retrieveAll");
         });
     }
 

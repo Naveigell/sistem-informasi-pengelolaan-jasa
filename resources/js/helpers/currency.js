@@ -29,7 +29,7 @@ class CurrencySentences {
             cur = sentences[1];
         }
 
-        value = value / (10 ** (max - 1));
+        value = value / (10 ** (max - (max % 3)));
 
         return `${value} ${cur}`;
     }

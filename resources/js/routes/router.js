@@ -12,6 +12,8 @@ import UserIndex from "../components/Pages/Main/User/Index/Body";
 import TechnicianIndex from "../components/Pages/Main/Technician/Index/Body";
 import TechnicianUpdate from "../components/Pages/Main/Technician/Update/Body";
 
+import AdminIndex from "../components/Pages/Main/Admin/Index/Body";
+
 import Biodata from "../components/Pages/Main/Biodata/Body";
 
 import OrderIndex from "../components/Pages/Main/Orders/Index/Body";
@@ -81,6 +83,14 @@ export const router = new VueRouter({
             path: '/technician',
             name: 'technician',
             component: TechnicianIndex,
+            meta: {
+                roles: ["admin", "user"]
+            }
+        },
+        {
+            path: '/admins',
+            name: 'admins',
+            component: AdminIndex,
             meta: {
                 roles: ["admin", "user"]
             }
