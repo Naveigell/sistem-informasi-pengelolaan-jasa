@@ -4,7 +4,7 @@
             <div class="grid">
                 <div class="admin-grid-container">
                     <div class="admin-grid" v-for="(admin, index) in admins" v-if="admins.length > 0">
-                        <router-link :to="{ path: '/admin/' + admin.username }" style="text-decoration: none;">
+                        <router-link :to="{ path: '/admins/' + admin.username }" style="text-decoration: none;">
                             <img v-if="admin.biodata !== undefined" width="100%" height="170" :src="admin.biodata.profile_picture" alt="admins">
                             <hr/>
                             <span class="admin-title">

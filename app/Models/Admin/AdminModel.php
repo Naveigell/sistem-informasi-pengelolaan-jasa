@@ -33,6 +33,20 @@ class AdminModel extends Model
     }
 
     /**
+     * Retrieve admin by username
+     *
+     * @param $username
+     * @return AdminModel|Model|object|null
+     */
+    public function retrieveByUsername($username)
+    {
+        return $this->with(["biodata"])->select(["id_users", "name", "username", "email"])->where([
+            "role" => $this->role,
+            "username" => $username
+        ])->first();
+    }
+
+    /**
      * Insert technician
      *
      * @param object $data

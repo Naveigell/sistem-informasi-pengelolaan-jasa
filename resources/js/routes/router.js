@@ -13,6 +13,7 @@ import TechnicianIndex from "../components/Pages/Main/Technician/Index/Body";
 import TechnicianUpdate from "../components/Pages/Main/Technician/Update/Body";
 
 import AdminIndex from "../components/Pages/Main/Admin/Index/Body";
+import AdminShow from "../components/Pages/Main/Admin/Show/Body";
 
 import Biodata from "../components/Pages/Main/Biodata/Body";
 
@@ -91,6 +92,14 @@ export const router = new VueRouter({
             path: '/admins',
             name: 'admins',
             component: AdminIndex,
+            meta: {
+                roles: ["admin", "user"]
+            }
+        },
+        {
+            path: '/admins/:username',
+            name: 'admins.show',
+            component: AdminShow,
             meta: {
                 roles: ["admin", "user"]
             }

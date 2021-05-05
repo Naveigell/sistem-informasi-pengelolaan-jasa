@@ -69,6 +69,25 @@ class AdminController extends Controller
     }
 
     /**
+     * Retrieve admin data by username
+     *
+     * @param $username
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function retrieveByUsername($username)
+    {
+        $data = $this->admins->retrieveByUsername($username);
+        if ($data == null) {
+            return error(null, ["message" => "Data tidak ditemukan"], 404);
+        }
+
+        // add full url into profile picture
+        $data->biodata->profile_picture = user_picture($data->biodata->profile_picture);
+
+        return json($data);
+    }
+
+    /**
      * Create new Admin
      *
      * @param AdminRequestInsert $request
