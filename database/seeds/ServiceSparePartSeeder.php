@@ -45,7 +45,7 @@ class ServiceSparePartSeeder extends Seeder
 
             $sparePartNeeded = $this->makeSparePart($service->jenis_perangkat);
 
-            $spareParts = DB::table('spare_part')->select(['id_spare_part', 'nama_spare_part', 'harga'])
+            $spareParts = DB::table('spare_part')->select(['id_spare_part', 'nama_spare_part', 'harga', 'harga_asli'])
                                                       ->whereIn('id_spare_part', $sparePartNeeded)
                                                       ->get()->toArray();
 
@@ -64,7 +64,8 @@ class ServiceSparePartSeeder extends Seeder
                         "service_spare_part_id_service"     => $service->id_service,
                         "nama_spare_part"                   => $sparePart->nama_spare_part,
                         "jumlah"                            => $jumlah,
-                        "harga"                             => $sparePart->harga
+                        "harga"                             => $sparePart->harga,
+                        "harga_asli"                        => $sparePart->harga_asli
                     ];
 
                     $inserted = DB::table('service_spare_part')->insert($data);

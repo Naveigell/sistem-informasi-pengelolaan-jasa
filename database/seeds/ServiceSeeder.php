@@ -39,10 +39,9 @@ class ServiceSeeder extends Seeder
      * @return mixed Buat teknisi secara random
      */
     private function makeTeknisi($tipe) {
-        $listTeknisi        = DB::table('users')->select(["users.role", "users.id_users", "keahlian_teknisi.tipe"])->where([
-            "role"      => "teknisi",
-            "tipe"      => $tipe
-        ])->join("keahlian_teknisi", "keahlian_teknisi.keahlian_teknisi_id_users", "=", "users.id_users")->get()->toArray();
+        $listTeknisi        = DB::table('users')->select(["users.role", "users.id_users"])->where([
+            "role"      => "teknisi"
+        ])->get()->toArray();
 
         return $this->random($listTeknisi);
     }
@@ -106,6 +105,7 @@ class ServiceSeeder extends Seeder
                     $estimasiSelesai = null;
                 }
 
+                DB::beginTransaction();
                 try {
                     DB::table('service')->insert([
                         "service_id_teknisi"            => $teknisi->id_users,
@@ -124,10 +124,12 @@ class ServiceSeeder extends Seeder
                         "tanggal_selesai"               => $tanggalSelesai,
                         "estimasi_selesai"              => $estimasiSelesai
                     ]);
+                    DB::commit();
 
                     error_log("Create success");
                 } catch (Exception $e) {
                     error_log("Create error : ".$e->getMessage());
+                    DB::rollBack();
                 }
 
                 error_log($uniqueID);

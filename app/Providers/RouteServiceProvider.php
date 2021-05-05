@@ -69,7 +69,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function mapJasaRoutes()
     {
-        Route::prefix("/service")->group(function () {
+        Route::prefix("/service")->middleware("should.has.role:admin")->group(function () {
             Route::get("/", "Api\Jasa\JasaController@retrieveAll");
             Route::post("/", "Api\Jasa\JasaController@insert");
             Route::patch("/activate", "Api\Jasa\JasaController@activate");
@@ -88,12 +88,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix("/technicians")->group(function () {
             Route::get("/search", "Api\Technician\TechnicianController@search");
             Route::get("/{page?}", "Api\Technician\TechnicianController@retrieveAll");
-            Route::get("/{id}/graph", "Api\Technician\GraphController@retrieve");
-            Route::get("/username/{username}", "Api\Technician\TechnicianController@retrieveByUsername");
-            Route::post("/", "Api\Technician\TechnicianController@create");
-            Route::delete("/{id}", "Api\Technician\TechnicianController@delete");
-            Route::put("/", "Api\Technician\TechnicianController@update");
-            Route::post("/reset-password", "Api\Technician\TechnicianController@resetPassword");
+            Route::get("/{id}/graph", "Api\Technician\GraphController@retrieve")->middleware("should.has.role:admin,teknisi");
+            Route::get("/username/{username}", "Api\Technician\TechnicianController@retrieveByUsername")->middleware("should.has.role:admin,teknisi");
+            Route::post("/", "Api\Technician\TechnicianController@create")->middleware("should.has.role:admin");
+            Route::delete("/{id}", "Api\Technician\TechnicianController@delete")->middleware("should.has.role:admin");
+            Route::put("/", "Api\Technician\TechnicianController@update")->middleware("should.has.role:admin");
+            Route::post("/reset-password", "Api\Technician\TechnicianController@resetPassword")->middleware("should.has.role:admin");
         });
     }
 
@@ -105,12 +105,12 @@ class RouteServiceProvider extends ServiceProvider
     public function mapSparepartRoutes()
     {
         Route::prefix("/spareparts")->group(function (){
-            Route::get("/search", "Api\Sparepart\SparepartController@search");
-            Route::get("/retrieve/{id}", "Api\Sparepart\SparepartController@retrieve");
-            Route::get("/{page?}", "Api\Sparepart\SparepartController@retrieveAll")->name('sparepart.index');
-            Route::post("/", "Api\Sparepart\SparepartController@insert");
-            Route::put("/", "Api\Sparepart\SparepartController@update");
-            Route::delete("/{id}", "Api\Sparepart\SparepartController@delete");
+            Route::get("/search", "Api\Sparepart\SparepartController@search")->middleware("should.has.role:admin,teknisi");
+            Route::get("/retrieve/{id}", "Api\Sparepart\SparepartController@retrieve")->middleware("should.has.role:admin,teknisi");
+            Route::get("/{page?}", "Api\Sparepart\SparepartController@retrieveAll")->middleware("should.has.role:admin,teknisi")->name('sparepart.index');
+            Route::post("/", "Api\Sparepart\SparepartController@insert")->middleware("should.has.role:admin");
+            Route::put("/", "Api\Sparepart\SparepartController@update")->middleware("should.has.role:admin");
+            Route::delete("/{id}", "Api\Sparepart\SparepartController@delete")->middleware("should.has.role:admin");
         });
     }
 
@@ -122,11 +122,11 @@ class RouteServiceProvider extends ServiceProvider
     public function mapBiodataRoutes()
     {
         Route::prefix("/biodata")->group(function (){
-            Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata');
-            Route::get('/image', 'Api\User\Account\BiodataController@getProfilePicture');
-            Route::get('/graph', 'Api\User\Account\GraphController@retrieveData');
-            Route::put('/', 'Api\User\Account\BiodataController@updateBiodata');
-            Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture');
+            Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata')->middleware("should.has.role:admin,teknisi,user");
+            Route::get('/image', 'Api\User\Account\BiodataController@getProfilePicture')->middleware("should.has.role:admin,teknisi,user");
+            Route::get('/graph', 'Api\User\Account\GraphController@retrieveData')->middleware("should.has.role:teknisi");
+            Route::put('/', 'Api\User\Account\BiodataController@updateBiodata')->middleware("should.has.role:admin,teknisi,user");
+            Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture')->middleware("should.has.role:admin,teknisi,user");
         });
     }
 
