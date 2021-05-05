@@ -47,7 +47,36 @@ class AdminModel extends Model
     }
 
     /**
-     * Insert technician
+     * Search admin by name
+     *
+     * @param $q
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function search($q){
+        return $this->with(["biodata"])->select(["id_users", "name", "username", "role"])
+            ->where("role", $this->role)->where(function ($query) use ($q) {
+                // explode the array
+                $queryArray = explode(" ", $q);
+                for ($i = 0; $i < count($queryArray); $i++) {
+                    $merges = "";
+                    // then merge the array, example
+                    // "blue phone casing", will be
+                    // "blue phone casing", "blue phone", "blue"
+                    for ($j = 0; $j <= $i; $j++) {
+                        $merges .= $queryArray[$j];
+
+                        if ($j < $i) {
+                            $merges .= " ";
+                        }
+                    }
+                    $query->orWhere("name", "LIKE", "%$merges%");
+                }
+
+            })->paginate(12);
+    }
+
+    /**
+     * Insert admin
      *
      * @param object $data
      * @return int

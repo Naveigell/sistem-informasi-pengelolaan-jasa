@@ -104,6 +104,7 @@ class RouteServiceProvider extends ServiceProvider
     public function mapAdminRoutes()
     {
         Route::prefix("/admins")->group(function () {
+            Route::get("/search", "Api\Admin\AdminController@search");
             Route::get("/{page?}", "Api\Admin\AdminController@retrieveAll");
             Route::get("/username/{username}", "Api\Admin\AdminController@retrieveByUsername")->middleware("should.has.role:admin,user");
             Route::post("/", "Api\Admin\AdminController@create")->middleware("should.has.role:admin");

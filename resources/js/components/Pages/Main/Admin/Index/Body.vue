@@ -17,7 +17,7 @@
                             </div>
                         </div>
                     </div>
-                    <button @click="searchadmins()" class="button-search button-success-primary-md">Cari</button>
+                    <button @click="searchAdmins()" class="button-search button-success-primary-md">Cari</button>
                 </div>
                 <div class="admin-tools">
                     <div class="admin-tools-left">
@@ -168,12 +168,16 @@ export default {
                 this.retrieveUrl(url(index));
             }
         },
-        searchadmins(){
-            this.retrieveUrl(this.$endpoints.admins.search, {
-                params: {
-                    q: this.search.query,
-                }
-            });
+        searchAdmins(){
+            if (this.search.query === "") {
+                this.retrieveUrl(this.$endpoints.admins.data);
+            } else {
+                this.retrieveUrl(this.$endpoints.admins.search, {
+                    params: {
+                        q: this.search.query,
+                    }
+                });
+            }
         }
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequestInsert;
+use App\Http\Requests\Admin\AdminRequestSearch;
 use App\Models\Admin\AdminModel;
 use App\Models\User\Account\BiodataModel;
 use App\Traits\Random;
@@ -66,6 +68,57 @@ class AdminController extends Controller
             ],
             "admins"        => $admins
         ]);
+    }
+
+    /**
+     * Search Admin by name
+     *
+     * @param AdminRequestSearch $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(AdminRequestSearch $request)
+    {
+        $query  = $request->get("q");
+        $page   = (int) $request->get("p");
+
+        set_current_page($page);
+
+        $collections    = $this->admins->search($query);
+        $admins         = $this->collectAdmin(collect($collections->items()));
+
+        $current_page   = $collections->currentPage();
+        $last_page      = $collections->lastPage();
+
+        $current_url    = \request()->url();
+        $previous_page  = $current_page - 1 > 0 && $current_page <= $last_page ? $current_page - 1 : null;
+        $next_page      = $current_page < $last_page && $current_page > 0 ? $current_page + 1 : null;
+
+        $next_url       = QueryString::parse([
+            "q"     => $query,
+            "p"     => $next_page
+        ]);
+
+        $previous_url   = QueryString::parse([
+            "q"     => $query,
+            "p"     => $previous_page
+        ]);
+
+        $data = [
+            "total"         => $collections->total(),
+            "pages"         => [
+                "current_page"      => $current_page,
+                "last_page"         => $last_page,
+                "per_page"          => $collections->perPage(),
+                "current_url"       => $current_url,
+                "previous_url"      => api_path_v1(self::SEARCH_PATH_URL.$previous_url),
+                "next_url"          => api_path_v1(self::SEARCH_PATH_URL.$next_url),
+                "uri"               => api_path_v1(self::MAIN_PATH_URL)
+            ],
+            "admins"        => $admins,
+            "search"        => true
+        ];
+
+        return json($data);
     }
 
     /**
