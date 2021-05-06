@@ -79,7 +79,8 @@ const endpoints = {
         data: "/complaints",
         retrieve: "/complaints/retrieve/:id",
         do_complaint: "/complaints/do-complaint/:id",
-        do_accept: "/complaints/do-accept/:id"
+        do_user_accept: "/complaints/do-user-accept/:id",
+        do_admin_accept: "/complaints/do-admin-accept/:id"
     },
     exports: {
         finance: {

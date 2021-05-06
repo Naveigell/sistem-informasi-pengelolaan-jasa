@@ -142,9 +142,24 @@ class ComplaintController extends Controller implements TimeSentences
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function doAccept($id)
+    public function doUserAccept($id)
     {
-        $updated = $this->complaint->doAccept($id, $this->auth->id());
+        $updated = $this->complaint->doUserAccept($id, $this->auth->id());
+        if ($updated) {
+            return json([], null, 204);
+        }
+        return error(null, ["message" => "Gagal menyimpan data"]);
+    }
+
+    /**
+     * Do accept, by admin
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function doAdminAccept($id)
+    {
+        $updated = $this->complaint->doAdminAccept($id);
         if ($updated) {
             return json([], null, 204);
         }

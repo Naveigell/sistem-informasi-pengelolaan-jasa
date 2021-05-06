@@ -27,15 +27,25 @@ class SaranSeeder extends Seeder
         for ($i = 0; $i < $random; $i++) {
             $suggestion = $this->randomSuggestion($suggestions);
 
-            DB::table("pengaduan")->insert([
-                "pengaduan_id_users"    => $id,
-                "isi"                   => $suggestion->content,
-                "stars"                 => rand(1, 5),
-                "tipe"                  => "saran",
-                "created_at"            => date("Y-m-d H:i:s"),
-                "updated_at"            => date("Y-m-d H:i:s")
-            ]);
-            error_log("User with id: $id has = '".$suggestion->content."'");
+            DB::beginTransaction();
+            try {
+                DB::table("pengaduan")->insert([
+                    "pengaduan_id_users"    => $id,
+                    "isi"                   => $suggestion->content,
+                    "stars"                 => rand(1, 5),
+                    "tipe"                  => "saran",
+                    "created_at"            => date("Y-m-d H:i:s"),
+                    "updated_at"            => date("Y-m-d H:i:s")
+                ]);
+
+                DB::commit();
+
+                error_log("User with id: $id has = '".$suggestion->content."'");
+            } catch (\Exception $exception) {
+                DB::rollBack();
+
+                error_log("Something error with id: $id, ".$exception->getMessage());
+            }
         }
         error_log("");
         error_log("");

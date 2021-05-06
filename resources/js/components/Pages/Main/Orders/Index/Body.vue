@@ -43,7 +43,7 @@
                                     <th>DIBUAT</th>
                                     <th>TEKNISI</th>
                                     <th>STATUS</th>
-                                    <th>HARGA</th>
+                                    <th>BIAYA</th>
                                     <th>AKSI</th>
                                 </tr>
                                 </thead>

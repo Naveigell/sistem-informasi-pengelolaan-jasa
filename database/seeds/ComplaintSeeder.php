@@ -22,16 +22,27 @@ class ComplaintSeeder extends Seeder
     {
         $complaint = $this->randomComplaint($complaints);
 
-        DB::table("pengaduan")->insert([
-            "pengaduan_id_users"    => $id_user,
-            "pengaduan_id_teknisi"  => $id_teknisi,
-            "pengaduan_id_service"  => $id_service,
-            "isi"                   => $complaint->content,
-            "stars"                 => rand(1, 5),
-            "tipe"                  => "komplain",
-            "created_at"            => date("Y-m-d H:i:s"),
-            "updated_at"            => date("Y-m-d H:i:s")
-        ]);
+        DB::beginTransaction();
+        try {
+            DB::table("pengaduan")->insert([
+                "pengaduan_id_users"    => $id_user,
+                "pengaduan_id_teknisi"  => $id_teknisi,
+                "pengaduan_id_service"  => $id_service,
+                "isi"                   => $complaint->content,
+                "stars"                 => rand(1, 5),
+                "tipe"                  => "komplain",
+                "created_at"            => date("Y-m-d H:i:s"),
+                "updated_at"            => date("Y-m-d H:i:s")
+            ]);
+
+            DB::commit();
+
+            error_log("Complaint had been made");
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            error_log("Complaint error : ".$exception->getMessage());
+        }
     }
 
     /**

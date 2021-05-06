@@ -284,7 +284,7 @@ class OrderModel extends Model implements Countable
             "spareparts:service_spare_part_id_service,service_spare_part_id_spare_part,id_service_spare_part,nama_spare_part,jumlah,harga",
             "spareparts.images:id_foto_spare_part,foto_spare_part_id_spare_part,picture",
             "technician",
-            "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe"
+            "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe,disetujui_admin"
         ])
         ->select(["id_service", "service_id_teknisi", "service_id_user", "nama_pemilik", "alamat_pemilik", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service"])
         ->where("unique_id", $unique_id)->first();

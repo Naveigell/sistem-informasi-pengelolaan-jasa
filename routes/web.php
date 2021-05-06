@@ -41,7 +41,8 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/", "Api\Complaint\ComplaintController@retrieveAll");
         Route::get("/retrieve/{id}", "Api\Complaint\ComplaintController@retrieve");
         Route::put("/do-complaint/{id}", "Api\Complaint\ComplaintController@doComplaint")->middleware("should.has.role:teknisi");
-        Route::put("/do-accept/{id}", "Api\Complaint\ComplaintController@doAccept")->middleware("should.has.role:user");
+        Route::put("/do-user-accept/{id}", "Api\Complaint\ComplaintController@doUserAccept")->middleware("should.has.role:user");
+        Route::put("/do-admin-accept/{id}", "Api\Complaint\ComplaintController@doAdminAccept")->middleware("should.has.role:admin");
     });
 
     Route::group(["prefix" => "/orders", "middleware" => "auth.global"], function () {

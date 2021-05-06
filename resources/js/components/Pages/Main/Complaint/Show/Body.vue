@@ -14,8 +14,13 @@
                             <router-link v-if="data.complaint.order !== undefined && data.complaint.order !== null" style="color: #5179d6; text-decoration: none;" :to="{ path: '/orders/' + data.complaint.order.unique_id }">
                                 <h3>{{ data.complaint.order.unique_id }}</h3>
                             </router-link>
-                            <span v-if="Object.keys(data.complaint).length > 0" class="label" v-bind:class="{'label-danger': data.complaint.dikerjakan_teknisi === 0 && data.complaint.disetujui_user === 0, 'label-info': data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_user === 0, 'label-success': data.complaint.disetujui_user === 1 && data.complaint.dikerjakan_teknisi}" style="display: inline-block; margin-bottom: 20px;">
-                                {{ data.complaint.disetujui_user === 1 && data.complaint.dikerjakan_teknisi === 1 ? "Disetujui user" : data.complaint.dikerjakan_teknisi === 1 ? "Selesai dikerjakan" : "complain" }}
+                            <span v-if="Object.keys(data.complaint).length > 0">
+                                <span v-if="data.complaint.disetujui_admin === 0" class="label" v-bind:class="{'label-danger': data.complaint.dikerjakan_teknisi === 0 && data.complaint.disetujui_user === 0, 'label-info': data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_user === 0, 'label-success': data.complaint.disetujui_user === 1 && data.complaint.dikerjakan_teknisi}" style="display: inline-block; margin-bottom: 20px;">
+                                    {{ data.complaint.disetujui_user === 1 && data.complaint.dikerjakan_teknisi === 1 ? "Disetujui user" : data.complaint.dikerjakan_teknisi === 1 ? "Selesai dikerjakan" : "complain" }}
+                                </span>
+                                <span v-else class="label-default label" style="display: inline-block; margin-bottom: 20px;">
+                                    selesai
+                                </span>
                             </span>
                             <div class="email-app mb-4">
                                 <main class="message">
@@ -77,12 +82,20 @@
                             <div v-if="$store.state.user.data.role === 'teknisi' && data.complaint.dikerjakan_teknisi === 0">
                                 <button @click="actions.doComplaint = true;" class="button-success-primary-tag" v-if="!actions.doComplaint">Kerjakan</button>
                                 <div v-else>
-                                    <button @click="doService" class="button-green-primary-tag"><i class="fa fa-check"></i>&nbspIya</button>
+                                    <button @click="doComplaint" class="button-green-primary-tag"><i class="fa fa-check"></i>&nbspIya</button>
                                     <button @click="actions.doComplaint = false;" class="button-danger-primary-tag"><i class="fa fa-times"></i>&nbspBatal</button>
                                 </div>
                             </div>
                             <div v-if="$store.state.user.data.role === 'user' && data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_user === 0">
                                 <span style="display: block; margin-bottom: 10px; font-weight: bold;" class="text-info text">Komplain sudah dikerjakan oleh teknisi, mohon untuk menyetujui komplain.</span>
+                                <button @click="actions.doAccept = true;" class="button-success-primary-tag" v-if="!actions.doAccept">Setujui</button>
+                                <div v-else>
+                                    <button @click="accept" class="button-green-primary-tag"><i class="fa fa-check"></i>&nbspIya</button>
+                                    <button @click="actions.doAccept = false;" class="button-danger-primary-tag"><i class="fa fa-times"></i>&nbspBatal</button>
+                                </div>
+                            </div>
+                            <div v-if="this.$role.isAdmin && data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_user === 1 && data.complaint.disetujui_admin === 0">
+                                <span style="display: block; margin-bottom: 10px; font-weight: bold;" class="text-info text">Komplain sudah dikerjakan oleh teknisi dan diterima pelanggan, mohon admin untuk menyetujui komplain.</span>
                                 <button @click="actions.doAccept = true;" class="button-success-primary-tag" v-if="!actions.doAccept">Setujui</button>
                                 <div v-else>
                                     <button @click="accept" class="button-green-primary-tag"><i class="fa fa-check"></i>&nbspIya</button>
@@ -144,11 +157,20 @@ export default {
             })
         },
         accept(){
-            const url = this.$url.generateUrl(this.$endpoints.complaints.do_accept);
+            let endpoint = this.$endpoints.complaints.do_admin_accept;
+            if (this.$role.isUser) {
+                endpoint = this.$url.generateUrl(this.$endpoints.complaints.do_user_accept);
+            }
+
+            const url = this.$url.generateUrl(endpoint);
             const id = this.$router.currentRoute.params.id;
 
             this.$api.put(url(id)).then((response) => {
-                this.data.complaint.disetujui_user = 1;
+                if (this.$role.isUser) {
+                    this.data.complaint.disetujui_user = 1;
+                } else {
+                    this.data.complaint.disetujui_admin = 1;
+                }
 
                 this.$root.$emit("open-toast", {
                     type: "success",
@@ -175,7 +197,7 @@ export default {
                 }
             });
         },
-        doService(){
+        doComplaint(){
             const url = this.$url.generateUrl(this.$endpoints.complaints.do_complaint);
             const id = this.$router.currentRoute.params.id;
 

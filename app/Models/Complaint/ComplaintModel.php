@@ -42,14 +42,13 @@ class ComplaintModel extends Model
      * Check if order has not finished complaint
      *
      * @param $id_service
-     * @param $id_teknisi
      * @return bool
      */
-    public function orderHasComplaint($id_service)
+    public function orderHasComplaintAndNotFinished($id_service)
     {
         return $this->where([
             "pengaduan_id_service"  => $id_service,
-            "disetujui_user"        => 0
+            "disetujui_admin"        => 0
         ])->exists();
     }
 
@@ -66,7 +65,7 @@ class ComplaintModel extends Model
     public function retrieveAll($id_users, $id_teknisi, $role, $next, $last_suggestion_id = null)
     {
         $take = 15;
-        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "dikerjakan_teknisi", "disetujui_user", "created_at"])
+        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "dikerjakan_teknisi", "disetujui_user", "disetujui_admin", "created_at"])
                      ->orderBy("id_pengaduan", "DESC");
 
         if ($last_suggestion_id != null) {
@@ -99,7 +98,7 @@ class ComplaintModel extends Model
      * @param $id_user
      * @return int
      */
-    public function doAccept($id, $id_user)
+    public function doUserAccept($id, $id_user)
     {
         return $this->where([
             "id_pengaduan"              => $id,
@@ -107,6 +106,23 @@ class ComplaintModel extends Model
             "tipe"                      => $this->type
         ])->update([
             "disetujui_user"            => 1
+        ]);
+    }
+
+    /**
+     * Do accept, by admin
+     *
+     * @param $id
+     * @param $id_user
+     * @return int
+     */
+    public function doAdminAccept($id)
+    {
+        return $this->where([
+            "id_pengaduan"              => $id,
+            "tipe"                      => $this->type
+        ])->update([
+            "disetujui_admin"            => 1
         ]);
     }
 
@@ -138,7 +154,7 @@ class ComplaintModel extends Model
      */
     public function retrieve($id, $id_users, $role)
     {
-        $main = $this->with(["order:unique_id,id_service"])->select(["id_pengaduan", "pengaduan_id_users", "pengaduan_id_service", "isi", "balasan", "disetujui_user", "dikerjakan_teknisi", "created_at"]);
+        $main = $this->with(["order:unique_id,id_service"])->select(["id_pengaduan", "pengaduan_id_users", "pengaduan_id_service", "isi", "balasan", "disetujui_user", "dikerjakan_teknisi", "disetujui_admin", "created_at"]);
 
         if ($role == "user") {
             return $main->where([

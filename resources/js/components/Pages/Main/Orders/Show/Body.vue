@@ -37,7 +37,7 @@
                                     <div v-if="complaint.exists">
                                         <span class="status status-danger" v-if="complaint.data.dikerjakan_teknisi === 0" style="font-weight: bold; font-size: 16px;">Komplain</span>
                                         <span class="status status-info" v-else-if="complaint.data.dikerjakan_teknisi === 1 && complaint.data.disetujui_user === 0" style="font-weight: bold; font-size: 16px;">Komplain selesai dikerjakan</span>
-                                        <span class="status status-success" v-else-if="complaint.data.disetujui_user === 1" style="font-weight: bold; font-size: 16px;">Komplain disetujui</span>
+                                        <span class="status status-success" v-else-if="complaint.data.disetujui_user === 1" style="font-weight: bold; font-size: 16px;">Komplain disetujui pelanggan</span>
                                     </div>
                                     <div class="information-container">
                                         <div class="row">
@@ -217,6 +217,9 @@
                                                     </div>
                                                     <div v-if="complaint.data.dikerjakan_teknisi !== 1">
                                                         <span class="text-danger" style="font-size: 15px;">{{ $store.state.user.data.role === 'teknisi' ? "Mohon segera mengerjakan komplain" : "Komplain belum dikerjakan, mohon menunggu." }}</span>
+                                                    </div>
+                                                    <div v-if="complaint.data.disetujui_admin === 0 && complaint.data.dikerjakan_teknisi === 1 && complaint.data.disetujui_user === 1">
+                                                        <span class="text-danger" style="font-size: 15px;">Menunggu persetujuan admin</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-10 right-column" v-else>

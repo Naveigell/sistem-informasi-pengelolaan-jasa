@@ -25,7 +25,7 @@
                     </div>
                     <div class="admin-tools-right" v-if="this.$role.isAdmin">
                         <div class="admin-tools-right-container">
-                            <button @click="modal.insert.open = true" class="button-add button-success-primary-md" style="padding: 10px 20px;">
+                            <button v-if="this.$role.isAdmin" @click="modal.insert.open = true" class="button-add button-success-primary-md" style="padding: 10px 20px;">
                                 <i class="fa fa-plus"></i>&nbsp Tambah Admin
                             </button>
                             <div class="view-model">

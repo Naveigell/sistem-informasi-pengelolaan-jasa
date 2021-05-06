@@ -25,6 +25,7 @@ class CreatePengaduanTable extends Migration
                 $table->enum('tipe', ['saran', 'komplain']);
                 $table->boolean('dikerjakan_teknisi')->default(0);
                 $table->boolean('disetujui_user')->default(0);
+                $table->boolean('disetujui_admin')->default(0);
                 $table->timestamps();
 
                 // foreign

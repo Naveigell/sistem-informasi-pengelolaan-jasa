@@ -432,6 +432,7 @@ class OrderController extends Controller implements TimeSentences
             $this->auth->user()->role == "teknisi" ? $this->auth->id() : null,
             $this->auth->user()->role == "user" ? $this->auth->id() : null,
         );
+
         $current_page   = $collections->currentPage();
         $last_page      = $collections->lastPage();
 
@@ -441,6 +442,11 @@ class OrderController extends Controller implements TimeSentences
 
         $next_url       = $this->createQueryString($request->id, $request->status, $next_page);
         $previous_url   = $this->createQueryString($request->id, $request->status, $previous_page);
+
+        $orders         = collect($collections->items())->map(function ($item) {
+            $item["price"] = $this->calculateSparepartTotalPrice($item["spareparts"]->toArray());
+            return $item;
+        });
 
         $data = [
             "total"         => $collections->total(),
@@ -453,7 +459,7 @@ class OrderController extends Controller implements TimeSentences
                 "next_url"          => api_path_v1(self::SEARCH_PATH_URL.$next_url),
                 "uri"               => api_path_v1(self::MAIN_PATH_URL)
             ],
-            "orders"        => $this->addTimeSentences(collect($collections->items())),
+            "orders"        => $this->addTimeSentences(collect($orders)),
             "search"        => true
         ];
 
@@ -537,7 +543,7 @@ class OrderController extends Controller implements TimeSentences
      */
     private function hasComplaintAndNotFinished($id) : bool
     {
-        return $this->auth->user()->role === "admin" && $this->complaint->orderHasComplaint($id);
+        return $this->auth->user()->role === "admin" && $this->complaint->orderHasComplaintAndNotFinished($id);
     }
 
     /**
@@ -560,7 +566,7 @@ class OrderController extends Controller implements TimeSentences
                 // prevent admin to change status service into pembayaran if
                 // the order has complaint and not finished
                 if ($this->hasComplaintAndNotFinished($request->id)) {
-                    return error(null, ["message" => "Complaint belum dikerjakan teknisi"], 422);
+                    return error(null, ["message" => "Komplain belum disetujui"], 422);
                 }
 
                 DB::beginTransaction();
