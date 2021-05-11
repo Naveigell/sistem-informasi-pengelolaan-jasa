@@ -356,11 +356,11 @@ class OrderController extends Controller implements TimeSentences
 
                         DB::commit();
 
-                        if ($newSparepartSaved && $lastSparepartDeleted) {
+                        if ($newSparepartSaved) {
                             return json([], null, 204);
                         }
 
-                        return error(null, ["message" => "Server error, terjadi kesalahan"]);
+                        return error(null, ["message" => "Server error, terjadi kesalahan", $newSparepartSaved, $lastSparepartDeleted]);
 
                     } else {
                         return error(null, ["message" => "Salah satu stok melebihi batas"], 422);

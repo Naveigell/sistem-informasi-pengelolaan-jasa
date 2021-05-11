@@ -202,7 +202,7 @@
                                             <div class="row">
                                                 <div class="col-md-2 left-column">
                                                     <span>
-                                                        * {{ complaint.exists ? '' : 'Buat' }} Komplain
+                                                        * {{ complaint.exists && this.$role.isTechnician ? '' : 'Buat' }} Komplain
                                                         <span>
                                                             <br>
                                                             <router-link :to="{ path: '/complaints/' + complaint.data.id_pengaduan }" style="display: inline-block;">

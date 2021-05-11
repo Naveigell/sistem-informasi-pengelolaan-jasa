@@ -140,6 +140,8 @@ export default {
     },
     mounted() {
         this.retrieve(this.$router.currentRoute.params.id);
+
+        console.log(this.$role)
     },
     methods: {
         retrieve(id){
@@ -159,7 +161,7 @@ export default {
         accept(){
             let endpoint = this.$endpoints.complaints.do_admin_accept;
             if (this.$role.isUser) {
-                endpoint = this.$url.generateUrl(this.$endpoints.complaints.do_user_accept);
+                endpoint = this.$endpoints.complaints.do_user_accept;
             }
 
             const url = this.$url.generateUrl(endpoint);
