@@ -33,7 +33,7 @@ class OrderRequestUpdateStatusService extends FormRequest
             "id.min"                        => "Id minimal 1",
 
             "status.required"               => "Status tidak boleh kosong",
-            "status.in"                     => "Status harus diantara menunggu, dicek, perbaikan, selesai, pembayaran dan terima"
+            "status.in"                     => "Status harus diantara menunggu, dicek, perbaikan, selesai dan terima"
         ];
     }
 
@@ -47,7 +47,7 @@ class OrderRequestUpdateStatusService extends FormRequest
     {
         return [
             "id"                => "required|integer|min:1",
-            "status"            => "required|in:menunggu,dicek,perbaikan,selesai,pembayaran,terima"
+            "status"            => "required|in:menunggu,dicek,perbaikan,selesai,terima"
         ];
     }
 }

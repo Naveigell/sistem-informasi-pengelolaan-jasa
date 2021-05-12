@@ -4,6 +4,7 @@ namespace App\Models\Order;
 
 use App\Interfaces\Total\Countable;
 use App\Models\Complaint\ComplaintModel;
+use App\Models\Jasa\JasaModel;
 use App\Models\Technician\TechnicianModel;
 use App\Models\User\UserModel;
 use App\Traits\DateTime\DateTimeRepeaterAndSanitizer;
@@ -27,7 +28,7 @@ class OrderModel extends Model implements Countable
      * Represent the enum field (status_service) in table, because i don't know how to get all
      * the value from it
      */
-    const STATUS_SERVICE = ["menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "terima"];
+    const STATUS_SERVICE = ["menunggu", "dicek", "perbaikan", "selesai", "terima"];
 
     /**
      * Update service status
@@ -87,7 +88,7 @@ class OrderModel extends Model implements Countable
     public function printOrder($unique_id)
     {
         return $this->with(["user:id_users,email", "user.biodata:id_biodata,biodata_id_users,nomor_hp"])
-                    ->select(["unique_id", "nama_pemilik", "service_id_user", "alamat_pemilik", "nama_perangkat", "keluhan", "jenis_perangkat", "merk"])
+                    ->select(["unique_id", "nama_pelanggan", "service_id_user", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk"])
                     ->where("unique_id", $unique_id)->first();
     }
 
@@ -124,7 +125,6 @@ class OrderModel extends Model implements Countable
                 UNION SELECT 0 AS total, 'dicek' AS status_service
                 UNION SELECT 0 AS total, 'perbaikan' AS status_service
                 UNION SELECT 0 AS total, 'selesai' AS status_service
-                UNION SELECT 0 AS total, 'pembayaran' AS status_service
                 UNION SELECT 0 AS total, 'terima' AS status_service
             ) service
             GROUP BY status_service
@@ -172,26 +172,26 @@ class OrderModel extends Model implements Countable
             "user:id_users,name,email,username",
             "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe",
             "spareparts:id_service_spare_part,service_spare_part_id_service,jumlah,harga"
-        ])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pemilik", "service_id_teknisi", "service_id_user"])->orderBy("id_service", "DESC");
+        ])->select(["id_service", "unique_id", "created_at", "status_service", "nama_pelanggan", "service_id_teknisi", "service_id_user"])->orderBy("id_service", "DESC");
     }
 
     /**
      * Get order lists
      *
-     * @param null $id_teknisi
-     * @param null $id_user
+     * @param $id
+     * @param $role
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getOrderList($id_teknisi = null, $id_user = null)
+    public function getOrderList($id, $role)
     {
         // if user is admin
-        if ($id_teknisi == null && $id_user == null) {
+        if ($role == "admin") {
             return $this->main()->paginate(12);
-        } else if ($id_teknisi == null) { // if user is normal user
-            return $this->main()->where("service_id_user", $id_user)->paginate(12);
+        } else if ($role == "user") { // if user is normal user
+            return $this->main()->where("service_id_user", $id)->paginate(12);
         }
         // if user is a technician
-        return $this->main()->where("service_id_teknisi", $id_teknisi)
+        return $this->main()->where("service_id_teknisi", $id)
                             ->orWhere("status_service", "menunggu")
                             ->paginate(12);
     }
@@ -284,10 +284,16 @@ class OrderModel extends Model implements Countable
             "spareparts:service_spare_part_id_service,service_spare_part_id_spare_part,id_service_spare_part,nama_spare_part,jumlah,harga",
             "spareparts.images:id_foto_spare_part,foto_spare_part_id_spare_part,picture",
             "technician",
-            "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe,disetujui_admin"
+            "complaint:disetujui_user,id_pengaduan,isi,pengaduan_id_service,dikerjakan_teknisi,tipe,disetujui_admin",
+            "service:id_jasa,nama_jasa"
         ])
-        ->select(["id_service", "service_id_teknisi", "service_id_user", "nama_pemilik", "alamat_pemilik", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service"])
+        ->select(["id_service", "service_id_jasa", "service_id_teknisi", "service_id_user", "nama_pelanggan", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service"])
         ->where("unique_id", $unique_id)->first();
+    }
+
+    public function service()
+    {
+        return $this->hasOne(JasaModel::class, "id_jasa", "service_id_jasa");
     }
 
     public function spareparts()
@@ -321,9 +327,10 @@ class OrderModel extends Model implements Countable
     {
         return $this->insert([
             "service_id_user"                       => $id_user,
+            "service_id_jasa"                       => $data->id_service,
             "unique_id"                             => $unique_id,
-            "nama_pemilik"                          => $data->name,
-            "alamat_pemilik"                        => $data->address,
+            "nama_pelanggan"                        => $data->name,
+            "alamat_pelanggan"                      => $data->address,
             "nama_perangkat"                        => $data->device_name,
             "keluhan"                               => $data->device_problem,
             "jenis_perangkat"                       => $data->device_type == "pc" ? "pc/komputer" : $data->device_type,

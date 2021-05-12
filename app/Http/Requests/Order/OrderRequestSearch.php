@@ -25,7 +25,7 @@ class OrderRequestSearch extends FormRequest
     {
         return [
             "id"        => "sometimes|string",
-            "status"    => "sometimes|string|in:all,menunggu,dicek,perbaikan,selesai,pembayaran,diterima"
+            "status"    => "sometimes|string|in:all,menunggu,dicek,perbaikan,selesai,diterima"
         ];
     }
 }

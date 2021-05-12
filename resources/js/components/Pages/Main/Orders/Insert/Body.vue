@@ -72,6 +72,57 @@
                                             </div>
                                         </div>
                                         <br/>
+                                        <div v-if="services.length > 0">
+                                            <div class="row">
+                                                <div class="col-md-2 left-column">
+                                                    <span>
+                                                        * Jenis Jasa
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-10 right-column">
+                                                    <span v-if="data.service === null" style="display: inline-block; margin-top: 10px; color: #999;">Pilih jenis jasa dibawah ini</span>
+                                                    <div style="width: 100%;" v-else>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; padding: 15px 10px; font-weight: normal;">{{ data.service.nama_jasa }}</div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; padding: 15px 10px; font-weight: normal; position: relative;">
+                                                            {{ data.service.tipe.capitalize() }}
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; border-right: 1px solid #cfcfcf; padding: 15px 10px; font-weight: normal;">Rp {{ $currency.indonesian(data.service.biaya_jasa) }}</div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-right: 1px solid #cfcfcf; padding: 10px 10px; font-weight: normal;">
+                                                            <button class="button-transparent-tag" @click="data.service = null;">Batal</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row" v-if="data.service === null">
+                                                <div class="col-md-2 left-column"></div>
+                                                <div class="col-md-10 right-column">
+                                                    <table style="border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;">
+                                                        <thead>
+                                                        <tr style="background-color: #fafafa;">
+                                                            <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal; text-align: center;">Nama</th>
+                                                            <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 60px; font-weight: normal;">Tipe</th>
+                                                            <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal;">Biaya</th>
+                                                            <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 40px; font-weight: normal;">Aksi</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr v-for="service in services">
+                                                            <td style="max-width: 100px; text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ service.nama_jasa }}</td>
+                                                            <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 60px; font-weight: normal; position: relative;">
+                                                                {{ service.tipe.capitalize() }}
+                                                            </td>
+                                                            <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(service.biaya_jasa) }}</td>
+                                                            <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;">
+                                                                <button class="button-transparent-tag" @click="data.service = service;">Pilih</button>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-2 left-column">
                                                 <span>* Keluhan Perangkat</span>
@@ -155,7 +206,8 @@ export default {
                 device_name: "",
                 device_problem: "",
                 device_type: "pc",
-                device_brand: ""
+                device_brand: "",
+                service: null
             },
             errors: {
                 name: null,
@@ -164,7 +216,8 @@ export default {
                 device_name: null,
                 device_problem: null,
                 device_type: null,
-                device_brand: null
+                device_brand: null,
+                service: null
             },
             modals: {
                 search: {
@@ -173,7 +226,8 @@ export default {
                 insert: {
                     open: false
                 }
-            }
+            },
+            services: []
         }
     },
     watch: {
@@ -214,9 +268,22 @@ export default {
             }
         },
     },
+    mounted() {
+        this.retrieveService();
+    },
     methods: {
+        retrieveService(){
+            this.$api.get(this.$endpoints.service.data).then((response) => {
+                this.services = response.data.body.service;
+                console.log(this.services)
+            }).catch((error) => {
+                console.log(error)
+            });
+        },
         create(){
-            this.$api.post(this.$endpoints.orders.insert, this.data).then((response) => {
+            const id_service = this.data.service === null ? null : this.data.service.id_jasa;
+
+            this.$api.post(this.$endpoints.orders.insert, { ...this.data, id_service }).then((response) => {
                 this.$router.push({
                     name: "orders"
                 });

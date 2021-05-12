@@ -45,6 +45,9 @@ class OrderRequestInsert extends FormRequest
             "device_brand.required"         => "Merk perangkat harus diisi",
             "device_brand.min"              => "Panjang karakter merk minimal 3",
             "device_brand.max"              => "Panjang karakter merk maksimal 70",
+
+            "id_service.required"           => "Jenis jasa harus dipilih",
+            "id_service.min"                => "Id jasa minimal 1"
         ];
     }
 
@@ -63,7 +66,9 @@ class OrderRequestInsert extends FormRequest
             "device_name"               => "required|string|min:4|max:50",
             "device_problem"            => "required|string|min:8|max:3000",
             "device_type"               => "required|string|in:pc,hp,printer",
-            "device_brand"              => "required|string|min:3|max:70"
+            "device_brand"              => "required|string|min:3|max:70",
+
+            "id_service"                => "required|min:1"
         ];
     }
 }

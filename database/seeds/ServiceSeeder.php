@@ -70,7 +70,7 @@ class ServiceSeeder extends Seeder
 
             $user = $listUser[$i];
 
-            $random     = rand(6, 14);
+            $random     = rand(20, 40);
             $id         = $user->id_users;
             $name       = $user->name;
             $address    = $user->alamat;
@@ -84,7 +84,7 @@ class ServiceSeeder extends Seeder
                 $biayaJasa          = $jasa->biaya_jasa;
                 $biayaTotal         = $biayaPerbaikan + $biayaJasa;
 
-                $status             = $this->random(["menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "terima"]);
+                $status             = $this->random(["menunggu", "dicek", "perbaikan", "selesai", "terima"]);
                 $uniqueID           = $this->randomID($id, 10);
                 $teknisi            = $this->makeTeknisi($keluhan->tipe);
 
@@ -95,12 +95,12 @@ class ServiceSeeder extends Seeder
 
                 $namaPerangkat      = strtoupper($keluhan->tipe." ".rand(100, 999));
 
-                if (!in_array($status, ["selesai", "pembayaran", "terima"])) {
+                if (!in_array($status, ["selesai", "terima"])) {
                     $biayaTotal = null;
                     $tanggalSelesai = null;
                 }
 
-                if (!in_array($status, ["dicek", "perbaikan", "selesai", "pembayaran", "terima"])) {
+                if (!in_array($status, ["dicek", "perbaikan", "selesai", "terima"])) {
                     $tanggalPengecekan = null;
                     $estimasiSelesai = null;
                 }
@@ -112,8 +112,8 @@ class ServiceSeeder extends Seeder
                         "service_id_user"               => $id,
                         "service_id_jasa"               => $jasa->id_jasa,
                         "unique_id"                     => $uniqueID,
-                        "nama_pemilik"                  => $name,
-                        "alamat_pemilik"                => $address,
+                        "nama_pelanggan"                  => $name,
+                        "alamat_pelanggan"                => $address,
                         "nama_perangkat"                => $namaPerangkat,
                         "keluhan"                       => $keluhan->keluhan,
                         "jenis_perangkat"               => $keluhan->tipe,

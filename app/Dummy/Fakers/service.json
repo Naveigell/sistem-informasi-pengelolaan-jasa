@@ -35,6 +35,6 @@
         "printer": []
     },
     "status": [
-        "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "terima"
+        "menunggu", "dicek", "perbaikan", "selesai", "terima"
     ]
 }

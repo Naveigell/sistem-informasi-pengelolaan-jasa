@@ -41,6 +41,17 @@ class JasaModel extends Model
     }
 
     /**
+     * Check if jasa is exists
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isExist($id)
+    {
+        return $this->where("id_jasa", $id)->exists();
+    }
+
+    /**
      * Create new jasa
      *
      * @param $data

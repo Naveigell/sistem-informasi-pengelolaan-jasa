@@ -14,6 +14,7 @@ use App\Http\Requests\Order\OrderRequestTake;
 use App\Http\Requests\Order\OrderRequestUpdateStatusService;
 use App\Interfaces\Time\TimeSentences;
 use App\Models\Complaint\ComplaintModel;
+use App\Models\Jasa\JasaModel;
 use App\Models\Order\OrderModel;
 use App\Models\Order\OrderSparepartModel;
 use App\Models\Sparepart\SparepartModel;
@@ -29,6 +30,7 @@ class OrderController extends Controller implements TimeSentences
     private UserModel $user;
     private OrderModel $order;
     private ComplaintModel $complaint;
+    private JasaModel $jasa;
 
     private $auth;
     private const MAIN_PATH_URL = "/orders";
@@ -41,6 +43,7 @@ class OrderController extends Controller implements TimeSentences
         $this->sparepart        = new SparepartModel;
         $this->orderSparepart   = new OrderSparepartModel;
         $this->complaint        = new ComplaintModel;
+        $this->jasa             = new JasaModel;
 
         $this->auth  = auth("user");
     }
@@ -57,8 +60,7 @@ class OrderController extends Controller implements TimeSentences
 
         set_current_page($page);
         $collections = $this->order->getOrderList(
-            $this->auth->user()->role == "teknisi" ? $this->auth->id() : null,
-            $this->auth->user()->role == "user" ? $this->auth->id() : null
+            $this->auth->id(), $this->auth->user()->role
         );
 
         $current_page   = $collections->currentPage();
@@ -149,6 +151,11 @@ class OrderController extends Controller implements TimeSentences
             "nama_spare_part"                   => "nama"
         ], $data["spareparts"]);
 
+        $data["service"] = Arrays::replaceKey([
+            "id_jasa"               => "id",
+            "nama_jasa"             => "name"
+        ], $data["service"]);
+
         $data["spareparts"] = $this->replaceSparepartImagesKey($data["spareparts"]);
         $data["price"] = $this->calculateSparepartTotalPrice($data["spareparts"]);
 
@@ -166,7 +173,7 @@ class OrderController extends Controller implements TimeSentences
             "service_id_user"       => "user_id",
             "jenis_perangkat"       => "jenis",
             "status_service"        => "status",
-            "alamat_pemilik"        => "alamat"
+            "alamat_pelanggan"        => "alamat"
         ], $data);
 
         return json(["order" => $data]);
@@ -243,6 +250,11 @@ class OrderController extends Controller implements TimeSentences
      */
     public function create(OrderRequestInsert $request)
     {
+        // before create, check if service is available
+        if (!$this->jasa->isExist($request->id_service)) {
+            return error(null, ["message" => "Jasa tidak ditemukan"], 404);
+        }
+
         $user = $this->user->getIdByEmail($request->email);
         if ($user == null) {
             return error(null, ["message" => "Email tidak ditemukan, silakan membuat email"]);
@@ -360,7 +372,7 @@ class OrderController extends Controller implements TimeSentences
                             return json([], null, 204);
                         }
 
-                        return error(null, ["message" => "Server error, terjadi kesalahan", $newSparepartSaved, $lastSparepartDeleted]);
+                        return error(null, ["message" => "Server error, terjadi kesalahan"]);
 
                     } else {
                         return error(null, ["message" => "Salah satu stok melebihi batas"], 422);
@@ -498,7 +510,7 @@ class OrderController extends Controller implements TimeSentences
         if ($this->auth->user()->role == "teknisi") {
             return $authorized(["menunggu", "dicek", "perbaikan", "selesai"]);
         } else if ($this->auth->user()->role == "admin") {
-            return $authorized(["pembayaran", "terima"]);
+            return $authorized(["terima"]);
         }
         return false;
     }
@@ -558,12 +570,17 @@ class OrderController extends Controller implements TimeSentences
         $status     = OrderModel::STATUS_SERVICE;
 
         if (!empty($index)) {
+            // check if the real technician can update this order
+            if (!$this->order->isOrderBelongsToTechnician($request->id, $this->auth->id())) {
+                return error(null, ["message" => "You cannot update this order status, the order is not belongs to you"], 401);
+            }
+
             $array = array_splice($status, $index + 1);
 
             // check status authorization before update
             if ($this->isUpdateStatusAuthorized($request->status)) {
 
-                // prevent admin to change status service into pembayaran if
+                // prevent admin to change status service into "terima" if
                 // the order has complaint and not finished
                 if ($this->hasComplaintAndNotFinished($request->id)) {
                     return error(null, ["message" => "Komplain belum disetujui"], 422);

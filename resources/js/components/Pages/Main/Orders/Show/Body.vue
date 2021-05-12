@@ -11,20 +11,22 @@
                         </div>
                         <div style="height: 200px;">
                             <h4 style="font-weight: bold; margin: 50px;">Status Perbaikan</h4>
-                            <div class="status-bar-indicator-container" style="">
-                                <div v-for="(status, index) in statuses">
-                                    <div v-if="index <= statuses.indexOf(data.status)" class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">
-                                        <div style="background: #39b474DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fa fa-check" style="color: white; font-size: 20px;"></i>
+                            <div class="status-bar-indicator-container" style="position: relative; width: 100%;">
+                                <div style="position: absolute; left: 0; right: 0;">
+                                    <div v-for="(status, index) in statuses" style="background: red;">
+                                        <div v-if="index <= statuses.indexOf(data.status)" class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">
+                                            <div style="background: #39b474DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fa fa-check" style="color: white; font-size: 20px;"></i>
+                                            </div>
+                                            <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
                                         </div>
-                                        <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
-                                    </div>
-                                    <div v-else class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">
-                                        <div style="background: #808080DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">
-                                            <i class="fa fa-clock-o" style="color: white; font-size: 20px;"></i>
+                                        <div v-else class="col-sm-2 col-md-2 col-lg-2 col-xl-2" style="display: flex; justify-content: center; align-items: center; height: 120px; position: relative; flex-direction: column;">
+                                            <div style="background: #808080DD; border-radius: 30000px; padding: 20px; height: 50px; width: 50px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fa fa-clock-o" style="color: white; font-size: 20px;"></i>
+                                            </div>
+                                            <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
+                                            <button v-if="updateStatusAuthorized(status)" @click="updateStatusService(status)" class="button-transparent-tag" style="position: absolute; bottom: -40px;">Pilih</button>
                                         </div>
-                                        <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
-                                        <button v-if="updateStatusAuthorized(status)" @click="updateStatusService(status)" class="button-transparent-tag" style="position: absolute; bottom: -40px;">Pilih</button>
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +44,7 @@
                                     <div class="information-container">
                                         <div class="row">
                                             <div class="col-md-2 left-column">
-                                                <span>* Nama Pemilik</span>
+                                                <span>* Nama Pelanggan</span>
                                             </div>
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
@@ -54,7 +56,7 @@
                                         <div class="row">
                                             <div class="col-md-2 left-column">
                                                 <span>
-                                                    * Email Pemilik
+                                                    * Email Pelanggan
                                                 </span>
                                             </div>
                                             <div class="col-md-10 right-column">
@@ -66,7 +68,7 @@
                                         <br/>
                                         <div class="row">
                                             <div class="col-md-2 left-column">
-                                                <span>* Alamat Pemilik</span>
+                                                <span>* Alamat Pelanggan</span>
                                             </div>
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
@@ -84,7 +86,7 @@
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
                                                     <button v-if="$store.state.user.data.role !== 'teknisi'" @click="modals.show_sparepart.open = true;" class="button-success-primary-sm">Lihat</button>
-                                                    <button :disabled="['selesai', 'pembayaran', 'terima'].includes(data.status)" v-else @click="['selesai', 'pembayaran', 'terima'].includes(data.status) ? modals.choose_sparepart.open = false : modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
+                                                    <button :disabled="['selesai', 'terima'].includes(data.status)" v-else @click="['selesai', 'pembayaran', 'terima'].includes(data.status) ? modals.choose_sparepart.open = false : modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
                                                 </div>
                                                 <span v-if="$store.state.user.data.role === 'teknisi'" style="display: inline-block; margin-top: 10px; color: #999;">Sparepart hanya bisa diperbarui saat status service dibawah "SELESAI"</span>
                                             </div>
@@ -109,7 +111,7 @@
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(sparepart.harga) }}</td>
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 60px; font-weight: normal; position: relative;">
                                                                     <div class="input-container" v-if="$store.state.user.data.role === 'teknisi'">
-                                                                        <input type="text" v-bind:disabled="['selesai', 'pembayaran', 'terima'].includes(data.status)" v-model="sparepart.jumlah">
+                                                                        <input type="text" v-bind:disabled="['selesai', 'terima'].includes(data.status)" v-model="sparepart.jumlah">
                                                                     </div>
                                                                     <span v-else>x{{ sparepart.jumlah }}</span>
                                                                 </td>
@@ -178,6 +180,17 @@
                                         <br/>
                                         <div class="row">
                                             <div class="col-md-2 left-column">
+                                                <span>* Jenis Jasa</span>
+                                            </div>
+                                            <div class="col-md-10 right-column">
+                                                <div class="input-container">
+                                                    <input v-model="data.service" disabled type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-md-2 left-column">
                                                 <span>* Teknisi</span>
                                             </div>
                                             <div class="col-md-10 right-column">
@@ -198,7 +211,7 @@
                                             </div>
                                         </div>
                                         <br/>
-                                        <div v-if="['selesai', 'pembayaran', 'terima'].includes(data.status)">
+                                        <div v-if="['selesai', 'terima'].includes(data.status)">
                                             <div class="row">
                                                 <div class="col-md-2 left-column">
                                                     <span>
@@ -286,7 +299,8 @@ export default {
                 device_problem: "",
                 device_type: "pc",
                 device_brand: "",
-                total_price: 0
+                total_price: 0,
+                service: ""
             },
             spareparts: [],
             modals: {
@@ -298,7 +312,7 @@ export default {
                 }
             },
             statuses: [
-                "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "terima"
+                "menunggu", "dicek", "perbaikan", "selesai", "terima"
             ],
             complaint: {
                 exists: false,
@@ -323,7 +337,6 @@ export default {
             get(){
                 switch (this.data.status) {
                     case "selesai":
-                    case "pembayaran":
                     case "terima":
                         return `Rp. ${this.$currency.indonesian(this.data.total_price)}`;
                     default:
@@ -420,7 +433,7 @@ export default {
             const url = this.$url.generateUrl(this.$endpoints.orders.retrieve);
             this.$api.get(url(this.$router.currentRoute.params.unique_id)).then((response) => {
                 this.data.id                = response.data.body.order.id;
-                this.data.name              = response.data.body.order.nama_pemilik;
+                this.data.name              = response.data.body.order.nama_pelanggan;
                 this.data.email             = response.data.body.order.user.email;
                 this.data.address           = response.data.body.order.alamat;
                 this.data.technician        = response.data.body.order.technician == null ? this.data.technician : response.data.body.order.technician;
@@ -432,6 +445,7 @@ export default {
                 this.data.device_problem    = response.data.body.order.keluhan;
                 this.data.device_brand      = response.data.body.order.merk;
                 this.data.total_price       = response.data.body.order.price;
+                this.data.service           = response.data.body.order.service.name;
 
                 this.spareparts             = this.data.spareparts;
 
@@ -479,32 +493,20 @@ export default {
                         icon: "fa fa-check"
                     }
                 });
-                console.log(response)
             }).catch((error) => {
-                console.error(error.response)
-                if (error.response.status === 500) {
-                    const message = error.response.data.errors.messages.exception !== null ? error.response.data.errors.messages.exception : error.response.data.errors.messages.message;
+                const message = error.response.data.errors.messages.exception !== undefined ?
+                                error.response.data.errors.messages.exception :
+                                error.response.data.errors.messages.message;
 
-                    this.$root.$emit("open-toast", {
-                        type: "failed",
-                        background: this.$colors.errorPrimary,
-                        data: {
-                            title: "Failed!",
-                            message: message,
-                            icon: "fa fa-check"
-                        }
-                    });
-                } else if (error.response.status === 422) {
-                    this.$root.$emit("open-toast", {
-                        type: "failed",
-                        background: this.$colors.errorPrimary,
-                        data: {
-                            title: "Failed!",
-                            message: error.response.data.errors.messages.message,
-                            icon: "fa fa-check"
-                        }
-                    });
-                }
+                this.$root.$emit("open-toast", {
+                    type: "failed",
+                    background: this.$colors.errorPrimary,
+                    data: {
+                        title: "Failed!",
+                        message: message,
+                        icon: "fa fa-check"
+                    }
+                });
             })
         },
         updateStatusAuthorized(status){
@@ -512,12 +514,21 @@ export default {
                 return !array.includes(status);
             };
 
+            const arr = ["menunggu", "dicek", "perbaikan", "selesai", "terima"];
+
+            const index = arr.indexOf(status);
+            if (index <= 0)
+                return false;
+
+            // arr[index - 1] === this.data.status >> meaning
+            // check the previous status if the previous status is same with current status
             const role = this.$store.state.user.data.role;
-            if (role === "teknisi"){
-                return notAuthorized(["pembayaran", "terima"]);
-            } else if (role === "admin") {
+            if (role === "teknisi" && arr[index - 1] === this.data.status){
+                return notAuthorized(["terima"]);
+            } else if (role === "admin" && arr[index - 1] === this.data.status) {
                 return notAuthorized(["menunggu", "dicek", "perbaikan", "selesai"]);
             }
+
             return false;
         }
     }

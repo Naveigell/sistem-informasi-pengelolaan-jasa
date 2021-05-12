@@ -58,7 +58,7 @@
                                         <td>
                                             <span v-if="repairment.technician == null">-</span>
                                             <router-link v-else :to="{ path: '/technician/' + repairment.technician.username }">
-                                                {{ repairment.technician.username }}
+                                                {{ repairment.technician.name }}
                                             </router-link>
                                         </td>
                                         <td>
@@ -149,11 +149,6 @@ export default {
                     enum: "selesai"
                 },
                 {
-                    name: "Pembayaran",
-                    class: "status-success",
-                    enum: "pembayaran"
-                },
-                {
                     name: "Terima",
                     class: "status-success",
                     enum: "terima"
@@ -183,7 +178,7 @@ export default {
             },
             rendered: false,
             statuses: {
-                list: ["semua", "menunggu", "dicek", "perbaikan", "selesai", "pembayaran", "diterima"],
+                list: ["semua", "menunggu", "dicek", "perbaikan", "selesai", "diterima"],
                 selected: "semua"
             },
             modal: {
@@ -204,7 +199,6 @@ export default {
         pricesString(item){
             switch (item.status_service) {
                 case "selesai":
-                case "pembayaran":
                 case "terima":
                     return `Rp. ${this.$currency.indonesian(item.price)}`;
                 default:

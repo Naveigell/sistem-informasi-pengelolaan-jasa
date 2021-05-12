@@ -19,7 +19,7 @@
                         NAMA
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-4">
-                        : &nbsp {{ data.nama_pemilik }}
+                        : &nbsp {{ data.nama_pelanggan }}
                     </div>
                 </div>
                 <div class="row" style="font-size: 28px; margin-bottom: 6px;">
@@ -35,7 +35,7 @@
                         ALAMAT
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-4">
-                        : &nbsp {{ data.alamat_pemilik }}
+                        : &nbsp {{ data.alamat_pelanggan }}
                     </div>
                 </div>
                 <div class="row" style="font-size: 28px; margin-bottom: 6px;">

@@ -200,11 +200,6 @@ export default {
                     enum: "selesai"
                 },
                 {
-                    name: "Pembayaran",
-                    class: "status-success",
-                    enum: "pembayaran"
-                },
-                {
                     name: "Terima",
                     class: "status-success",
                     enum: "terima"
