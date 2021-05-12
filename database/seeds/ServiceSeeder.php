@@ -70,7 +70,7 @@ class ServiceSeeder extends Seeder
 
             $user = $listUser[$i];
 
-            $random     = rand(20, 40);
+            $random     = rand(40, 70);
             $id         = $user->id_users;
             $name       = $user->name;
             $address    = $user->alamat;

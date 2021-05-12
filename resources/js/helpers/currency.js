@@ -4,6 +4,7 @@ let max = 0;
 const SENTENCES = [
     ["rb", "ribu"],
     ["jt", "juta"],
+    ["mlyr", "milyar"],
 ];
 
 class CurrencySentences {
@@ -19,8 +20,14 @@ class CurrencySentences {
     }
 
     parse(value){
+        let offset = [12, 9, 6, 3].filter(function (item) {
+            return item < max;
+        })[0];
+
         let sentences = SENTENCES[0];
-        if (max > 6) {
+        if (max > 9) {
+            sentences = SENTENCES[2];
+        } else if (max > 6) {
             sentences = SENTENCES[1];
         }
 
@@ -29,7 +36,7 @@ class CurrencySentences {
             cur = sentences[1];
         }
 
-        value = value / (10 ** (max - (max % 3)));
+        value = value / (10 ** (offset));
 
         return `${value} ${cur}`;
     }

@@ -61,8 +61,8 @@ class OrderSparepartModel extends Model
             ])
             ->join("service", "service_spare_part.service_spare_part_id_service", "=", "service.id_service")
             ->where("service.status_service", "terima")
-            ->whereMonth("service_spare_part.updated_at", $date->toArray()["month"])
-            ->whereYear("service_spare_part.updated_at", $date->toArray()["year"])->sum("harga");
+            ->whereMonth("service.updated_at", $date->toArray()["month"])
+            ->whereYear("service.updated_at", $date->toArray()["year"])->sum("harga");
 
             array_push($arr, (int) $result);
         }

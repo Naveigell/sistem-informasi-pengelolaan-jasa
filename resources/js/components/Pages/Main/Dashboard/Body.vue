@@ -140,10 +140,10 @@
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
                                             <router-link :to="{ path: '/technician' }" v-if="!$role.isTechnician">
-                                                {{ repairment.technician == null ? "-" : repairment.technician.username }}
+                                                {{ repairment.technician == null ? "-" : repairment.technician.name }}
                                             </router-link>
                                             <router-link :to="{ path: '/user' }" v-else>
-                                                {{ repairment.user == null ? "-" : repairment.user.username }}
+                                                {{ repairment.user == null ? "-" : repairment.user.name }}
                                             </router-link>
                                         </td>
                                         <td>
