@@ -71,6 +71,25 @@ class UserController extends Controller
     }
 
     /**
+     * Retrieve user data by username
+     *
+     * @param $username
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function retrieveByUsername($username)
+    {
+        $data = $this->user->retrieveByUsername($username);
+        if ($data == null) {
+            return error(null, ["message" => "Data tidak ditemukan"], 404);
+        }
+
+        // add full url into profile picture
+        $data->biodata->profile_picture = user_picture($data->biodata->profile_picture);
+
+        return json($data);
+    }
+
+    /**
      * Create new User
      *
      * @param UserRequestInsert $request
@@ -78,7 +97,7 @@ class UserController extends Controller
      */
     public function create(UserRequestInsert $request)
     {
-        $data = (object) $request->only(["name", "username", "email", "gender", "address"]);
+        $data = (object) $request->only(["name", "username", "email", "gender", "phone", "address"]);
         $data->avatar = $this->randomStringImage().".png";
 
         $defaultImagePath = public_path("/img/users/default/placeholder.png");

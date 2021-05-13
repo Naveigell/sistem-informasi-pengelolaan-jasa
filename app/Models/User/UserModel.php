@@ -66,6 +66,20 @@ class UserModel extends Model
     }
 
     /**
+     * Retrieve user by username
+     *
+     * @param $username
+     * @return UserModel|Model|object|null
+     */
+    public function retrieveByUsername($username)
+    {
+        return $this->with(["biodata"])->select(["id_users", "name", "username", "email"])->where([
+            "role" => $this->role,
+            "username" => $username
+        ])->first();
+    }
+
+    /**
      * Search user email, to take to form
      *
      * @param $email

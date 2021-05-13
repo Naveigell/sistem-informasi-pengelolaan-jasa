@@ -4,7 +4,7 @@
             <div class="grid">
                 <div class="user-grid-container">
                     <div class="user-grid" v-for="(user, index) in users" v-if="users.length > 0">
-                        <a style="text-decoration: none;">
+                        <router-link :to="{ path: '/users/' + user.username }" style="text-decoration: none;">
                             <img v-if="user.biodata !== undefined" :src="user.biodata.profile_picture" width="100%" height="170" alt="users">
                             <hr/>
                             <span class="user-title">
@@ -24,7 +24,7 @@
                                 </span>
                             </div>
                             <br/>
-                        </a>
+                        </router-link>
                         <transition name="user-delete-container-transition">
                             <div key="delete" class="user-delete-container" v-if="onDeleteMode">
                                 <span v-on:click="openDeleteModal(user.id, user, index)">

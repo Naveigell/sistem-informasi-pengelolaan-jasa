@@ -9,13 +9,16 @@
                     </button>
                 </div>
             </div>
-            <div class="type-container col-md-3 text-center">
+            <div class="type-container col-md-2 text-center">
                 <span>{{ data.tipe.capitalize() }}</span>
             </div>
-            <div class="description-container col-md-5 text-center">
+            <div class="description-container col-md-4 text-center">
                 <div class="description">
                     {{ data.deskripsi }}
                 </div>
+            </div>
+            <div class="service-price-container col-md-3 text-center">
+                <span class="price">Rp. {{ this.$currency.indonesian(data.biaya_jasa) }}</span>
             </div>
             <div class="action-container col-md-2">
                 <span style="color: var(--warning-primary)" v-on:click="modal.update.open = true"><i class="fa fa-pencil-square-o"></i></span>

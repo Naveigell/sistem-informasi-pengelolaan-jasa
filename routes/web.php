@@ -19,6 +19,7 @@ Route::group(['prefix' => '/api/v1'], function () {
     Route::group(["prefix" => "/users", "middleware" => "auth.global"], function () {
         Route::get("/search/email", "Api\User\UserController@searchEmail");
         Route::get("/search", "Api\User\UserController@search");
+        Route::get("/username/{username}", "Api\User\UserController@retrieveByUsername")->middleware("should.have.role:admin");
         Route::get("/{page?}", "Api\User\UserController@retrieveAll");
         Route::post("/", "Api\User\UserController@create")->middleware("should.have.role:admin");
         Route::delete("/{id}", "Api\User\UserController@delete")->middleware("should.have.role:admin");

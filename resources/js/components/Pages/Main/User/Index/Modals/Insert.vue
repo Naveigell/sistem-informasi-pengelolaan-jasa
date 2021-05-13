@@ -28,6 +28,11 @@
                             <span class="error-message" v-if="errors.gender != null && errors.gender !== undefined">{{ errors.gender[0] }}</span>
                         </div>
                         <div class="input-container">
+                            <label for="">Nomor Telepon</label>
+                            <input v-bind:class="{'input-error': errors.phone != null && errors.phone !== undefined}" @focus="errors.phone = null;" type="text" placeholder="Nomor Telepon User" v-model="data.phone">
+                            <span class="error-message" v-if="errors.phone != null && errors.phone !== undefined">{{ errors.phone[0] }}</span>
+                        </div>
+                        <div class="input-container">
                             <label for="">Email</label>
                             <input v-bind:class="{'input-error': errors.email != null && errors.email !== undefined}" @focus="errors.email = null;" type="text" placeholder="Email User" v-model="data.email">
                             <span class="error-message" v-if="errors.email != null && errors.email !== undefined">{{ errors.email[0] }}</span>
@@ -65,6 +70,7 @@ export default {
                 username: "",
                 email: "",
                 gender: "Laki - laki",
+                phone: "",
                 address: ""
             },
             errors: {
@@ -72,6 +78,7 @@ export default {
                 username: null,
                 email: null,
                 gender: null,
+                phone: null,
                 address: null
             }
         }
@@ -96,6 +103,11 @@ export default {
             const arr = ["Laki - laki", "Perempuan"];
             if (!arr.includes(newVal)) {
                 this.data.gender = oldVal;
+            }
+        },
+        "data.phone": function (newVal, oldVal) {
+            if (newVal.length > 17) {
+                this.data.phone = oldVal;
             }
         },
         "data.address": function (newVal, oldVal) {

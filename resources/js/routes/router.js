@@ -8,6 +8,7 @@ import SparepartUpdate from "../components/Pages/Main/Sparepart/Update/Body";
 import SparepartInsert from "../components/Pages/Main/Sparepart/Insert/Body";
 
 import UserIndex from "../components/Pages/Main/User/Index/Body";
+import UserShow from "../components/Pages/Main/User/Show/Body";
 
 import TechnicianIndex from "../components/Pages/Main/Technician/Index/Body";
 import TechnicianUpdate from "../components/Pages/Main/Technician/Update/Body";
@@ -76,6 +77,14 @@ export const router = new VueRouter({
             path: '/user',
             name: 'user',
             component: UserIndex,
+            meta: {
+                roles: ["admin"]
+            }
+        },
+        {
+            path: '/users/:username',
+            name: 'user.show',
+            component: UserShow,
             meta: {
                 roles: ["admin"]
             }

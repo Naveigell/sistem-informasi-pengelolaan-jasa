@@ -51,7 +51,8 @@ const endpoints = {
         search: "/users/search",
         search_email: "/users/search/email",
         insert: "/users",
-        delete: "/users"
+        delete: "/users",
+        retrieve: "/users/username/:username",
     },
     orders: {
         last: "/orders/take/:number/last",
