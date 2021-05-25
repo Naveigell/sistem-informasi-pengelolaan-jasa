@@ -126,7 +126,7 @@
                                     <tr>
                                         <th>ORDER ID</th>
                                         <th>DIBUAT</th>
-                                        <th>{{ this.$role.isTechnician ? "PEMILIK" : "TEKNISI" }}</th>
+                                        <th>{{ this.$role.isTechnician ? "PELANGGAN" : "TEKNISI" }}</th>
                                         <th>STATUS</th>
                                     </tr>
                                 </thead>

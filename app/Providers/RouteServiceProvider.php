@@ -108,6 +108,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::get("/{page?}", "Api\Admin\AdminController@retrieveAll");
             Route::get("/username/{username}", "Api\Admin\AdminController@retrieveByUsername")->middleware("should.have.role:admin,user");
             Route::post("/", "Api\Admin\AdminController@create")->middleware("should.have.role:admin");
+            Route::delete("/{id}", "Api\Admin\AdminController@delete")->middleware("should.have.role:admin");
         });
     }
 

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\AdminRequestInsert;
 use App\Http\Requests\Admin\AdminRequestSearch;
 use App\Models\Admin\AdminModel;
 use App\Models\User\Account\BiodataModel;
+use App\Traits\Files\FilesHandler;
 use App\Traits\Random;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
-    use Random;
+    use FilesHandler, Random;
 
     private AdminModel $admins;
     private BiodataModel $biodata;
@@ -119,6 +120,36 @@ class AdminController extends Controller
         ];
 
         return json($data);
+    }
+
+    /**
+     * Delete admin
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $image = $this->biodata->retrieveProfilePicture($id);
+            $delete = $this->admins->deleteAdmin($id);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            return error(null, ["server" => "Hapus admin gagal"], 500);
+        }
+
+        try {
+            if ($delete && $image != null) {
+                // image is not an array, so we add it into an array
+                $this->deleteMultipleImages("/img/users", [$image->profile_picture]);
+            }
+        } catch (\Exception $exception) {}
+
+        return json([], null, 204);
     }
 
     /**

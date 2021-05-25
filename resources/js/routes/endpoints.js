@@ -34,6 +34,7 @@ const endpoints = {
         data: "/admins",
         search: "/admins/search",
         insert: "/admins",
+        delete: "/admins",
         retrieve: "/admins/username/:username",
     },
     technicians: {

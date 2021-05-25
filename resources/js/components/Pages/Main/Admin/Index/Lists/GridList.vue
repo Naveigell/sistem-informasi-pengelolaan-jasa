@@ -25,7 +25,15 @@
                             </div>
                             <br/>
                         </router-link>
+                        <transition name="admin-delete-container-transition">
+                            <div key="delete" class="admin-delete-container" v-if="onDeleteMode">
+                                <span v-on:click="openDeleteModal(admin.id, admin, index)">
+                                    <i class="fa fa-trash"></i> Hapus
+                                </span>
+                            </div>
+                        </transition>
                     </div>
+                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :admin="data.admin" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                 </div>
             </div>
         </div>
@@ -33,9 +41,41 @@
 </template>
 
 <script>
+import Delete from "../Modals/Delete";
+
 export default {
     name: "GridList",
-    props: ["admins"],
+    props: ["admins", "onDeleteMode"],
+    components: {
+        "delete-modal": Delete,
+    },
+    data() {
+        return {
+            data: {
+                id: -1,
+                admin: null,
+                index: -1
+            },
+            modal: {
+                delete: false
+            },
+        }
+    },
+    methods: {
+        openDeleteModal(id, admin, index){
+            this.data.id = id;
+            this.data.admin = admin;
+            this.data.index = index;
+            this.modal.delete = true;
+        },
+        onDeleteModalAnimationEnd(){
+            const self = this;
+            const id = setTimeout(function () {
+                self.admins.splice(self.data.index, 1);
+                clearTimeout(id);
+            }, 800);
+        }
+    }
 }
 </script>
 

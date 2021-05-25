@@ -36,10 +36,13 @@
                                     <i class="fa fa-list-ul"></i>
                                 </div>
                             </div>
+                            <button class="button-add button-danger-md" v-on:click="mode.onDeleteMode = !mode.onDeleteMode; overlay.full = true;" style="margin-left: 7px;">
+                                {{ mode.onDeleteMode ? "Batal Hapus" : "Hapus" }}
+                            </button>
                         </div>
                     </div>
                 </div>
-                <grid v-bind:admins="admins"/>
+                <grid v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -89,6 +92,9 @@ export default {
                 lastPage: 1,
                 totalPage: 1,
                 totalData: 0
+            },
+            mode: {
+                onDeleteMode: false
             },
             search: {
                 query: "",

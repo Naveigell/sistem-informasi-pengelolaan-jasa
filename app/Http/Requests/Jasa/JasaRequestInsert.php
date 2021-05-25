@@ -33,7 +33,7 @@ class JasaRequestInsert extends FormRequest
             "price.required"        => "Harga jasa harus diisi",
             "price.integer"         => "Harus berupa angka",
             "price.min"             => "Harga jasa minimal 1",
-            "price.max"             => "Harga jasa minimal 99.999.999",
+            "price.max"             => "Harga jasa minimal 5.000.000",
         ];
     }
 
@@ -48,7 +48,7 @@ class JasaRequestInsert extends FormRequest
             "name"          => "required|string|min:3|max:30",
             "description"   => "required|string|min:5|max:255",
             "type"          => "required|string|in:pc,printer,hp",
-            "price"         => "required|integer|min:1|max:99999999"
+            "price"         => "required|integer|min:1|max:5000000"
         ];
     }
 }

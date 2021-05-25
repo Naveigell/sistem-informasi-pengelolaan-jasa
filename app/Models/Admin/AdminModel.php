@@ -93,4 +93,16 @@ class AdminModel extends Model
             "updated_at"    => now()
         ]);
     }
+
+    /**
+     * @param $id
+     * @return int
+     */
+    public function deleteAdmin($id)
+    {
+        return $this->where("role", $this->role)->where("id_users", $id)
+                    // prevent admin to delete himself
+                    ->whereNotIn("id_users", [auth("user")->id()])
+                    ->delete();
+    }
 }

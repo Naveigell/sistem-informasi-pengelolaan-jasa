@@ -19,7 +19,7 @@ class OrderRequestInsert extends FormRequest
     public function messages()
     {
         return [
-            "name.required"                 => "Nama pemilik tidak boleh kosong",
+            "name.required"                 => "Nama pelanggan tidak boleh kosong",
             "name.min"                      => "Panjang karakter nama minimal 4",
             "name.max"                      => "Panjang karakter nama maksimal 40",
 
@@ -27,9 +27,9 @@ class OrderRequestInsert extends FormRequest
             "email.min"                     => "Panjang karakter email minimal 8",
             "email.max"                     => "Panjang karakter email maksimal 255",
 
-            "address.required"              => "Alamat pemilik harus diisi",
+            "address.required"              => "Alamat pelanggan harus diisi",
             "address.min"                   => "Panjang karakter alamat minimal 8",
-            "address.max"                   => "Panjang karakter alamat maksimal 90",
+            "address.max"                   => "Panjang karakter alamat maksimal 100",
 
             "device_name.required"          => "Nama perangkat harus diisi",
             "device_name.min"               => "Panjang karakter perangkat minimal 4",

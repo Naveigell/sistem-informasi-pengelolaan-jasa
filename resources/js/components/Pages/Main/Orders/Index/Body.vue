@@ -41,7 +41,7 @@
                                 <tr>
                                     <th>ORDER ID</th>
                                     <th>DIBUAT</th>
-                                    <th>TEKNISI</th>
+                                    <th>{{ this.$role.isTechnician ? "PELANGGAN" : "TEKNISI" }}</th>
                                     <th>STATUS</th>
                                     <th>BIAYA</th>
                                     <th>AKSI</th>
@@ -56,9 +56,14 @@
                                         </td>
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
-                                            <span v-if="repairment.technician == null">-</span>
-                                            <router-link v-else :to="{ path: '/technician/' + repairment.technician.username }">
-                                                {{ repairment.technician.name }}
+                                            <div v-if="!$role.isTechnician">
+                                                <span v-if="repairment.technician == null">-</span>
+                                                <router-link v-else :to="{ path: '/technician/' + repairment.technician.username }">
+                                                    {{ repairment.technician.name }}
+                                                </router-link>
+                                            </div>
+                                            <router-link v-else :to="{ path: '/users/' + repairment.user.username }">
+                                                {{ repairment.user.name }}
                                             </router-link>
                                         </td>
                                         <td>

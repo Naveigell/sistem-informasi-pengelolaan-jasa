@@ -23,7 +23,7 @@ class BiodataUpdateRequest extends FormRequest
     {
         return [
             "alamat.required"                   => "Alamat harus diisi",
-            "alamat.min"                        => "Panjang karakter alamat minimal 6",
+            "alamat.min"                        => "Panjang karakter alamat minimal 8",
             "alamat.max"                        => "Panjang karakter alamat maksimal 100",
 
             "email.required"                    => "Email tidak boleh kosong",
@@ -36,15 +36,17 @@ class BiodataUpdateRequest extends FormRequest
 
             "name.required"                     => "Nama tidak boleh kosong",
             "name.min"                          => "Panjang karakter nama minimal 6",
-            "name.max"                          => "Panjang karakter nama minimal 60",
+            "name.max"                          => "Panjang karakter nama maksimal 60",
 
             "nomor_hp.required"                 => "Nomor hp tidak boleh kosong",
             "nomor_hp.numeric"                  => "Nomor hp harus berupa angka",
-            "nomor_hp.digits_between"           => "Panjang karakter nomor hp harus antara 9 hingga 17",
+            "nomor_hp.digits_between"           => "Panjang karakter nomor hp harus antara 7 hingga 17",
 
             "username.required"                 => "Username harus diisi",
             "username.min"                      => "Panjang karakter username minimal 6",
-            "username.max"                      => "Panjang karakter username maksimal 40"
+            "username.max"                      => "Panjang karakter username maksimal 40",
+            "username.no_space"                 => "Username tidak boleh memiliki spasi",
+            "username.lowercase"                => "Username tidak boleh memiliki huruf besar",
         ];
     }
 

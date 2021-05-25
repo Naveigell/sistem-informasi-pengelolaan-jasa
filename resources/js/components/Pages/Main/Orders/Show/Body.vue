@@ -178,17 +178,23 @@
                                             </div>
                                         </div>
                                         <br/>
-                                        <div class="row">
-                                            <div class="col-md-2 left-column">
-                                                <span>* Jenis Jasa</span>
-                                            </div>
-                                            <div class="col-md-10 right-column">
-                                                <div class="input-container">
-                                                    <input v-model="data.service" disabled type="text" value="">
+                                        <div v-if="data.service !== null">
+                                            <div class="row">
+                                                <div class="col-md-2 left-column">
+                                                    <span>* Jenis Jasa</span>
+                                                </div>
+                                                <div class="col-md-10 right-column">
+                                                    <div style="width: 100%;">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; padding: 15px 10px; font-weight: normal;">{{ data.service.name }}</div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; padding: 15px 10px; font-weight: normal; position: relative;">
+                                                            {{ data.service.tipe.capitalize() }}
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4" style="display: inline-block; text-align: center; border-bottom: 1px solid #cfcfcf; border-top: 1px solid #cfcfcf; border-left: 1px solid #cfcfcf; border-right: 1px solid #cfcfcf; padding: 15px 10px; font-weight: normal;">Rp {{ $currency.indonesian(data.service.biaya_jasa) }}</div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <br/>
                                         </div>
-                                        <br/>
                                         <div class="row">
                                             <div class="col-md-2 left-column">
                                                 <span>* Teknisi</span>
@@ -212,7 +218,7 @@
                                         </div>
                                         <br/>
                                         <div v-if="['selesai', 'terima'].includes(data.status)">
-                                            <div class="row">
+                                            <div class="row" v-if="$role.isUser || complaint.exists">
                                                 <div class="col-md-2 left-column">
                                                     <span>
                                                         * {{ complaint.exists && this.$role.isTechnician ? '' : 'Buat' }} Komplain
@@ -300,7 +306,7 @@ export default {
                 device_type: "pc",
                 device_brand: "",
                 total_price: 0,
-                service: ""
+                service: null
             },
             spareparts: [],
             modals: {
@@ -338,7 +344,7 @@ export default {
                 switch (this.data.status) {
                     case "selesai":
                     case "terima":
-                        return `Rp. ${this.$currency.indonesian(this.data.total_price)}`;
+                        return `Rp. ${this.$currency.indonesian(this.data.total_price + (this.data.service === null ? 0 : this.data.service.biaya_jasa))}`;
                     default:
                         return "-";
                 }
@@ -445,7 +451,7 @@ export default {
                 this.data.device_problem    = response.data.body.order.keluhan;
                 this.data.device_brand      = response.data.body.order.merk;
                 this.data.total_price       = response.data.body.order.price;
-                this.data.service           = response.data.body.order.service.name;
+                this.data.service           = response.data.body.order.service;
 
                 this.spareparts             = this.data.spareparts;
 
