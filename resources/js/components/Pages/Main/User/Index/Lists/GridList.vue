@@ -20,7 +20,7 @@
                             </div>
                             <div class="user-meta">
                                 <span class="user-type">
-                                    <i class="fas fa-box"></i> User
+                                    <i class="fas fa-box"></i> Pelanggan
                                 </span>
                             </div>
                             <br/>

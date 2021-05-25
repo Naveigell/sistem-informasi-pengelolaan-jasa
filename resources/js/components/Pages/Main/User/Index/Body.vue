@@ -11,7 +11,7 @@
                     <div class="user-inputs">
                         <div class="user-input-search">
                             <div class="input-search-container">
-                                <span>Nama User</span>
+                                <span>Nama Pelanggan</span>
                                 <span class="separator"></span>
                                 <input v-model="search.query" type="text" class="input-search" placeholder="Input"/>
                             </div>
@@ -21,12 +21,12 @@
                 </div>
                 <div class="user-tools">
                     <div class="user-tools-left">
-                        <h4>{{ paginator.totalData }} User Aktif</h4>
+                        <h4>{{ paginator.totalData }} Pelanggan Aktif</h4>
                     </div>
                     <div class="user-tools-right">
                         <div class="user-tools-right-container">
                             <button @click="modal.insert.open = true" class="button-add button-success-primary-md" style="padding: 10px 20px;">
-                                <i class="fa fa-plus"></i>&nbsp Tambah User
+                                <i class="fa fa-plus"></i>&nbsp Tambah Pelanggan
                             </button>
                             <div class="view-model">
                                 <div>

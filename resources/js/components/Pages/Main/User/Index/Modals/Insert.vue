@@ -7,16 +7,16 @@
                         <i class="fa fa-times"></i>
                     </div>
                     <form @submit.prevent>
-                        <h2>Tambah User</h2>
-                        <span class="sub-title">Isi form dibawah untuk menambah user baru</span> <br/>
+                        <h2>Tambah Pelanggan</h2>
+                        <span class="sub-title">Isi form dibawah untuk menambah pelanggan baru</span> <br/>
                         <div class="input-container">
                             <label for="">Nama</label>
-                            <input v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" placeholder="Nama User" v-model="data.name">
+                            <input v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" placeholder="Nama Pelanggan" v-model="data.name">
                             <span class="error-message" v-if="errors.name != null && errors.name !== undefined">{{ errors.name[0] }}</span>
                         </div>
                         <div class="input-container">
                             <label for="">Username</label>
-                            <input v-bind:class="{'input-error': errors.username != null && errors.username !== undefined}" @focus="errors.username = null;" type="text" placeholder="Username User" v-model="data.username">
+                            <input v-bind:class="{'input-error': errors.username != null && errors.username !== undefined}" @focus="errors.username = null;" type="text" placeholder="Username Pelanggan" v-model="data.username">
                             <span class="error-message" v-if="errors.username != null && errors.username !== undefined">{{ errors.username[0] }}</span>
                         </div>
                         <div class="input-container">
@@ -29,17 +29,17 @@
                         </div>
                         <div class="input-container">
                             <label for="">Nomor Telepon</label>
-                            <input v-bind:class="{'input-error': errors.phone != null && errors.phone !== undefined}" @focus="errors.phone = null;" type="text" placeholder="Nomor Telepon User" v-model="data.phone">
+                            <input v-bind:class="{'input-error': errors.phone != null && errors.phone !== undefined}" @focus="errors.phone = null;" type="text" placeholder="Nomor Telepon Pelanggan" v-model="data.phone">
                             <span class="error-message" v-if="errors.phone != null && errors.phone !== undefined">{{ errors.phone[0] }}</span>
                         </div>
                         <div class="input-container">
                             <label for="">Email</label>
-                            <input v-bind:class="{'input-error': errors.email != null && errors.email !== undefined}" @focus="errors.email = null;" type="text" placeholder="Email User" v-model="data.email">
+                            <input v-bind:class="{'input-error': errors.email != null && errors.email !== undefined}" @focus="errors.email = null;" type="text" placeholder="Email Pelanggan" v-model="data.email">
                             <span class="error-message" v-if="errors.email != null && errors.email !== undefined">{{ errors.email[0] }}</span>
                         </div>
                         <div class="input-container">
                             <label for="">Alamat</label>
-                            <textarea v-bind:class="{'input-error': errors.address != null && errors.address !== undefined}" @focus="errors.address = null;" placeholder="Alamat User" v-model="data.address"></textarea>
+                            <textarea v-bind:class="{'input-error': errors.address != null && errors.address !== undefined}" @focus="errors.address = null;" placeholder="Alamat Pelanggan" v-model="data.address"></textarea>
                             <span class="error-message" v-if="errors.address != null && errors.address !== undefined">{{ errors.address[0] }}</span>
                         </div>
                         <div class="input-container">

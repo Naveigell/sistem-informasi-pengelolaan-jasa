@@ -2,7 +2,7 @@
     <div class="app-container">
         <div class="body-container" style="margin-bottom: 20px; position:relative;">
             <div class="biodata-role">
-                User
+                Pelanggan
             </div>
             <h4>
                 <i class="fa fa-user" style="margin-right: 10px"></i>{{ user.data.name == null ? "" : user.data.name }}
@@ -18,7 +18,7 @@
                 <div class="biodata-container-center">
                     <div class="biodata-container-center-form">
                         <form action="" v-on:submit.prevent>
-                            <h5>Profil User</h5>
+                            <h5>Profil Pelanggan</h5>
                             <div style="margin-top: 16px;">
                                 <div class="field-disabled field-container">
                                     <input disabled type="text" style="width: 80%; border: none; outline: none; cursor: no-drop;" v-model="user.data.name">
@@ -44,7 +44,7 @@
                                 </div>
                             </div>
 
-                            <h5>Kontak User</h5>
+                            <h5>Kontak Pelanggan</h5>
                             <div style="margin-top: 16px;">
                                 <div class="field-disabled field-container">
                                     <input disabled type="text" style="width: 80%; border: none; outline: none; cursor: no-drop;" v-model="user.data.email">
