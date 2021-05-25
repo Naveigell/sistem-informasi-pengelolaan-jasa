@@ -23,8 +23,7 @@
                     <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
                 </div>
                 <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
-                    <a>Settings</a>
-                    <a>Biodata</a>
+                    <a v-if="$role.isAdmin">History</a>
                     <router-link :to="{ path: 'suggestions' }">
                         <span style="display: inline-block; float: left;">Messages</span>
                         <span style="display: inline-block; float: right;"><i class="fa fa-envelope"></i></span>

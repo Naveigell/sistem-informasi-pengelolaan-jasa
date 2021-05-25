@@ -120,6 +120,17 @@ class UserModel extends Model
     }
 
     /**
+     * Get username by id
+     *
+     * @param $id
+     * @return UserModel|Model|object|null
+     */
+    public function getUsernameById($id)
+    {
+        return $this->select(["username"])->where("id_users", $id)->first();
+    }
+
+    /**
      * @param $id
      * @return int
      */

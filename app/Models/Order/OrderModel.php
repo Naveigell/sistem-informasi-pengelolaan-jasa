@@ -318,6 +318,17 @@ class OrderModel extends Model implements Countable
     }
 
     /**
+     * Get unique id
+     *
+     * @param $id
+     * @return OrderModel|Model|object|null
+     */
+    public function getUniqueIdById($id)
+    {
+        return $this->select(["unique_id"])->where("id_orders", $id)->first();
+    }
+
+    /**
      * Create new order
      *
      * @param $data

@@ -158,6 +158,17 @@ class TechnicianModel extends Model
     }
 
     /**
+     * Get username by id
+     *
+     * @param $id
+     * @return TechnicianModel|Model|object|null
+     */
+    public function getUsernameById($id)
+    {
+        return $this->select(["username"])->where("id_users", $id)->first();
+    }
+
+    /**
      * @param $id
      * @return int
      */

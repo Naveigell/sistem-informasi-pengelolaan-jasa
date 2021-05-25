@@ -114,11 +114,12 @@
                                                             </td>
                                                             <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(service.biaya_jasa) }}</td>
                                                             <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;">
-                                                                <button class="button-transparent-tag" @click="data.service = service;">Pilih</button>
+                                                                <button class="button-transparent-tag" @click="data.service = service; errors.id_service = null;">Pilih</button>
                                                             </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
+                                                    <span style="display: block;" class="error-message" v-if="errors.id_service != null && errors.id_service !== undefined">{{ errors.id_service[0] }}</span>
                                                 </div>
                                             </div>
                                             <br/>
@@ -217,7 +218,7 @@ export default {
                 device_problem: null,
                 device_type: null,
                 device_brand: null,
-                service: null
+                id_service: null
             },
             modals: {
                 search: {

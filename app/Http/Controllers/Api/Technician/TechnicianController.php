@@ -10,7 +10,9 @@ use App\Http\Requests\Technician\TechnicianRequestResetPassword;
 use App\Http\Requests\Technician\TechnicianRequestSearch;
 use App\Http\Requests\Technician\TechnicianRequestUpdate;
 
+use App\Interfaces\History\MakeHistory;
 use App\Models\Auth\AuthModel;
+use App\Models\History\HistoryModel;
 use App\Models\Technician\TechnicianModel;
 use App\Models\User\Account\BiodataModel;
 
@@ -23,7 +25,7 @@ use App\Traits\Files\FilesHandler;
 use App\Traits\Random;
 use Illuminate\Support\Facades\Hash;
 
-class TechnicianController extends Controller
+class TechnicianController extends Controller implements MakeHistory
 {
     use FilesHandler, Random;
 
@@ -32,6 +34,7 @@ class TechnicianController extends Controller
      */
     private $technicians;
     private $biodata;
+    private $history;
     private $auth;
 
     private const MAIN_PATH_URL = "/technicians";
@@ -40,6 +43,7 @@ class TechnicianController extends Controller
     public function __construct(){
         $this->technicians = new TechnicianModel;
         $this->biodata = new BiodataModel;
+        $this->history = new HistoryModel;
         $this->auth = new AuthModel;
     }
 
@@ -259,6 +263,8 @@ class TechnicianController extends Controller
     {
         DB::beginTransaction();
         try {
+            $this->createHistory([$id]);
+
             $image = $this->biodata->retrieveProfilePicture($id);
             $delete = $this->technicians->deleteTechnician($id);
 
@@ -307,5 +313,20 @@ class TechnicianController extends Controller
 
             return $item;
         });
+    }
+
+    /**
+     * Create history
+     *
+     * @param array $data
+     */
+    public function createHistory(array $data)
+    {
+        $username = auth("user")->user()->username;
+        $id = auth("user")->id();
+
+        $target = $this->technicians->getUsernameById($data[0]);
+        $targetUsername = $target === null ? "" : $target->username;
+        $this->history->createHistory("(Admin) $username with id '$id' do action [DELETE] to (Technician) $targetUsername with id '$data[0]'");
     }
 }

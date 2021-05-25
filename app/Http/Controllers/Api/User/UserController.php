@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserRequestInsert;
 use App\Http\Requests\User\UserRequestSearch;
 
+use App\Interfaces\History\MakeHistory;
+use App\Models\History\HistoryModel;
 use App\Models\User\Account\BiodataModel;
 use App\Models\User\UserModel;
 
@@ -19,11 +21,11 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class UserController extends Controller
+class UserController extends Controller implements MakeHistory
 {
     use FilesHandler, Random;
 
-    private $user, $biodata;
+    private $user, $biodata, $history;
 
     private const MAIN_PATH_URL = "/users";
     private const SEARCH_PATH_URL = "/users/search";
@@ -32,6 +34,7 @@ class UserController extends Controller
     {
         $this->user = new UserModel;
         $this->biodata = new BiodataModel;
+        $this->history = new HistoryModel;
     }
 
     /**
@@ -133,6 +136,8 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
+            $this->createHistory([$id]);
+
             $image = $this->biodata->retrieveProfilePicture($id);
             $delete = $this->user->deleteUser($id);
 
@@ -244,5 +249,20 @@ class UserController extends Controller
 
             return $item;
         });
+    }
+
+    /**
+     * Create history
+     *
+     * @param array $data
+     */
+    public function createHistory(array $data)
+    {
+        $username = auth("user")->user()->username;
+        $id = auth("user")->id();
+
+        $target = $this->user->getUsernameById($data[0]);
+        $targetUsername = $target === null ? "" : $target->username;
+        $this->history->createHistory("(Admin) $username with id '$id' do action [DELETE] to (Pelanggan) $targetUsername with id '$data[0]'");
     }
 }

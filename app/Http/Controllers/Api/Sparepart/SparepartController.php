@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Sparepart;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\History\MakeHistory;
+use App\Models\History\HistoryModel;
 use App\Models\Sparepart\FotoSparepartModel;
 use App\Models\Sparepart\SparepartModel;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +24,7 @@ use App\Helpers\Url\QueryString;
  * Class SparepartController
  * @package App\Http\Controllers\Api\Sparepart
  */
-class SparepartController extends Controller {
+class SparepartController extends Controller implements MakeHistory {
     use FilesHandler;
 
     /**
@@ -36,12 +38,15 @@ class SparepartController extends Controller {
      */
     private SparepartModel $sparepart;
 
+    private HistoryModel $history;
+
     /**
      * @var FotoSparepartModel App\Models\Sparepart\FotoSparepartModel
      */
     private FotoSparepartModel $fotoSparepart;
 
     public function __construct() {
+        $this->history = new HistoryModel();
         $this->sparepart = new SparepartModel();
         $this->fotoSparepart = new FotoSparepartModel();
     }
@@ -171,6 +176,8 @@ class SparepartController extends Controller {
     {
         DB::beginTransaction();
         try {
+            $this->createHistory([$id]);
+
             $images = $this->fotoSparepart->getImages($id);
             $delete = $this->sparepart->deleteSparepart($id);
 
@@ -270,5 +277,20 @@ class SparepartController extends Controller {
 
             return $item;
         });
+    }
+
+    /**
+     * Create history
+     *
+     * @param array $data
+     */
+    public function createHistory(array $data)
+    {
+        $username = auth("user")->user()->username;
+        $id = auth("user")->id();
+
+        $target = $this->sparepart->getNameById($data[0]);
+        $targetName = $target === null ? "" : $target->nama_spare_part;
+        $this->history->createHistory("(Admin) $username with id '$id' do action [DELETE] to spare part '$targetName' with id '$data[0]'");
     }
 }

@@ -121,6 +121,17 @@ class SparepartModel extends Model
     }
 
     /**
+     * Get spare part name by id
+     *
+     * @param $id
+     * @return SparepartModel|Model|object|null
+     */
+    public function getNameById($id)
+    {
+        return $this->select(["nama_spare_part"])->where("id_spare_part", $id)->first();
+    }
+
+    /**
      * @param mixed|string $q
      * @param null|string $t
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator

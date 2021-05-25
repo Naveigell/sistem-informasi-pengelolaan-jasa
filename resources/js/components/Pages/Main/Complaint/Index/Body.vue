@@ -74,7 +74,7 @@
                                         <td class="inbox-small-cells">
                                             <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">
                                         </td>
-                                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
+<!--                                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>-->
                                         <td class="view-message dont-show">{{ $store.state.user.data.role === 'pelanggan' ? "Kepada: Teknisi" : complaint.user.name }} <span v-if="complaint.disetujui_admin === 0" class="label pull-right" v-bind:class="{'label-danger': complaint.dikerjakan_teknisi === 0 && complaint.disetujui_pelanggan === 0, 'label-info': complaint.dikerjakan_teknisi === 1 && complaint.disetujui_pelanggan === 0, 'label-success': complaint.disetujui_pelanggan === 1 && complaint.dikerjakan_teknisi === 1 && complaint.disetujui_admin === 0}">{{ complaint.disetujui_pelanggan === 1 ? "Disetujui pelanggan" : complaint.dikerjakan_teknisi === 1 ? "Selesai dikerjakan" : "complain" }}</span></td>
                                         <td class="view-message" style="text-overflow: ellipsis; overflow-x: hidden; max-width: 700px; white-space: nowrap;">{{ complaint.content.cutIfGreaterThan(30000) }}</td>
                                         <td class="view-message inbox-small-cells"></td>

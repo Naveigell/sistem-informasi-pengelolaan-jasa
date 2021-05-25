@@ -6,7 +6,9 @@ use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequestInsert;
 use App\Http\Requests\Admin\AdminRequestSearch;
+use App\Interfaces\History\MakeHistory;
 use App\Models\Admin\AdminModel;
+use App\Models\History\HistoryModel;
 use App\Models\User\Account\BiodataModel;
 use App\Traits\Files\FilesHandler;
 use App\Traits\Random;
@@ -15,12 +17,13 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class AdminController extends Controller
+class AdminController extends Controller implements MakeHistory
 {
     use FilesHandler, Random;
 
     private AdminModel $admins;
     private BiodataModel $biodata;
+    private HistoryModel $history;
 
     private $auth;
 
@@ -31,6 +34,7 @@ class AdminController extends Controller
     {
         $this->admins   = new AdminModel();
         $this->biodata  = new BiodataModel();
+        $this->history  = new HistoryModel();
 
         $this->auth     = auth("user");
     }
@@ -132,6 +136,8 @@ class AdminController extends Controller
     {
         DB::beginTransaction();
         try {
+            $this->createHistory([$id]);
+
             $image = $this->biodata->retrieveProfilePicture($id);
             $delete = $this->admins->deleteAdmin($id);
 
@@ -233,5 +239,20 @@ class AdminController extends Controller
 
             return $item;
         });
+    }
+
+    /**
+     * Create history
+     *
+     * @param array $data
+     */
+    public function createHistory(array $data)
+    {
+        $username = auth("user")->user()->username;
+        $id = auth("user")->id();
+
+        $target = $this->admins->getUsernameById($data[0]);
+        $targetUsername = $target === null ? "" : $target->username;
+        $this->history->createHistory("(Admin) $username with id '$id' do action [DELETE] to (Admin) $targetUsername with id '$data[0]'");
     }
 }

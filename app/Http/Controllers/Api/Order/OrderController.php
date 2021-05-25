@@ -12,8 +12,10 @@ use App\Http\Requests\Order\OrderRequestSearch;
 use App\Http\Requests\Order\OrderRequestSearchSparepart;
 use App\Http\Requests\Order\OrderRequestTake;
 use App\Http\Requests\Order\OrderRequestUpdateStatusService;
+use App\Interfaces\History\MakeHistory;
 use App\Interfaces\Time\TimeSentences;
 use App\Models\Complaint\ComplaintModel;
+use App\Models\History\HistoryModel;
 use App\Models\Jasa\JasaModel;
 use App\Models\Order\OrderModel;
 use App\Models\Order\OrderSparepartModel;
@@ -23,7 +25,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class OrderController extends Controller implements TimeSentences
+class OrderController extends Controller implements TimeSentences, MakeHistory
 {
     private OrderSparepartModel $orderSparepart;
     private SparepartModel $sparepart;
@@ -31,6 +33,7 @@ class OrderController extends Controller implements TimeSentences
     private OrderModel $order;
     private ComplaintModel $complaint;
     private JasaModel $jasa;
+    private HistoryModel $history;
 
     private $auth;
     private const MAIN_PATH_URL = "/orders";
@@ -43,6 +46,7 @@ class OrderController extends Controller implements TimeSentences
         $this->sparepart        = new SparepartModel;
         $this->orderSparepart   = new OrderSparepartModel;
         $this->complaint        = new ComplaintModel;
+        $this->history          = new HistoryModel;
         $this->jasa             = new JasaModel;
 
         $this->auth  = auth("user");
@@ -210,10 +214,19 @@ class OrderController extends Controller implements TimeSentences
      */
     public function delete($id)
     {
-        $deleted = $this->order->deleteOrder($id);
-        if (!$deleted) {
+        DB::beginTransaction();
+        try {
+            $this->createHistory([$id]);
+
+            $this->order->deleteOrder($id);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
             return error(null, ["server" => "Hapus order gagal"], 500);
         }
+
         return json(null, null, 204);
     }
 
@@ -695,5 +708,20 @@ class OrderController extends Controller implements TimeSentences
     public function toSentences(\DateTime $time): string
     {
         return (new Time())->toSentences($time);
+    }
+
+    /**
+     * Create history
+     *
+     * @param array $data
+     */
+    public function createHistory(array $data)
+    {
+        $username = auth("user")->user()->username;
+        $id = auth("user")->id();
+
+        $target = $this->order->getUniqueIdById($data[0]);
+        $uniqueId = $target === null ? "" : $target->unique_id;
+        $this->history->createHistory("(Admin) $username with id '$id' do action [DELETE] to order with unique id '$uniqueId'");
     }
 }

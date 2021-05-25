@@ -47,6 +47,17 @@ class AdminModel extends Model
     }
 
     /**
+     * Get username by id
+     *
+     * @param $id
+     * @return AdminModel|Model|object|null
+     */
+    public function getUsernameById($id)
+    {
+        return $this->select(["username"])->where("id_users", $id)->first();
+    }
+
+    /**
      * Search admin by name
      *
      * @param $q
