@@ -65,6 +65,10 @@ Route::group(['prefix' => '/api/v1'], function () {
     Route::group(["prefix" => "/reports", "middleware" => ["auth.global", "should.have.role:admin"]], function () {
         Route::get("/finance/excel", "Api\Reports\FinanceController@excelConverter");
     });
+
+    Route::group(["prefix" => "/history", "middleware" => ["auth.global", "should.have.role:admin"]], function () {
+        Route::get("/", "Api\History\HistoryController@retrieveAll");
+    });
 });
 
 Route::view('/{any}', "index")->where('any', '^(?!api).*');

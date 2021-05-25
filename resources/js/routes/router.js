@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 
 import Dashboard from "../components/Pages/Main/Dashboard/Body";
 
+import History from "../components/Pages/Main/History/Body";
+
 import SparepartIndex from "../components/Pages/Main/Sparepart/Index/Body";
 import SparepartUpdate from "../components/Pages/Main/Sparepart/Update/Body";
 import SparepartInsert from "../components/Pages/Main/Sparepart/Insert/Body";
@@ -215,6 +217,15 @@ export const router = new VueRouter({
             name: 'reports',
             component: ReportsIndex,
             meta: {
+                roles: ["admin"]
+            }
+        },
+        {
+            path: '/history',
+            name: 'history',
+            component: History,
+            meta: {
+                fullscreen: true,
                 roles: ["admin"]
             }
         },

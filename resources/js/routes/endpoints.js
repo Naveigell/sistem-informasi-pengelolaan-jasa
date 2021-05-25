@@ -84,6 +84,9 @@ const endpoints = {
         do_user_accept: "/complaints/do-user-accept/:id",
         do_admin_accept: "/complaints/do-admin-accept/:id"
     },
+    history: {
+        data: "/history"
+    },
     exports: {
         finance: {
             excel: "/reports/:name/:type"
