@@ -78,7 +78,7 @@
                                             <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">
                                         </td>
                                         <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                                        <td class="view-message dont-show">{{ $store.state.user.data.role === 'user' ? "Kepada: Admin" : suggestion.user.name }} <span v-if="suggestion.type === 'komplain'" class="label label-danger pull-right">complain</span></td>
+                                        <td class="view-message dont-show">{{ $store.state.user.data.role === 'pelanggan' ? "Kepada: Admin" : suggestion.user.name }} <span v-if="suggestion.type === 'komplain'" class="label label-danger pull-right">complain</span></td>
                                         <td class="view-message" style="text-overflow: ellipsis; overflow-x: hidden; max-width: 700px; white-space: nowrap;">{{ suggestion.content.cutIfGreaterThan(30000) }}</td>
                                         <td class="view-message inbox-small-cells"></td>
                                         <td class="view-message text-right">{{ suggestion.created_at_sentences }}</td>

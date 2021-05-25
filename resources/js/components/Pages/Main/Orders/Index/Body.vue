@@ -92,7 +92,7 @@
                                                 Ambil
                                             </button>
                                         </td>
-                                        <td v-else-if="($store.state.user.data.role === 'teknisi' && repairment.status_service !== 'menunggu') || $store.state.user.data.role === 'user'">
+                                        <td v-else-if="($store.state.user.data.role === 'teknisi' && repairment.status_service !== 'menunggu') || $store.state.user.data.role === 'pelanggan'">
                                             <router-link :to="{ path: '/orders/' + repairment.unique_id }" class="button-warning-primary-tag">
                                                 Lihat
                                             </router-link>

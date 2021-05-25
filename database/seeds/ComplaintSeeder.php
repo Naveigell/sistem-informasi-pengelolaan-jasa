@@ -37,17 +37,17 @@ class ComplaintSeeder extends Seeder
         DB::beginTransaction();
         try {
             DB::table("pengaduan")->insert([
-                "pengaduan_id_users"    => $id_user,
-                "pengaduan_id_teknisi"  => $id_teknisi,
-                "pengaduan_id_orders"  => $id_service,
-                "isi"                   => $complaint->content,
-                "stars"                 => rand(1, 5),
-                "tipe"                  => "komplain",
-                "dikerjakan_teknisi"    => $technician,
-                "disetujui_pelanggan"        => $user,
-                "disetujui_admin"       => $admin,
-                "created_at"            => date("Y-m-d H:i:s"),
-                "updated_at"            => date("Y-m-d H:i:s")
+                "pengaduan_id_pelanggan"    => $id_user,
+                "pengaduan_id_teknisi"      => $id_teknisi,
+                "pengaduan_id_orders"       => $id_service,
+                "isi"                       => $complaint->content,
+                "stars"                     => rand(1, 5),
+                "tipe"                      => "komplain",
+                "dikerjakan_teknisi"        => $technician,
+                "disetujui_pelanggan"       => $user,
+                "disetujui_admin"           => $admin,
+                "created_at"                => date("Y-m-d H:i:s"),
+                "updated_at"                => date("Y-m-d H:i:s")
             ]);
 
             DB::commit();

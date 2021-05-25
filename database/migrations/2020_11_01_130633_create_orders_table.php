@@ -18,7 +18,7 @@ class CreateServiceTable extends Migration
                 $table->bigIncrements('id_orders');
                 $table->unsignedBigInteger('orders_id_teknisi')->nullable()->index();
                 $table->unsignedBigInteger('orders_id_jasa')->nullable()->index();
-                $table->unsignedBigInteger('orders_id_user')->nullable()->index();
+                $table->unsignedBigInteger('orders_id_pelanggan')->nullable()->index();
                 $table->string('unique_id', 255)->unique()->index();
                 $table->string('nama_pelanggan', 40);
                 $table->string('alamat_pelanggan', 90);
@@ -31,7 +31,7 @@ class CreateServiceTable extends Migration
                 $table->timestamps();
 
                 $table->foreign('orders_id_teknisi')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
-                $table->foreign('orders_id_user')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+                $table->foreign('orders_id_pelanggan')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
                 $table->foreign('orders_id_jasa')->references('id_jasa')->on('jasa')->onUpdate('CASCADE')->onDelete('SET NULL');
             });
         }

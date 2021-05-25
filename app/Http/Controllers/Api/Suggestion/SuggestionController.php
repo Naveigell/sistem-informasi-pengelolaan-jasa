@@ -41,7 +41,7 @@ class SuggestionController extends Controller implements TimeSentences
 
         $data = Arrays::replaceKey([
             "id_pengaduan"              => "id",
-            "pengaduan_id_users"        => "user_id",
+            "pengaduan_id_pelanggan"    => "user_id",
             "isi"                       => "content",
             "tipe"                      => "type",
         ], $data instanceof Collection ? $data->toArray() : $data);
@@ -108,7 +108,7 @@ class SuggestionController extends Controller implements TimeSentences
      */
     public function retrieveSingle($id)
     {
-        $data = $this->suggestions->retrieveSingle($id, $this->auth->user()->role == "user" ? $this->auth->id() : null, $this->auth->id());
+        $data = $this->suggestions->retrieveSingle($id, $this->auth->user()->role == "pelanggan" ? $this->auth->id() : null, $this->auth->id());
 
         if ($data == null) {
             return error(null, ["message" => "Data tidak ditemukan"], 404);
@@ -117,10 +117,10 @@ class SuggestionController extends Controller implements TimeSentences
         $data = collect($data);
 
         $data = Arrays::replaceKey([
-            "id_pengaduan"          => "id",
-            "pengaduan_id_users"    => "user_id",
-            "isi"                   => "content",
-            "balasan"               => "reply"
+            "id_pengaduan"              => "id",
+            "pengaduan_id_pelanggan"    => "user_id",
+            "isi"                       => "content",
+            "balasan"                   => "reply"
         ], $data->toArray());
 
         $data["user"] = Arrays::replaceKey([

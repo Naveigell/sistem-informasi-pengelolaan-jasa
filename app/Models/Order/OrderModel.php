@@ -187,7 +187,7 @@ class OrderModel extends Model implements Countable
         // if user is admin
         if ($role == "admin") {
             return $this->main()->paginate(12);
-        } else if ($role == "user") { // if user is normal user
+        } else if ($role == "pelanggan") { // if user is normal user
             return $this->main()->where("orders_id_user", $id)->paginate(12);
         }
         // if user is a technician
@@ -382,7 +382,7 @@ class OrderModel extends Model implements Countable
      */
     public function total($id, $role)
     {
-        if ($role === "user") {
+        if ($role === "pelanggan") {
             return $this->where("orders_id_user", $id)->count();
         } else if ($role === "teknisi") {
             return $this->where("orders_id_teknisi", $id)->count();

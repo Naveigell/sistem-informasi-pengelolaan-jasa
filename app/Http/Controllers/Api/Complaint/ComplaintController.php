@@ -59,7 +59,7 @@ class ComplaintController extends Controller implements TimeSentences
     public function retrieveAll(ComplaintRequestPaginate $request)
     {
         $data = $this->complaint->retrieveAll(
-            $this->auth->user()->role == "user" ? $this->auth->id() : null,
+            $this->auth->user()->role == "pelanggan" ? $this->auth->id() : null,
             $this->auth->user()->role == "teknisi" ? $this->auth->id() : null,
             $this->auth->user()->role,
             $request->next == "true",
@@ -68,7 +68,7 @@ class ComplaintController extends Controller implements TimeSentences
 
         $data = Arrays::replaceKey([
             "id_pengaduan"              => "id",
-            "pengaduan_id_users"        => "user_id",
+            "pengaduan_id_pelanggan"    => "user_id",
             "isi"                       => "content",
             "tipe"                      => "type",
         ], $data instanceof Collection ? $data->toArray() : $data);
@@ -104,7 +104,7 @@ class ComplaintController extends Controller implements TimeSentences
     {
         $data = $this->complaint->retrieve(
             $id,
-            $this->auth->user()->role == "user" ? $this->auth->id() : null,
+            $this->auth->user()->role == "pelanggan" ? $this->auth->id() : null,
             $this->auth->id()
         );
 
@@ -115,10 +115,10 @@ class ComplaintController extends Controller implements TimeSentences
         $data = collect($data);
 
         $data = Arrays::replaceKey([
-            "id_pengaduan"          => "id",
-            "pengaduan_id_users"    => "user_id",
-            "isi"                   => "content",
-            "balasan"               => "reply"
+            "id_pengaduan"              => "id",
+            "pengaduan_id_pelanggan"    => "user_id",
+            "isi"                       => "content",
+            "balasan"                   => "reply"
         ], $data->toArray());
 
         $data["user"] = Arrays::replaceKey([

@@ -30,12 +30,12 @@ class SaranSeeder extends Seeder
             DB::beginTransaction();
             try {
                 DB::table("pengaduan")->insert([
-                    "pengaduan_id_users"    => $id,
-                    "isi"                   => $suggestion->content,
-                    "stars"                 => rand(1, 5),
-                    "tipe"                  => "saran",
-                    "created_at"            => date("Y-m-d H:i:s"),
-                    "updated_at"            => date("Y-m-d H:i:s")
+                    "pengaduan_id_pelanggan"    => $id,
+                    "isi"                       => $suggestion->content,
+                    "stars"                     => rand(1, 5),
+                    "tipe"                      => "saran",
+                    "created_at"                => date("Y-m-d H:i:s"),
+                    "updated_at"                => date("Y-m-d H:i:s")
                 ]);
 
                 DB::commit();
@@ -62,7 +62,7 @@ class SaranSeeder extends Seeder
         $suggestions = $this->readFile("pengaduan")->file->pengaduan->saran;
         error_log(print_r($this->randomSuggestion($suggestions)));
 
-        $users = DB::table("users")->select(["id_users"])->where("role", "user")->get();
+        $users = DB::table("users")->select(["id_users"])->where("role", "pelanggan")->get();
         foreach ($users as $user) {
             DB::beginTransaction();
             try {

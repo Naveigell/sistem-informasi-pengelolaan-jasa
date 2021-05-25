@@ -24,7 +24,7 @@ class UsersSeeder extends Seeder {
      * @param $second string
      * @return string Adding separator between first name and second name
      */
-    private function addingUsernameSeparator($first, $second) : string {
+    private function addingUsernameSeparator(string $first, string $second) : string {
         return $first.$this->random(['_', '.', '', '__']).$second.rand(1, 999);
     }
 
@@ -32,7 +32,7 @@ class UsersSeeder extends Seeder {
      * @param $username string
      * @return string generate an email from username
      */
-    private function makeEmail($username) : string {
+    private function makeEmail(string $username) : string {
         $parse = $this->readFile("internet");
 
         return $username.'@'.$this->random($parse->file->email);
@@ -98,7 +98,7 @@ class UsersSeeder extends Seeder {
                 $gender     = static::$gender == 1 ? "Laki - laki" : "Perempuan";
                 $address    = $this->makeAddress();
 
-                $role = $i < 7 ? "teknisi" : "user";
+                $role = $i < 7 ? "teknisi" : "pelanggan";
                 $role = $i < 2 ? "admin" : $role;
 
                 $imgName = Str::random(60).date("YmdHis");

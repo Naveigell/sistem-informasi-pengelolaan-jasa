@@ -46,7 +46,7 @@ export const router = new VueRouter({
             name: 'dashboard',
             component: Dashboard,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -94,7 +94,7 @@ export const router = new VueRouter({
             name: 'technician',
             component: TechnicianIndex,
             meta: {
-                roles: ["admin", "user"]
+                roles: ["admin", "pelanggan"]
             }
         },
         {
@@ -102,7 +102,7 @@ export const router = new VueRouter({
             name: 'admins',
             component: AdminIndex,
             meta: {
-                roles: ["admin", "user"]
+                roles: ["admin", "pelanggan"]
             }
         },
         {
@@ -110,7 +110,7 @@ export const router = new VueRouter({
             name: 'admins.show',
             component: AdminShow,
             meta: {
-                roles: ["admin", "user"]
+                roles: ["admin", "pelanggan"]
             }
         },
         {
@@ -126,7 +126,7 @@ export const router = new VueRouter({
             name: 'biodata',
             component: Biodata,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -142,7 +142,7 @@ export const router = new VueRouter({
             name: 'orders',
             component: OrderIndex,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -158,7 +158,7 @@ export const router = new VueRouter({
             name: 'orders.show',
             component: OrderShow,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -175,7 +175,7 @@ export const router = new VueRouter({
             name: 'suggestions',
             component: SuggestionsIndex,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -183,7 +183,7 @@ export const router = new VueRouter({
             name: 'suggestions.add',
             component: SuggestionsInsert,
             meta: {
-                roles: ["user"]
+                roles: ["pelanggan"]
             }
         },
         {
@@ -191,7 +191,7 @@ export const router = new VueRouter({
             name: 'suggestions.show',
             component: SuggestionsShow,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -199,7 +199,7 @@ export const router = new VueRouter({
             name: 'complaints',
             component: ComplaintIndex,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -207,7 +207,7 @@ export const router = new VueRouter({
             name: 'complaints.show',
             component: ComplaintShow,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         },
         {
@@ -223,7 +223,7 @@ export const router = new VueRouter({
             name: 'notfound',
             component: Errors404,
             meta: {
-                roles: ["admin", "teknisi", "user"]
+                roles: ["admin", "teknisi", "pelanggan"]
             }
         }
     ],

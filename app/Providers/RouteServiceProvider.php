@@ -106,7 +106,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix("/admins")->group(function () {
             Route::get("/search", "Api\Admin\AdminController@search");
             Route::get("/{page?}", "Api\Admin\AdminController@retrieveAll");
-            Route::get("/username/{username}", "Api\Admin\AdminController@retrieveByUsername")->middleware("should.have.role:admin,user");
+            Route::get("/username/{username}", "Api\Admin\AdminController@retrieveByUsername")->middleware("should.have.role:admin,pelanggan");
             Route::post("/", "Api\Admin\AdminController@create")->middleware("should.have.role:admin");
             Route::delete("/{id}", "Api\Admin\AdminController@delete")->middleware("should.have.role:admin");
         });
@@ -137,11 +137,11 @@ class RouteServiceProvider extends ServiceProvider
     public function mapBiodataRoutes()
     {
         Route::prefix("/biodata")->group(function (){
-            Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata')->middleware("should.have.role:admin,teknisi,user");
-            Route::get('/image', 'Api\User\Account\BiodataController@getProfilePicture')->middleware("should.have.role:admin,teknisi,user");
+            Route::get('/', 'Api\User\Account\BiodataController@retrieveBiodata')->middleware("should.have.role:admin,teknisi,pelanggan");
+            Route::get('/image', 'Api\User\Account\BiodataController@getProfilePicture')->middleware("should.have.role:admin,teknisi,pelanggan");
             Route::get('/graph', 'Api\User\Account\GraphController@retrieveData')->middleware("should.have.role:teknisi");
-            Route::put('/', 'Api\User\Account\BiodataController@updateBiodata')->middleware("should.have.role:admin,teknisi,user");
-            Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture')->middleware("should.have.role:admin,teknisi,user");
+            Route::put('/', 'Api\User\Account\BiodataController@updateBiodata')->middleware("should.have.role:admin,teknisi,pelanggan");
+            Route::post('/image', 'Api\User\Account\BiodataController@updateProfilePicture')->middleware("should.have.role:admin,teknisi,pelanggan");
         });
     }
 

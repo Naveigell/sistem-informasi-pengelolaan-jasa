@@ -42,7 +42,7 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/", "Api\Complaint\ComplaintController@retrieveAll");
         Route::get("/retrieve/{id}", "Api\Complaint\ComplaintController@retrieve");
         Route::put("/do-complaint/{id}", "Api\Complaint\ComplaintController@doComplaint")->middleware("should.have.role:teknisi");
-        Route::put("/do-user-accept/{id}", "Api\Complaint\ComplaintController@doUserAccept")->middleware("should.have.role:user");
+        Route::put("/do-user-accept/{id}", "Api\Complaint\ComplaintController@doUserAccept")->middleware("should.have.role:pelanggan");
         Route::put("/do-admin-accept/{id}", "Api\Complaint\ComplaintController@doAdminAccept")->middleware("should.have.role:admin");
     });
 

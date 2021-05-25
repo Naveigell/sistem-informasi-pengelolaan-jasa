@@ -16,7 +16,7 @@ class CreatePengaduanTable extends Migration
         if (!Schema::hasTable('pengaduan')) {
             Schema::create('pengaduan', function (Blueprint $table) {
                 $table->bigIncrements('id_pengaduan');
-                $table->unsignedBigInteger('pengaduan_id_users')->nullable()->index();
+                $table->unsignedBigInteger('pengaduan_id_pelanggan')->nullable()->index();
                 $table->unsignedBigInteger('pengaduan_id_teknisi')->nullable()->index();
                 $table->unsignedBigInteger('pengaduan_id_orders')->nullable()->index();
                 $table->text('isi')->nullable();
@@ -29,7 +29,7 @@ class CreatePengaduanTable extends Migration
                 $table->timestamps();
 
                 // foreign
-                $table->foreign('pengaduan_id_users')->on('users')->references('id_users')->onUpdate('CASCADE')->onDelete('SET NULL');
+                $table->foreign('pengaduan_id_pelanggan')->on('users')->references('id_users')->onUpdate('CASCADE')->onDelete('SET NULL');
                 $table->foreign('pengaduan_id_teknisi')->on('users')->references('id_users')->onUpdate('CASCADE')->onDelete('SET NULL');
                 $table->foreign('pengaduan_id_orders')->on('orders')->references('id_orders')->onUpdate('CASCADE')->onDelete('SET NULL');
             });

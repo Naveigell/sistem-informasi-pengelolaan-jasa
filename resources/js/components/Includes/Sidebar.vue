@@ -44,7 +44,7 @@ export default {
                             name: "Dashboard",
                             isLink: true,
                             to: "/",
-                            roles: ["admin", "teknisi", "user"]
+                            roles: ["admin", "teknisi", "pelanggan"]
                         },
                         {
                             name: "Data Pelanggan",
@@ -62,16 +62,16 @@ export default {
                             name: "Data Admin",
                             isLink: true,
                             to: "/admins",
-                            roles: ["admin", "user"]
+                            roles: ["admin", "pelanggan"]
                         },
                         {
                             name: "Data Teknisi",
                             isLink: true,
                             to: "/technician",
-                            roles: ["admin", "user"]
+                            roles: ["admin", "pelanggan"]
                         }
                     ],
-                    roles: ["admin", "teknisi", "user"]
+                    roles: ["admin", "teknisi", "pelanggan"]
                 },
                 {
                     title: "Biodata",
@@ -79,7 +79,7 @@ export default {
                     hasDropdown: false,
                     isLink: true,
                     to: "/account/biodata",
-                    roles: ["admin", "teknisi", "user"]
+                    roles: ["admin", "teknisi", "pelanggan"]
                 },
                 {
                     title: "Service",
@@ -95,7 +95,7 @@ export default {
                     hasDropdown: false,
                     isLink: true,
                     to: "/orders",
-                    roles: ["admin", "teknisi", "user"]
+                    roles: ["admin", "teknisi", "pelanggan"]
                 },
                 {
                     title: "Laporan",

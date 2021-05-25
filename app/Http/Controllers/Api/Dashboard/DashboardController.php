@@ -38,7 +38,7 @@ class DashboardController extends Controller
             return json($this->admin());
         } else if ($this->role === "teknisi") {
             return json($this->technician());
-        } else if ($this->role === "user") {
+        } else if ($this->role === "pelanggan") {
             return json($this->user());
         }
     }

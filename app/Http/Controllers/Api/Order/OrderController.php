@@ -442,7 +442,7 @@ class OrderController extends Controller implements TimeSentences
             $request->id,
             $request->status,
             $this->auth->user()->role == "teknisi" ? $this->auth->id() : null,
-            $this->auth->user()->role == "user" ? $this->auth->id() : null,
+            $this->auth->user()->role == "pelanggan" ? $this->auth->id() : null,
         );
 
         $current_page   = $collections->currentPage();

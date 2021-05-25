@@ -30,17 +30,17 @@ class SuggestionModel extends Model implements Countable
     public function retrieveAll($id_users, $role, $next, $last_suggestion_id = null)
     {
         $take = 15;
-        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "created_at"])
+        $main = $this->select(["id_pengaduan", "pengaduan_id_pelanggan", "isi", "tipe", "created_at"])
                      ->orderBy("id_pengaduan", "DESC");
 
         if ($last_suggestion_id != null) {
             $main->where("id_pengaduan", "<=", $last_suggestion_id);
         }
 
-        if ($role == "user") {
+        if ($role == "pelanggan") {
             return $main->where([
-                "pengaduan_id_users"    => $id_users,
-                "tipe"                  => $this->type
+                "pengaduan_id_pelanggan"    => $id_users,
+                "tipe"                      => $this->type
             ])->take($take)->get();
         } else {
             return $main->where([
@@ -70,8 +70,8 @@ class SuggestionModel extends Model implements Countable
     public function total($id, $role)
     {
         $query = $this->where("tipe", $this->type);
-        if ($role === "user") {
-            $query = $query->where("pengaduan_id_users", $id);
+        if ($role === "pelanggan") {
+            $query = $query->where("pengaduan_id_pelanggan", $id);
         }
         return $query->count();
     }
@@ -94,7 +94,7 @@ class SuggestionModel extends Model implements Countable
 
     public function user()
     {
-        return $this->hasOne(UserModel::class, "id_users", "pengaduan_id_users");
+        return $this->hasOne(UserModel::class, "id_users", "pengaduan_id_pelanggan");
     }
 
     /**
@@ -107,7 +107,7 @@ class SuggestionModel extends Model implements Countable
     public function createSuggestion($id, $text)
     {
         return $this->insert([
-            "pengaduan_id_users"        => $id,
+            "pengaduan_id_pelanggan"        => $id,
             "isi"                       => $text,
             "tipe"                      => $this->type,
             "created_at"                => date("Y-m-d H:i:s"),
@@ -125,13 +125,13 @@ class SuggestionModel extends Model implements Countable
      */
     public function retrieveSingle($id, $id_users, $role)
     {
-        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "balasan", "created_at"]);
+        $main = $this->select(["id_pengaduan", "pengaduan_id_pelanggan", "isi", "balasan", "created_at"]);
 
-        if ($role == "user") {
+        if ($role == "pelanggan") {
             return $main->where([
-                "id_pengaduan"          => $id,
-                "pengaduan_id_users"    => $id_users,
-                "tipe"                  => $this->type
+                "id_pengaduan"              => $id,
+                "pengaduan_id_pelanggan"    => $id_users,
+                "tipe"                      => $this->type
             ])->first();
         } else {
             return $main->where([

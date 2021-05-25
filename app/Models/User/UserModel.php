@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 class UserModel extends Model
 {
     protected $table = "users";
-    private $role = "user";
+    private $role = "pelanggan";
 
     public function getUsersList()
     {

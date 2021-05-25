@@ -86,7 +86,7 @@
                                     <button @click="actions.doComplaint = false;" class="button-danger-primary-tag"><i class="fa fa-times"></i>&nbspBatal</button>
                                 </div>
                             </div>
-                            <div v-if="$store.state.user.data.role === 'user' && data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_pelanggan === 0">
+                            <div v-if="$store.state.user.data.role === 'pelanggan' && data.complaint.dikerjakan_teknisi === 1 && data.complaint.disetujui_pelanggan === 0">
                                 <span style="display: block; margin-bottom: 10px; font-weight: bold;" class="text-info text">Komplain sudah dikerjakan oleh teknisi, mohon untuk menyetujui komplain.</span>
                                 <button @click="actions.doAccept = true;" class="button-success-primary-tag" v-if="!actions.doAccept">Setujui</button>
                                 <div v-else>
