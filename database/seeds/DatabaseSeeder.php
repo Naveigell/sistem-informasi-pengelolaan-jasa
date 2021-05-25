@@ -15,9 +15,9 @@ class DatabaseSeeder extends Seeder
 //         $this->call(JasaSeeder::class);
 //         $this->call(SparePartSeeder::class);
 //         $this->call(KeahlianTeknisiSeeder::class);
-         $this->call(ServiceSeeder::class);
+//         $this->call(ServiceSeeder::class);
 //         $this->call(SparePartPictureSeeder::class);
-         $this->call(ServiceSparePartSeeder::class);
+//         $this->call(ServiceSparePartSeeder::class);
 //         $this->call(SaranSeeder::class);
 //         $this->call(ComplaintSeeder::class);
     }

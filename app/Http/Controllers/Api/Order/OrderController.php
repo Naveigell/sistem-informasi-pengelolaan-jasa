@@ -145,9 +145,9 @@ class OrderController extends Controller implements TimeSentences
 
         // CHANGE KEY OF ARRAY (FOR EASY READ IN FRONT END)
         $data["spareparts"] = Arrays::replaceKey([
-            "service_spare_part_id_service"     => "service_id",
-            "service_spare_part_id_spare_part"  => "spare_part_id",
-            "id_service_spare_part"             => "id",
+            "orders_spare_part_id_orders"     => "service_id",
+            "orders_spare_part_id_spare_part"  => "spare_part_id",
+            "id_orders_spare_part"             => "id",
             "nama_spare_part"                   => "nama"
         ], $data["spareparts"]);
 
@@ -168,9 +168,9 @@ class OrderController extends Controller implements TimeSentences
         ], $data["technician"]);
 
         $data = Arrays::replaceKey([
-            "id_service"            => "id",
-            "service_id_teknisi"    => "teknisi_id",
-            "service_id_user"       => "user_id",
+            "id_orders"            => "id",
+            "orders_id_teknisi"    => "teknisi_id",
+            "orders_id_user"       => "user_id",
             "jenis_perangkat"       => "jenis",
             "status_service"        => "status",
             "alamat_pelanggan"        => "alamat"
@@ -339,8 +339,8 @@ class OrderController extends Controller implements TimeSentences
                             $index = $key;
                             $obj = $objects->values()->all();
 
-                            $item["service_spare_part_id_service"] = $request->id;
-                            $item["service_spare_part_id_spare_part"] = $item["id_spare_part"];
+                            $item["orders_spare_part_id_orders"] = $request->id;
+                            $item["orders_spare_part_id_spare_part"] = $item["id_spare_part"];
                             $item["jumlah"] = $obj[$index]["jumlah"];
 
                             return $item;
@@ -351,8 +351,8 @@ class OrderController extends Controller implements TimeSentences
                             $item["updated_at"] = now();
 
                             return collect($item)->only([
-                                "service_spare_part_id_spare_part",
-                                "service_spare_part_id_service",
+                                "orders_spare_part_id_spare_part",
+                                "orders_spare_part_id_orders",
                                 "nama_spare_part",
                                 "jumlah",
                                 "harga",
@@ -526,7 +526,7 @@ class OrderController extends Controller implements TimeSentences
     {
         $collections = collect($spareparts);
         foreach ($collections as $item) {
-            $sparepart = DB::table("spare_part")->select(["stok", "id_spare_part", "terjual"])->where("id_spare_part", $item["service_spare_part_id_spare_part"])->first();
+            $sparepart = DB::table("spare_part")->select(["stok", "id_spare_part", "terjual"])->where("id_spare_part", $item["orders_spare_part_id_spare_part"])->first();
             if ($sparepart == null) {
                 throw new \Exception("Sparepart tidak ditemukan", 404);
             }
@@ -571,7 +571,7 @@ class OrderController extends Controller implements TimeSentences
 
         if (!empty($index)) {
             // check if the real technician can update this order
-            if (!$this->order->isOrderBelongsToTechnician($request->id, $this->auth->id())) {
+            if (!$this->order->isOrderBelongsToTechnician($request->id, $this->auth->id()) && $this->auth->user()->role == "teknisi") {
                 return error(null, ["message" => "You cannot update this order status, the order is not belongs to you"], 401);
             }
 

@@ -64,7 +64,7 @@ export default {
             if (this.button.disabled) return;
 
             const self = this;
-            this.$api.delete(this.$endpoints.orders.delete + `/${this.order.id_service}`).then(function (response) {
+            this.$api.delete(this.$endpoints.orders.delete + `/${this.order.id_orders}`).then(function (response) {
                 self.emitToParent("success", "Hapus order berhasil", true);
                 self.$emit("response");
             }).catch(function (error) {

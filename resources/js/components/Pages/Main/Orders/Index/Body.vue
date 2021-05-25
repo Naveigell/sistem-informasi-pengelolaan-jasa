@@ -68,7 +68,7 @@
                                         </td>
                                         <td>
                                             <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
-                                            <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_user === 0) : false">Komplain</span>
+                                            <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_pelanggan === 0) : false">Komplain</span>
                                         </td>
                                         <td>{{ pricesString(repairment) }}</td>
                                         <td v-if="$store.state.user.data.role === 'admin'">
@@ -211,7 +211,7 @@ export default {
             }
         },
         take(index){
-            const id = this.repairments[index].id_service;
+            const id = this.repairments[index].id_orders;
             this.$api.post(this.$endpoints.orders.take, {
                 id
             }).then((response) => {

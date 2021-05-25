@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OrderModel extends Model
 {
-    protected $table = "service";
-    protected $primaryKey = "id_service";
+    protected $table = "orders";
+    protected $primaryKey = "id_orders";
 
     /**
      * @param int $month
@@ -24,20 +24,20 @@ class OrderModel extends Model
     public function collectDataForExports(int $month, int $year)
     {
         return $this->with(["service", "spareparts"])
-                    ->select(["id_service", "service_id_jasa", "unique_id", "biaya_jasa"])
-                    ->whereMonth("service.updated_at", $month)
-                    ->whereYear("service.updated_at", $year)
+                    ->select(["id_orders", "orders_id_jasa", "unique_id", "biaya_jasa"])
+                    ->whereMonth("orders.updated_at", $month)
+                    ->whereYear("orders.updated_at", $year)
                     ->where("status_service", "terima")
                     ->get();
     }
 
     public function service()
     {
-        return $this->hasOne(JasaModel::class, "id_jasa", "service_id_jasa");
+        return $this->hasOne(JasaModel::class, "id_jasa", "orders_id_jasa");
     }
 
     public function spareparts()
     {
-        return $this->hasMany(OrderSparepartModel::class, "service_spare_part_id_service", "id_service");
+        return $this->hasMany(OrderSparepartModel::class, "orders_spare_part_id_orders", "id_orders");
     }
 }

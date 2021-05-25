@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OrderSparepartModel extends Model
 {
-    protected $table = "service_spare_part";
-    protected $primaryKey = "id_service_spare_part";
+    protected $table = "orders_spare_part";
+    protected $primaryKey = "id_orders_spare_part";
 
     /**
      * Collect data for exporter
@@ -24,8 +24,8 @@ class OrderSparepartModel extends Model
      */
     public function collectDataForExports(int $month, int $year)
     {
-        return $this->select(["nama_spare_part", "jumlah", "harga_asli", "harga", "updated_at", "service_spare_part_id_service"])
-                    ->with(["order:id_service,service_id_jasa,unique_id", "order.service:id_jasa,biaya_jasa"])
+        return $this->select(["nama_spare_part", "jumlah", "harga_asli", "harga", "updated_at", "orders_spare_part_id_orders"])
+                    ->with(["order:id_orders,orders_id_jasa,unique_id", "order.service:id_jasa,biaya_jasa"])
                     ->whereMonth("updated_at", $month)
                     ->whereYear("updated_at", $year)
                     ->get()
@@ -34,6 +34,6 @@ class OrderSparepartModel extends Model
 
     public function order()
     {
-        return $this->belongsTo(OrderModel::class, "service_spare_part_id_service", "id_service");
+        return $this->belongsTo(OrderModel::class, "orders_spare_part_id_orders", "id_orders");
     }
 }

@@ -30,7 +30,7 @@ class ComplaintModel extends Model
     public function saveComplaint($id_service, $id_user, $id_teknisi, $content)
     {
         return $this->insert([
-            "pengaduan_id_service"      => $id_service,
+            "pengaduan_id_orders"      => $id_service,
             "pengaduan_id_users"        => $id_user,
             "pengaduan_id_teknisi"      => $id_teknisi,
             "isi"                       => $content,
@@ -47,7 +47,7 @@ class ComplaintModel extends Model
     public function orderHasComplaintAndNotFinished($id_service)
     {
         return $this->where([
-            "pengaduan_id_service"  => $id_service,
+            "pengaduan_id_orders"  => $id_service,
             "disetujui_admin"        => 0
         ])->exists();
     }
@@ -65,7 +65,7 @@ class ComplaintModel extends Model
     public function retrieveAll($id_users, $id_teknisi, $role, $next, $last_suggestion_id = null)
     {
         $take = 15;
-        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "dikerjakan_teknisi", "disetujui_user", "disetujui_admin", "created_at"])
+        $main = $this->select(["id_pengaduan", "pengaduan_id_users", "isi", "tipe", "dikerjakan_teknisi", "disetujui_pelanggan", "disetujui_admin", "created_at"])
                      ->orderBy("id_pengaduan", "DESC");
 
         if ($last_suggestion_id != null) {
@@ -105,7 +105,7 @@ class ComplaintModel extends Model
             "pengaduan_id_users"        => $id_user,
             "tipe"                      => $this->type
         ])->update([
-            "disetujui_user"            => 1
+            "disetujui_pelanggan"            => 1
         ]);
     }
 
@@ -154,7 +154,7 @@ class ComplaintModel extends Model
      */
     public function retrieve($id, $id_users, $role)
     {
-        $main = $this->with(["order:unique_id,id_service"])->select(["id_pengaduan", "pengaduan_id_users", "pengaduan_id_service", "isi", "balasan", "disetujui_user", "dikerjakan_teknisi", "disetujui_admin", "created_at"]);
+        $main = $this->with(["order:unique_id,id_orders"])->select(["id_pengaduan", "pengaduan_id_users", "pengaduan_id_orders", "isi", "balasan", "disetujui_pelanggan", "dikerjakan_teknisi", "disetujui_admin", "created_at"]);
 
         if ($role == "user") {
             return $main->where([
@@ -172,7 +172,7 @@ class ComplaintModel extends Model
 
     public function order()
     {
-        return $this->belongsTo(OrderModel::class, "pengaduan_id_service", "id_service");
+        return $this->belongsTo(OrderModel::class, "pengaduan_id_orders", "id_orders");
     }
 
     public function user()

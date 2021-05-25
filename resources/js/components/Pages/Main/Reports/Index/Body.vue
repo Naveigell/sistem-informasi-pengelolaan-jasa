@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-md-12" style="margin-top: 7px;">
                                 <button @click="download" class="download-button download-button-blue"><i class="fa fa-download"></i>&nbsp{{ loading.onLoading ? loading.text : "Excel" }}</button>
-                                <button class="download-button download-button-red"><i class="fa fa-download"></i>&nbsp{{ loading.onLoading ? loading.text : "Pdf" }}</button>
+<!--                                <button class="download-button download-button-red"><i class="fa fa-download"></i>&nbsp{{ loading.onLoading ? loading.text : "Pdf" }}</button>-->
                             </div>
                         </div>
                         <br/>

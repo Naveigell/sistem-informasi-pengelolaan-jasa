@@ -38,7 +38,7 @@ class ComplaintController extends Controller implements TimeSentences
             return error(null, ["message" => "Data tidak ditemukan"], 404);
         }
 
-        $saved = $this->complaint->saveComplaint($request->id, $this->auth->id(), $technician->service_id_teknisi, $request->text);
+        $saved = $this->complaint->saveComplaint($request->id, $this->auth->id(), $technician->orders_id_teknisi, $request->text);
         if ($saved) {
             return json([
                 "complaint"                 => [

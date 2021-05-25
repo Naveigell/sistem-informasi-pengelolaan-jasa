@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\DB;
  */
 class OrderSparepartModel extends Model
 {
-    protected $table = "service_spare_part";
-    protected $primaryKey = "id_service_spare_part";
+    protected $table = "orders_spare_part";
+    protected $primaryKey = "id_orders_spare_part";
 
     public function images()
     {
-        return $this->hasMany(FotoSparepartModel::class, "foto_spare_part_id_spare_part", "service_spare_part_id_spare_part");
+        return $this->hasMany(FotoSparepartModel::class, "foto_spare_part_id_spare_part", "orders_spare_part_id_spare_part");
     }
 
     /**
@@ -39,7 +39,7 @@ class OrderSparepartModel extends Model
      */
     public function retrieveSparepartByIdOrder($id)
     {
-        return $this->select(["id_service_spare_part", "service_spare_part_id_service", "jumlah", "service_spare_part_id_spare_part"])->where("service_spare_part_id_service", $id)->get();
+        return $this->select(["id_orders_spare_part", "orders_spare_part_id_orders", "jumlah", "orders_spare_part_id_spare_part"])->where("orders_spare_part_id_orders", $id)->get();
     }
 
     /**
@@ -55,14 +55,14 @@ class OrderSparepartModel extends Model
 
             $date = Carbon::now()->subMonths($i);
             $result = $this->select([
-                DB::raw("SUM(service_spare_part.harga) AS harga"), "service_spare_part.id_service_spare_part", "service.id_service",
-                DB::raw("MONTH(service_spare_part.updated_at) AS bulan"),
-                DB::raw("YEAR(service_spare_part.updated_at) AS tahun")
+                DB::raw("SUM(orders_spare_part.harga) AS harga"), "orders_spare_part.id_orders_spare_part", "orders.id_orders",
+                DB::raw("MONTH(orders_spare_part.updated_at) AS bulan"),
+                DB::raw("YEAR(orders_spare_part.updated_at) AS tahun")
             ])
-            ->join("service", "service_spare_part.service_spare_part_id_service", "=", "service.id_service")
-            ->where("service.status_service", "terima")
-            ->whereMonth("service.updated_at", $date->toArray()["month"])
-            ->whereYear("service.updated_at", $date->toArray()["year"])->sum("harga");
+            ->join("orders", "orders_spare_part.orders_spare_part_id_orders", "=", "orders.id_orders")
+            ->where("orders.status_service", "terima")
+            ->whereMonth("orders.updated_at", $date->toArray()["month"])
+            ->whereYear("orders.updated_at", $date->toArray()["year"])->sum(DB::raw("harga * jumlah"));
 
             array_push($arr, (int) $result);
         }
@@ -77,6 +77,6 @@ class OrderSparepartModel extends Model
      */
     public function deleteSparepart($id_service)
     {
-        return $this->where("service_spare_part_id_service", $id_service)->delete();
+        return $this->where("orders_spare_part_id_orders", $id_service)->delete();
     }
 }
