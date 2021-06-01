@@ -88,7 +88,7 @@ class OrderModel extends Model implements Countable
     public function printOrder($unique_id)
     {
         return $this->with(["user:id_users,email", "user.biodata:id_biodata,biodata_id_users,nomor_hp"])
-                    ->select(["unique_id", "nama_pelanggan", "orders_id_user", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk"])
+                    ->select(["unique_id", "nama_pelanggan", "orders_id_pelanggan", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk"])
                     ->where("unique_id", $unique_id)->first();
     }
 
@@ -172,7 +172,7 @@ class OrderModel extends Model implements Countable
             "user:id_users,name,email,username",
             "complaint:disetujui_pelanggan,id_pengaduan,isi,pengaduan_id_orders,dikerjakan_teknisi,tipe",
             "spareparts:id_orders_spare_part,orders_spare_part_id_orders,jumlah,harga"
-        ])->select(["id_orders", "unique_id", "created_at", "status_service", "nama_pelanggan", "orders_id_teknisi", "orders_id_user"])->orderBy("id_orders", "DESC");
+        ])->select(["id_orders", "unique_id", "created_at", "status_service", "nama_pelanggan", "orders_id_teknisi", "orders_id_pelanggan"])->orderBy("id_orders", "DESC");
     }
 
     /**
@@ -188,7 +188,7 @@ class OrderModel extends Model implements Countable
         if ($role == "admin") {
             return $this->main()->paginate(12);
         } else if ($role == "pelanggan") { // if user is normal user
-            return $this->main()->where("orders_id_user", $id)->paginate(12);
+            return $this->main()->where("orders_id_pelanggan", $id)->paginate(12);
         }
         // if user is a technician
         return $this->main()->where("orders_id_teknisi", $id)
@@ -239,8 +239,8 @@ class OrderModel extends Model implements Countable
     public function getTechnicianIdByServiceIdAndUserId($id_service, $id_user)
     {
         return $this->select(["orders_id_teknisi"])->where([
-            "id_orders"        => $id_service,
-            "orders_id_user"   => $id_user
+            "id_orders"             => $id_service,
+            "orders_id_pelanggan"   => $id_user
         ])->first();
     }
 
@@ -258,7 +258,7 @@ class OrderModel extends Model implements Countable
         $where = $this->addWhereClause("status_service", $status, $where);
 
         if ($user_id != null) {
-            $where = $this->addWhereClause("orders_id_user", $user_id, $where);
+            $where = $this->addWhereClause("orders_id_pelanggan", $user_id, $where);
         } else if ($status != "menunggu" && $teknisi_id != null) {
             $where = $this->addWhereClause("orders_id_teknisi", $teknisi_id, $where);
         }
@@ -268,7 +268,7 @@ class OrderModel extends Model implements Countable
 
     public function user()
     {
-        return $this->hasOne(UserModel::class, "id_users", "orders_id_user");
+        return $this->hasOne(UserModel::class, "id_users", "orders_id_pelanggan");
     }
 
     /**
@@ -287,8 +287,28 @@ class OrderModel extends Model implements Countable
             "complaint:disetujui_pelanggan,id_pengaduan,isi,pengaduan_id_orders,dikerjakan_teknisi,tipe,disetujui_admin",
             "service:id_jasa,nama_jasa,tipe,biaya_jasa"
         ])
-        ->select(["id_orders", "orders_id_jasa", "orders_id_teknisi", "orders_id_user", "nama_pelanggan", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service"])
+        ->select(["id_orders", "orders_id_jasa", "orders_id_teknisi", "orders_id_pelanggan", "nama_pelanggan", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service", "note"])
         ->where("unique_id", $unique_id)->first();
+    }
+
+    /**
+     * Update note in order
+     *
+     * @param $id
+     * @param $id_teknisi
+     * @param null $note
+     * @return int
+     */
+    public function updateNote($id, $id_teknisi, $note = null)
+    {
+        $query = $this->where("id_orders", $id);
+        if ($id_teknisi != null) {
+            $query = $query->where("orders_id_teknisi", $id_teknisi);
+        }
+
+        return $query->update([
+            "note"  => $note
+        ]);
     }
 
     public function service()
@@ -337,17 +357,17 @@ class OrderModel extends Model implements Countable
     public function createOrder($id_user, $unique_id, object $data)
     {
         return $this->insert([
-            "orders_id_user"                       => $id_user,
-            "orders_id_jasa"                       => $data->id_service,
-            "unique_id"                             => $unique_id,
-            "nama_pelanggan"                        => $data->name,
-            "alamat_pelanggan"                      => $data->address,
-            "nama_perangkat"                        => $data->device_name,
-            "keluhan"                               => $data->device_problem,
-            "jenis_perangkat"                       => $data->device_type == "pc" ? "pc/komputer" : $data->device_type,
-            "merk"                                  => $data->device_brand,
-            "created_at"                            => now(),
-            "updated_at"                            => now()
+            "orders_id_pelanggan"                       => $id_user,
+            "orders_id_jasa"                            => $data->id_service,
+            "unique_id"                                 => $unique_id,
+            "nama_pelanggan"                            => $data->name,
+            "alamat_pelanggan"                          => $data->address,
+            "nama_perangkat"                            => $data->device_name,
+            "keluhan"                                   => $data->device_problem,
+            "jenis_perangkat"                           => $data->device_type == "pc" ? "pc/komputer" : $data->device_type,
+            "merk"                                      => $data->device_brand,
+            "created_at"                                => now(),
+            "updated_at"                                => now()
         ]);
     }
 
@@ -394,7 +414,7 @@ class OrderModel extends Model implements Countable
     public function total($id, $role)
     {
         if ($role === "pelanggan") {
-            return $this->where("orders_id_user", $id)->count();
+            return $this->where("orders_id_pelanggan", $id)->count();
         } else if ($role === "teknisi") {
             return $this->where("orders_id_teknisi", $id)->count();
         }

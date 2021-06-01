@@ -26,19 +26,19 @@ class BiodataUpdateRequest extends FormRequest
             "alamat.min"                        => "Panjang karakter alamat minimal 8",
             "alamat.max"                        => "Panjang karakter alamat maksimal 100",
 
-            "email.required"                    => "Email tidak boleh kosong",
+            "email.required"                    => "Email harus diisi",
             "email.email"                       => "Format email salah",
             "email.min"                         => "Panjang karakter email minimal 6",
             "email.max"                         => "Panjang karakter email maksimal 255",
 
-            "jenis_kelamin.required"            => "Jenis kelamin tidak boleh kosong",
+            "jenis_kelamin.required"            => "Jenis kelamin harus diisi",
             "jenis_kelamin.in"                  => "Jenis kelamin harus antara laki - laki atau perempuan",
 
-            "name.required"                     => "Nama tidak boleh kosong",
+            "name.required"                     => "Nama harus diisi",
             "name.min"                          => "Panjang karakter nama minimal 6",
             "name.max"                          => "Panjang karakter nama maksimal 60",
 
-            "nomor_hp.required"                 => "Nomor hp tidak boleh kosong",
+            "nomor_hp.required"                 => "Nomor hp harus diisi",
             "nomor_hp.numeric"                  => "Nomor hp harus berupa angka",
             "nomor_hp.digits_between"           => "Panjang karakter nomor hp harus antara 7 hingga 17",
 

@@ -25,7 +25,7 @@ class TechnicianRequestResetPassword extends FormRequest
             "username.required"         => "Username harus diisi",
             "username.min"              => "Panjang karakter username minimal 6",
 
-            "password.required"         => "Password tidak boleh kosong",
+            "password.required"         => "Password harus diisi",
             "password.min"              => "Panjang karakter password minimal 6"
         ];
     }

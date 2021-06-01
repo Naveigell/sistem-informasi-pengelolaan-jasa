@@ -69,13 +69,13 @@ class ComplaintSeeder extends Seeder
     {
         $complaints = $this->readFile("pengaduan")->file->pengaduan->komplain;
 
-        $orders = DB::table("service")->select(["id_orders", "orders_id_user", "orders_id_teknisi", "status_service"])->get();
+        $orders = DB::table("service")->select(["id_orders", "orders_id_pelanggan", "orders_id_teknisi", "status_service"])->get();
         foreach ($orders as $order) {
             DB::beginTransaction();
             try {
                 $rand = rand(1, 10);
                 if ($rand < 3) {
-                    $this->createComplaint($order->id_service, $order->orders_id_user, $order->orders_id_teknisi, $complaints);
+                    $this->createComplaint($order->id_service, $order->orders_id_pelanggan, $order->orders_id_teknisi, $complaints);
                 }
 
                 error_log("Complaint with id_service: $order->id_service created successfully, random value : $rand");

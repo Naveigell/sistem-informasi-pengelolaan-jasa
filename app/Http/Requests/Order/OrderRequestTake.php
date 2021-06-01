@@ -24,7 +24,7 @@ class OrderRequestTake extends FormRequest
     public function messages()
     {
         return [
-            "id.required"            => "Unique id tidak boleh kosong",
+            "id.required"            => "Unique id harus diisi",
             "id.min"                 => "Jumlah karakter dalam unique id minimal 5"
         ];
     }

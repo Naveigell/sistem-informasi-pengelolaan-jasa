@@ -28,6 +28,7 @@ class CreateServiceTable extends Migration
                 $table->string('merk', 70);
                 $table->integer('biaya_jasa')->nullable();
                 $table->enum('status_service', ['menunggu', 'dicek', 'perbaikan', 'selesai', 'terima'])->default("menunggu");
+                $table->text('note');
                 $table->timestamps();
 
                 $table->foreign('orders_id_teknisi')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');

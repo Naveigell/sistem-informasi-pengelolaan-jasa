@@ -34,7 +34,7 @@
                 </div>
                 <div class="spare-part-tools">
                     <div class="spare-part-tools-left">
-                        <h4>{{ this.paginator.totalData }} Spare Part Aktif</h4>
+                        <h4>{{ this.paginator.totalData }} Total Spare Part</h4>
                     </div>
                     <div class="spare-part-tools-right" v-if="['admin'].includes($store.state.user.data.role)">
                         <div class="spare-part-tools-right-container">

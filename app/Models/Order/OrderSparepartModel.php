@@ -53,7 +53,7 @@ class OrderSparepartModel extends Model
         for ($i = 6; $i >= 1; $i--) {
             DB::statement("SET sql_mode = ''");
 
-            $date = Carbon::now()->subMonths($i);
+            $date = Carbon::now()->subMonthsNoOverflow($i);
             $result = $this->select([
                 DB::raw("SUM(orders_spare_part.harga) AS harga"), "orders_spare_part.id_orders_spare_part", "orders.id_orders",
                 DB::raw("MONTH(orders_spare_part.updated_at) AS bulan"),

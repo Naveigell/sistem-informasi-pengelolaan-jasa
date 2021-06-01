@@ -19,7 +19,7 @@ class JasaRequestUpdate extends FormRequest
     public function messages()
     {
         return [
-            "id.required"           => "Id tidak boleh kosong",
+            "id.required"           => "Id harus diisi",
             "id.integer"            => "Id harus berupa angka",
             "id.min"                => "Id minimal 1",
 

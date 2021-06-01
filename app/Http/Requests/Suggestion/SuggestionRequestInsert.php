@@ -27,7 +27,7 @@ class SuggestionRequestInsert extends FormRequest
     public function messages()
     {
         return [
-            "text.required"                 => "Isi saran tidak boleh kosong",
+            "text.required"                 => "Isi saran harus diisi",
             "text.min"                      => "Isi saran minimal 8 karakter",
             "text.max"                      => "Isi saran maksimal 3000 karakter"
         ];

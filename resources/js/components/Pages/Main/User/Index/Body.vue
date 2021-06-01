@@ -21,7 +21,7 @@
                 </div>
                 <div class="user-tools">
                     <div class="user-tools-left">
-                        <h4>{{ paginator.totalData }} Pelanggan Aktif</h4>
+                        <h4>{{ paginator.totalData }} Total Pelanggan</h4>
                     </div>
                     <div class="user-tools-right">
                         <div class="user-tools-right-container">

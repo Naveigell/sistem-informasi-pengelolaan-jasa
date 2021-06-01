@@ -37,7 +37,7 @@ class GraphController extends Controller implements GraphDataInterface, GraphPro
     {
         $labels = [];
         for ($i = 6; $i >= 1; $i--) {
-            $date = Carbon::now()->subMonths($i);
+            $date = Carbon::now()->subMonthsNoOverflow($i);
             array_push($labels, strftime("%B", $date->getTimestamp())." ".$date->toArray()["year"]);
         }
 

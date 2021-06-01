@@ -91,7 +91,7 @@ class OrdersSeeder extends Seeder
                 try {
                     DB::table('service')->insert([
                         "orders_id_teknisi"             => $teknisi->id_users,
-                        "orders_id_user"                => $id,
+                        "orders_id_pelanggan"           => $id,
                         "orders_id_jasa"                => $jasa->id_jasa,
                         "unique_id"                     => $uniqueID,
                         "nama_pelanggan"                => $name,

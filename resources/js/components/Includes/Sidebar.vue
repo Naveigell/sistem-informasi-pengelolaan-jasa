@@ -82,8 +82,8 @@ export default {
                     roles: ["admin", "teknisi", "pelanggan"]
                 },
                 {
-                    title: "Service",
-                    icon: "fa fa-user",
+                    title: "Jasa",
+                    icon: "fa fa-wrench",
                     hasDropdown: false,
                     isLink: true,
                     to: "/service",

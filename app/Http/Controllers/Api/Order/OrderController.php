@@ -7,6 +7,7 @@ use App\Helpers\Times\Time;
 use App\Helpers\Url\QueryString;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderRequestInsert;
+use App\Http\Requests\Order\OrderRequestNote;
 use App\Http\Requests\Order\OrderRequestSaveSparepart;
 use App\Http\Requests\Order\OrderRequestSearch;
 use App\Http\Requests\Order\OrderRequestSearchSparepart;
@@ -172,12 +173,12 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
         ], $data["technician"]);
 
         $data = Arrays::replaceKey([
-            "id_orders"            => "id",
-            "orders_id_teknisi"    => "teknisi_id",
-            "orders_id_user"       => "user_id",
-            "jenis_perangkat"       => "jenis",
-            "status_service"        => "status",
-            "alamat_pelanggan"        => "alamat"
+            "id_orders"                 => "id",
+            "orders_id_teknisi"         => "teknisi_id",
+            "orders_id_pelanggan"       => "user_id",
+            "jenis_perangkat"           => "jenis",
+            "status_service"            => "status",
+            "alamat_pelanggan"          => "alamat"
         ], $data);
 
         return json(["order" => $data]);
@@ -673,6 +674,22 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
         }
 
         return error(null, ["message" => "Terjadi masalah saat mengambil order"]);
+    }
+
+    /**
+     * Update note in order
+     *
+     * @param OrderRequestNote $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateNote(OrderRequestNote $request)
+    {
+        $updated = $this->order->updateNote($request->id, $request->id_technician, $request->note);
+        if (!$updated) {
+            return error(null, ["message" => "Terjadi masalah saat mengubah catatan"]);
+        }
+
+        return json(null, null, 204);
     }
 
     /**

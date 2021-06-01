@@ -5,6 +5,10 @@
                 <div class="spare-part-image-container">
                     <h4 style="font-weight: bold;">Foto Sparepart</h4>
                     <span>Format gambar harus diantara .jpg, .jpeg dan .png</span>
+                    <div v-if="errors.images != null && errors.images !== undefined" style="text-align: center;">
+                        <br/>
+                        <span class="error-message">{{ errors.images[0] }}</span>
+                    </div>
                     <div class="image-container">
                         <div v-for="(item, index) in images" style="display: flex; flex-direction: column; align-items: center">
                             <div v-if="!images[index]" class="image-dashed" v-on:click="chooseImage(index)">

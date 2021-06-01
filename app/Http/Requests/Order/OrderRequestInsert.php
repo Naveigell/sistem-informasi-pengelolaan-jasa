@@ -19,7 +19,7 @@ class OrderRequestInsert extends FormRequest
     public function messages()
     {
         return [
-            "name.required"                 => "Nama pelanggan tidak boleh kosong",
+            "name.required"                 => "Nama pelanggan harus diisi",
             "name.min"                      => "Panjang karakter nama minimal 4",
             "name.max"                      => "Panjang karakter nama maksimal 40",
 

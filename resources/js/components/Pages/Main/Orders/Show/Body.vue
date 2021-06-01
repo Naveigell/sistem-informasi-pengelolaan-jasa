@@ -86,7 +86,7 @@
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
                                                     <button v-if="$store.state.user.data.role !== 'teknisi'" @click="modals.show_sparepart.open = true;" class="button-success-primary-sm">Lihat</button>
-                                                    <button :disabled="['selesai', 'terima'].includes(data.status)" v-else @click="['selesai', 'pembayaran', 'terima'].includes(data.status) ? modals.choose_sparepart.open = false : modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
+                                                    <button :disabled="['selesai', 'terima'].includes(data.status)" v-else @click="['selesai', 'terima'].includes(data.status) ? modals.choose_sparepart.open = false : modals.choose_sparepart.open = true;" class="button-success-primary-sm">Tambah Sparepart</button>
                                                 </div>
                                                 <span v-if="$store.state.user.data.role === 'teknisi'" style="display: inline-block; margin-top: 10px; color: #999;">Sparepart hanya bisa diperbarui saat status service dibawah "SELESAI"</span>
                                             </div>
@@ -115,7 +115,7 @@
                                                                     </div>
                                                                     <span v-else>x{{ sparepart.jumlah }}</span>
                                                                 </td>
-                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;"><i @click="spareparts.splice(index, 1)" class="fa fa-trash" style="color: #999; cursor: pointer;"></i></td>
+                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;"><i @click="['selesai', 'terima'].includes(data.status) ? null : spareparts.splice(index, 1)" class="fa fa-trash" style="color: #999; cursor: pointer;"></i></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -125,7 +125,7 @@
                                             <div class="row">
                                                 <div class="col-md-2 left-column"></div>
                                                 <div class="col-md-10">
-                                                    <button @click="saveSparepart" class="button-success-primary-sm">Simpan</button>
+                                                    <button v-if="['dicek', 'perbaikan'].includes(data.status)" @click="saveSparepart" class="button-success-primary-sm">Simpan</button>
                                                 </div>
                                             </div>
                                            <br/>
@@ -216,13 +216,42 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div v-if="(/*!['selesai', 'terima'].includes(data.status) && */!this.$role.isUser) || (note.exists && this.$role.isUser)">
+                                            <br/>
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-md-2 left-column">
+                                                        <span>
+                                                            * {{ data.note !== null && this.$role.isUser ? '' : 'Buat' }} Catatan
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-10 right-column">
+                                                        <div class="input-container">
+                                                            <button v-if="!note.form.show" @click="note.form.show = true;" class="button-danger-sm">Buat</button>
+                                                            <textarea v-model="note.text" :disabled="this.$role.isUser" @focus="note.errors.note = null" ref="complaint" v-bind:class="{'input-error': note.errors.note !== null && note.errors.note !== undefined}" v-else name="" cols="30" rows="10" placeholder="Tulis catatan disini" style="resize: none"></textarea>
+                                                        </div>
+                                                        <div v-if="note.form.show">
+                                                            <span class="error-message" v-if="note.errors.note != null && note.errors.note !== undefined">{{ note.errors.note[0] }}</span>
+                                                            <span class="word-count">{{ note.text.length }}/3000</span>
+                                                        </div>
+                                                        <div v-if="note.form.show && !this.$role.isUser">
+                                                            <br/>
+                                                            <div>
+                                                                <button @click="updateNote()" class="button-success-primary-sm">Ubah</button>
+                                                                <button v-if="data.note !== null" @click="deleteNote()" class="button-danger-sm">Hapus</button>
+                                                                <button v-else @click="note.form.show = false;" class="button-transparent-sm">Batal</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <br/>
                                         <div v-if="['selesai', 'terima'].includes(data.status)">
-<!--                                        <div>-->
                                             <div class="row" v-if="$role.isUser || complaint.exists">
                                                 <div class="col-md-2 left-column">
                                                     <span>
-                                                        * {{ complaint.exists && this.$role.isTechnician ? '' : 'Buat' }} Komplain
+                                                        * {{ complaint.exists && !this.$role.isUser ? '' : 'Buat' }} Komplain
                                                         <span>
                                                             <br>
                                                             <router-link :to="{ path: '/complaints/' + complaint.data.id_pengaduan }" style="display: inline-block;">
@@ -249,7 +278,7 @@
                                                     </div>
                                                     <div v-if="complaint.form.show">
                                                         <span class="error-message" v-if="complaint.errors.text != null && complaint.errors.text !== undefined">{{ complaint.errors.text[0] }}</span>
-                                                        <span class="word-count">{{ complaint.text.length }}/3000</span>
+                                                        <span class="word-count">{{ complaint.text.length }}/6000</span>
                                                     </div>
                                                     <div v-if="complaint.form.show">
                                                         <br/>
@@ -307,7 +336,8 @@ export default {
                 device_type: "pc",
                 device_brand: "",
                 total_price: 0,
-                service: null
+                service: null,
+                note: null
             },
             spareparts: [],
             modals: {
@@ -329,6 +359,15 @@ export default {
                 data: {},
                 errors: {},
                 text: ""
+            },
+            note: {
+                exists: false,
+                form: {
+                    show: false,
+                },
+                data: {},
+                errors: {},
+                text: ""
             }
         }
     },
@@ -336,6 +375,11 @@ export default {
         "complaint.text": function (newVal, oldVal) {
             if (newVal.length > 3000) {
                 this.complaint.text = oldVal;
+            }
+        },
+        "note.text": function (newVal, oldVal) {
+            if (newVal.length > 6000) {
+                this.note.text = oldVal;
             }
         }
     },
@@ -453,6 +497,7 @@ export default {
                 this.data.device_brand      = response.data.body.order.merk;
                 this.data.total_price       = response.data.body.order.price;
                 this.data.service           = response.data.body.order.service;
+                this.data.note              = response.data.body.order.note;
 
                 this.spareparts             = this.data.spareparts;
 
@@ -465,7 +510,13 @@ export default {
                     this.complaint.data = response.data.body.order.complaint;
                 }
 
-                console.log(this.complaint)
+                if (response.data.body.order.note !== null) {
+                    this.note.exists = true;
+                    this.note.text = response.data.body.order.note;
+                    this.note.form.show = true;
+                }
+
+                console.log(this.note)
             }).catch((error) => {
                 console.error(error);
             })
@@ -483,8 +534,8 @@ export default {
         updateStatusService(status) {
             const id = this.data.id;
 
-            if (status === "selesai") {
-                const conf = confirm("Anda tidak akan bisa mengubah sparepart setelah selesai");
+            if (status === "selesai" || status === "terima") {
+                const conf = confirm("Anda tidak akan bisa mengubah status menjadi status sebelumnya");
                 if (!conf)
                     return;
             }
@@ -537,6 +588,57 @@ export default {
             }
 
             return false;
+        },
+        updateNote(){
+            this.$api.post(this.$endpoints.orders.note, {
+                note: this.note.text,
+                id: this.data.id,
+                id_technician: this.$role.isTechnician ? this.$store.state.user.data.id : undefined
+            }).then((response) => {
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Catatan berhasil diubah atau dibuat",
+                        icon: "fa fa-check"
+                    }
+                });
+                this.data.note = this.note.text;
+            }).catch((error) => {
+                if (error.response.status === 422) {
+                    this.note.errors = error.response.data.errors.messages;
+                }
+            });
+        },
+        deleteNote(){
+            const conf = confirm("Yakin menghapus note?");
+            if (!conf)
+                return;
+
+            this.$api.post(this.$endpoints.orders.note, {
+                id: this.data.id,
+                id_technician: this.$role.isTechnician ? this.$store.state.user.data.id : undefined
+            }).then((response) => {
+                this.$root.$emit("open-toast", {
+                    type: "success",
+                    background: this.$colors.successPrimary,
+                    data: {
+                        title: "Success!",
+                        message: "Catatan berhasil dihapus",
+                        icon: "fa fa-check"
+                    }
+                });
+
+                this.note.exists = false;
+                this.note.text = "";
+                this.note.form.show = false;
+                this.data.note = null;
+            }).catch((error) => {
+                if (error.response.status === 422) {
+                    this.note.errors = error.response.data.errors.messages;
+                }
+            });
         }
     }
 }

@@ -21,7 +21,7 @@
                 </div>
                 <div class="admin-tools">
                     <div class="admin-tools-left">
-                        <h4>{{ paginator.totalData }} Admin Aktif</h4>
+                        <h4>{{ paginator.totalData }} Total Admin</h4>
                     </div>
                     <div class="admin-tools-right" v-if="this.$role.isAdmin">
                         <div class="admin-tools-right-container">

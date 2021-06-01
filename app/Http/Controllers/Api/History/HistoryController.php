@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
+    /**
+     * Retrieve all histories
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function retrieveAll()
     {
         $histories = HistoryModel::all()->collect()->map(function ($item) {

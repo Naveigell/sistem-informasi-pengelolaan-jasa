@@ -22,7 +22,7 @@ class ProfilePictureUpdateRequest extends FormRequest
      */
     public function messages() {
         return [
-            "image.required"          => "Image tidak boleh kosong",
+            "image.required"          => "Image harus diisi",
             "image.mimes"             => "File yang disupport hanya .jpeg, .jpg dan .png",
             "image.max"               => "Ukuran image maksimal 10 MB"
         ];

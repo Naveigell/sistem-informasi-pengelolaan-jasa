@@ -51,7 +51,7 @@ class SparepartRequestInsert extends FormRequest
             "images.min"                => "Jumlah foto minimal 1",
             "images.max"                => "Jumlah foto maksimal 5",
 
-            "images.*.required"         => "Foto tidak boleh kosong",
+            "images.*.required"         => "Foto harus diisi",
             "images.*.mimes"            => "Hanya diperbolehkan ekstensi .jpg, .png, .jpeg",
             "images.*.max"              => "Ukuran foto maksimal 10MB atau 10.000KB"
         ];

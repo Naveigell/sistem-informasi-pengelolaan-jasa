@@ -1,26 +1,21 @@
 <template>
     <div>
         <div class="list">
-            <div class="title-container col-md-2">
+            <div class="title-container col-md-3 col-lg-3">
                 <span class="title">{{ data.nama_jasa }}</span>
-                <div class="tag-container">
-                    <button v-on:click="updateActivation()" style="min-width: 60px;" class="button-green-primary-tag tag" @mouseleave="hover.buttonActive = !hover.buttonActive" @mouseover="hover.buttonActive = !hover.buttonActive" :class="{'button-danger-primary-tag': !hover.buttonActive, 'button-green-primary-tag': hover.buttonActive}">
-                        {{ hover.buttonActive ? "Aktif" : "Nonaktif" }}
-                    </button>
-                </div>
+<!--                <div class="tag-container">-->
+<!--                    <button v-on:click="updateActivation()" style="min-width: 60px;" class="button-green-primary-tag tag" @mouseleave="hover.buttonActive = !hover.buttonActive" @mouseover="hover.buttonActive = !hover.buttonActive" :class="{'button-danger-primary-tag': !hover.buttonActive, 'button-green-primary-tag': hover.buttonActive}">-->
+<!--                        {{ hover.buttonActive ? "Aktif" : "Nonaktif" }}-->
+<!--                    </button>-->
+<!--                </div>-->
             </div>
-            <div class="type-container col-md-2 text-center">
+            <div class="type-container col-md-3 col-lg-3 text-center">
                 <span>{{ data.tipe.capitalize() }}</span>
             </div>
-            <div class="description-container col-md-4 text-center">
-                <div class="description">
-                    {{ data.deskripsi }}
-                </div>
-            </div>
-            <div class="service-price-container col-md-3 text-center">
+            <div class="service-price-container col-md-3 col-lg-3 text-center">
                 <span class="price">Rp. {{ this.$currency.indonesian(data.biaya_jasa) }}</span>
             </div>
-            <div class="action-container col-md-2">
+            <div class="action-container col-md-3 col-lg-3">
                 <span style="color: var(--warning-primary)" v-on:click="modal.update.open = true"><i class="fa fa-pencil-square-o"></i></span>
                 <span style="color: var(--red-primary)" v-on:click="modal.delete.open = true"><i class="fa fa-trash"></i></span>
             </div>

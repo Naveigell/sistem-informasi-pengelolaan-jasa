@@ -21,7 +21,7 @@
                 </div>
                 <div class="technician-tools">
                     <div class="technician-tools-left">
-                        <h4>{{ paginator.totalData }} Teknisi Aktif</h4>
+                        <h4>{{ paginator.totalData }} Total Teknisi</h4>
                     </div>
                     <div class="technician-tools-right" v-if="this.$role.isAdmin">
                         <div class="technician-tools-right-container">

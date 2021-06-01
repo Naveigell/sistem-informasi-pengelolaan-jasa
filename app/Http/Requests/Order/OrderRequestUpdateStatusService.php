@@ -28,11 +28,11 @@ class OrderRequestUpdateStatusService extends FormRequest
     public function messages()
     {
         return [
-            "id.required"                   => "Id tidak boleh kosong",
+            "id.required"                   => "Id harus diisi",
             "id.integer"                    => "Id harus berupa angka",
             "id.min"                        => "Id minimal 1",
 
-            "status.required"               => "Status tidak boleh kosong",
+            "status.required"               => "Status harus diisi",
             "status.in"                     => "Status harus diantara menunggu, dicek, perbaikan, selesai dan terima"
         ];
     }

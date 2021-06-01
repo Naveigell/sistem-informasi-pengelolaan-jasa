@@ -32,35 +32,35 @@
                                         <i class=" fa fa-refresh"></i>
                                     </a>
                                 </div>
-                                <div class="btn-group hidden-phone">
-                                    <a data-toggle="dropdown" href="#" class="btn mini blue" aria-expanded="false">
-                                        More
-                                        <i class="fa fa-angle-down "></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                                        <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                                    </ul>
-                                </div>
-                                <div class="btn-group hidden-phone" @click="openDeleteModal">
-                                    <a class="btn mini blue" aria-expanded="false">
-                                        <i class="fa fa-trash"></i>&nbsp Delete
-                                    </a>
-                                </div>
-                                <div class="btn-group">
-                                    <a data-toggle="dropdown" href="#" class="btn mini blue">
-                                        Move to
-                                        <i class="fa fa-angle-down "></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                                        <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-                                    </ul>
-                                </div>
+<!--                                <div class="btn-group hidden-phone">-->
+<!--                                    <a data-toggle="dropdown" href="#" class="btn mini blue" aria-expanded="false">-->
+<!--                                        More-->
+<!--                                        <i class="fa fa-angle-down "></i>-->
+<!--                                    </a>-->
+<!--                                    <ul class="dropdown-menu">-->
+<!--                                        <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>-->
+<!--                                        <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>-->
+<!--                                        <li class="divider"></li>-->
+<!--                                        <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                                <div class="btn-group hidden-phone" @click="openDeleteModal">-->
+<!--                                    <a class="btn mini blue" aria-expanded="false">-->
+<!--                                        <i class="fa fa-trash"></i>&nbsp Delete-->
+<!--                                    </a>-->
+<!--                                </div>-->
+<!--                                <div class="btn-group">-->
+<!--                                    <a data-toggle="dropdown" href="#" class="btn mini blue">-->
+<!--                                        Move to-->
+<!--                                        <i class="fa fa-angle-down "></i>-->
+<!--                                    </a>-->
+<!--                                    <ul class="dropdown-menu">-->
+<!--                                        <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>-->
+<!--                                        <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>-->
+<!--                                        <li class="divider"></li>-->
+<!--                                        <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
 
                                 <ul class="unstyled inbox-pagination">
                                     <li @click="previous">
@@ -74,9 +74,9 @@
                             <table class="table table-inbox table-hover">
                                 <tbody>
                                     <tr class="" v-for="(suggestion, index) in suggestions" @click="moveInto(suggestion.id, $event)">
-                                        <td class="inbox-small-cells">
-                                            <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">
-                                        </td>
+<!--                                        <td class="inbox-small-cells">-->
+<!--                                            <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">-->
+<!--                                        </td>-->
 <!--                                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>-->
                                         <td class="view-message dont-show">{{ $store.state.user.data.role === 'pelanggan' ? "Kepada: Admin" : suggestion.user.name }} <span v-if="suggestion.type === 'komplain'" class="label label-danger pull-right">complain</span></td>
                                         <td class="view-message" style="text-overflow: ellipsis; overflow-x: hidden; max-width: 700px; white-space: nowrap;">{{ suggestion.content.cutIfGreaterThan(30000) }}</td>

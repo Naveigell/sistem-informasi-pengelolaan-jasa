@@ -58,6 +58,7 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::get("/retrieve/{id}", "Api\Order\OrderController@retrieve");
         Route::post("/", "Api\Order\OrderController@create")->middleware("should.have.role:admin");
         Route::post("/take", "Api\Order\OrderController@take")->middleware("should.have.role:teknisi");
+        Route::post("/note", "Api\Order\OrderController@updateNote");
         Route::put("/status", "Api\Order\OrderController@updateStatusService")->middleware("should.have.role:admin,teknisi");
         Route::delete("/{id}", "Api\Order\OrderController@delete")->middleware("should.have.role:admin");
     });
