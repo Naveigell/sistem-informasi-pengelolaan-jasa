@@ -33,7 +33,7 @@ class JasaModel extends Model
     {
         return $this->where("id_jasa", $data->id)->update([
             "nama_jasa"         => $data->name,
-            "deskripsi"         => $data->description,
+//            "deskripsi"         => $data->description,
             "tipe"              => $data->type == "pc" ? "pc/komputer" : $data->type,
             "biaya_jasa"        => $data->price,
             "updated_at"        => now()
@@ -61,7 +61,7 @@ class JasaModel extends Model
     {
         return $this->insertGetId([
             "nama_jasa"         => $data->name,
-            "deskripsi"         => $data->description,
+//            "deskripsi"         => $data->description,
             "tipe"              => $data->type == "pc" ? "pc/komputer" : $data->type,
             "biaya_jasa"        => $data->price,
             "created_at"        => now(),

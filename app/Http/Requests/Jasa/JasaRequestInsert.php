@@ -23,9 +23,9 @@ class JasaRequestInsert extends FormRequest
             "name.min"              => "Panjang karakter jasa minimal 3",
             "name.max"              => "Panjang karakter jasa minimal 30",
 
-            "description.required"  => "Deskripsi harus diisi",
-            "description.min"       => "Panjang karakter deskripsi minimal 5",
-            "description.max"       => "Panjang karakter deskripsi minimal 255",
+//            "description.required"  => "Deskripsi harus diisi",
+//            "description.min"       => "Panjang karakter deskripsi minimal 5",
+//            "description.max"       => "Panjang karakter deskripsi minimal 255",
 
             "type.required"         => "Tipe jasa harus diisi",
             "type.in"               => "Tipe jasa harus diantara pc, printer atau hp",
@@ -46,7 +46,7 @@ class JasaRequestInsert extends FormRequest
     {
         return [
             "name"          => "required|string|min:3|max:30",
-            "description"   => "required|string|min:5|max:255",
+//            "description"   => "required|string|min:5|max:255",
             "type"          => "required|string|in:pc,printer,hp",
             "price"         => "required|integer|min:1|max:5000000"
         ];

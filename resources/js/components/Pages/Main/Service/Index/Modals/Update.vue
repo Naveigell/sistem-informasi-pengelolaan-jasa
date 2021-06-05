@@ -23,11 +23,6 @@
                             </select>
                             <span class="error-message" v-if="errors.type != null && errors.type !== undefined">{{ errors.type[0] }}</span>
                         </div>
-                        <div class="input-container">
-                            <label for="">Deskripsi</label>
-                            <textarea v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi" v-model="data.description"></textarea>
-                            <span class="error-message" v-if="errors.description != null && errors.description !== undefined">{{ errors.description[0] }}</span>
-                        </div>
                         <div>
                             <label for="">Biaya Jasa</label>
                             <div class="input-container-price" v-bind:class="{'input-error': errors.price != null && errors.price !== undefined}">
@@ -83,11 +78,11 @@ export default {
                 this.data.name = oldVal;
             }
         },
-        "data.description": function (newVal, oldVal) {
-            if (newVal.length > 255) {
-                this.data.description = oldVal;
-            }
-        },
+        // "data.description": function (newVal, oldVal) {
+        //     if (newVal.length > 255) {
+        //         this.data.description = oldVal;
+        //     }
+        // },
         "data.type": function (newVal, oldVal) {
             const arr = ["pc", "hp", "printer"];
             if (!arr.includes(newVal)) {
@@ -274,7 +269,7 @@ form > button {
     background: white;
     border-radius: 4px;
     width: 390px;
-    height: 520px;
+    height: 390px;
     position: relative;
     z-index: 39;
     overflow-y: auto;

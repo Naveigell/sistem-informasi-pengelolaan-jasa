@@ -80,7 +80,7 @@ export default {
             const activeListCount = this.lists.map(item => item.aktif).reduce(function (prev, next) {
                 return prev + next;
             });
-            this.$emit("updateListCount", activeListCount);
+            this.$emit("updateListCount", this.lists.length);
         },
     }
 }

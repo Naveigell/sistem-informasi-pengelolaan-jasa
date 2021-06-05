@@ -10,7 +10,7 @@
                         <h2>Tambah Jasa</h2>
                         <span class="sub-title">Isi form dibawah untuk membuat jasa baru</span> <br/>
                         <div class="input-container">
-                            <label for="">Nama Service</label>
+                            <label for="">Nama Jasa</label>
                             <input v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" placeholder="Nama Service" v-model="data.name">
                             <span class="error-message" v-if="errors.name != null && errors.name !== undefined">{{ errors.name[0] }}</span>
                         </div>
@@ -23,11 +23,11 @@
                             </select>
                             <span class="error-message" v-if="errors.type != null && errors.type !== undefined">{{ errors.type[0] }}</span>
                         </div>
-                        <div class="input-container">
-                            <label for="">Deskripsi</label>
-                            <textarea v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi" v-model="data.description"></textarea>
-                            <span class="error-message" v-if="errors.description != null && errors.description !== undefined">{{ errors.description[0] }}</span>
-                        </div>
+<!--                        <div class="input-container">-->
+<!--                            <label for="">Deskripsi</label>-->
+<!--                            <textarea v-bind:class="{'input-error': errors.description != null && errors.description !== undefined}" @focus="errors.description = null;" placeholder="Deskripsi" v-model="data.description"></textarea>-->
+<!--                            <span class="error-message" v-if="errors.description != null && errors.description !== undefined">{{ errors.description[0] }}</span>-->
+<!--                        </div>-->
                         <div>
                             <label for="">Biaya Jasa</label>
                             <div class="input-container-price" v-bind:class="{'input-error': errors.price != null && errors.price !== undefined}">
@@ -60,7 +60,7 @@ export default {
             data: {
                 name: "",
                 type: "pc",
-                description: "",
+                // description: "",
                 price: "1"
             },
             errors: {
@@ -78,11 +78,11 @@ export default {
                 this.data.name = oldVal;
             }
         },
-        "data.description": function (newVal, oldVal) {
-            if (newVal.length > 255) {
-                this.data.description = oldVal;
-            }
-        },
+        // "data.description": function (newVal, oldVal) {
+        //     if (newVal.length > 255) {
+        //         this.data.description = oldVal;
+        //     }
+        // },
         "data.type": function (newVal, oldVal) {
             const arr = ["pc", "hp", "printer"];
             if (!arr.includes(newVal)) {
@@ -241,7 +241,7 @@ form > button {
     background: white;
     border-radius: 4px;
     width: 390px;
-    height: 520px;
+    height: 390px;
     position: relative;
     z-index: 39;
     overflow-y: auto;

@@ -60,7 +60,7 @@ class JasaController extends Controller {
      */
     public function update(JasaRequestUpdate $request)
     {
-        $fields     = (object) $request->only(["id", "name", "description", "type", "price"]);
+        $fields     = (object) $request->only(["id", "name", "type", "price"]);
         $updated    = $this->jasa->updateJasa($fields);
         return json([$fields]);
     }
@@ -73,7 +73,7 @@ class JasaController extends Controller {
      */
     public function insert(JasaRequestInsert $request)
     {
-        $fields     = (object) $request->only(["name", "description", "type", "price"]);
+        $fields     = (object) $request->only(["name", "type", "price"]);
         $id         = $this->jasa->createJasa($fields);
 
         $data   = $this->jasa->getSingleData($id);
