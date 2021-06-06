@@ -33,8 +33,8 @@
                             </div>
                         </transition>
                     </div>
-                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :admin="data.admin" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                 </div>
+                <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :admin="data.admin" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
             </div>
         </div>
     </div>

@@ -29,12 +29,12 @@
                                 <i class="fa fa-plus"></i>&nbsp Tambah Pelanggan
                             </button>
                             <div class="view-model">
-                                <div>
+                                <div v-bind:class="{'active': mode.viewMode === 0}" @click="changeViewMode(0)">
+                                    <i class="fa fa-th"></i>
+                                </div>
+                                <div v-bind:class="{'active': mode.viewMode === 1}" @click="changeViewMode(1)">
                                     <i class="fa fa-list-ul"></i>
                                 </div>
-<!--                                <div>-->
-<!--                                    <i class="fa fa-list-ul"></i>-->
-<!--                                </div>-->
                             </div>
                             <button class="button-add button-danger-md" v-on:click="mode.onDeleteMode = !mode.onDeleteMode; overlay.full = true;" style="margin-left: 7px;">
                                 {{ mode.onDeleteMode ? "Batal Hapus" : "Hapus" }}
@@ -42,7 +42,8 @@
                         </div>
                     </div>
                 </div>
-                <grid @reload="reload" v-bind:users="users" :on-delete-mode="mode.onDeleteMode"/>
+                <grid v-if="mode.viewMode === 0" v-bind:users="users" :on-delete-mode="mode.onDeleteMode" @reload="reload" />
+                <list v-if="mode.viewMode === 1" v-bind:users="users" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -64,12 +65,14 @@
 
 <script>
 import GridList from "./Lists/GridList";
+import ListView from "./Lists/ListView";
 import Insert from "./Modals/Insert";
 
 export default {
     name: "Body",
     components: {
         "grid": GridList,
+        list: ListView,
         Insert,
     },
     mounted() {
@@ -101,7 +104,10 @@ export default {
                 onSearch: false
             },
             mode: {
-                onDeleteMode: false
+                onDeleteMode: false,
+                // view mode 0 is mean 'grid' list,
+                // view mode 1 is mean 'list' view
+                viewMode: 0
             },
             overlay: {
                 full: false
@@ -181,6 +187,9 @@ export default {
         closeModal(modal) {
             modal.open = false;
         },
+        changeViewMode(mode) {
+            this.mode.viewMode = mode;
+        }
     }
 }
 </script>
@@ -194,7 +203,7 @@ export default {
     margin: 0;
 }
 
-.view-model div:first-child {
+.view-model .active {
     background: white;
 }
 

@@ -29,10 +29,10 @@
                                 <i class="fa fa-plus"></i>&nbsp Tambah Admin
                             </button>
                             <div class="view-model">
-                                <div>
-                                    <i class="fa fa-list-ul"></i>
+                                <div v-bind:class="{'active': mode.viewMode === 0}" @click="changeViewMode(0)">
+                                    <i class="fa fa-th"></i>
                                 </div>
-                                <div>
+                                <div v-bind:class="{'active': mode.viewMode === 1}" @click="changeViewMode(1)">
                                     <i class="fa fa-list-ul"></i>
                                 </div>
                             </div>
@@ -42,7 +42,8 @@
                         </div>
                     </div>
                 </div>
-                <grid v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
+                <grid v-if="mode.viewMode === 0" v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
+                <list v-if="mode.viewMode === 1" v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -63,6 +64,7 @@
 </template>
 
 <script>
+import ListView from "./Lists/ListView";
 import GridList from "./Lists/GridList";
 import Insert from "./Modals/Insert";
 
@@ -70,6 +72,7 @@ export default {
     name: "Body",
     components: {
         grid: GridList,
+        list: ListView,
         Insert
     },
     data(){
@@ -94,7 +97,10 @@ export default {
                 totalData: 0
             },
             mode: {
-                onDeleteMode: false
+                onDeleteMode: false,
+                // view mode 0 is mean 'grid' list,
+                // view mode 1 is mean 'list' view
+                viewMode: 0
             },
             search: {
                 query: "",
@@ -184,6 +190,9 @@ export default {
                     }
                 });
             }
+        },
+        changeViewMode(mode) {
+            this.mode.viewMode = mode;
         }
     }
 }
@@ -198,7 +207,7 @@ export default {
     margin: 0;
 }
 
-.view-model div:first-child {
+.view-model .active {
     background: white;
 }
 

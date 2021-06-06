@@ -204,11 +204,13 @@ class AdminController extends Controller implements MakeHistory
                     return json(["message" => "Tambah admin berhasil"], null, 201);
                 } catch (\Exception $exception) {
                     DB::rollBack();
+
+                    error_log($exception->getMessage());
                 }
             }
         }
 
-        return error(null, ["server" => "Terjadi masalah saat menambah teknisi"]);
+        return error(null, ["server" => "Terjadi masalah saat menambah admin"]);
     }
 
     /**

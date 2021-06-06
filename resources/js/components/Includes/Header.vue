@@ -8,9 +8,6 @@
         <div class="right-side" v-if="$store.state.user.data != null">
             <div class="tools-container">
                 <span class="">
-                    <i class="glyphicon glyphicon-th"></i>
-                </span>
-                <span class="">
                     <i class="fa fa-bell"></i>
                 </span>
             </div>

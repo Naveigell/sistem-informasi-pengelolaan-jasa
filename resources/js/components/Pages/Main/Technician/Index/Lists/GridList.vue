@@ -33,10 +33,10 @@
                             </div>
                         </transition>
                     </div>
-                    <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :technician="data.technician" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
                 </div>
             </div>
         </div>
+        <delete-modal @onAnimationEnd="onDeleteModalAnimationEnd" :technician="data.technician" v-if="modal.delete" v-bind:id="data.id" @closeModal="modal.delete = false"/>
     </div>
 </template>
 
