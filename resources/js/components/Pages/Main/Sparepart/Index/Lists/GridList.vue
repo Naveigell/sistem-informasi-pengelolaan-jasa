@@ -61,9 +61,6 @@ export default {
             },
         }
     },
-    mounted() {
-
-    },
     methods: {
         openDeleteModal(id, sparepart, index){
             this.data.id = id;

@@ -32,9 +32,9 @@
                                 <div>
                                     <i class="fa fa-list-ul"></i>
                                 </div>
-                                <div>
-                                    <i class="fa fa-list-ul"></i>
-                                </div>
+<!--                                <div>-->
+<!--                                    <i class="fa fa-list-ul"></i>-->
+<!--                                </div>-->
                             </div>
                             <button class="button-add button-danger-md" v-on:click="mode.onDeleteMode = !mode.onDeleteMode; overlay.full = true;" style="margin-left: 7px;">
                                 {{ mode.onDeleteMode ? "Batal Hapus" : "Hapus" }}

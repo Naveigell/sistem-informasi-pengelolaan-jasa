@@ -136,7 +136,7 @@ class SparepartModel extends Model
      * @param null|string $t
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function search($q, $t = null) {
+    public function search($q, $t = null, string $o = null) {
         $query = $this->select(["id_spare_part", "nama_spare_part AS nama", "tipe", "stok", "harga"])
 //                    ->whereRaw("MATCH(nama_spare_part) AGAINST(? IN BOOLEAN MODE)", array($q))
 //                    ->whereRaw("MATCH(nama_spare_part) AGAINST("%value" IN BOOLEAN MODE)", array($q))
@@ -163,6 +163,11 @@ class SparepartModel extends Model
         // type is optional,
         if ($t != null) {
             $query->where("tipe", $t);
+        }
+
+        // o/order by is optional
+        if ($o !== null) {
+            $query->orderBy("harga", $o);
         }
 
         return $query->paginate(12);

@@ -54,6 +54,9 @@ import Endpoints from "./routes/endpoints";
 
 Vue.use({
     async install(Vue) {
+        // const token = document.getElementById("_token").value
+        // axios.defaults.data._token = document.getElementById("_token").value;
+        // axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
         const axiosInstance = axios.create({
             baseURL: "http://localhost:8000/api/v1/",
             headers: {

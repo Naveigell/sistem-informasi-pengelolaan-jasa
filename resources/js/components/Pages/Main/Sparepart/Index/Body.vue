@@ -3,9 +3,9 @@
         <div class="spare-part-body-container">
             <div class="top-navigation">
                 <ul>
-                    <li class="router-active">Semua</li>
-                    <li>Harga Terendah</li>
-                    <li>Harga Tertinggi</li>
+                    <li @click="changeTabsIndex(0)" :class="{'router-active': mode.tabsIndex === 0}">Semua</li>
+                    <li @click="changeTabsIndex(1)" :class="{'router-active': mode.tabsIndex === 1}">Harga Terendah</li>
+                    <li @click="changeTabsIndex(2)" :class="{'router-active': mode.tabsIndex === 2}">Harga Tertinggi</li>
                 </ul>
             </div>
             <div class="spare-part-list-container">
@@ -42,10 +42,10 @@
                                 <i class="fa fa-plus"></i>&nbsp Tambah Spare Part
                             </router-link>
                             <div class="view-model">
-                                <div>
-                                    <i class="fa fa-list-ul"></i>
+                                <div v-bind:class="{'active': mode.viewMode === 0}" @click="changeViewMode(0)">
+                                    <i class="fa fa-th"></i>
                                 </div>
-                                <div>
+                                <div v-bind:class="{'active': mode.viewMode === 1}" @click="changeViewMode(1)">
                                     <i class="fa fa-list-ul"></i>
                                 </div>
                             </div>
@@ -55,7 +55,8 @@
                         </div>
                     </div>
                 </div>
-                <grid v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
+                <grid v-if="mode.viewMode === 0" v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
+                <list v-if="mode.viewMode === 1" v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -77,6 +78,7 @@
 
 <script>
 import GridList from "./Lists/GridList";
+import ListView from "./Lists/ListView";
 import FullOverlay from "../../../../Overlays/FullOverlay";
 import TopRightToast from "../../../../Toasts/TopRightToast";
 
@@ -84,6 +86,7 @@ export default {
     name: "Body",
     components: {
         "grid": GridList,
+        "list": ListView,
         "full-overlay": FullOverlay,
         "toast": TopRightToast
     },
@@ -114,7 +117,11 @@ export default {
                 onSearch: false
             },
             mode: {
-                onDeleteMode: false
+                onDeleteMode: false,
+                tabsIndex: 0,
+                // view mode 0 is mean 'grid' list,
+                // view mode 1 is mean 'list' view
+                viewMode: 0
             },
             overlay: {
                 full: false
@@ -177,9 +184,10 @@ export default {
             if (this.search.onSearch) {
                 this.retrieveUrl(this.$endpoints.sparepart.search, {
                     params: {
-                        q: this.search.query,
+                        q: this.search.query.length === 0 ? undefined : this.search.query.length,
                         t: this.search.type === "komputer/pc" ? "pc" : this.search.type,
-                        p: index
+                        p: index,
+                        o: this.mode.tabsIndex === 0 ? undefined : this.mode.tabsIndex === 1 ? "ASC" : "DESC"
                     }
                 });
             } else {
@@ -195,10 +203,18 @@ export default {
 
             this.retrieveUrl(this.$endpoints.sparepart.search, {
                 params: {
-                    q: this.search.query,
-                    t: this.search.type === "komputer/pc" ? "pc" : this.search.type
+                    q: this.search.query.length === 0 ? undefined : this.search.query.length,
+                    t: this.search.type === "komputer/pc" ? "pc" : this.search.type,
+                    o: this.mode.tabsIndex === 0 ? undefined : this.mode.tabsIndex === 1 ? "ASC" : "DESC"
                 }
             });
+        },
+        changeTabsIndex(index){
+            this.mode.tabsIndex = index;
+            this.searchSpareparts();
+        },
+        changeViewMode(mode) {
+            this.mode.viewMode = mode;
         }
     }
 }
@@ -213,7 +229,7 @@ export default {
     margin: 0;
 }
 
-.view-model div:first-child {
+.view-model .active {
     background: white;
 }
 

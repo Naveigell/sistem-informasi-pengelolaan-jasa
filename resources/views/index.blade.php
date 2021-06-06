@@ -26,5 +26,9 @@
         <layout></layout>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        console.log(token)
+    </script>
 </body>
 </html>

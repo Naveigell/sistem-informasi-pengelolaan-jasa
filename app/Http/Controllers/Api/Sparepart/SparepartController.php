@@ -203,14 +203,15 @@ class SparepartController extends Controller implements MakeHistory {
      * @return JsonResponse
      */
     public function search(SparepartRequestSearch $request){
-        $query  = $request->get("q");
+        $query      = $request->get("q");
         // set the type to komputer/pc if the type just pc
-        $type   = $request->get("t") == "pc" ? "pc/komputer" : $request->get("t");
-        $page   = (int) $request->get("p");
+        $type       = $request->get("t") == "pc" ? "pc/komputer" : $request->get("t");
+        $page       = (int) $request->get("p");
+        $orderBy    = $request->get("o");
 
         set_current_page($page);
 
-        $collections    = $this->sparepart->search($query, $type);
+        $collections    = $this->sparepart->search($query == null ? "" : $query, $type, $orderBy);
         $spareparts     = $this->collectSpareparts(collect($collections->items()));
 
         $current_page   = $collections->currentPage();
