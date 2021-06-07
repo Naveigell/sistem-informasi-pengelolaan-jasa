@@ -11,7 +11,7 @@
                                 <th>NAMA</th>
                                 <th>FOTO</th>
                                 <th>USERNAME</th>
-                                <th>NOMOR TELEPON</th>
+                                <th>NOMOR HP</th>
                                 <th>AKSI</th>
                             </tr>
                             </thead>

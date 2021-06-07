@@ -86,10 +86,10 @@ export default {
             }
         },
         "data.gender": function (newVal, oldVal) {
-            const arr = ["Laki - laki", "Perempuan"];
-            if (!arr.includes(newVal)) {
-                this.data.gender = oldVal;
-            }
+            // const arr = ["Laki - laki", "Perempuan"];
+            // if (!arr.includes(newVal)) {
+            //     this.data.gender = oldVal;
+            // }
         },
     },
     mounted() {

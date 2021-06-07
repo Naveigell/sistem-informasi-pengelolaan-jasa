@@ -42,8 +42,11 @@
                         </div>
                     </div>
                 </div>
-                <grid v-if="mode.viewMode === 0" v-bind:technicians="technicians" :on-delete-mode="mode.onDeleteMode"/>
-                <list v-if="mode.viewMode === 1" v-bind:technicians="technicians" :on-delete-mode="mode.onDeleteMode"/>
+                <div v-if="technicians.length > 0">
+                    <grid v-if="mode.viewMode === 0" v-bind:technicians="technicians" :on-delete-mode="mode.onDeleteMode"/>
+                    <list v-if="mode.viewMode === 1" v-bind:technicians="technicians" :on-delete-mode="mode.onDeleteMode"/>
+                </div>
+                <not-found :message="'Teknisi tidak ditemukan'" v-else/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -67,6 +70,7 @@
 import GridList from "./Lists/GridList";
 import ListView from "./Lists/ListView";
 import Insert from "./Modals/Insert";
+import NotFound from "../../../../Shared/NotFound/NotFound";
 
 export default {
     name: "Body",
@@ -74,6 +78,7 @@ export default {
         grid: GridList,
         list: ListView,
         Insert,
+        "not-found": NotFound,
     },
     data(){
         return {

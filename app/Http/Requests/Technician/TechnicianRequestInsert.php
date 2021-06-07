@@ -23,23 +23,27 @@ class TechnicianRequestInsert extends FormRequest
     public function messages()
     {
         return [
-            "name.required"                 => "Nama harus diisi",
-            "name.min"                      => "Nama minimal memiliki 4 karakter",
-            "name.max"                      => "Nama maksimal memiliki 60 karakter",
+            "name.required"                         => "Nama harus diisi",
+            "name.min"                              => "Nama minimal memiliki 4 karakter",
+            "name.max"                              => "Nama maksimal memiliki 60 karakter",
 
-            "username.required"             => "Username harus diisi",
-            "username.min"                  => "Username minimal memiliki 6 karakter",
-            "username.max"                  => "Username maksimal memiliki 40 karakter",
-            "username.no_space"             => "Username tidak boleh memiliki spasi",
-            "username.lowercase"            => "Username tidak boleh memiliki huruf besar",
+            "username.required"                     => "Username harus diisi",
+            "username.min"                          => "Username minimal memiliki 6 karakter",
+            "username.max"                          => "Username maksimal memiliki 40 karakter",
+            "username.regex"                        => "Username hanya boleh memiliki angka, huruf, underscore dan titik",
+            "username.unique"                       => "Username sudah ada yang mengambil",
+            "username.no_space"                     => "Username tidak boleh memiliki spasi",
+            "username.lowercase"                    => "Username tidak boleh memiliki huruf besar",
+            "username.at_least_one_character"       => "Username minimal memiliki 1 huruf",
+            "username.first_letter_must_alphabet"   => "Huruf pertama username harus berupa huruf",
 
-            "email.required"                => "Email harus diisi",
-            "email.min"                     => "Email minimal memiliki 6 karakter",
-            "email.max"                     => "Email maksimal memiliki 255 karakter",
-            "email.email"                   => "Format email tidak valid",
+            "email.required"                        => "Email harus diisi",
+            "email.min"                             => "Email minimal memiliki 6 karakter",
+            "email.max"                             => "Email maksimal memiliki 255 karakter",
+            "email.email"                           => "Format email tidak valid",
 
-            "gender.required"               => "Jenis kelamin harus diisi",
-            "gender.in"                     => "Jenis kelamin harus antara laki - laki dan perempuan"
+            "gender.required"                       => "Jenis kelamin harus diisi",
+            "gender.in"                             => "Jenis kelamin harus antara laki - laki dan perempuan"
         ];
     }
 
@@ -53,7 +57,7 @@ class TechnicianRequestInsert extends FormRequest
     {
         return [
             "name"          => "required|string|min:4|max:60",
-            "username"      => "required|string|min:6|max:40|no_space|lowercase",
+            "username"      => "required|string|min:6|max:40|unique:users|regex:/^[a-z0-9_.]+$/|at_least_one_character|first_letter_must_alphabet|no_space|lowercase",
             "email"         => "required|string|min:6|email",
             "gender"        => "required|string|in:Laki - laki,Perempuan"
         ];

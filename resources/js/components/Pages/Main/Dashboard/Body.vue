@@ -98,7 +98,7 @@
                             <div style="padding-left: 25px; padding-right: 20px; display: flex; align-items: center; justify-content: space-between;">
                                 <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">PENDAPATAN DARI BULAN KE BULAN</h5>
                                 <div>
-                                    <span style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-print"></i></span>
+                                    <span @click="moveTo('/reports')" style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-print"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                                 <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px;">PERBAIKAN TERBARU</h5>
                                 <div>
                                     <span @click="retrieveOrders" style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-refresh"></i></span>
-                                    <span style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-plus"></i></span>
+                                    <span @click="$router.push({ path: '/orders/add' })" v-if="this.$role.isAdmin" style="display: inline-block; padding: 3px 8px; border-radius: 3px; background: #e0e5e8; cursor: pointer;"><i class="fa fa-plus"></i></span>
                                 </div>
                             </div>
                         </div>

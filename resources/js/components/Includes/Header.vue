@@ -20,15 +20,15 @@
                     <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
                 </div>
                 <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
-                    <router-link :to="{ path: 'history' }" v-if="$role.isAdmin">
+                    <router-link :to="{ path: '/history' }" v-if="$role.isAdmin">
                         History
                     </router-link>
-                    <router-link :to="{ path: 'suggestions' }">
+                    <router-link :to="{ path: '/suggestions' }">
                         <span style="display: inline-block; float: left;">Messages</span>
                         <span style="display: inline-block; float: right;"><i class="fa fa-envelope"></i></span>
                         <div style="clear: both;"></div>
                     </router-link>
-                    <router-link :to="{ path: 'complaints' }">
+                    <router-link :to="{ path: '/complaints' }">
                         <span style="display: inline-block; float: left;">Complaints</span>
                         <span style="display: inline-block; float: right;"><i class="fa fa-times-circle"></i></span>
                         <div style="clear: both;"></div>

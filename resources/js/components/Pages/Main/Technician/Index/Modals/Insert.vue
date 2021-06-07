@@ -86,10 +86,10 @@ export default {
             }
         },
         "data.gender": function (newVal, oldVal) {
-            const arr = ["Laki - laki", "Perempuan"];
-            if (!arr.includes(newVal)) {
-                this.data.gender = oldVal;
-            }
+            // const arr = ["Laki - laki", "Perempuan"];
+            // if (!arr.includes(newVal)) {
+            //     this.data.gender = oldVal;
+            // }
         },
     },
     mounted() {
@@ -111,6 +111,7 @@ export default {
             }, 500);
         },
         save(){
+            console.log(this.data)
             this.$api.post(this.$endpoints.technicians.insert, this.data).then((response) => {
                 this.emitToParent("success", "Teknisi berhasil ditambahkan", true);
                 this.$root.$emit("open-toast", {

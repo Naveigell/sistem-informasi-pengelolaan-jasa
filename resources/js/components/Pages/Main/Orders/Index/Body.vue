@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div style="padding: 20px;">
-                            <table class="table table-striped borderless">
+                            <table v-if="repairments.length > 0" class="table table-striped borderless">
                                 <thead>
                                 <tr>
                                     <th>ORDER ID</th>
@@ -100,6 +100,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <not-found v-else/>
                             <div class="pagination">
                                 <span @click="retrievePreviousUrl" class="page-pagination">
                                     <span><i class="fa fa-angle-left"></i></span>
@@ -123,11 +124,13 @@
 
 <script>
 import Delete from "./Modals/Delete";
+import NotFound from "../../../../Shared/NotFound/NotFound";
 
 export default {
     name: "Body",
     components: {
-        Delete
+        Delete,
+        "not-found": NotFound
     },
     data() {
         return {

@@ -11,7 +11,7 @@
                                 <th>NAMA</th>
                                 <th>FOTO</th>
                                 <th>USERNAME</th>
-                                <th>NOMOR TELEPON</th>
+                                <th>NOMOR HP</th>
                                 <th>AKSI</th>
                             </tr>
                             </thead>
@@ -33,7 +33,7 @@
                                     {{ user.biodata === undefined ? '' : user.biodata.nomor_hp === null ? "-" : user.biodata.nomor_hp }}
                                 </td>
                                 <td>
-                                    <button @click="moveTo('/user/' + user.username)" class="button-warning-primary-tag">
+                                    <button @click="moveTo('/users/' + user.username)" class="button-warning-primary-tag">
                                         Lihat
                                     </button>
                                     <transition name="user-delete-container-transition">

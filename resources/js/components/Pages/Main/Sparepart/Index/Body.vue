@@ -55,8 +55,11 @@
                         </div>
                     </div>
                 </div>
-                <grid v-if="mode.viewMode === 0" v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
-                <list v-if="mode.viewMode === 1" v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
+                <div v-if="spareparts.length > 0">
+                    <grid v-if="mode.viewMode === 0" v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
+                    <list v-if="mode.viewMode === 1" v-bind:spareparts="spareparts" :on-delete-mode="mode.onDeleteMode"/>
+                </div>
+                <not-found :message="'Spare part tidak ditemukan'" v-else/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -81,6 +84,7 @@ import GridList from "./Lists/GridList";
 import ListView from "./Lists/ListView";
 import FullOverlay from "../../../../Overlays/FullOverlay";
 import TopRightToast from "../../../../Toasts/TopRightToast";
+import NotFound from "../../../../Shared/NotFound/NotFound";
 
 export default {
     name: "Body",
@@ -88,7 +92,8 @@ export default {
         "grid": GridList,
         "list": ListView,
         "full-overlay": FullOverlay,
-        "toast": TopRightToast
+        "toast": TopRightToast,
+        "not-found": NotFound
     },
     data(){
         return {

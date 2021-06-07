@@ -42,8 +42,11 @@
                         </div>
                     </div>
                 </div>
-                <grid v-if="mode.viewMode === 0" v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
-                <list v-if="mode.viewMode === 1" v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
+                <div v-if="admins.length > 0">
+                    <grid v-if="mode.viewMode === 0" v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
+                    <list v-if="mode.viewMode === 1" v-bind:admins="admins" :on-delete-mode="mode.onDeleteMode"/>
+                </div>
+                <not-found :message="'Admin tidak ditemukan'" v-else/>
                 <div class="pagination">
                     <span @click="retrievePreviousUrl()" class="to-left-page-pagination page-pagination"><i class="fa fa-angle-left"></i></span>
                     <div class="active-pages" style="margin-left: 12px;">
@@ -67,13 +70,15 @@
 import ListView from "./Lists/ListView";
 import GridList from "./Lists/GridList";
 import Insert from "./Modals/Insert";
+import NotFound from "../../../../Shared/NotFound/NotFound";
 
 export default {
     name: "Body",
     components: {
         grid: GridList,
         list: ListView,
-        Insert
+        Insert,
+        "not-found": NotFound
     },
     data(){
         return {

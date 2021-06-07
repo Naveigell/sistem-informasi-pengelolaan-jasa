@@ -100,10 +100,10 @@ export default {
             }
         },
         "data.gender": function (newVal, oldVal) {
-            const arr = ["Laki - laki", "Perempuan"];
-            if (!arr.includes(newVal)) {
-                this.data.gender = oldVal;
-            }
+            // const arr = ["Laki - laki", "Perempuan"];
+            // if (!arr.includes(newVal)) {
+            //     this.data.gender = oldVal;
+            // }
         },
         "data.phone": function (newVal, oldVal) {
             if (newVal.length > 17) {
