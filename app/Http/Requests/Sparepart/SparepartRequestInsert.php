@@ -23,6 +23,12 @@ class SparepartRequestInsert extends FormRequest
             "name.min"                  => "Panjang karakter nama minimal 7",
             "name.max"                  => "Panjang karakter nama maksimal 70",
 
+            "part_number.min"           => "Panjang karakter part number minimal 3",
+            "part_number.max"           => "Panjang karakter part number maksimal 50",
+
+            "serial_number.min"         => "Panjang karakter serial number minimal 3",
+            "serial_number.max"         => "Panjang karakter serial number maksimal 50",
+
             "description.required"      => "Deskripsi harus diisi",
             "description.min"           => "Panjang karakter deskripsi minimal 10",
             "description.max"           => "Panjang karakter deskripsi maksimal 3000",
@@ -67,6 +73,8 @@ class SparepartRequestInsert extends FormRequest
     {
         return [
             "name"              => "required|string|min:7|max:70",
+            "part_number"       => "sometimes|string|min:3|max:50",
+            "serial_number"     => "sometimes|string|min:3|max:50",
             "description"       => "required|string|min:10|max:3000",
             "type"              => "required|in:pc,hp,printer",
             "stock"             => "required|integer|min:1|max:65000",

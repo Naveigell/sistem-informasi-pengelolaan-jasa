@@ -21,7 +21,6 @@ class CreatePengaduanTable extends Migration
                 $table->unsignedBigInteger('pengaduan_id_orders')->nullable()->index();
                 $table->text('isi')->nullable();
                 $table->text('balasan')->nullable();
-                $table->unsignedTinyInteger('stars')->default(3);
                 $table->enum('tipe', ['saran', 'komplain']);
                 $table->boolean('dikerjakan_teknisi')->default(0);
                 $table->boolean('disetujui_pelanggan')->default(0);

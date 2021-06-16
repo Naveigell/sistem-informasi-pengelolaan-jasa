@@ -220,6 +220,8 @@ export default {
                 const data = response.data.body.graph.data;
                 const options = response.data.body.graph.options;
 
+                console.log(data)
+
                 const max = Math.max(...data.datasets[0].data);
 
                 this.$currency.sentences.parseMax(max);

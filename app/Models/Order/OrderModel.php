@@ -172,7 +172,7 @@ class OrderModel extends Model implements Countable
             "user:id_users,name,email,username",
             "complaint:disetujui_pelanggan,id_pengaduan,isi,pengaduan_id_orders,dikerjakan_teknisi,tipe",
             "spareparts:id_orders_spare_part,orders_spare_part_id_orders,jumlah,harga"
-        ])->select(["id_orders", "unique_id", "created_at", "status_service", "nama_pelanggan", "orders_id_teknisi", "orders_id_pelanggan"])->orderBy("id_orders", "DESC");
+        ])->select(["id_orders", "unique_id", "created_at", "status_service", "nama_pelanggan", "orders_id_teknisi", "orders_id_pelanggan", "canceled_at"])->orderBy("id_orders", "DESC");
     }
 
     /**
@@ -184,16 +184,30 @@ class OrderModel extends Model implements Countable
      */
     public function getOrderList($id, $role)
     {
+        $main = $this->main()->whereNotNull("orders_id_pelanggan");
         // if user is admin
         if ($role == "admin") {
-            return $this->main()->paginate(12);
+            return $main->paginate(12);
         } else if ($role == "pelanggan") { // if user is normal user
-            return $this->main()->where("orders_id_pelanggan", $id)->paginate(12);
+            return $main->where("orders_id_pelanggan", $id)->paginate(12);
         }
         // if user is a technician
-        return $this->main()->where("orders_id_teknisi", $id)
+        return $main->where("orders_id_teknisi", $id)
                             ->orWhere("status_service", "menunggu")
                             ->paginate(12);
+    }
+
+    /**
+     * Cancel order
+     *
+     * @param $id
+     * @return int
+     */
+    public function cancel($id)
+    {
+        return $this->whereNull("canceled_at")->where("id_orders", $id)->update([
+            "canceled_at"   => now()
+        ]);
     }
 
     /**
@@ -281,13 +295,13 @@ class OrderModel extends Model implements Countable
     {
         return $this->with([
             "user:id_users,name,email",
-            "spareparts:orders_spare_part_id_orders,orders_spare_part_id_spare_part,id_orders_spare_part,nama_spare_part,jumlah,harga",
+            "spareparts:orders_spare_part_id_orders,orders_spare_part_id_spare_part,id_orders_spare_part,nama_spare_part,jumlah,harga,part_number,serial_number",
             "spareparts.images:id_foto_spare_part,foto_spare_part_id_spare_part,picture",
             "technician",
             "complaint:disetujui_pelanggan,id_pengaduan,isi,pengaduan_id_orders,dikerjakan_teknisi,tipe,disetujui_admin",
             "service:id_jasa,nama_jasa,tipe,biaya_jasa"
         ])
-        ->select(["id_orders", "orders_id_jasa", "orders_id_teknisi", "orders_id_pelanggan", "nama_pelanggan", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service", "note"])
+        ->select(["id_orders", "orders_id_jasa", "orders_id_teknisi", "orders_id_pelanggan", "nama_pelanggan", "alamat_pelanggan", "nama_perangkat", "keluhan", "jenis_perangkat", "merk", "status_service", "note", "canceled_at"])
         ->where("unique_id", $unique_id)->first();
     }
 
@@ -393,15 +407,18 @@ class OrderModel extends Model implements Countable
      *
      * @param $number
      * @param null $id
+     * @param null $role
      * @return OrderModel[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function takeFromLast($number, $id = null)
+    public function takeFromLast($number, $id = null, $role = null)
     {
         // check if technician or admin
-        if ($id == null) {
+        if ($role == "admin") {
             return $this->main()->take($number)->get();
+        } else if ($role == "teknisi") {
+            return $this->main()->where("orders_id_teknisi", $id)->take($number)->get();
         }
-        return $this->main()->where("orders_id_teknisi", $id)->take($number)->get();
+        return $this->main()->where("orders_id_pelanggan", $id)->take($number)->get();
     }
 
     /**

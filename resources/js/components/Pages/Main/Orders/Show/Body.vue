@@ -25,7 +25,7 @@
                                                 <i class="fa fa-clock-o" style="color: white; font-size: 20px;"></i>
                                             </div>
                                             <span style="display: inline-block; position: absolute; bottom: 0; font-family: InterRegular, Arial, sans-serif; font-weight: bold;">{{ createOrderStatusText(status) }}</span>
-                                            <button v-if="updateStatusAuthorized(status)" @click="updateStatusService(status)" class="button-transparent-tag" style="position: absolute; bottom: -40px;">Pilih</button>
+                                            <button v-if="updateStatusAuthorized(status) && data.canceled_at === null" @click="updateStatusService(status)" class="button-transparent-tag" style="position: absolute; bottom: -40px;">Pilih</button>
                                         </div>
                                     </div>
                                 </div>
@@ -94,13 +94,15 @@
                                         <br/>
                                         <div v-if="spareparts.length > 0 && $store.state.user.data.role === 'teknisi'">
                                             <div class="row">
-                                                <div class="col-md-2 left-column"></div>
-                                                <div class="col-md-10 right-column">
+                                                <div v-if="!table.sparepart.expand" class="col-md-2 left-column"></div>
+                                                <div class="right-column" :class="{'col-md-10': !table.sparepart.expand, 'col-md-12': table.sparepart.expand}">
                                                     <table style="border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;">
                                                         <thead>
                                                             <tr style="background-color: #fafafa;">
                                                                 <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal; text-align: center;">Nama</th>
                                                                 <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal;">Harga</th>
+                                                                <th v-if="table.sparepart.expand" style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal;">Part Number</th>
+                                                                <th v-if="table.sparepart.expand" style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 80px; font-weight: normal;">Serial Number</th>
                                                                 <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 60px; font-weight: normal;">Jumlah</th>
                                                                 <th style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; color: #999; padding: 10px 40px; font-weight: normal;">Aksi</th>
                                                             </tr>
@@ -109,13 +111,17 @@
                                                             <tr v-for="(sparepart, index) in spareparts">
                                                                 <td style="max-width: 100px; text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ sparepart.nama }}</td>
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 80px; font-weight: normal;">Rp {{ $currency.indonesian(sparepart.harga) }}</td>
+                                                                <td v-if="table.sparepart.expand" style="max-width: 100px; text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ sparepart.part_number === null ? "-" : sparepart.part_number }}</td>
+                                                                <td v-if="table.sparepart.expand" style="max-width: 100px; text-overflow: ellipsis; overflow-x: hidden; border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 20px; font-weight: normal;">{{ sparepart.serial_number === null ? "-" : sparepart.serial_number }}</td>
                                                                 <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 60px; font-weight: normal; position: relative;">
                                                                     <div class="input-container" v-if="$store.state.user.data.role === 'teknisi'">
                                                                         <input type="text" v-bind:disabled="['selesai', 'terima'].includes(data.status)" v-model="sparepart.jumlah">
                                                                     </div>
                                                                     <span v-else>x{{ sparepart.jumlah }}</span>
                                                                 </td>
-                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;"><i @click="['selesai', 'terima'].includes(data.status) ? null : spareparts.splice(index, 1)" class="fa fa-trash" style="color: #999; cursor: pointer;"></i></td>
+                                                                <td style="border-bottom: 1px solid #ebebeb; border-top: 1px solid #ebebeb; border-left: 1px solid #ebebeb; padding: 10px 40px; font-weight: normal;">
+                                                                    <i @click="['selesai', 'terima'].includes(data.status) ? null : spareparts.splice(index, 1)" class="fa fa-trash" style="color: #999; cursor: pointer;"></i>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -123,9 +129,13 @@
                                             </div>
                                             <br/>
                                             <div class="row">
-                                                <div class="col-md-2 left-column"></div>
-                                                <div class="col-md-10">
+                                                <div v-if="!table.sparepart.expand" class="col-md-2 left-column"></div>
+                                                <div :class="{'col-md-10': !table.sparepart.expand, 'col-md-12': table.sparepart.expand}">
                                                     <button v-if="['dicek', 'perbaikan'].includes(data.status)" @click="saveSparepart" class="button-success-primary-sm">Simpan</button>
+                                                    <button @click="table.sparepart.expand = !table.sparepart.expand;" class="button-transparent-tag">
+                                                        <i class="fa" :class="{'fa-expand': !table.sparepart.expand, 'fa-compress': table.sparepart.expand}"></i>
+                                                        &nbsp {{ table.sparepart.expand ? "Perkecil" : "Perbesar" }}
+                                                    </button>
                                                 </div>
                                             </div>
                                            <br/>
@@ -280,7 +290,7 @@
                                                         <span class="error-message" v-if="complaint.errors.text != null && complaint.errors.text !== undefined">{{ complaint.errors.text[0] }}</span>
                                                         <span class="word-count">{{ complaint.text.length }}/6000</span>
                                                     </div>
-                                                    <div v-if="complaint.form.show">
+                                                    <div v-if="complaint.form.show && data.canceled_at === null">
                                                         <br/>
                                                         <div>
                                                             <button @click="sendComplaint" class="button-success-primary-sm">Kirim</button>
@@ -337,7 +347,13 @@ export default {
                 device_brand: "",
                 total_price: 0,
                 service: null,
-                note: null
+                note: null,
+                canceled_at: null
+            },
+            table: {
+                sparepart: {
+                    expand: false
+                }
             },
             spareparts: [],
             modals: {
@@ -498,6 +514,7 @@ export default {
                 this.data.total_price       = response.data.body.order.price;
                 this.data.service           = response.data.body.order.service;
                 this.data.note              = response.data.body.order.note;
+                this.data.canceled_at       = response.data.body.order.canceled_at;
 
                 this.spareparts             = this.data.spareparts;
 
@@ -516,7 +533,7 @@ export default {
                     this.note.form.show = true;
                 }
 
-                console.log(this.note)
+                console.log(this.spareparts)
             }).catch((error) => {
                 console.error(error);
             })

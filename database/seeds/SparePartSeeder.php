@@ -2,12 +2,13 @@
 
 use Illuminate\Database\Seeder;
 use App\Traits\Seeder\FakerFiles;
+use App\Traits\Random;
 
 use Illuminate\Support\Facades\DB;
 
 class SparePartSeeder extends Seeder
 {
-    use FakerFiles;
+    use FakerFiles, Random;
     /**
      * Run the database seeds.
      *
@@ -43,10 +44,10 @@ class SparePartSeeder extends Seeder
 
         $listHarga = [
             // hp
-            "271897", "521716", "1037329", "413407", "513000", "216000", "338712",
+            272000, 522000, 1037000, 413000, 513000, 216000, 339000,
 
             // pc/laptop
-            "182000", "155000", "415000", "218000", "17000", "174900", "175000", "715000", "455000", "2920000"
+            182000, 155000, 415000, 218000, 17000, 174900, 175000, 715000, 455000, 2920000
         ];
 
         $sparePart = DB::table('spare_part');
@@ -57,8 +58,13 @@ class SparePartSeeder extends Seeder
                 "deskripsi"         => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus ac nunc eu mattis. Nunc rutrum arcu eget justo accumsan eleifend. Nulla a dui quis lorem luctus iaculis. Quisque vitae elementum mauris, vel sodales urna. Cras eget eleifend augue. Integer malesuada ante ut mollis ultrices. Proin facilisis tincidunt lacus, eget luctus dui porttitor ac. Mauris lacinia condimentum faucibus. Aliquam imperdiet feugiat nisi a tristique. Fusce venenatis commodo nulla, eu tincidunt nunc pharetra et. Aenean nec lobortis dui. Nulla pellentesque ligula nec tortor convallis, eget pharetra magna eleifend. Nulla sit amet tempus ipsum. Phasellus in sapien quis justo feugiat lacinia at vitae justo. Donec congue sagittis dui ullamcorper pellentesque. Morbi vel dui lacus. Nullam varius quam velit, vel faucibus odio dapibus et. In finibus dictum velit, et dignissim nunc tempus eget. Donec ac facilisis sem.",
                 "tipe"              => $listTipe[$i],
                 "stok"              => $listStok[$i],
-                "terjual"           => rand(6, 15),
-                "harga"             => $listHarga[$i]
+                "part_number"       => rand(1, 10) < 4 ? $this->partNumber() : null,
+                "serial_number"     => rand(1, 10) < 4 ? $this->serialNumber() : null,
+//                "terjual"           => rand(6, 15),
+                "harga_asli"        => $listHarga[$i] - round($listHarga[$i] / 10),
+                "harga"             => $listHarga[$i],
+                "created_at"        => date("Y-m-d H:i:s"),
+                "updated_at"        => date("Y-m-d H:i:s"),
             ]);
         }
     }

@@ -52,6 +52,34 @@
                         <br/>
                         <div class="row">
                             <div class="col-md-2 left-column">
+                                <span>* Part Number</span>
+                            </div>
+                            <div class="col-md-10 right-column">
+                                <div class="input-container">
+                                    <input v-bind:class="{'input-error': errors.part_number != null && errors.part_number !== undefined}" @focus="errors.part_number = null;" type="text" placeholder="Masukkan part number" v-model="data.part_number" maxlength="50">
+                                </div>
+                                <span style="display: inline-block; color: #999; line-height: 25px; font-size: 13px;">Jika tidak ada dapat dikosongkan</span>
+                                <span class="error-message" v-if="errors.part_number != null && errors.part_number !== undefined">{{ errors.part_number[0] }}</span>
+                                <span class="word-count">{{ data.part_number.length }}/50</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-2 left-column">
+                                <span>* Serial Number</span>
+                            </div>
+                            <div class="col-md-10 right-column">
+                                <div class="input-container">
+                                    <input v-bind:class="{'input-error': errors.serial_number != null && errors.serial_number !== undefined}" @focus="errors.serial_number = null;" type="text" placeholder="Masukkan serial number" v-model="data.serial_number" maxlength="50">
+                                </div>
+                                <span style="display: inline-block; color: #999; line-height: 25px; font-size: 13px;">Jika tidak ada dapat dikosongkan</span>
+                                <span class="error-message" v-if="errors.serial_number != null && errors.serial_number !== undefined">{{ errors.serial_number[0] }}</span>
+                                <span class="word-count">{{ data.serial_number.length }}/50</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-2 left-column">
                                 <span>* Deskripsi</span>
                             </div>
                             <div class="col-md-10 right-column">
@@ -151,7 +179,9 @@ export default {
                 type: "pc",
                 stock: 0,
                 price: 0,
-                real_price: 0
+                real_price: 0,
+                part_number: "",
+                serial_number: ""
             },
             errors: {
                 name: null,
@@ -159,7 +189,9 @@ export default {
                 type: null,
                 stock: null,
                 price: null,
-                real_price: null
+                real_price: null,
+                part_number: null,
+                serial_number: null
             },
             toast: {
                 open: false,
@@ -212,7 +244,17 @@ export default {
             if (isNaN(newVal) || newVal < 0 || newVal > 9999999999) {
                 this.data.real_price = oldVal;
             }
-        }
+        },
+        "data.part_number": function (newVal, oldVal) {
+            if (newVal.length > 50) {
+                this.data.part_number = oldVal;
+            }
+        },
+        "data.serial_number": function (newVal, oldVal) {
+            if (newVal.length > 50) {
+                this.data.serial_number = oldVal;
+            }
+        },
     },
     methods: {
         chooseImage(index){
@@ -251,6 +293,14 @@ export default {
             form.append("stock", this.data.stock);
             form.append("price", this.data.price);
             form.append("real_price", this.data.real_price);
+
+            if (this.data.part_number.length !== 0) {
+                form.append("part_number", this.data.part_number);
+            }
+
+            if (this.data.serial_number.length !== 0) {
+                form.append("serial_number", this.data.serial_number);
+            }
 
             const images = this.$refs.input_images;
             for (const index in images) {

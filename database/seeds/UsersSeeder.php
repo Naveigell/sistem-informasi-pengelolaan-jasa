@@ -111,7 +111,9 @@ class UsersSeeder extends Seeder {
                         "username"      => $username,
                         "email"         => $email,
                         "password"      => Hash::make("123456"),
-                        "role"          => $role
+                        "role"          => $role,
+                        "created_at"    => date("Y-m-d H:i:s"),
+                        "updated_at"    => date("Y-m-d H:i:s"),
                     ]);
 
                     $biodata->insert([
@@ -119,7 +121,9 @@ class UsersSeeder extends Seeder {
                         "jenis_kelamin"         => $gender,
                         "nomor_hp"              => $phone,
                         "profile_picture"       => $imgName.".png",
-                        "alamat"                => $address
+                        "alamat"                => $address,
+                        "created_at"    => date("Y-m-d H:i:s"),
+                        "updated_at"    => date("Y-m-d H:i:s"),
                     ]);
 
                     DB::commit();

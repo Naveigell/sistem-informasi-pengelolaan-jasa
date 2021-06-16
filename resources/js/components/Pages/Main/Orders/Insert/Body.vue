@@ -16,11 +16,11 @@
                                     <div class="information-container">
                                         <div class="row">
                                             <div class="col-md-2 left-column">
-                                                <span>* Nama Pemilik</span>
+                                                <span>* Nama Pelanggan</span>
                                             </div>
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
-                                                    <input v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" v-model="data.name" placeholder="Masukkan nama pemilik" maxlength="70">
+                                                    <input v-bind:class="{'input-error': errors.name != null && errors.name !== undefined}" @focus="errors.name = null;" type="text" v-model="data.name" placeholder="Masukkan nama pelanggan" maxlength="70">
                                                 </div>
                                                 <span class="error-message" v-if="errors.name != null && errors.name !== undefined">{{ errors.name[0] }}</span>
                                                 <span class="word-count">{{ data.name.length }}/70</span>
@@ -30,7 +30,7 @@
                                         <div class="row">
                                             <div class="col-md-2 left-column">
                                                 <span>
-                                                    * Email Pemilik
+                                                    * Email Pelanggan
                                                     <br>
                                                     <span @click="modals.insert.open = true;" style="display: inline-block; float: right;">
                                                         <a style="text-decoration: underline; color: #0000EE; cursor: pointer;">Buat</a>
@@ -39,7 +39,7 @@
                                             </div>
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
-                                                    <input @click="modals.search.open = true;" v-bind:class="{'input-error': errors.email != null && errors.email !== undefined}" @focus="errors.email = null;" type="text" v-model="data.email" placeholder="Masukkan email pemilik" maxlength="70">
+                                                    <input @click="modals.search.open = true;" v-bind:class="{'input-error': errors.email != null && errors.email !== undefined}" @focus="errors.email = null;" type="text" v-model="data.email" placeholder="Masukkan email pelanggan" maxlength="70">
                                                 </div>
                                                 <span class="error-message" v-if="errors.email != null && errors.email !== undefined">{{ errors.email[0] }}</span>
                                                 <span class="word-count">{{ data.email.length }}/255</span>
@@ -48,11 +48,11 @@
                                         <br/>
                                         <div class="row">
                                             <div class="col-md-2 left-column">
-                                                <span>* Alamat Pemilik</span>
+                                                <span>* Alamat Pelanggan</span>
                                             </div>
                                             <div class="col-md-10 right-column">
                                                 <div class="input-container">
-                                                    <textarea v-bind:class="{'input-error': errors.address != null && errors.address !== undefined}" @focus="errors.address = null;" placeholder="Alamat pemilik" v-model="data.address" name="" cols="30" rows="10" style="resize: none"></textarea>
+                                                    <textarea v-bind:class="{'input-error': errors.address != null && errors.address !== undefined}" @focus="errors.address = null;" placeholder="Alamat pelanggan" v-model="data.address" name="" cols="30" rows="10" style="resize: none"></textarea>
                                                 </div>
                                                 <span class="error-message" v-if="errors.address != null && errors.address !== undefined">{{ errors.address[0] }}</span>
                                                 <span class="word-count">{{ data.address.length }}/90</span>

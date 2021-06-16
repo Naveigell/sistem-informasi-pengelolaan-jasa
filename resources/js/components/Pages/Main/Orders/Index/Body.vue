@@ -40,7 +40,7 @@
                                 <thead>
                                 <tr>
                                     <th>ORDER ID</th>
-                                    <th>DIBUAT</th>
+                                    <th>WAKTU</th>
                                     <th>{{ this.$role.isTechnician ? "PELANGGAN" : "TEKNISI" }}</th>
                                     <th>STATUS</th>
                                     <th>BIAYA</th>
@@ -57,18 +57,23 @@
                                         <td>{{ repairment.created_at_sentences }}</td>
                                         <td>
                                             <div v-if="!$role.isTechnician">
-                                                <span v-if="repairment.technician == null">-</span>
+                                                <span v-if="repairment.technician === null">-</span>
                                                 <router-link v-else :to="{ path: '/technician/' + repairment.technician.username }">
                                                     {{ repairment.technician.name }}
                                                 </router-link>
                                             </div>
-                                            <router-link v-else :to="{ path: '/users/' + repairment.user.username }">
+                                            <router-link v-else :to="{ path: '/users/' }">
                                                 {{ repairment.user.name }}
                                             </router-link>
                                         </td>
                                         <td>
-                                            <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
-                                            <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_pelanggan === 0) : false">Komplain</span>
+                                            <span v-if="repairment.canceled_at === null">
+                                                <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_pelanggan === 0) : false">Komplain</span>
+                                                <span class="status" v-else :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
+                                            </span>
+                                            <span v-else>
+                                                <span class="status status-danger">Dibatalkan</span>
+                                            </span>
                                         </td>
                                         <td>{{ pricesString(repairment) }}</td>
                                         <td v-if="$store.state.user.data.role === 'admin'">
@@ -77,6 +82,9 @@
                                             </router-link>
                                             <button @click="openDeleteModal(repairment)" class="button-danger-primary-tag">
                                                 <i class="fa fa-trash"></i>
+                                            </button>
+                                            <button v-if="repairment.canceled_at === null" @click="openCancelModal(repairment)" class="button-transparent-tag">
+                                                Batal
                                             </button>
                                         </td>
                                         <td v-else-if="$store.state.user.data.role === 'teknisi' && repairment.status_service === 'menunggu'">
@@ -119,17 +127,19 @@
             </div>
         </div>
         <Delete @response="reload" v-if="modal.delete.open" :order="modal.delete.data" @closeModal="modal.delete.open = false;"/>
+        <Cancel @response="reload" v-if="modal.cancel.open" :order="modal.cancel.data" @closeModal="modal.cancel.open = false;"/>
     </div>
 </template>
 
 <script>
 import Delete from "./Modals/Delete";
+import Cancel from "./Modals/Cancel";
 import NotFound from "../../../../Shared/NotFound/NotFound";
 
 export default {
     name: "Body",
     components: {
-        Delete,
+        Delete, Cancel,
         "not-found": NotFound
     },
     data() {
@@ -196,6 +206,13 @@ export default {
                         id: -1,
                         order: {}
                     }
+                },
+                cancel: {
+                    open: false,
+                    data: {
+                        id: -1,
+                        order: {}
+                    }
                 }
             }
         }
@@ -234,6 +251,10 @@ export default {
         openDeleteModal(data){
             this.modal.delete.open = true;
             this.modal.delete.data = data;
+        },
+        openCancelModal(data){
+            this.modal.cancel.open = true;
+            this.modal.cancel.data = data;
         },
         chooseStatus(index){
             this.statuses.selected = this.statuses.list[index];

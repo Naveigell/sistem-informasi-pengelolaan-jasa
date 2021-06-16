@@ -36,12 +36,18 @@ class CurrencySentences {
             cur = sentences[1];
         }
 
+        if (Math.floor(value) < 1000)
+            return `${Math.floor(value)}`;
+
         value = value / (10 ** (offset));
 
         return `${value} ${cur}`;
     }
 
     parseMax(value) {
+        if (value <= 0)
+            return 0;
+
         let index = 0;
         let val = value;
 

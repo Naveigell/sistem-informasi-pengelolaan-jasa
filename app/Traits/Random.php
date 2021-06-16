@@ -14,6 +14,26 @@ trait Random {
     }
 
     /**
+     * @return string return a random serial number
+     */
+    private function serialNumber() : string
+    {
+        return  strtoupper(Str::random(4))."-".
+                strtoupper(Str::random(6))."-".
+                strtoupper(Str::random(1));
+    }
+
+    /**
+     * @return string return a random part number
+     */
+    private function partNumber() : string
+    {
+        return  strtoupper(Str::random(3)).rand(100, 999).
+                strtoupper(Str::random(3)).rand(100, 999).
+                strtoupper(Str::random(3));
+    }
+
+    /**
      * @param null $additional
      * @param int $length length of random array, default is 12
      * @return string create some id with additional

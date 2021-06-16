@@ -27,6 +27,8 @@ class SparepartModel extends Model
             "nama_spare_part"       => $data->name,
             "deskripsi"             => $data->description,
             "tipe"                  => $data->type == "pc" ? "pc/komputer" : $data->type,
+            "part_number"           => property_exists($data, "part_number") ? $data->part_number : null,
+            "serial_number"         => property_exists($data, "serial_number") ? $data->serial_number : null,
             "stok"                  => $data->stock,
             "harga_asli"            => $data->real_price,
             "harga"                 => $data->price,
@@ -57,8 +59,10 @@ class SparepartModel extends Model
             "nama_spare_part"           => $data->name,
             "deskripsi"                 => $data->description,
             "tipe"                      => $data->type == "pc" ? "pc/komputer" : $data->type,
+            "part_number"               => property_exists($data, "part_number") ? $data->part_number : null,
+            "serial_number"             => property_exists($data, "serial_number") ? $data->serial_number : null,
             "stok"                      => $data->stock,
-            "harga_asli"            => $data->real_price,
+            "harga_asli"                => $data->real_price,
             "harga"                     => $data->price
         ]);
     }
@@ -94,7 +98,7 @@ class SparepartModel extends Model
      */
     public function searchSparepart($query, $type)
     {
-        return $this->with(["images"])->select(["id_spare_part", "nama_spare_part", "harga", "stok"])->whereRaw("nama_spare_part LIKE ? AND tipe = ? AND stok > 0", ["%$query%", $type])->take(5)->get();
+        return $this->with(["images"])->select(["id_spare_part", "nama_spare_part", "harga", "stok", "part_number", "serial_number"])->whereRaw("nama_spare_part LIKE ? AND tipe = ? AND stok > 0", ["%$query%", $type])->take(5)->get();
     }
 
     /**

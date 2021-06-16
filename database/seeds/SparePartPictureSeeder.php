@@ -40,7 +40,9 @@ class SparePartPictureSeeder extends Seeder
             try {
                 DB::table('foto_spare_part')->insert([
                     "foto_spare_part_id_spare_part"     => $i + 1,
-                    "picture"                           => $picArray[$i]
+                    "picture"                           => $picArray[$i],
+                    "created_at"    => date("Y-m-d H:i:s"),
+                    "updated_at"    => date("Y-m-d H:i:s"),
                 ]);
 
                 error_log("Pic : ".$picArray[$i]." Created");

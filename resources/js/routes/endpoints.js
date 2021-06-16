@@ -70,6 +70,7 @@ const endpoints = {
         complaint: "/orders/complaint",
         print: "/orders/:unique_id/print",
         note: "/orders/note",
+        cancel: "/orders/:id/cancel"
     },
     suggestions: {
         data: "/suggestions/:last_id",

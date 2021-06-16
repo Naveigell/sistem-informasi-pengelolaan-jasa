@@ -113,12 +113,17 @@ export default {
     },
     mounted() {
         this.retrieve();
+        window.onafterprint = () => {
+            this.back();
+        }
     },
     methods: {
         print(){
-            if (this.dataLoaded && this.imageLoaded) {
-                window.print();
-            }
+            this.$nextTick(() => {
+                if (this.dataLoaded && this.imageLoaded) {
+                    window.print();
+                }
+            });
         },
         retrieve(){
             const id    = this.$router.currentRoute.params.unique_id;

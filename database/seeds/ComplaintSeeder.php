@@ -18,7 +18,7 @@ class ComplaintSeeder extends Seeder
         return $complaints[array_rand($complaints)];
     }
 
-    private function createComplaint($id_service, $id_user, $id_teknisi, $complaints)
+    private function createComplaint($id_orders, $id_user, $id_teknisi, $complaints)
     {
         $complaint = $this->randomComplaint($complaints);
         $technician = 0;
@@ -39,9 +39,8 @@ class ComplaintSeeder extends Seeder
             DB::table("pengaduan")->insert([
                 "pengaduan_id_pelanggan"    => $id_user,
                 "pengaduan_id_teknisi"      => $id_teknisi,
-                "pengaduan_id_orders"       => $id_service,
+                "pengaduan_id_orders"       => $id_orders,
                 "isi"                       => $complaint->content,
-                "stars"                     => rand(1, 5),
                 "tipe"                      => "komplain",
                 "dikerjakan_teknisi"        => $technician,
                 "disetujui_pelanggan"       => $user,
@@ -69,16 +68,16 @@ class ComplaintSeeder extends Seeder
     {
         $complaints = $this->readFile("pengaduan")->file->pengaduan->komplain;
 
-        $orders = DB::table("service")->select(["id_orders", "orders_id_pelanggan", "orders_id_teknisi", "status_service"])->get();
+        $orders = DB::table("orders")->select(["id_orders", "orders_id_pelanggan", "orders_id_teknisi", "status_service"])->where("status_service", "selesai")->get();
         foreach ($orders as $order) {
             DB::beginTransaction();
             try {
                 $rand = rand(1, 10);
                 if ($rand < 3) {
-                    $this->createComplaint($order->id_service, $order->orders_id_pelanggan, $order->orders_id_teknisi, $complaints);
+                    $this->createComplaint($order->id_orders, $order->orders_id_pelanggan, $order->orders_id_teknisi, $complaints);
                 }
 
-                error_log("Complaint with id_service: $order->id_service created successfully, random value : $rand");
+                error_log("Complaint with id_orders: $order->id_orders created successfully, random value : $rand");
 
                 DB::commit();
             } catch (Exception $exception) {

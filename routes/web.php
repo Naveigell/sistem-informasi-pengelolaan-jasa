@@ -61,6 +61,7 @@ Route::group(['prefix' => '/api/v1'], function () {
         Route::post("/note", "Api\Order\OrderController@updateNote");
         Route::put("/status", "Api\Order\OrderController@updateStatusService")->middleware("should.have.role:admin,teknisi");
         Route::delete("/{id}", "Api\Order\OrderController@delete")->middleware("should.have.role:admin");
+        Route::put("/{id}/cancel", "Api\Order\OrderController@cancel")->middleware("should.have.role:admin");
     });
 
     Route::group(["prefix" => "/reports", "middleware" => ["auth.global", "should.have.role:admin"]], function () {

@@ -20,14 +20,12 @@ class CreateSparePartTable extends Migration {
                 $table->text('deskripsi')->nullable();
                 $table->enum('tipe', ['hp', 'pc/komputer', 'printer']);
                 $table->unsignedSmallInteger('stok');
-                $table->unsignedInteger('terjual')->default(0);
+                $table->string('part_number', 50)->nullable();
+                $table->string('serial_number', 50)->nullable();
                 $table->unsignedInteger('harga_asli');
                 $table->unsignedInteger('harga');
                 $table->timestamps();
             });
-
-            // add full text for nama_spare_part
-            DB::statement("ALTER TABLE spare_part ADD FULLTEXT full(nama_spare_part)");
         }
     }
 

@@ -13,6 +13,16 @@ class OrdersSeeder extends Seeder
 {
     use FakerFiles, Random;
 
+    /*
+     * QUERY
+     * UPDATE orders SET created_at = DATE_SUB(
+     *      NOW(),
+     *      INTERVAL ROUND(
+     *          CAST((SELECT id_orders FROM orders ORDER BY id_orders DESC LIMIT 0, 1) AS SIGNED) - CAST(id_orders AS SIGNED)
+     *      ) DAY
+     * );
+     */
+
     /**
      * @return stdClass make a random keluhan
      */
@@ -61,7 +71,7 @@ class OrdersSeeder extends Seeder
      */
     public function run() {
 
-        $listUser       = DB::table('users')->where('role', 'user')
+        $listUser       = DB::table('users')->where('role', 'pelanggan')
                             ->join('biodata', 'biodata.biodata_id_users', '=', 'users.id_users')->get();
 
         $listJasa       = DB::table("jasa")->select(["id_jasa", "biaya_jasa"])->get()->toArray();
@@ -70,7 +80,7 @@ class OrdersSeeder extends Seeder
 
             $user = $listUser[$i];
 
-            $random     = rand(40, 70);
+            $random     = rand(7, 15);
             $id         = $user->id_users;
             $name       = $user->name;
             $address    = $user->alamat;
@@ -89,7 +99,7 @@ class OrdersSeeder extends Seeder
 
                 DB::beginTransaction();
                 try {
-                    DB::table('service')->insert([
+                    DB::table('orders')->insert([
                         "orders_id_teknisi"             => $teknisi->id_users,
                         "orders_id_pelanggan"           => $id,
                         "orders_id_jasa"                => $jasa->id_jasa,
@@ -100,7 +110,6 @@ class OrdersSeeder extends Seeder
                         "keluhan"                       => $keluhan->keluhan,
                         "jenis_perangkat"               => $keluhan->tipe,
                         "merk"                          => $keluhan->merk,
-                        "biaya_jasa"                    => 0,
                         "status_service"                => $status,
                         "created_at"                    => date("Y-m-d H:i:s"),
                         "updated_at"                    => date("Y-m-d H:i:s")

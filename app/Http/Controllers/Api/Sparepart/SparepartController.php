@@ -63,7 +63,7 @@ class SparepartController extends Controller implements MakeHistory {
         $images     = $this->storeMultipleImages(public_path("/img/spareparts"), $files);
 
         // cast to object
-        $data = (object) $request->only(["name", "description", "type", "stock", "real_price", "price"]);
+        $data = (object) $request->only(["name", "description", "type", "stock", "real_price", "price", "part_number", "serial_number"]);
 
         DB::beginTransaction();
         try {
@@ -74,6 +74,8 @@ class SparepartController extends Controller implements MakeHistory {
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
+
+            error_log($exception->getMessage());
 
             return error(null, ["server" => "Tambah sparepart gagal"], 500);
         }
@@ -125,7 +127,7 @@ class SparepartController extends Controller implements MakeHistory {
         $images     = $this->storeMultipleImages(public_path("/img/spareparts"), $files);
 
         // cast to object
-        $data = (object) $request->only(["name", "description", "type", "stock", "real_price", "price"]);
+        $data = (object) $request->only(["name", "description", "type", "stock", "real_price", "price", "part_number", "serial_number"]);
         $id = $request->get("id");
 
         DB::beginTransaction();
@@ -160,7 +162,7 @@ class SparepartController extends Controller implements MakeHistory {
      */
     public function retrieve($id)
     {
-        $spareparts[]   = $this->sparepart->with("images")->find($id, ["id_spare_part", "nama_spare_part", "deskripsi", "tipe", "stok", "harga_asli", "harga"]);
+        $spareparts[]   = $this->sparepart->with("images")->find($id, ["id_spare_part", "nama_spare_part", "deskripsi", "tipe", "stok", "part_number", "serial_number", "harga_asli", "harga"]);
         $sparepart      = $this->collectSpareparts(collect($spareparts))->toArray()[0];
 
         return json(["sparepart" => $sparepart]);

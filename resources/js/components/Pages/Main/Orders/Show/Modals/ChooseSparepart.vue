@@ -35,6 +35,8 @@
                                 <th>NO</th>
                                 <th>FOTO</th>
                                 <th>NAMA</th>
+                                <th>PART NUMBER</th>
+                                <th>SERIAL NUMBER</th>
                                 <th>HARGA</th>
                                 <th>STOK</th>
                                 <th>AKSI</th>
@@ -49,6 +51,8 @@
                                         style="width: 60px; height: 60px;">
                                 </td>
                                 <td>{{ sparepart.name }}</td>
+                                <td>{{ sparepart.part_number === null ? "-" : sparepart.part_number }}</td>
+                                <td>{{ sparepart.serial_number === null ? "-" : sparepart.serial_number }}</td>
                                 <td>Rp {{ $currency.indonesian(sparepart.price) }}</td>
                                 <td>{{ sparepart.stock }}</td>
                                 <td>
@@ -90,8 +94,6 @@ export default {
 
             if (!["pc", "hp", "printer"].includes(params.t))
                 return;
-
-            console.log(params)
 
             this.$api.get(this.$endpoints.orders.search_sparepart, { params }).then((response) => {
                 this.spareparts = response.data.body.spareparts;

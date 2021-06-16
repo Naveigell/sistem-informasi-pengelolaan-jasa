@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServiceSparePartTable extends Migration
+class CreateOrdersSparePartTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,9 +19,11 @@ class CreateServiceSparePartTable extends Migration
                 $table->unsignedBigInteger('orders_spare_part_id_spare_part')->nullable()->index();
                 $table->unsignedBigInteger('orders_spare_part_id_orders')->nullable()->index();
                 $table->string('nama_spare_part', 120);
+                $table->string('part_number', 50)->nullable();
+                $table->string('serial_number', 50)->nullable();
                 $table->unsignedSmallInteger('jumlah');
-                $table->unsignedBigInteger('harga_asli');
-                $table->unsignedBigInteger('harga');
+                $table->unsignedInteger('harga_asli');
+                $table->unsignedInteger('harga');
                 $table->timestamps();
 
                 // foreign

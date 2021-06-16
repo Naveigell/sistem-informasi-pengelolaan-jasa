@@ -24,10 +24,11 @@ class OrderModel extends Model
     public function collectDataForExports(int $month, int $year)
     {
         return $this->with(["service", "spareparts"])
-                    ->select(["id_orders", "orders_id_jasa", "unique_id", "biaya_jasa"])
+                    ->select(["id_orders", "orders_id_jasa", "unique_id", "updated_at"])
                     ->whereMonth("orders.updated_at", $month)
                     ->whereYear("orders.updated_at", $year)
                     ->where("status_service", "terima")
+                    ->whereNull("canceled_at")
                     ->get();
     }
 

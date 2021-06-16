@@ -128,8 +128,8 @@ class DashboardController extends Controller
                 ],
                 "users"         => [
                     "count"     => (new UserModel())->total(),
-                    "text"      => "Pengguna",
-                    "route"     => "/users",
+                    "text"      => "Pelanggan",
+                    "route"     => "/user",
                     "icon"      => "fa-user"
                 ],
                 "messages"      => [

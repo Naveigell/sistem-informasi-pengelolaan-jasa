@@ -23,6 +23,7 @@ use App\Models\Order\OrderSparepartModel;
 use App\Models\Sparepart\SparepartModel;
 use App\Models\User\UserModel;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -254,6 +255,24 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
         $arr["page"] = $page;
 
         return QueryString::parse($arr);
+    }
+
+    /**
+     * Cancel order by given id
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancel($id)
+    {
+        $canceled = $this->order->cancel($id);
+        if ($canceled) {
+            return json(null, null, 204);
+        }
+
+        return error(null, [
+            "message"   => "Terjadi masalah saat membatalkan order"
+        ]);
     }
 
     /**
@@ -500,12 +519,8 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
      */
     public function takeFromLast($number)
     {
-        $data = [];
-        if ($this->auth->user()->role == "teknisi") {
-            $data = $this->order->takeFromLast($number, $this->auth->id());
-        } else {
-            $data = $this->order->takeFromLast($number);
-        }
+        $data = $this->order->takeFromLast($number, $this->auth->id(), $this->auth->user()->role);
+
         return json(["orders" => $this->addTimeSentences($data->collect())]);
     }
 

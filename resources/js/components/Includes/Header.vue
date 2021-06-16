@@ -17,7 +17,10 @@
                     <div class="account">
                         <img v-if="$store.state.user.picture != null" id="account-img" v-bind:src="$store.state.user.picture" alt="">
                     </div>
-                    <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
+                    <div>
+                        <span class="username" v-html="$store.state.user.data == null ? '(Not Login Yet)' : $store.state.user.data.username"></span>
+                        <span class="role" v-if="$store.state.user.data !== null">{{ $store.state.user.data.role }}</span>
+                    </div>
                 </div>
                 <div class="account-dropdown-container elevation-3" @mouseover="dropdown.open = true" @mouseleave="dropdown.open = false" v-if="dropdown.open">
                     <router-link :to="{ path: '/history' }" v-if="$role.isAdmin">
@@ -90,6 +93,18 @@ header {
     background: white;
 }
 
+.role {
+    color: #30c78d;
+    padding: 0 10px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 3px;
+    background-color: #bff0dd;
+    border-width: 1px;
+    border-radius: 30px;
+}
+
 .separator {
     width: 1px;
     height: 35px;
@@ -100,6 +115,7 @@ header {
 .username {
     font-weight: bold;
     margin-right: 14px;
+    display: block;
 }
 
 .tools-container {

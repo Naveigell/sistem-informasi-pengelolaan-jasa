@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServiceTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,9 +26,9 @@ class CreateServiceTable extends Migration
                 $table->text('keluhan');
                 $table->enum('jenis_perangkat', ['hp', 'pc/komputer', 'printer']);
                 $table->string('merk', 70);
-                $table->integer('biaya_jasa')->nullable();
                 $table->enum('status_service', ['menunggu', 'dicek', 'perbaikan', 'selesai', 'terima'])->default("menunggu");
-                $table->text('note');
+                $table->text('note')->nullable();
+                $table->dateTime('canceled_at')->nullable();
                 $table->timestamps();
 
                 $table->foreign('orders_id_teknisi')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');

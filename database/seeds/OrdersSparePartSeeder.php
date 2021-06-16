@@ -39,13 +39,13 @@ class OrdersSparePartSeeder extends Seeder
      */
     public function run()
     {
-        $services   = DB::table('service')->get();
+        $services   = DB::table('orders')->get();
 
         foreach ($services as $service) {
 
             $sparePartNeeded = $this->makeSparePart($service->jenis_perangkat);
 
-            $spareParts = DB::table('spare_part')->select(['id_spare_part', 'nama_spare_part', 'harga', 'harga_asli'])
+            $spareParts = DB::table('spare_part')->select(['id_spare_part', 'nama_spare_part', 'harga', 'harga_asli', 'part_number', 'serial_number'])
                                                       ->whereIn('id_spare_part', $sparePartNeeded)
                                                       ->get()->toArray();
 
@@ -60,9 +60,11 @@ class OrdersSparePartSeeder extends Seeder
                     $jumlah = rand(1, 2);
 
                     $data = [
-                        "orders_spare_part_id_spare_part"  => $sparePart->id_spare_part,
-                        "orders_spare_part_id_orders"     => $service->id_service,
+                        "orders_spare_part_id_spare_part"   => $sparePart->id_spare_part,
+                        "orders_spare_part_id_orders"       => $service->id_orders,
                         "nama_spare_part"                   => $sparePart->nama_spare_part,
+                        "part_number"                       => $sparePart->part_number,
+                        "serial_number"                     => $sparePart->serial_number,
                         "jumlah"                            => $jumlah,
                         "harga"                             => $sparePart->harga,
                         "harga_asli"                        => $sparePart->harga_asli,

@@ -16,10 +16,8 @@ class CreateJasaTable extends Migration {
             Schema::create('jasa', function (Blueprint $table) {
                 $table->bigIncrements('id_jasa');
                 $table->string('nama_jasa', 30);
-//                $table->string('deskripsi', 255);
                 $table->enum('tipe', ['hp', 'pc/komputer', 'printer']);
                 $table->mediumInteger('biaya_jasa')->unsigned();
-//                $table->boolean("aktif")->unsigned()->default(1);
                 $table->timestamps();
             });
         }

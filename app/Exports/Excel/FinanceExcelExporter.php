@@ -4,6 +4,7 @@ namespace App\Exports\Excel;
 
 use App\Models\Exports\Excel\OrderModel;
 use App\Traits\DateTime\DateTimeRepeaterAndSanitizer;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
@@ -67,9 +68,11 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
         $this->createGap(1, $array);
         array_push($array, ["Pendapatan Bulan $month $this->year", "", "", "", "", "", ""]);
         $this->createGap(2, $array);
-        array_push($array, ["No", "Order Id", "Sparepart", "Jumlah", "Harga asli", "Harga jual", "Biaya"]);
+        array_push($array, ["No", "Tanggal", "Order Id", "Sparepart", "Jumlah", "Harga asli", "Harga jual", "Biaya Jasa"]);
         foreach ($data as $datum) {
             $spareparts = $datum["spareparts"];
+            $date = Carbon::parse($datum["updated_at"])->translatedFormat("d F Y");
+
             if (count($spareparts) > 0) {
                 for ($i = 0; $i < count($spareparts); $i++) {
                     $sparepart = $spareparts[$i];
@@ -81,20 +84,16 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
                     $arr = [];
 
                     $arr[] = $index;
-                    if ($i == 0) {
-                        $arr[] = $datum["unique_id"];
-                    } else {
-                        $arr[] = "";
-                    }
+                    $arr[] = $date;
+                    $arr[] = $datum["unique_id"];
 
                     $arr[] = $sparepart["nama_spare_part"];
                     $arr[] = $sparepart["jumlah"];
                     $arr[] = $sparepart["harga_asli"];
                     $arr[] = $sparepart["harga"];
+                    $arr[] = $datum["service"]["biaya_jasa"];
 
                     if ($i == 0) {
-                        $arr[] = $datum["service"]["biaya_jasa"];
-
                         $cost += $datum["service"]["biaya_jasa"];
                     }
 
@@ -104,14 +103,14 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
                 $index++;
                 $cost += $datum["service"]["biaya_jasa"];
 
-                array_push($array, [$index, $datum["unique_id"], "-", "-", "-", "-", $datum["service"]["biaya_jasa"]]);
+                array_push($array, [$index, $date, $datum["unique_id"], "-", "-", "-", "-", $datum["service"]["biaya_jasa"]]);
             }
         }
-        array_push($array, ["Total", "", "", "", $spending, $income, $cost]);
+        array_push($array, ["Total", "", "", "", "", $spending, $income, $cost]);
         $this->createGap(3, $array); // make some space for confirmation
-        array_push($array, ["", "", "", "", "Mengetahui", "", ""]);
+        array_push($array, ["", "", "", "", "", "Mengetahui", "", ""]);
         $this->createGap(4, $array);
-        array_push($array, ["", "", "", "", $admin->name, "", ""]);
+        array_push($array, ["", "", "", "", "", $admin->name, "", ""]);
 
         $this->count = $index + $gap + 2;
 
@@ -124,9 +123,9 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
     public function columnFormats(): array
     {
         return [
-            "E"         => self::FORMAT_ACCOUNTING_RP_INDONESIAN,
             "F"         => self::FORMAT_ACCOUNTING_RP_INDONESIAN,
             "G"         => self::FORMAT_ACCOUNTING_RP_INDONESIAN,
+            "H"         => self::FORMAT_ACCOUNTING_RP_INDONESIAN,
         ];
     }
 
@@ -134,10 +133,11 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
     {
         return [
             "B"         => 20,
-            "C"         => 55,
-            "E"         => 20,
+            "C"         => 20,
+            "D"         => 55,
             "F"         => 20,
-            "G"         => 20
+            "G"         => 20,
+            "H"         => 20
         ];
     }
 
@@ -151,17 +151,21 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
         $sheet->getStyle("B")->getAlignment()->setIndent(1);
 
         // C Column Style
-        $sheet->getStyle("C5")->getAlignment()->setHorizontal("center");
         $sheet->getStyle("C")->getAlignment()->setHorizontal("left");
         $sheet->getStyle("C")->getAlignment()->setIndent(1);
-        $sheet->getStyle("C5")->getAlignment()->setIndent(0);
 
         // D Column Style
-        $sheet->getStyle("D")->getAlignment()->setHorizontal("center");
+        $sheet->getStyle("D5")->getAlignment()->setHorizontal("center");
+        $sheet->getStyle("D")->getAlignment()->setHorizontal("left");
+        $sheet->getStyle("D")->getAlignment()->setIndent(1);
+        $sheet->getStyle("D5")->getAlignment()->setIndent(0);
+
+        // E Column Style
+        $sheet->getStyle("E")->getAlignment()->setHorizontal("center");
 
         // 2 Row Style
         try {
-            $sheet->mergeCells("A2:G2");
+            $sheet->mergeCells("A2:H2");
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
@@ -180,7 +184,7 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
         $sheet->getStyle($this->count)->getFont()->setBold(true);
 
         try {
-            $sheet->mergeCells("A$this->count:D$this->count");
+            $sheet->mergeCells("A$this->count:E$this->count");
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
@@ -188,18 +192,18 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
         $confirmationSpace = $this->count + 4;
         // merge some cell for confirmation
         try {
-            $sheet->mergeCells("E$confirmationSpace:G$confirmationSpace");
-            $sheet->getStyle("E$confirmationSpace")->getAlignment()->setVertical("center");
-            $sheet->getStyle("E$confirmationSpace")->getAlignment()->setHorizontal("center");
+            $sheet->mergeCells("F$confirmationSpace:H$confirmationSpace");
+            $sheet->getStyle("F$confirmationSpace")->getAlignment()->setVertical("center");
+            $sheet->getStyle("F$confirmationSpace")->getAlignment()->setHorizontal("center");
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
 
         $confirmationSpace += 5;
         try {
-            $sheet->mergeCells("E$confirmationSpace:G$confirmationSpace");
-            $sheet->getStyle("E$confirmationSpace")->getAlignment()->setVertical("center");
-            $sheet->getStyle("E$confirmationSpace")->getAlignment()->setHorizontal("center");
+            $sheet->mergeCells("F$confirmationSpace:H$confirmationSpace");
+            $sheet->getStyle("F$confirmationSpace")->getAlignment()->setVertical("center");
+            $sheet->getStyle("F$confirmationSpace")->getAlignment()->setHorizontal("center");
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
@@ -214,7 +218,7 @@ class FinanceExcelExporter implements FromCollection, WithColumnFormatting, With
     private function createGap(int $count, &$array)
     {
         for ($i = 0; $i < $count; $i++) {
-            array_push($array, ["", "", "", "", "", "", ""]);
+            array_push($array, ["", "", "", "", "", "", "", ""]);
         }
     }
 }

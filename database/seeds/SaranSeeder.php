@@ -32,7 +32,6 @@ class SaranSeeder extends Seeder
                 DB::table("pengaduan")->insert([
                     "pengaduan_id_pelanggan"    => $id,
                     "isi"                       => $suggestion->content,
-                    "stars"                     => rand(1, 5),
                     "tipe"                      => "saran",
                     "created_at"                => date("Y-m-d H:i:s"),
                     "updated_at"                => date("Y-m-d H:i:s")

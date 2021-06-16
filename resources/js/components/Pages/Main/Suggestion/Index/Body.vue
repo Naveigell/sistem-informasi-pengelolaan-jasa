@@ -73,7 +73,7 @@
                             </div>
                             <table class="table table-inbox table-hover">
                                 <tbody>
-                                    <tr class="" v-for="(suggestion, index) in suggestions" @click="moveInto(suggestion.id, $event)">
+                                    <tr class="" v-for="(suggestion, index) in suggestions" @click="moveInto(suggestion.id, $event)" v-if="suggestion.user !== null">
 <!--                                        <td class="inbox-small-cells">-->
 <!--                                            <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">-->
 <!--                                        </td>-->
