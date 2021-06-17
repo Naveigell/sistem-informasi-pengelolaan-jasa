@@ -306,6 +306,27 @@ class OrderModel extends Model implements Countable
     }
 
     /**
+     * Move order into another technician
+     *
+     * @param $id
+     * @param $id_teknisi
+     * @param $role
+     * @return int
+     */
+    public function changeTechnician($id, $id_teknisi, $role)
+    {
+        $query = $this->where("id_orders", $id);
+
+        if ($role == "teknisi") {
+            $query->where("orders_id_teknisi", auth("user")->id());
+        }
+
+        return $query->update([
+            "orders_id_teknisi"     => $id_teknisi
+        ]);
+    }
+
+    /**
      * Update note in order
      *
      * @param $id

@@ -9,6 +9,9 @@
                                 <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px; font-size: 16px;">STATUS ORDER</h5>
                             </div>
                         </div>
+                        <div v-if="!['selesai', 'terima'].includes(data.status)" style="padding: 20px 50px 0 50px;">
+                            <button @click="modals.change_technician.open = true;" style="float: right;" class="button-transparent-tag">Ganti teknisi</button>
+                        </div>
                         <div style="height: 200px;">
                             <h4 style="font-weight: bold; margin: 50px;">Status Perbaikan</h4>
                             <div class="status-bar-indicator-container" style="position: relative; width: 100%;">
@@ -316,6 +319,7 @@
             </div>
             <ShowSparepart :spareparts="data.spareparts" v-if="modals.show_sparepart.open" @close="modals.show_sparepart.open = false;"/>
             <ChooseSparepart @sparepart="addSparepart" v-if="modals.choose_sparepart.open" @close="modals.choose_sparepart.open = false;"/>
+            <ChangeTechnician @response="handleChangeTechnician" :id="data.id" v-if="modals.change_technician.open" @close="modals.change_technician.open = false;"/>
         </div>
     </div>
 </template>
@@ -323,11 +327,12 @@
 <script>
 import ShowSparepart from "./Modals/ShowSparepart";
 import ChooseSparepart from "./Modals/ChooseSparepart";
+import ChangeTechnician from "./Modals/ChangeTechnician";
 
 export default {
     name: "Body",
     components: {
-        ShowSparepart, ChooseSparepart
+        ShowSparepart, ChooseSparepart, ChangeTechnician
     },
     data() {
         return {
@@ -362,7 +367,10 @@ export default {
                 },
                 choose_sparepart: {
                     open: false
-                }
+                },
+                change_technician: {
+                    open: false
+                },
             },
             statuses: [
                 "menunggu", "dicek", "perbaikan", "selesai", "terima"
@@ -656,6 +664,10 @@ export default {
                     this.note.errors = error.response.data.errors.messages;
                 }
             });
+        },
+        handleChangeTechnician(){
+            this.modals.change_technician.open = false;
+            this.back();
         }
     }
 }

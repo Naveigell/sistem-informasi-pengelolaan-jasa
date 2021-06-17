@@ -23,41 +23,6 @@
                                         </a>
                                     </div>
                                 </div>
-
-<!--                                <div class="btn-group">-->
-<!--                                    <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">-->
-<!--                                        <i class=" fa fa-refresh"></i>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                                <div class="btn-group hidden-phone">-->
-<!--                                    <a data-toggle="dropdown" href="#" class="btn mini blue" aria-expanded="false">-->
-<!--                                        More-->
-<!--                                        <i class="fa fa-angle-down "></i>-->
-<!--                                    </a>-->
-<!--                                    <ul class="dropdown-menu">-->
-<!--                                        <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>-->
-<!--                                        <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>-->
-<!--                                        <li class="divider"></li>-->
-<!--                                        <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                                <div class="btn-group hidden-phone" @click="openDeleteModal">-->
-<!--                                    <a class="btn mini blue" aria-expanded="false">-->
-<!--                                        <i class="fa fa-trash"></i>&nbsp Delete-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                                <div class="btn-group">-->
-<!--                                    <a data-toggle="dropdown" href="#" class="btn mini blue">-->
-<!--                                        Move to-->
-<!--                                        <i class="fa fa-angle-down "></i>-->
-<!--                                    </a>-->
-<!--                                    <ul class="dropdown-menu">-->
-<!--                                        <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>-->
-<!--                                        <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>-->
-<!--                                        <li class="divider"></li>-->
-<!--                                        <li><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
                                 <ul class="unstyled inbox-pagination">
                                     <li @click="previous">
                                         <a class="np-btn"><i class="fa fa-angle-left  pagination-left"></i></a>
@@ -70,10 +35,6 @@
                             <table class="table table-inbox table-hover">
                                 <tbody>
                                     <tr class="" v-for="(complaint, index) in complaints" @click="moveInto(complaint.id, $event)">
-<!--                                        <td class="inbox-small-cells">-->
-<!--                                            <input @change="check" ref="checkboxes" type="checkbox" class="mail-checkbox">-->
-<!--                                        </td>-->
-<!--                                        <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>-->
                                         <td class="view-message dont-show">{{ $store.state.user.data.role === 'pelanggan' ? "Kepada: Teknisi" : complaint.user.name }} <span v-if="complaint.disetujui_admin === 0" class="label pull-right" v-bind:class="{'label-danger': complaint.dikerjakan_teknisi === 0 && complaint.disetujui_pelanggan === 0, 'label-info': complaint.dikerjakan_teknisi === 1 && complaint.disetujui_pelanggan === 0, 'label-success': complaint.disetujui_pelanggan === 1 && complaint.dikerjakan_teknisi === 1 && complaint.disetujui_admin === 0}">{{ complaint.disetujui_pelanggan === 1 ? "Disetujui pelanggan" : complaint.dikerjakan_teknisi === 1 ? "Selesai dikerjakan" : "complain" }}</span></td>
                                         <td class="view-message" style="text-overflow: ellipsis; overflow-x: hidden; max-width: 700px; white-space: nowrap;">{{ complaint.content.cutIfGreaterThan(30000) }}</td>
                                         <td class="view-message inbox-small-cells"></td>

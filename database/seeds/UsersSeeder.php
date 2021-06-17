@@ -78,7 +78,7 @@ class UsersSeeder extends Seeder {
         $users = DB::table('users');
         $biodata = DB::table('biodata');
 
-        for ($i = 0; $i < 90; $i++) {
+        for ($i = 0; $i < 100; $i++) {
 
             DB::transaction(function () use($i, $users, $biodata) {
                 $list = $this->randomListName();
@@ -98,8 +98,8 @@ class UsersSeeder extends Seeder {
                 $gender     = static::$gender == 1 ? "Laki - laki" : "Perempuan";
                 $address    = $this->makeAddress();
 
-                $role = $i < 7 ? "teknisi" : "pelanggan";
-                $role = $i < 2 ? "admin" : $role;
+                $role = $i < 10 ? "teknisi" : "pelanggan";
+                $role = $i < 3 ? "admin" : $role;
 
                 $imgName = Str::random(60).date("YmdHis");
                 $imgCreated = $this->makeDefaultImage($imgName);

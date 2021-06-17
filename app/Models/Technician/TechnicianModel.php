@@ -59,7 +59,7 @@ class TechnicianModel extends Model
      */
     public function getIdByUsername($username)
     {
-        return $this->select(["id_users"])->where("username", $username)->first();
+        return $this->select(["id_users"])->where("role", $this->role)->where("username", $username)->first();
     }
 
     /**
@@ -71,7 +71,7 @@ class TechnicianModel extends Model
      */
     public function updateDataByUsername($username, object $data)
     {
-        return $this->where("username", $username)->update([
+        return $this->where("username", $username)->where("role", $this->role)->update([
             "name"          => $data->name,
             "username"      => $data->username,
         ]);
@@ -165,7 +165,7 @@ class TechnicianModel extends Model
      */
     public function getUsernameById($id)
     {
-        return $this->select(["username"])->where("id_users", $id)->first();
+        return $this->select(["username"])->where("role", $this->role)->where("id_users", $id)->first();
     }
 
     /**

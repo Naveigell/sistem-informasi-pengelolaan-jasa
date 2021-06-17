@@ -173,7 +173,7 @@ header {
     padding: 5px;
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     border-radius: 30px;
 }

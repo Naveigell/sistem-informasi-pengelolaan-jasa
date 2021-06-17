@@ -125,7 +125,7 @@
                                 <thead>
                                     <tr>
                                         <th>ORDER ID</th>
-                                        <th>DIBUAT</th>
+                                        <th>WAKTU</th>
                                         <th>{{ this.$role.isTechnician ? "PELANGGAN" : "TEKNISI" }}</th>
                                         <th>STATUS</th>
                                     </tr>
@@ -147,7 +147,13 @@
                                             </router-link>
                                         </td>
                                         <td>
-                                            <span class="status" :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
+                                            <span v-if="repairment.canceled_at === null">
+                                                <span class="status status-danger" v-if="repairment.complaint !== null ? (repairment.complaint.dikerjakan_teknisi === 0 || repairment.complaint.disetujui_pelanggan === 0) : false">Komplain</span>
+                                                <span class="status" v-else :class="getStatusOrderInfo(repairment.status_service).class">{{ getStatusOrderInfo(repairment.status_service).name }}</span>
+                                            </span>
+                                            <span v-else>
+                                                <span class="status status-danger">Dibatalkan</span>
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>

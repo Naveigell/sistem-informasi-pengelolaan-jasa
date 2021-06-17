@@ -79,7 +79,7 @@
                                     </div>
                                 </main>
                             </div>
-                            <div v-if="$store.state.user.data.role === 'teknisi' && data.complaint.dikerjakan_teknisi === 0">
+                            <div v-if="(this.$role.isTechnician || this.$role.isAdmin) && data.complaint.dikerjakan_teknisi === 0">
                                 <button @click="actions.doComplaint = true;" class="button-success-primary-tag" v-if="!actions.doComplaint">Kerjakan</button>
                                 <div v-else>
                                     <button @click="doComplaint" class="button-green-primary-tag"><i class="fa fa-check"></i>&nbspIya</button>

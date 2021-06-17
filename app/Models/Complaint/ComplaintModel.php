@@ -56,17 +56,16 @@ class ComplaintModel extends Model
      * Retrieve complaint
      *
      * @param $id_users
-     * @param $id_teknisi
      * @param $role
-     * @param $next
      * @param null $last_suggestion_id
      * @return ComplaintModel[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function retrieveAll($id_users, $id_teknisi, $role, $next, $last_suggestion_id = null)
+    public function retrieveAll($id_users, $role, $last_suggestion_id = null)
     {
         $take = 15;
         $main = $this->select(["id_pengaduan", "pengaduan_id_pelanggan", "isi", "tipe", "dikerjakan_teknisi", "disetujui_pelanggan", "disetujui_admin", "created_at"])
-                     ->orderBy("id_pengaduan", "DESC");
+                     ->orderBy("id_pengaduan", "DESC")
+                     ->where("tipe", $this->type);
 
         if ($last_suggestion_id != null) {
             $main->where("id_pengaduan", "<=", $last_suggestion_id);
@@ -75,18 +74,8 @@ class ComplaintModel extends Model
         if ($role == "pelanggan") {
             return $main->where([
                 "pengaduan_id_pelanggan"    => $id_users,
-                "tipe"                      => $this->type
             ])->take($take)->get();
-        } else if ($role == "teknisi") {
-            $main = $main->where([
-                "tipe"                  => $this->type,
-                "pengaduan_id_teknisi"  => $id_teknisi
-            ]);
         }
-
-        $main = $main->where([
-            "tipe"                  => $this->type
-        ]);
 
         return $main->take($take)->with(["user:id_users,name,username"])->get();
     }
@@ -133,11 +122,10 @@ class ComplaintModel extends Model
      * @param $id_teknisi
      * @return int
      */
-    public function doComplaint($id, $id_teknisi)
+    public function doComplaint($id)
     {
         return $this->where([
             "id_pengaduan"              => $id,
-            "pengaduan_id_teknisi"      => $id_teknisi,
             "tipe"                      => $this->type
         ])->update([
             "dikerjakan_teknisi"        => 1

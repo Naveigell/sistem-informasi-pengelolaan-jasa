@@ -28,7 +28,7 @@ class CreateOrdersTable extends Migration
                 $table->string('merk', 70);
                 $table->enum('status_service', ['menunggu', 'dicek', 'perbaikan', 'selesai', 'terima'])->default("menunggu");
                 $table->text('note')->nullable();
-                $table->dateTime('canceled_at')->nullable();
+                $table->timestamp('canceled_at')->nullable();
                 $table->timestamps();
 
                 $table->foreign('orders_id_teknisi')->references('id_users')->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');

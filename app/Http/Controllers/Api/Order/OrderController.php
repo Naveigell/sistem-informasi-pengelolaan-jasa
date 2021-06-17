@@ -21,6 +21,7 @@ use App\Models\Jasa\JasaModel;
 use App\Models\Order\OrderModel;
 use App\Models\Order\OrderSparepartModel;
 use App\Models\Sparepart\SparepartModel;
+use App\Models\Technician\TechnicianModel;
 use App\Models\User\UserModel;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
     private ComplaintModel $complaint;
     private JasaModel $jasa;
     private HistoryModel $history;
+    private TechnicianModel $technician;
 
     private $auth;
     private const MAIN_PATH_URL = "/orders";
@@ -50,6 +52,7 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
         $this->complaint        = new ComplaintModel;
         $this->history          = new HistoryModel;
         $this->jasa             = new JasaModel;
+        $this->technician       = new TechnicianModel;
 
         $this->auth  = auth("user");
     }
@@ -255,6 +258,29 @@ class OrderController extends Controller implements TimeSentences, MakeHistory
         $arr["page"] = $page;
 
         return QueryString::parse($arr);
+    }
+
+    /**
+     * Change technician in order
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changeTechnician(Request $request, $id)
+    {
+        $exists = $this->technician->getUsernameById($request->technician_id);
+
+        if (is_null($exists) || $request->technician_id == $this->auth->id()) {
+            return error(null, ["message" => "Id teknisi tidak valid"], 400);
+        }
+
+        $updated = $this->order->changeTechnician($id, $request->technician_id, $this->auth->user()->role);
+        if ($updated) {
+            return json(null, null, 204);
+        }
+
+        return error(null, ["message" => "Terjadi kesalahan saat mengganti teknisi"]);
     }
 
     /**

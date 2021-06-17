@@ -60,9 +60,7 @@ class ComplaintController extends Controller implements TimeSentences
     {
         $data = $this->complaint->retrieveAll(
             $this->auth->user()->role == "pelanggan" ? $this->auth->id() : null,
-            $this->auth->user()->role == "teknisi" ? $this->auth->id() : null,
             $this->auth->user()->role,
-            $request->next == "true",
             $request->id
         );
 
@@ -174,7 +172,7 @@ class ComplaintController extends Controller implements TimeSentences
      */
     public function doComplaint($id)
     {
-        $updated = $this->complaint->doComplaint($id, $this->auth->id());
+        $updated = $this->complaint->doComplaint($id);
         if ($updated) {
             return json([], null, 204);
         }
