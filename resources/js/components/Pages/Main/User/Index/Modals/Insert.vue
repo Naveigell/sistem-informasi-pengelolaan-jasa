@@ -38,6 +38,12 @@
                             <span class="error-message" v-if="errors.email != null && errors.email !== undefined">{{ errors.email[0] }}</span>
                         </div>
                         <div class="input-container">
+                            <label for="">Instansi/Perusahaan</label>
+                            <input v-bind:class="{'input-error': errors.company != null && errors.company !== undefined}" @focus="errors.company = null;" type="text" placeholder="Instansi/Perusahaan Pelanggan" v-model="data.company">
+                            <span class="error-message" v-if="errors.company != null && errors.company !== undefined">{{ errors.company[0] }}</span>
+                            <span class="sub-message" v-else>Kosongkan jika dirasa tidak perlu</span>
+                        </div>
+                        <div class="input-container">
                             <label for="">Alamat</label>
                             <textarea v-bind:class="{'input-error': errors.address != null && errors.address !== undefined}" @focus="errors.address = null;" placeholder="Alamat Pelanggan" v-model="data.address"></textarea>
                             <span class="error-message" v-if="errors.address != null && errors.address !== undefined">{{ errors.address[0] }}</span>
@@ -71,6 +77,7 @@ export default {
                 email: "",
                 gender: "Laki - laki",
                 phone: "",
+                company: "",
                 address: ""
             },
             errors: {
@@ -79,6 +86,7 @@ export default {
                 email: null,
                 gender: null,
                 phone: null,
+                company: null,
                 address: null
             }
         }
@@ -110,6 +118,11 @@ export default {
                 this.data.phone = oldVal;
             }
         },
+        "data.company": function (newVal, oldVal) {
+            if (newVal.length > 70) {
+                this.data.company = oldVal;
+            }
+        },
         "data.address": function (newVal, oldVal) {
             if (newVal.length > 100) {
                 this.data.address = oldVal;
@@ -135,7 +148,12 @@ export default {
             }, 500);
         },
         save(){
-            this.$api.post(this.$endpoints.users.insert, this.data).then((response) => {
+            const data = { ...this.data };
+            if (data.company.length <= 0) {
+                delete data.company;
+            }
+
+            this.$api.post(this.$endpoints.users.insert, data).then((response) => {
                 this.emitToParent("success", "User berhasil ditambahkan", true);
             }).catch((error) => {
                 const data = error.response.data;
@@ -228,6 +246,11 @@ form > button {
     color: #555;
 }
 
+.sub-message {
+    font-size: 13px;
+    color: #aaa;
+}
+
 .input-container .input-error, .input-error {
     border: 1px solid var(--error-primary);
 }
@@ -253,6 +276,7 @@ form > button {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: scroll;
 }
 
 .insert-container {

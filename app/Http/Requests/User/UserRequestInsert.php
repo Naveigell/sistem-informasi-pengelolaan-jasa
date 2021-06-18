@@ -46,7 +46,10 @@ class UserRequestInsert extends FormRequest
 
             "phone.required"                        => "Nomor telepon harus diisi",
             "phone.min"                             => "Panjang nomor telepon minimal 7",
-            "phone.max"                             => "Panjang nomor telepona maksima 17",
+            "phone.max"                             => "Panjang nomor telepona maksimal 17",
+
+            "company.min"                           => "Panjang instansi/perusahaan minimal 4",
+            "company.max"                           => "Panjang instansi/perusahaan maksimal 70",
 
             "address.required"                      => "Alamat harus diisi",
             "address.min"                           => "Alamat minimal memiliki 8 karakter",
@@ -68,7 +71,8 @@ class UserRequestInsert extends FormRequest
             "email"         => "required|string|min:6|email",
             "gender"        => "required|string|in:Laki - laki,Perempuan",
             "phone"         => "required|string|min:7|max:17",
-            "address"       => "required|string|min:8|max:100"
+            "company"       => "sometimes|string|min:4|max:70",
+            "address"       => "required|string|min:8|max:100",
         ];
     }
 }

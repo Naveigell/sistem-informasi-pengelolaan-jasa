@@ -48,6 +48,11 @@
                                 <span style="margin-left: 11px;" v-if="!button.saveActive" class="biodata-value">{{ user.data.biodata.alamat }}</span>
                                 <textarea style="margin-left: 12px; resize: none;" v-model="user.update.biodata.alamat" v-else type="text" class="biodata-input"></textarea>
                             </div>
+                            <div v-if="this.$role.isUser" v-bind:class="{'biodata-table': !button.saveActive, 'biodata-table-save-button-active': button.saveActive}">
+                                <span class="biodata-title">Instansi</span>
+                                <span v-if="!button.saveActive" class="biodata-value">{{ user.data.biodata.instansi }}</span>
+                                <input v-model="user.update.biodata.instansi" v-else type="text" class="biodata-input">
+                            </div>
 
                             <h5>Kontak Saya</h5>
                             <div v-bind:class="{'biodata-table': !button.saveActive, 'biodata-table-save-button-active': button.saveActive}">
@@ -161,6 +166,9 @@ export default {
             this.$api.get(this.$endpoints.biodata.data).then(function (response) {
                 self.user.data = JSON.parse(JSON.stringify(response.data.body));
                 self.user.update = JSON.parse(JSON.stringify(response.data.body));
+
+                self.user.data.biodata.instansi = self.user.data.biodata.instansi === null ? "-" : self.user.data.biodata.instansi;
+                self.user.update.biodata.instansi = self.user.update.biodata.instansi === null ? "" : self.user.update.biodata.instansi;
             }).catch(function (error) {
                 console.log(error)
             });
@@ -242,8 +250,13 @@ export default {
 
             if (this.user.data == null) return;
 
+            const data = { ...this.user.update.biodata };
+            if (data.instansi.length <= 0) {
+                delete data.instansi;
+            }
+
             this.$api.put(this.$endpoints.biodata.data, {
-                ...this.user.update.biodata
+                ...data
             }).then(function (response) {
                 if (response.status === 200) {
                     self.$root.$emit("open-toast", {
@@ -411,7 +424,7 @@ img {
 .biodata-container-center {
     display: block;
     width: 100%;
-    height: 440px;
+    height: 500px;
 }
 
 .image-container {

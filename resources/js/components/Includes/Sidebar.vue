@@ -74,14 +74,6 @@ export default {
                     roles: ["admin", "teknisi", "pelanggan"]
                 },
                 {
-                    title: "Instansi",
-                    icon: "fa fa-building",
-                    hasDropdown: false,
-                    isLink: true,
-                    to: "/agency",
-                    roles: ["admin", "teknisi"]
-                },
-                {
                     title: "Biodata",
                     icon: "fa fa-user",
                     hasDropdown: false,

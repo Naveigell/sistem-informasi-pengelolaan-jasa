@@ -35,7 +35,16 @@ class BiodataController extends Controller {
      * @return JsonResponse
      */
     public function updateBiodata(BiodataUpdateRequest $request) {
-        $code = $this->biodata->updateBiodata(auth("user")->id(), $request->alamat, $request->email, $request->jenis_kelamin, $request->name, $request->nomor_hp, $request->username);
+        $code = $this->biodata->updateBiodata(
+            auth("user")->id(),
+            $request->alamat,
+            $request->email,
+            $request->jenis_kelamin,
+            $request->name,
+            $request->nomor_hp,
+            $request->username,
+            $request->instansi
+        );
         $message = ["biodata" => "Biodata berhasil diubah"];
 
         // check if username, email or phone are duplicated

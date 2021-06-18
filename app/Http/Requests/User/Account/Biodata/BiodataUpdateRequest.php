@@ -4,6 +4,15 @@ namespace App\Http\Requests\User\Account\Biodata;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property mixed alamat
+ * @property mixed email
+ * @property mixed jenis_kelamin
+ * @property mixed name
+ * @property mixed nomor_hp
+ * @property mixed username
+ * @property mixed instansi
+ */
 class BiodataUpdateRequest extends FormRequest
 {
     /**
@@ -42,6 +51,9 @@ class BiodataUpdateRequest extends FormRequest
             "nomor_hp.numeric"                      => "Nomor hp harus berupa angka",
             "nomor_hp.digits_between"               => "Panjang karakter nomor hp harus antara 7 hingga 17",
 
+            "instansi.min"                          => "Panjang instansi/perusahaan minimal 4",
+            "instansi.max"                          => "Panjang instansi/perusahaan maksimal 70",
+
             "username.required"                     => "Username harus diisi",
             "username.min"                          => "Username minimal memiliki 6 karakter",
             "username.max"                          => "Username maksimal memiliki 40 karakter",
@@ -68,6 +80,7 @@ class BiodataUpdateRequest extends FormRequest
             "jenis_kelamin"     => "required|string|in:Laki - laki,Perempuan",
             "name"              => "required|string|min:6|max:60",
             "nomor_hp"          => "required|numeric|digits_between:9,17",
+            "instansi"          => "sometimes|string|min:4|max:70",
             "username"          => "required|string|min:6|max:40|unique:users|regex:/^[a-z0-9_.]+$/|at_least_one_character|first_letter_must_alphabet|no_space|lowercase"
         ];
     }

@@ -21,7 +21,7 @@ class BiodataModel extends Model
      * @return BiodataModel|BiodataModel[]|\Illuminate\Database\Eloquent\Collection|Model|object get first biodata
      */
     public function retrieveBiodata($id){
-        return $this->select(["jenis_kelamin", "nomor_hp", "profile_picture", "alamat", "name", "username", "email"])
+        return $this->select(["jenis_kelamin", "nomor_hp", "profile_picture", "alamat", "name", "username", "email", "instansi"])
                     ->join("users", "biodata_id_users", "=", "id_users")
                     ->where("biodata_id_users", $id)->first();
     }
@@ -59,6 +59,7 @@ class BiodataModel extends Model
             "biodata_id_users"      => $id,
             "jenis_kelamin"         => $data->gender,
             "nomor_hp"              => property_exists($data, 'phone') ? $data->phone : null,
+            "instansi"              => property_exists($data, 'company') ? $data->company : null,
             "profile_picture"       => $data->avatar,
             "alamat"                => property_exists($data, 'address') ? $data->address : null,
             "created_at"            => now(),
@@ -74,9 +75,10 @@ class BiodataModel extends Model
      * @param $name string
      * @param $nomor_hp string
      * @param $username string
+     * @param $company string
      * @return int return an http status code
      */
-    public function updateBiodata($id_users, $alamat, $email, $jenis_kelamin, $name, $nomor_hp, $username) {
+    public function updateBiodata($id_users, $alamat, $email, $jenis_kelamin, $name, $nomor_hp, $username, $company) {
 
         DB::beginTransaction();
 
@@ -84,7 +86,8 @@ class BiodataModel extends Model
             $biodata = $this->where("biodata_id_users", $id_users)->update([
                 "alamat"            => $alamat,
                 "jenis_kelamin"     => $jenis_kelamin,
-                "nomor_hp"          => $nomor_hp
+                "nomor_hp"          => $nomor_hp,
+                "instansi"          => $company
             ]);
 
             $account = DB::table('users')->where("id_users", $id_users)->update([

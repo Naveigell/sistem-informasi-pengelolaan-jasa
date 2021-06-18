@@ -62,10 +62,20 @@ class UsersSeeder extends Seeder {
         $imgPath = public_path("img/users/default/placeholder.png");
         $extension = File::extension($imgPath);
 
-//        $moved = Storage::disk("public")->put("users/image/$name.$extension", $img);
         $moved = File::copy($imgPath, public_path("/img/users/$name.$extension"));
 
         return $moved;
+    }
+
+    /**
+     * Create agency for users
+     *
+     * @param array $agencies
+     * @return mixed
+     */
+    private function createAgency(array $agencies)
+    {
+        return $agencies[array_rand($agencies)];
     }
 
     /**
@@ -75,12 +85,13 @@ class UsersSeeder extends Seeder {
      */
     public function run() {
 
-        $users = DB::table('users');
-        $biodata = DB::table('biodata');
+        $users      = DB::table('users');
+        $biodata    = DB::table('biodata');
+        $agencies   = $this->readFile("instansi")->file->instansi;
 
         for ($i = 0; $i < 100; $i++) {
 
-            DB::transaction(function () use($i, $users, $biodata) {
+            DB::transaction(function () use($i, $users, $biodata, $agencies) {
                 $list = $this->randomListName();
 
                 // first name and second name
@@ -107,24 +118,34 @@ class UsersSeeder extends Seeder {
                 DB::beginTransaction();
                 try {
                     $id = $users->insertGetId([
-                        "name"          => $name,
-                        "username"      => $username,
-                        "email"         => $email,
-                        "password"      => Hash::make("123456"),
-                        "role"          => $role,
-                        "created_at"    => date("Y-m-d H:i:s"),
-                        "updated_at"    => date("Y-m-d H:i:s"),
+                        "name"                  => $name,
+                        "username"              => $username,
+                        "email"                 => $email,
+                        "password"              => Hash::make("123456"),
+                        "role"                  => $role,
+                        "created_at"            => date("Y-m-d H:i:s"),
+                        "updated_at"            => date("Y-m-d H:i:s"),
                     ]);
 
-                    $biodata->insert([
+                    $biodataData = [
                         "biodata_id_users"      => $id,
                         "jenis_kelamin"         => $gender,
                         "nomor_hp"              => $phone,
                         "profile_picture"       => $imgName.".png",
                         "alamat"                => $address,
-                        "created_at"    => date("Y-m-d H:i:s"),
-                        "updated_at"    => date("Y-m-d H:i:s"),
-                    ]);
+                        "created_at"            => date("Y-m-d H:i:s"),
+                        "updated_at"            => date("Y-m-d H:i:s"),
+                    ];
+
+                    if ($role == "pelanggan") {
+                        $agency = $this->createAgency($agencies);
+
+                        if (rand(1, 10) < 4) {
+                            $biodataData["instansi"] = $agency;
+                        }
+                    }
+
+                    $biodata->insert($biodataData);
 
                     DB::commit();
 

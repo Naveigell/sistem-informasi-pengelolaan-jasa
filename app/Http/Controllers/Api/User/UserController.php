@@ -100,7 +100,7 @@ class UserController extends Controller implements MakeHistory
      */
     public function create(UserRequestInsert $request)
     {
-        $data = (object) $request->only(["name", "username", "email", "gender", "phone", "address"]);
+        $data = (object) $request->only(["name", "username", "email", "gender", "phone", "company", "address"]);
         $data->avatar = $this->randomStringImage().".png";
 
         $defaultImagePath = public_path("/img/users/default/placeholder.png");

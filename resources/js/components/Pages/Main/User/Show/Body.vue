@@ -43,6 +43,12 @@
                                     <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Alamat</label>
                                 </div>
                             </div>
+                            <div style="margin-top: 16px;">
+                                <div class="field-disabled field-container">
+                                    <input disabled type="text" style="width: 80%; border: none; outline: none; cursor: no-drop;" v-model="user.data.company">
+                                    <label style="display: inline-block; margin-left: 4px; color: #aaaaaa; font-weight: normal; font-size: 15px; position:absolute; right: 10px">Instansi</label>
+                                </div>
+                            </div>
 
                             <h5>Kontak Pelanggan</h5>
                             <div style="margin-top: 16px;">
@@ -87,6 +93,7 @@ export default {
                     address: "",
                     email: "",
                     phone: "",
+                    company: "",
                     picture: null
                 },
             },
@@ -104,8 +111,8 @@ export default {
                 this.user.data.address      = response.data.body.biodata.alamat;
                 this.user.data.phone        = response.data.body.biodata.nomor_hp;
                 this.user.data.picture      = response.data.body.biodata.profile_picture;
-
-                console.log(response)
+                this.user.data.company      = response.data.body.biodata.instansi;
+                this.user.data.company      = this.user.data.company === null ? "-" : this.user.data.company;
             }).catch((error) => {
                 if (error.response.status === 404) {
                     this.back();
