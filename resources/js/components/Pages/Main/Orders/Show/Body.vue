@@ -9,7 +9,7 @@
                                 <h5 style="font-weight: 500; letter-spacing: 1px; line-height: 25px; font-size: 16px;">STATUS ORDER</h5>
                             </div>
                         </div>
-                        <div v-if="!['selesai', 'terima'].includes(data.status)" style="padding: 20px 50px 0 50px;">
+                        <div v-if="!['selesai', 'terima'].includes(data.status) && (this.$role.isAdmin || this.$role.isTechnician)" style="padding: 20px 50px 0 50px;">
                             <button @click="modals.change_technician.open = true;" style="float: right;" class="button-transparent-tag">Ganti teknisi</button>
                         </div>
                         <div style="height: 200px;">
